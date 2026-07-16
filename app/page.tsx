@@ -348,7 +348,7 @@ export default function Home() {
   // Slides configuration
   const slides = [
     {
-      image: "/hero_wedding.png",
+      image: "/mms/hero_wedding.png",
       tag: "Weddings & Elopements",
       title: "Your Love Story, Beautifully Told.",
       desc: "We capture every glance, every laugh, every tear that makes your day yours — a cinematic love story you'll treasure forever.",
@@ -356,7 +356,7 @@ export default function Home() {
       link: "#weddings-experience"
     },
     {
-      image: "/hero_conference.png",
+      image: "/mms/hero_conference.png",
       tag: "Conferences & Live Storytelling",
       title: "Events That Spark Genuine Connection.",
       desc: "From large screens and podcast capture to digital podiums and brand briefs, we create conferences that feel emotional, cinematic and unforgettable.",
@@ -364,7 +364,7 @@ export default function Home() {
       link: "#corporate-experience"
     },
     {
-      image: "/DSC_7504.jpg",
+      image: "/mms/DSC_7504.jpg",
       tag: "Brand Storytelling",
       title: "Where Moments Become Movies — Live, Cinematic, Unforgettable.",
       desc: "We turn events into emotional experiences — powered by world-class equipment, social amplification, and the unique stage of Victoria Falls.",
@@ -376,7 +376,7 @@ export default function Home() {
   // Conference & Cinematic slides (for separate carousels)
   const conferenceSlides = [
     {
-      image: "/conference_card.png",
+      image: "/mms/conference_card.png",
       title: "Conferences: Capture Every Angle",
       desc: "Large screens, interpretation systems, audio equipment and polished production bring every presentation, idea and voice into focus.",
       features: [
@@ -387,7 +387,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/conference_setup2.jpg",
+      image: "/mms/conference_setup2.jpg",
       title: "Podcast & Live Capture",
       desc: "On-site podcast rigs, intimate interview zones and ongoing content capture make each session feel alive beyond the event.",
       features: [
@@ -398,7 +398,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/conference_screens.jpg",
+      image: "/mms/conference_screens.jpg",
       title: "Corporate Event Amplification",
       desc: "Corporate events layered with social media marketing, billboards, digital podiums and visual storytelling that widens every audience.",
       features: [
@@ -412,7 +412,7 @@ export default function Home() {
 
   const cinematicSlides = [
     {
-      image: "/cinema_ad.jpg",
+      image: "/mms/cinema_ad.jpg",
       title: "Cinematic Campaigns",
       desc: "Advertisements, animation, posters and motion design crafted to make your story feel polished, emotional and unforgettable.",
       features: [
@@ -423,7 +423,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/cinematic_drone.jpg",
+      image: "/mms/cinematic_drone.jpg",
       title: "Immersive Capture",
       desc: "Drone sequences, 360 capture and podcast experiences that bring personal moments to life with cinematic scale.",
       features: [
@@ -434,7 +434,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/cinema_posters.jpg",
+      image: "/mms/cinema_posters.jpg",
       title: "Creative Storytelling",
       desc: "Design-forward visuals and film assets that turn campaigns into stories audiences feel and remember.",
       features: [
@@ -450,7 +450,7 @@ export default function Home() {
   const services = [
     {
       title: "Visual Storytelling",
-      image: "/wedding_card.png",
+      image: "/mms/wedding_card.png",
       alt: "Visual storytelling through photography and videography",
       desc: "Corporate events, social media marketing, billboards and digital podiums sit above our visual storytelling — pairing creative capture with high-impact campaigns.",
       items: [
@@ -464,7 +464,7 @@ export default function Home() {
     },
     {
       title: "Event Experiences",
-      image: "/conference_card.png",
+      image: "/mms/conference_card.png",
       alt: "Event experiences, planning and coordination",
       desc: "Large screens, interpretation systems, audio equipment, interactive digital displays and live streaming come together for seamless event production.",
       items: [
@@ -478,7 +478,7 @@ export default function Home() {
     },
     {
       title: "Cinematic Experiences",
-      image: "/DSC_7504.jpg",
+      image: "/mms/DSC_7504.jpg",
       alt: "Digital presence, social media and branding",
       desc: "Advertisements, animation, posters, graphic design and creative campaigns shape cinematic experiences for brands, weddings and destination stories.",
       items: [
@@ -494,7 +494,7 @@ export default function Home() {
 
   const pastWorkItems = [
     {
-      image: "/wedding_card.png",
+      image: "/mms/wedding_card.png",
       category: "Wedding Film",
       title: "Victoria Falls Wedding Film",
       desc: "An emotional, intimate film captured across waterfall light and golden celebration.",
@@ -502,7 +502,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/conference_card.png",
+      image: "/mms/conference_card.png",
       category: "Live Production",
       title: "Global Summit Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
@@ -510,7 +510,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/cinema_ad.jpg",
+      image: "/mms/cinema_ad.jpg",
       category: "Brand Campaign",
       title: "Luxury Brand Campaign",
       desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
@@ -518,7 +518,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/cinematic_drone.jpg",
+      image: "/mms/cinematic_drone.jpg",
       category: "Corporate Event",
       title: "Corporate Event Experience",
       desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
@@ -526,7 +526,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/cinema_posters.jpg",
+      image: "/mms/cinema_posters.jpg",
       category: "Immersive Media",
       title: "Immersive Media Production",
       desc: "360 capture, drone sequences and podcast experiences that transformed events into shareable stories.",
@@ -705,7 +705,7 @@ export default function Home() {
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/victoria_falls_banner.png"
+            src="/mms/victoria_falls_banner.png"
             alt="MMS Partners Background"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
@@ -1083,7 +1083,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/victoria_falls_banner.png"
+            src="/mms/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
@@ -1143,7 +1143,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/hero_wedding.png"
+            src="/mms/hero_wedding.png"
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
@@ -1165,7 +1165,7 @@ export default function Home() {
             <div className="glass-panel p-8 rounded-3xl border border-[#c5a880]/15 flex flex-col sm:flex-row gap-6 items-start gsap-fade-up">
               <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-[#c5a880]/30 shadow-md">
                 <Image
-                  src="/avatar1.png"
+                  src="/mms/avatar1.png"
                   alt="Tanya, Bride"
                   fill
                   className="object-cover"
@@ -1217,7 +1217,7 @@ export default function Home() {
         {/* Background Scenic Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/victoria_falls_banner.png"
+            src="/mms/victoria_falls_banner.png"
             alt="Scenic view of Victoria Falls"
             fill
             className="object-cover gsap-reveal-bg-img"
@@ -1291,7 +1291,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/victoria_falls_banner.png"
+            src="/mms/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"

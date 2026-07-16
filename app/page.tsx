@@ -19,6 +19,7 @@ import {
   Video,
   Award,
   Star,
+   ArrowRight,
   ChevronLeft,
   ChevronRight,
   Camera,
@@ -348,7 +349,7 @@ export default function Home() {
   // Slides configuration
   const slides = [
     {
-      image: "/mms/hero_wedding.png",
+      image: "/mms/wedding1.jpg",
       tag: "Weddings & Elopements",
       title: "Your Love Story, Beautifully Told.",
       desc: "We capture every glance, every laugh, every tear that makes your day yours — a cinematic love story you'll treasure forever.",
@@ -356,7 +357,7 @@ export default function Home() {
       link: "#weddings-experience"
     },
     {
-      image: "/mms/hero_conference.png",
+      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
       tag: "Conferences & Live Storytelling",
       title: "Events That Spark Genuine Connection.",
       desc: "From large screens and podcast capture to digital podiums and brand briefs, we create conferences that feel emotional, cinematic and unforgettable.",
@@ -376,7 +377,7 @@ export default function Home() {
   // Conference & Cinematic slides (for separate carousels)
   const conferenceSlides = [
     {
-      image: "/mms/conference_card.png",
+      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
       title: "Conferences: Capture Every Angle",
       desc: "Large screens, interpretation systems, audio equipment and polished production bring every presentation, idea and voice into focus.",
       features: [
@@ -387,7 +388,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/mms/conference_setup2.jpg",
+      image: "/mms/360.jpg",
       title: "Podcast & Live Capture",
       desc: "On-site podcast rigs, intimate interview zones and ongoing content capture make each session feel alive beyond the event.",
       features: [
@@ -398,7 +399,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/mms/conference_screens.jpg",
+      image: "/mms/OEM-ODM-86-Inch-Business-Meeting-Presentation-Interactive-LED-Touch-Screen-Monitor-White-Board.jpg",
       title: "Corporate Event Amplification",
       desc: "Corporate events layered with social media marketing, billboards, digital podiums and visual storytelling that widens every audience.",
       features: [
@@ -412,7 +413,7 @@ export default function Home() {
 
   const cinematicSlides = [
     {
-      image: "/mms/cinema_ad.jpg",
+      image: "/mms/creative-designer-photographer-workspace-desk-setup-free-photo.webp",
       title: "Cinematic Campaigns",
       desc: "Advertisements, animation, posters and motion design crafted to make your story feel polished, emotional and unforgettable.",
       features: [
@@ -423,7 +424,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/mms/cinematic_drone.jpg",
+      image: "/mms/videographer-2.webp",
       title: "Immersive Capture",
       desc: "Drone sequences, 360 capture and podcast experiences that bring personal moments to life with cinematic scale.",
       features: [
@@ -434,7 +435,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/mms/cinema_posters.jpg",
+      image: "/mms/African-Distillers-e1768319604563.webp",
       title: "Creative Storytelling",
       desc: "Design-forward visuals and film assets that turn campaigns into stories audiences feel and remember.",
       features: [
@@ -450,7 +451,7 @@ export default function Home() {
   const services = [
     {
       title: "Visual Storytelling",
-      image: "/mms/wedding_card.png",
+      image: "/mms/wedding1.jpg",
       alt: "Visual storytelling through photography and videography",
       desc: "Corporate events, social media marketing, billboards and digital podiums sit above our visual storytelling — pairing creative capture with high-impact campaigns.",
       items: [
@@ -464,7 +465,7 @@ export default function Home() {
     },
     {
       title: "Event Experiences",
-      image: "/mms/conference_card.png",
+      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
       alt: "Event experiences, planning and coordination",
       desc: "Large screens, interpretation systems, audio equipment, interactive digital displays and live streaming come together for seamless event production.",
       items: [
@@ -494,7 +495,7 @@ export default function Home() {
 
   const pastWorkItems = [
     {
-      image: "/mms/wedding_card.png",
+      image: "/mms/wedding-sparkler-machine-grand-entrance-exit-1024x683.jpg",
       category: "Wedding Film",
       title: "Victoria Falls Wedding Film",
       desc: "An emotional, intimate film captured across waterfall light and golden celebration.",
@@ -502,7 +503,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/mms/conference_card.png",
+      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
       category: "Live Production",
       title: "Global Summit Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
@@ -510,7 +511,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/mms/cinema_ad.jpg",
+      image: "/mms/creative-designer-photographer-workspace-desk-setup-free-photo.webp",
       category: "Brand Campaign",
       title: "Luxury Brand Campaign",
       desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
@@ -518,7 +519,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/mms/cinematic_drone.jpg",
+      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
       category: "Corporate Event",
       title: "Corporate Event Experience",
       desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
@@ -526,7 +527,7 @@ export default function Home() {
       link: "#gallery"
     },
     {
-      image: "/mms/cinema_posters.jpg",
+      image: "/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg",
       category: "Immersive Media",
       title: "Immersive Media Production",
       desc: "360 capture, drone sequences and podcast experiences that transformed events into shareable stories.",
@@ -705,7 +706,7 @@ export default function Home() {
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/mms/victoria_falls_banner.png"
+            src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg"
             alt="MMS Partners Background"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
@@ -1075,15 +1076,131 @@ export default function Home() {
       </section>
 
       {/* 3) CHOOSE YOUR EXPERIENCE SECTION */}
-      
+      <section id="experiences" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-16">
+          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Your Journey Begins Here</span>
+          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Choose Your Experience</h2>
+          <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
+            Two paths. One premier cinematic excellence.
+          </p>
+        </div>
 
-     
-      {/* 6) OUR PROCESS SECTION (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 z-10">
+          {/* OR Badge in Center */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-[#050507] border border-[#c5a880] shadow-[0_0_15px_rgba(197,168,128,0.3)]">
+            <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">OR</span>
+          </div>
+
+          {/* Left Experience Card - Weddings */}
+          <div id="weddings-experience" className="group relative rounded-3xl overflow-hidden glass-panel border border-[#c5a880]/15 flex flex-col h-full min-h-[460px] justify-between p-8 md:p-12 transition-all duration-500 hover:border-[#c5a880]/40">
+            {/* Background Image with Zoom & Dark Gradient */}
+            <div className="absolute inset-0 z-0 overflow-hidden">
+              <Image
+                src="/wedding_card.png"
+                alt="Weddings & Elopements"
+                fill
+                className="object-cover gsap-reveal-bg-img transition-transform duration-7000 ease-out group-hover:scale-105"
+                style={{ opacity: 0.1 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/85 to-transparent z-10" />
+            </div>
+
+            {/* Top Text content */}
+            <div className="relative z-20 space-y-4">
+              <span className="text-[10px] tracking-[0.3em] text-[#c5a880] uppercase font-bold block">WEDDINGS & ELOPEMENTS</span>
+
+              {/* Bullet Points list */}
+              <ul className="space-y-3 pt-6 font-sans text-sm text-[#f4ebd0]/85 font-light">
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Destination Weddings</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Elopements</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Emotional Wedding Films</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Planning Support</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Bottom Button */}
+            <div className="relative z-20 pt-8">
+              <a
+                href="#contact"
+                className="group/btn inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-[#c5a880] group-hover:text-white transition-colors duration-300 font-semibold"
+              >
+                <span>Explore Wedding Experiences</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform duration-300" />
+              </a>
+            </div>
+          </div>
+
+          {/* Right Experience Card - Corporate */}
+          <div id="corporate-experience" className="group relative rounded-3xl overflow-hidden glass-panel border border-[#c5a880]/15 flex flex-col h-full min-h-[460px] justify-between p-8 md:p-12 transition-all duration-500 hover:border-[#c5a880]/40">
+            {/* Background Image with Zoom & Dark Gradient */}
+            <div className="absolute inset-0 z-0 overflow-hidden">
+              <Image
+                src="/conference_card.png"
+                alt="Corporate Events"
+                fill
+                className="object-cover gsap-reveal-bg-img transition-transform duration-7000 ease-out group-hover:scale-105"
+                style={{ opacity: 0.1 }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/85 to-transparent z-10" />
+            </div>
+
+            {/* Top Text content */}
+            <div className="relative z-10 space-y-4">
+              <span className="text-[10px] tracking-[0.3em] text-[#c5a880] uppercase font-bold block">CORPORATE & EVENTS</span>
+
+              {/* Bullet Points list */}
+              <ul className="space-y-3 pt-6 font-sans text-sm text-[#f4ebd0]/85 font-light">
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Conferences</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Live Streaming</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Corporate Events</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
+                  <span>Brand Productions</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Bottom Button */}
+            <div className="relative z-10 pt-8">
+              <a
+                href="#contact"
+                className="group/btn inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-[#c5a880] group-hover:text-white transition-colors duration-300 font-semibold"
+              >
+                <span>Explore Event Solutions</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform duration-300" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    {/* 6) OUR PROCESS SECTION (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
       <section id="about" className="relative py-16 md:py-24 border-t border-b border-[#c5a880]/15 gsap-section-bg overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/mms/victoria_falls_banner.png"
+            src="/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
@@ -1143,8 +1260,8 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/mms/hero_wedding.png"
-            alt="Scenic Falls Parallax"
+            src="/mms/wedding1.jpg"
+            alt="Wedding scenic background"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
             style={{ opacity: 0.2 }}
@@ -1165,8 +1282,8 @@ export default function Home() {
             <div className="glass-panel p-8 rounded-3xl border border-[#c5a880]/15 flex flex-col sm:flex-row gap-6 items-start gsap-fade-up">
               <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-[#c5a880]/30 shadow-md">
                 <Image
-                  src="/mms/avatar1.png"
-                  alt="Tanya, Bride"
+                  src="/mms/videographer-2.webp"
+                  alt="Videographer portrait"
                   fill
                   className="object-cover"
                 />
@@ -1181,7 +1298,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-xs text-[#f4ebd0]/80 leading-relaxed font-light italic">
-                  &quot;From the moment we spoke, they made us feel at ease. On the day, they were invisible but captured everything. We treasure our film forever.&quot;
+                  "From the moment we spoke, they made us feel at ease. On the day, they were invisible but captured everything. We treasure our film forever."
                 </p>
                 <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">— Tanya, Bride</p>
               </div>
@@ -1202,7 +1319,7 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-xs text-[#f4ebd0]/80 leading-relaxed font-light italic">
-                  &quot;Communications were fast, clear and professional. The team delivered beyond expectations. Highly recommended for global events.&quot;
+                  "Communications were fast, clear and professional. The team delivered beyond expectations. Highly recommended for global events."
                 </p>
                 <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">— Jason P., Events Manager</p>
               </div>
@@ -1217,7 +1334,7 @@ export default function Home() {
         {/* Background Scenic Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/mms/victoria_falls_banner.png"
+            src="/victoria_falls_banner.png"
             alt="Scenic view of Victoria Falls"
             fill
             className="object-cover gsap-reveal-bg-img"
@@ -1235,7 +1352,7 @@ export default function Home() {
               <h2 className="text-4xl md:text-5xl font-light text-white font-serif leading-tight">
                 WHY VICTORIA FALLS?<br />
                 More than a destination.<br />
-                It&apos;s a feeling.
+                It's a feeling.
               </h2>
 
               {/* 2x2 Feature points */}
@@ -1291,7 +1408,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
-            src="/mms/victoria_falls_banner.png"
+            src="/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
@@ -1305,7 +1422,7 @@ export default function Home() {
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
             <p className="text-sm text-[#f4ebd0]/70 font-light">
-              Let&apos;s bring your vision to life in one of the world&apos;s most extraordinary places.
+              Let's bring your vision to life in one of the world's most extraordinary places.
             </p>
           </div>
 
@@ -1322,9 +1439,9 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-[#c5a880]/15 flex items-center justify-center">
                   <Heart className="w-5 h-5 text-[#c5a880]" />
                 </div>
-                <h3 className="text-2xl font-light text-white font-serif">Let&apos;s Create Your Wedding Story</h3>
+                <h3 className="text-2xl font-light text-white font-serif">Let's Create Your Wedding Story</h3>
                 <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">
-                  Tell us your vision and we&apos;ll help craft an unforgettable experience.
+                  Tell us your vision and we'll help craft an unforgettable experience.
                 </p>
               </div>
               <div>
@@ -1426,7 +1543,6 @@ export default function Home() {
           </footer>
         </div>
       </section>
-
     </div>
   );
 }

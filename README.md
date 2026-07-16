@@ -1,4 +1,18 @@
+# mms-main
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## MMS Image Library
+
+The `public/mms` folder includes visual assets grouped around the main offerings of this site:
+
+- **Weddings & events**: celebration photography, wedding portraits, sparkler exits, and intimate event storytelling.
+- **Conferences & production**: large-screen setups, conference halls, video conferencing, live event staging, and AV presentation hardware.
+- **Destination & scenic visuals**: Victoria Falls, bridges, aerial landscapes, and immersive travel locations.
+- **Creative marketing & branding**: social media campaign imagery, design workspace scenes, ad visuals, and promotional content.
+- **Technical & equipment showcases**: production gear, spark machines, LED presentation monitors, and event technology packages.
+
+These images support the page's portfolio, services, and gallery sections.
 
 ## Getting Started
 

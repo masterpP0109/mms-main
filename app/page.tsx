@@ -123,15 +123,16 @@ export default function Home() {
       });
 
       // GSAP Reveal for section elements (slide-up fade-in)
-      const sectionRevealTargets = [
-        ".gsap-fade-up",
-        ".gsap-service-card",
-        ".gsap-experience-card",
-        ".gsap-testimonial",
-        ".gsap-cta-card",
-        ".gsap-small-card",
-        ".gsap-button"
-      ].join(", ");
+        const sectionRevealTargets = [
+          ".gsap-fade-up",
+          ".gsap-service-card",
+          ".gsap-experience-card",
+          ".gsap-testimonial",
+          ".gsap-cta-card",
+          ".gsap-small-card",
+          ".gsap-button",
+          ".gsap-bento-card"
+        ].join(", ");
 
       gsap.utils.toArray<HTMLElement>(".gsap-section-bg").forEach((sec) => {
         const elements = sec.querySelectorAll(sectionRevealTargets);
@@ -173,9 +174,10 @@ export default function Home() {
       );
 
       // Horizontal "wheel" carousel for Past Work
-      const section = pastWorkRef.current;
+      let pastWorkCtx: gsap.Context | undefined;
+      const section = pastWorkRef?.current;
       if (section) {
-        const ctx = gsap.context(() => {
+        pastWorkCtx = gsap.context(() => {
           const pinContainer = section.querySelector<HTMLElement>(".past-work-pin");
           const track = section.querySelector<HTMLElement>(".past-work-track");
           const heading = section.querySelector<HTMLElement>(".past-work-heading");
@@ -348,12 +350,20 @@ export default function Home() {
           };
         }, section);
 
-        return () => ctx.revert();
+        return () => pastWorkCtx?.revert();
       }
 
       window.addEventListener("load", () => {
         ScrollTrigger.refresh();
       });
+
+      // Timeline steps bounce/reveal animation
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      ScrollTrigger.refresh();
     }
   }, []);
 
@@ -484,6 +494,20 @@ export default function Home() {
       name: "David K.",
       role: "Brand Marketing Director",
       content: "They transformed our product launch into a visual story that still gets compliments months later. Truly world-class production.",
+      avatar: null,
+      rating: 5
+    },
+    {
+      name: "Maria R.",
+      role: "Destination Wedding Bride",
+      content: "Our wedding in Victoria Falls was pure magic on film. The team captured every tear, every laugh, and every golden sunset moment flawlessly.",
+      avatar: "/mms/wedding1.jpg",
+      rating: 5
+    },
+    {
+      name: "Alex T.",
+      role: "Tech Conference Organizer",
+      content: "From setup to teardown, the AV team was flawless. Our hybrid event reached 50,000+ viewers with zero technical issues. Incredible.",
       avatar: null,
       rating: 5
     }
@@ -727,7 +751,7 @@ export default function Home() {
 
       {/* Inserted AI hero intro copy */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 gsap-section-bg">
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 gsap-fade-up">
           <h2 className="text-4xl md:text-5xl font-light text-white font-serif gsap-heading">Where Moments Become Movies — Live, Cinematic, Unforgettable.</h2>
           <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-2xl mx-auto mt-4 gsap-copy">We turn events into emotional experiences — powered by world-class equipment, social amplification, and stunning cinematic craft.</p>
         </div>
@@ -866,7 +890,7 @@ export default function Home() {
 
       {/* 2b-CAROUSEL 2) CONFERENCES CAROUSEL - Styled like Hero */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative gsap-section-bg">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 gsap-fade-up">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 gsap-eyebrow">Corporate & Conferences</span>
           <h2 className="text-3xl md:text-5xl font-light text-white font-serif gsap-heading">Conferences & Large-Scale Events</h2>
           <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto mt-4 gsap-copy">Large screens, interpretation systems, audio equipment and full AV setup to capture every message and stream it globally.</p>
@@ -951,7 +975,7 @@ export default function Home() {
 
       {/* 2c-CAROUSEL 3) CINEMATIC EXPERIENCES CAROUSEL - Styled like Hero */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative gsap-section-bg">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 gsap-fade-up">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 gsap-eyebrow">Cinematic & Creative</span>
           <h2 className="text-3xl md:text-5xl font-light text-white font-serif gsap-heading">Cinematic Experiences</h2>
           <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto mt-4 gsap-copy">Advertisements, animation, drone sequences, 360 immersive booths and creative assets that turn events into unforgettable moments.</p>
@@ -1105,7 +1129,7 @@ export default function Home() {
                             View Project
                           </a>
                           <span className="pw-card-counter text-[10px] uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-mono">
-                            {String(idx + 1).padStart(2, "0")} / {String(pastWorkItems.length).padStart(2, "00")}
+                            {String(idx + 1).padStart(2, "00")} / {String(pastWorkItems.length).padStart(2, "00")}
                           </span>
                         </div>
                       </div>
@@ -1125,7 +1149,7 @@ export default function Home() {
       </section>
 
       {/* 3) INTERACTIVE BUILDER: PLAN YOUR PROJECT */}
-      <section id="builder" className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <section id="builder" className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative gsap-section-bg">
         <div className="text-center mb-12 gsap-fade-up">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Plan Your Project</span>
           <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Build Your Creative Brief</h2>
@@ -1599,7 +1623,7 @@ export default function Home() {
       </section>
 
 
-      <section id="contact" className="relative py-20 md:py-28 gsap-section-bg overflow-hidden bg-black">
+      <section id="contact" className="relative py-12 md:py-16 gsap-section-bg overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
@@ -1609,72 +1633,86 @@ export default function Home() {
             className="object-cover gsap-reveal-bg-img pointer-events-none"
             style={{ opacity: 0.3 }}
           />
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 bg-black/50 z-10" />
         </div>
 
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-4 gsap-fade-up">
+        <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-3 gsap-fade-up">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
-            <p className="text-sm text-[#f4ebd0]/70 font-light">
+            <h2 className="text-2xl md:text-4xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
+            <p className="text-xs text-[#f4ebd0]/70 font-light">
               Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
             </p>
           </div>
 
-          {/* Action Cards Side by Side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20 relative">
-            {/* OR badge inside center */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-[#050507] border border-[#c5a880] shadow-[0_0_10px_rgba(197,168,128,0.2)]">
-              <span className="text-[10px] font-serif text-[#c5a880] uppercase font-semibold">OR</span>
-            </div>
-
-            {/* Card 1: Let's Create Your Wedding Story */}
-            <div className="glass-panel p-8 md:p-12 rounded-3xl border border-[#c5a880]/20 bg-[#161310]/95 flex flex-col justify-between space-y-8 group transition-all duration-500 hover:shadow-[0_0_20px_rgba(197,168,128,0.15)] gsap-fade-up z-10">
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-full bg-[#c5a880]/15 flex items-center justify-center">
+          <div className="space-y-4">
+            {/* Primary Card - Wedding Story */}
+            <div className="glass-panel rounded-2xl border border-[#c5a880]/20 bg-gradient-to-r from-[#161310]/95 to-[#1a1410]/95 p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 gsap-bento-card group hover:shadow-[0_0_30px_rgba(197,168,128,0.08)] transition-all duration-500">
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
                   <Heart className="w-5 h-5 text-[#c5a880]" />
                 </div>
-                <h3 className="text-2xl font-light text-white font-serif">Let&apos;s Create Your Wedding Story</h3>
-                <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">
-                  Tell us your vision and we&lsquo;ll help craft an unforgettable experience.
-                </p>
+                <div className="space-y-1">
+                  <h3 className="text-lg md:text-xl font-light text-white font-serif">Let&apos;s Create Your Wedding Story</h3>
+                  <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light max-w-lg">
+                    Tell us your vision and we&lsquo;ll help craft an unforgettable experience. From intimate elopements to grand celebrations, we capture every golden moment.
+                  </p>
+                </div>
               </div>
-              <div>
-                <button
-                  onClick={() => alert("Thank you! Wedding Inquiry Form Coming Soon.")}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2.5 text-[10px] uppercase tracking-widest bg-[#c5a880] text-[#050507] hover:bg-white transition-colors duration-300 rounded-full font-bold cursor-pointer"
-                >
-                  Get Your Free Wedding Quote
-                </button>
-              </div>
+              <button
+                onClick={() => alert("Thank you! Wedding Inquiry Form Coming Soon.")}
+                className="shrink-0 inline-flex items-center justify-center px-5 py-2 text-[10px] uppercase tracking-widest bg-[#c5a880] text-[#050507] hover:bg-white transition-colors duration-300 rounded-full font-bold cursor-pointer"
+              >
+                Get Your Free Wedding Quote
+              </button>
             </div>
 
-            {/* Card 2: Plan Your Next Production */}
-            <div className="glass-panel p-8 md:p-12 rounded-3xl border border-violet-500/25 bg-[#120f1a]/95 flex flex-col justify-between space-y-8 group transition-all duration-500 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)] gsap-fade-up z-10">
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-full bg-violet-500/10 flex items-center justify-center">
-                  <Briefcase className="w-5 h-5 text-violet-400" />
+            {/* Secondary Cards Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Event Production */}
+              <div className="glass-panel rounded-2xl border border-violet-500/20 bg-[#120f1a]/95 p-5 flex items-start justify-between gap-4 gsap-bento-card group hover:border-violet-500/40 transition-all duration-500">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-violet-500/10 flex items-center justify-center shrink-0">
+                    <Briefcase className="w-4 h-4 text-violet-400" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base font-light text-white font-serif">Plan Your Next Production</h3>
+                    <p className="text-[11px] text-[#f4ebd0]/70 leading-relaxed font-light">
+                      Professional coverage and cinematic content tailored to your needs.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-light text-white font-serif">Plan Your Next Production</h3>
-                <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">
-                  Professional coverage and cinematic content tailored to your needs.
-                </p>
-              </div>
-              <div>
                 <button
                   onClick={() => alert("Thank you! Event Inquiry Form Coming Soon.")}
-                  className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2.5 text-[10px] uppercase tracking-widest bg-violet-600 text-white hover:bg-violet-500 transition-colors duration-300 rounded-full font-bold cursor-pointer"
+                  className="shrink-0 inline-flex items-center justify-center px-4 py-1.5 text-[9px] uppercase tracking-widest bg-violet-600 text-white hover:bg-violet-500 transition-colors duration-300 rounded-full font-bold cursor-pointer"
                 >
-                  Get Your Free Event Quote
+                  Get Quote
                 </button>
               </div>
-            </div>
 
+              {/* Discovery Call */}
+              <div className="glass-panel rounded-2xl border border-[#c5a880]/15 bg-[#0e0e12]/95 p-5 flex items-start justify-between gap-4 gsap-bento-card group hover:border-[#c5a880]/40 transition-all duration-500">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#c5a880]/10 flex items-center justify-center shrink-0">
+                    <MessageSquare className="w-4 h-4 text-[#c5a880]" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base font-light text-white font-serif">Discovery Call</h3>
+                    <p className="text-[11px] text-[#f4ebd0]/70 leading-relaxed font-light">
+                      Book a free 15-minute call to discuss your vision.
+                    </p>
+                  </div>
+                </div>
+                <a href="#contact" className="shrink-0 inline-flex items-center justify-center px-4 py-1.5 text-[9px] uppercase tracking-widest border border-[#c5a880]/30 text-[#f4ebd0] hover:bg-[#c5a880] hover:text-[#050507] transition-all duration-300 rounded-full font-bold cursor-pointer">
+                  Book Now
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Footer */}
-          <footer className="pt-16 border-t border-[#c5a880]/15 gsap-fade-up relative z-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+          <footer className="pt-10 border-t border-[#c5a880]/15 gsap-fade-up relative z-10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8">
 
               {/* Column 1 */}
               <div className="col-span-2 md:col-span-1 space-y-4">

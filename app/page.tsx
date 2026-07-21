@@ -785,7 +785,7 @@ export default function Home() {
                 src={slides[currentSlide].image}
                 alt={slides[currentSlide].tag}
                 fill
-                className="object-contain object-center scale-105 animate-[zoom_20s_infinite_alternate] bright-image"
+                className="object-fill  scale-105 animate-[zoom_20s_infinite_alternate] bright-image"
                 style={{ opacity: 0.7, objectPosition: "center" }}
                 priority
               />
@@ -890,7 +890,7 @@ export default function Home() {
             src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg"
             alt="MMS Partners Background"
             fill
-            className="object-cover gsap-reveal-bg-img pointer-events-none"
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
             style={{ opacity: 0.35 }}
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
@@ -956,7 +956,7 @@ export default function Home() {
                   src={service.image}
                   alt={service.alt}
                   fill
-                  className="object-cover gsap-reveal-image bright-image transition-transform duration-7000 ease-out group-hover:scale-105"
+                  className="object-cover object-center gsap-reveal-image bright-image transition-transform duration-7000 ease-out group-hover:scale-105"
                   style={{ opacity: 0.85 }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-transparent z-10" />
@@ -1019,7 +1019,7 @@ export default function Home() {
                 src={conferenceSlides[conferenceSlide].image}
                 alt={conferenceSlides[conferenceSlide].title}
                 fill
-                className="object-contain object-center scale-105 animate-[zoom_20s_infinite_alternate]"
+                className="object-fill  scale-105 animate-[zoom_20s_infinite_alternate]"
                 style={{ opacity: 0.65, objectPosition: "center" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
@@ -1104,7 +1104,7 @@ export default function Home() {
                 src={cinematicSlides[cinematicSlide].image}
                 alt={cinematicSlides[cinematicSlide].title}
                 fill
-                className="object-contain object-center scale-105 animate-[zoom_20s_infinite_alternate]"
+                className="object-cover object-center scale-105 animate-[zoom_20s_infinite_alternate]"
                 style={{ opacity: 0.65, objectPosition: "center" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
@@ -1579,7 +1579,7 @@ export default function Home() {
             src="/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
             fill
-            className="object-cover gsap-reveal-bg-img pointer-events-none"
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
             style={{ opacity: 0.3 }}
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
@@ -1639,7 +1639,7 @@ export default function Home() {
             src="/mms/wedding1.jpg"
             alt="Wedding scenic background"
             fill
-            className="object-cover gsap-reveal-bg-img pointer-events-none"
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
             style={{ opacity: 0.3 }}
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
@@ -1683,7 +1683,7 @@ export default function Home() {
                           alt={testimonials[testimonialSlide].name}
                           width={56}
                           height={56}
-                          className="object-cover"
+                          className="object-cover object-center"
                         />
                       ) : (
                         <div className="w-full h-full bg-[#121218] flex items-center justify-center">
@@ -1738,7 +1738,7 @@ export default function Home() {
             src="/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
             fill
-            className="object-cover gsap-reveal-bg-img pointer-events-none"
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
             style={{ opacity: 0.3 }}
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
@@ -1830,7 +1830,7 @@ export default function Home() {
                     alt="MMS Logo"
                     width={130}
                     height={38}
-                    className="object-contain"
+                  className="object-contain"
                   />
                 </div>
                 <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">

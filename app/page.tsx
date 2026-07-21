@@ -19,6 +19,7 @@ import {
   Video,
   Award,
   Star,
+  Quote,
    ArrowRight,
   ChevronLeft,
   ChevronRight,
@@ -32,7 +33,18 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [conferenceSlide, setConferenceSlide] = useState(0);
   const [cinematicSlide, setCinematicSlide] = useState(0);
+  const [testimonialSlide, setTestimonialSlide] = useState(0);
   const pastWorkRef = useRef<HTMLElement | null>(null);
+  const [builderStep, setBuilderStep] = useState(0);
+  const [builderData, setBuilderData] = useState({
+    goal: "",
+    audience: "",
+    timeline: "",
+    name: "",
+    email: "",
+    phone: "",
+    details: ""
+  });
 
   // Auto-play Hero carousel every 6 seconds
   useEffect(() => {
@@ -47,26 +59,9 @@ export default function Home() {
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
 
-      // GSAP Reveal for card/scenic background images (increases opacity from 0.08 to 0.35 on scroll)
+      // GSAP Reveal for card/scenic background images (increases opacity from 0.15 to 0.5 on scroll)
       gsap.utils.toArray<HTMLElement>(".gsap-reveal-bg-img").forEach((img) => {
         const triggerEl = img.closest("section") || img.closest(".group") || img;
-        gsap.fromTo(img,
-          { opacity: 0.08 },
-          {
-            opacity: 0.35,
-            duration: 1.5,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: triggerEl,
-              start: "top 80%",
-              toggleActions: "play reverse play reverse"
-            }
-          }
-        );
-      });
-
-      // GSAP Reveal for custom video thumbnails (increases from 0.15 to 0.5)
-      gsap.utils.toArray<HTMLElement>(".gsap-reveal-image").forEach((img) => {
         gsap.fromTo(img,
           { opacity: 0.15 },
           {
@@ -74,9 +69,26 @@ export default function Home() {
             duration: 1.5,
             ease: "power2.out",
             scrollTrigger: {
+              trigger: triggerEl,
+              start: "top 80%",
+              once: true
+            }
+          }
+        );
+      });
+
+      // GSAP Reveal for custom video thumbnails (increases from 0.3 to 0.65)
+      gsap.utils.toArray<HTMLElement>(".gsap-reveal-image").forEach((img) => {
+        gsap.fromTo(img,
+          { opacity: 0.3 },
+          {
+            opacity: 0.65,
+            duration: 1.5,
+            ease: "power2.out",
+            scrollTrigger: {
               trigger: img,
               start: "top 85%",
-              toggleActions: "play reverse play reverse"
+              once: true
             }
           }
         );
@@ -84,20 +96,19 @@ export default function Home() {
 
       // Animate Hero side background images slightly on load
       gsap.fromTo(".gsap-hero-bg-left",
-        { opacity: 0.15 },
-        { opacity: 0.5, duration: 2.0, ease: "power2.out" }
+        { opacity: 0.3 },
+        { opacity: 0.65, duration: 2.0, ease: "power2.out" }
       );
       gsap.fromTo(".gsap-hero-bg-right",
-        { opacity: 0.15 },
-        { opacity: 0.45, duration: 2.0, ease: "power2.out" }
+        { opacity: 0.3 },
+        { opacity: 0.6, duration: 2.0, ease: "power2.out" }
       );
 
-      // GSAP Section enter tracking & in animation
+      // GSAP Section enter animation
       gsap.utils.toArray<HTMLElement>(".gsap-section-bg").forEach((sec) => {
         gsap.fromTo(sec,
-          { autoAlpha: 0, y: 25 },
+          { y: 25 },
           {
-            autoAlpha: 1,
             y: 0,
             duration: 1,
             ease: "power3.out",
@@ -105,7 +116,7 @@ export default function Home() {
               trigger: sec,
               start: "top 85%",
               end: "bottom top",
-              toggleActions: "play reverse play reverse",
+              once: true,
             }
           }
         );
@@ -136,7 +147,7 @@ export default function Home() {
               scrollTrigger: {
                 trigger: sec,
                 start: "top 85%",
-                toggleActions: "play reverse play reverse"
+                once: true,
               }
             }
           );
@@ -156,7 +167,7 @@ export default function Home() {
           scrollTrigger: {
             trigger: ".gsap-timeline-container",
             start: "top 80%",
-            toggleActions: "play reverse play reverse"
+            once: true
           }
         }
       );
@@ -368,8 +379,8 @@ export default function Home() {
       image: "/mms/DSC_7504.jpg",
       tag: "Brand Storytelling",
       title: "Where Moments Become Movies — Live, Cinematic, Unforgettable.",
-      desc: "We turn events into emotional experiences — powered by world-class equipment, social amplification, and the unique stage of Victoria Falls.",
-      btnText: "Discover Our Work",
+      desc: "We turn events into emotional experiences — powered by world-class equipment, social amplification, and stunning cinematic craft.",
+      btnText: "Build Your Project",
       link: "#builder"
     }
   ];
@@ -388,7 +399,7 @@ export default function Home() {
       ]
     },
     {
-      image: "/mms/360.jpg",
+      image: "/mms/IMG_9198.jpeg",
       title: "Podcast & Live Capture",
       desc: "On-site podcast rigs, intimate interview zones and ongoing content capture make each session feel alive beyond the event.",
       features: [
@@ -444,6 +455,23 @@ export default function Home() {
         "Brand campaigns",
         "Digital premieres"
       ]
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: "Tanya, Bride",
+      role: "Wedding Client",
+      content: "From the moment we spoke, they made us feel at ease. On the day, they were invisible but captured everything. We treasure our film forever.",
+      avatar: "/mms/videographer-2.webp",
+      rating: 5
+    },
+    {
+      name: "Jason P.",
+      role: "International Corporate Client, Events Manager",
+      content: "Communications were fast, clear and professional. The team delivered beyond expectations. Highly recommended for global events.",
+      avatar: null,
+      rating: 5
     }
   ];
 
@@ -565,7 +593,7 @@ export default function Home() {
 
             {/* Nav Links */}
             <div className="hidden md:flex items-center space-x-8 gsap-nav-links">
-              {["Home", "Services", "Experiences", "Gallery", "About", "Clients", "Contact"].map((item) => (
+              {["Home", "Services", "Builder", "Gallery", "About", "Clients", "Contact"].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
@@ -605,7 +633,7 @@ export default function Home() {
                 alt={slides[currentSlide].tag}
                 fill
                 className="object-cover scale-105 animate-[zoom_20s_infinite_alternate] bright-image"
-                style={{ opacity: 0.55 }}
+                style={{ opacity: 0.7 }}
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
@@ -680,7 +708,7 @@ export default function Home() {
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 gsap-section-bg">
         <div className="text-center mb-6">
           <h2 className="text-4xl md:text-5xl font-light text-white font-serif gsap-heading">Where Moments Become Movies — Live, Cinematic, Unforgettable.</h2>
-          <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-2xl mx-auto mt-4 gsap-copy">We turn events into emotional experiences — powered by world-class equipment, social amplification, and the unique stage of Victoria Falls.</p>
+          <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-2xl mx-auto mt-4 gsap-copy">We turn events into emotional experiences — powered by world-class equipment, social amplification, and stunning cinematic craft.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           <div className="glass-panel p-6 rounded-2xl border border-[#c5a880]/15 gsap-small-card">
@@ -710,9 +738,9 @@ export default function Home() {
             alt="MMS Partners Background"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.2 }}
+            style={{ opacity: 0.35 }}
           />
-          <div className="absolute inset-0 bg-black/60 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
 
         <div className="relative z-20 p-8 md:p-10">
@@ -776,7 +804,7 @@ export default function Home() {
                   alt={service.alt}
                   fill
                   className="object-cover gsap-reveal-image bright-image transition-transform duration-7000 ease-out group-hover:scale-105"
-                  style={{ opacity: 0.75 }}
+                  style={{ opacity: 0.85 }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-transparent z-10" />
               </div>
@@ -839,7 +867,7 @@ export default function Home() {
                 alt={conferenceSlides[conferenceSlide].title}
                 fill
                 className="object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.5 }}
+                style={{ opacity: 0.65 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
             </motion.div>
@@ -924,7 +952,7 @@ export default function Home() {
                 alt={cinematicSlides[cinematicSlide].title}
                 fill
                 className="object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.5 }}
+                style={{ opacity: 0.65 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
             </motion.div>
@@ -1075,121 +1103,316 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3) CHOOSE YOUR EXPERIENCE SECTION */}
-      <section id="experiences" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="text-center mb-16">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Your Journey Begins Here</span>
-          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Choose Your Experience</h2>
+      {/* 3) INTERACTIVE BUILDER: PLAN YOUR PROJECT */}
+      <section id="builder" className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="text-center mb-12 gsap-fade-up">
+          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Plan Your Project</span>
+          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Build Your Creative Brief</h2>
           <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
-            Two paths. One premier cinematic excellence.
+            Tell us what you need — we&apos;ll craft a custom quote and creative roadmap for your vision.
           </p>
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 z-10">
-          {/* OR Badge in Center */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-[#050507] border border-[#c5a880] shadow-[0_0_15px_rgba(197,168,128,0.3)]">
-            <span className="text-xs font-serif text-[#c5a880] tracking-wider uppercase font-semibold">OR</span>
+        <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-10 gsap-fade-up">
+          {/* Step Progress Indicator */}
+          <div className="flex items-center justify-between mb-10 max-w-md mx-auto">
+            {["Goal", "Audience", "Timeline", "Contact", "Review"].map((label, idx) => {
+              const stepNum = idx + 1;
+              const isActive = builderStep === idx;
+              const isDone = builderStep > idx;
+              return (
+                <div key={label} className="flex flex-col items-center">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-300 ${
+                      isActive
+                        ? "bg-[#c5a880] text-[#050507] scale-110"
+                        : isDone
+                        ? "bg-[#c5a880]/30 text-[#c5a880]"
+                        : "bg-[#c5a880]/10 text-[#f4ebd0]/40"
+                    }`}
+                  >
+                    {isDone ? "✓" : stepNum}
+                  </div>
+                  <span className={`text-[8px] uppercase tracking-widest mt-1.5 ${
+                    isActive ? "text-[#c5a880]" : isDone ? "text-[#c5a880]/60" : "text-[#f4ebd0]/30"
+                  }`}>
+                    {label}
+                  </span>
+                </div>
+              );
+            })}
           </div>
 
-          {/* Left Experience Card - Weddings */}
-          <div id="weddings-experience" className="group relative rounded-3xl overflow-hidden glass-panel border border-[#c5a880]/15 flex flex-col h-full min-h-[460px] justify-between p-8 md:p-12 transition-all duration-500 hover:border-[#c5a880]/40">
-            {/* Background Image with Zoom & Dark Gradient */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
-              <Image
-                src="/wedding_card.png"
-                alt="Weddings & Elopements"
-                fill
-                className="object-cover gsap-reveal-bg-img transition-transform duration-7000 ease-out group-hover:scale-105"
-                style={{ opacity: 0.1 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/85 to-transparent z-10" />
-            </div>
+          {/* Step 1: Goal Selection */}
+          {builderStep === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6"
+            >
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-serif text-white font-light">What type of project are you planning?</h3>
+                <p className="text-xs text-[#f4ebd0]/60 mt-2">Select the option that best describes your needs</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { id: "wedding", label: "Wedding Film", desc: "Cinematic wedding coverage & elopements", icon: Heart },
+                  { id: "corporate", label: "Corporate Event", desc: "Conferences, summits & live productions", icon: Briefcase },
+                  { id: "brand", label: "Brand Campaign", desc: "Advertisements, motion & brand storytelling", icon: Palette },
+                  { id: "content", label: "Content Package", desc: "Social content, podcasts & digital assets", icon: Megaphone },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setBuilderData({ ...builderData, goal: opt.id })}
+                    className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
+                      builderData.goal === opt.id
+                        ? "border-[#c5a880] bg-[#c5a880]/10 shadow-[0_0_20px_rgba(197,168,128,0.1)]"
+                        : "border-[#c5a880]/15 bg-[#050507]/50 hover:border-[#c5a880]/40"
+                    }`}
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0 mt-1">
+                      <opt.icon className="w-4 h-4 text-[#c5a880]" />
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-white block">{opt.label}</span>
+                      <span className="text-[11px] text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-            {/* Top Text content */}
-            <div className="relative z-20 space-y-4">
-              <span className="text-[10px] tracking-[0.3em] text-[#c5a880] uppercase font-bold block">WEDDINGS & ELOPEMENTS</span>
+          {/* Step 2: Audience / Event Type */}
+          {builderStep === 1 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6"
+            >
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-serif text-white font-light">Tell us about your event or audience</h3>
+                <p className="text-xs text-[#f4ebd0]/60 mt-2">This helps us tailor the creative approach</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { id: "intimate", label: "Intimate Gathering", desc: "Small group, personal celebration" },
+                  { id: "large-event", label: "Large Event", desc: "100+ guests, multi-camera setup" },
+                  { id: "corporate-audience", label: "Corporate Audience", desc: "Stakeholders, partners, press" },
+                  { id: "digital-first", label: "Digital-First", desc: "Content made for screens & social" },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setBuilderData({ ...builderData, audience: opt.id })}
+                    className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
+                      builderData.audience === opt.id
+                        ? "border-[#c5a880] bg-[#c5a880]/10 shadow-[0_0_20px_rgba(197,168,128,0.1)]"
+                        : "border-[#c5a880]/15 bg-[#050507]/50 hover:border-[#c5a880]/40"
+                    }`}
+                  >
+                    <div className="w-8 h-8 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
+                      <Users className="w-4 h-4 text-[#c5a880]" />
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-white block">{opt.label}</span>
+                      <span className="text-[11px] text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-              {/* Bullet Points list */}
-              <ul className="space-y-3 pt-6 font-sans text-sm text-[#f4ebd0]/85 font-light">
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Destination Weddings</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Elopements</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Emotional Wedding Films</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Planning Support</span>
-                </li>
-              </ul>
-            </div>
+          {/* Step 3: Timeline */}
+          {builderStep === 2 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6"
+            >
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-serif text-white font-light">What&apos;s your timeline?</h3>
+                <p className="text-xs text-[#f4ebd0]/60 mt-2">We work with all timelines — urgent to flexible</p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { id: "urgent", label: "Urgent", desc: "Within 2 weeks", days: "ASAP" },
+                  { id: "soon", label: "Soon", desc: "1–3 months out", days: "Medium" },
+                  { id: "planned", label: "Planning Ahead", desc: "3–6 months out", days: "Comfortable" },
+                  { id: "flexible", label: "Just Exploring", desc: "No fixed date yet", days: "Flexible" },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setBuilderData({ ...builderData, timeline: opt.id })}
+                    className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
+                      builderData.timeline === opt.id
+                        ? "border-[#c5a880] bg-[#c5a880]/10 shadow-[0_0_20px_rgba(197,168,128,0.1)]"
+                        : "border-[#c5a880]/15 bg-[#050507]/50 hover:border-[#c5a880]/40"
+                    }`}
+                  >
+                    <div className="w-10 h-10 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
+                      <span className="text-xs font-bold text-[#c5a880]">{opt.days}</span>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-white block">{opt.label}</span>
+                      <span className="text-[11px] text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
-            {/* Bottom Button */}
-            <div className="relative z-20 pt-8">
-              <a
-                href="#contact"
-                className="group/btn inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-[#c5a880] group-hover:text-white transition-colors duration-300 font-semibold"
-              >
-                <span>Explore Wedding Experiences</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform duration-300" />
-              </a>
-            </div>
-          </div>
+          {/* Step 4: Contact Capture */}
+          {builderStep === 3 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-6 max-w-lg mx-auto"
+            >
+              <div className="text-center mb-6">
+                <h3 className="text-xl font-serif text-white font-light">Where should we send your custom quote?</h3>
+                <p className="text-xs text-[#f4ebd0]/60 mt-2">We&apos;ll respond within 24 hours</p>
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Your Name</label>
+                  <input
+                    type="text"
+                    value={builderData.name}
+                    onChange={(e) => setBuilderData({ ...builderData, name: e.target.value })}
+                    placeholder="e.g. Sarah Johnson"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    value={builderData.email}
+                    onChange={(e) => setBuilderData({ ...builderData, email: e.target.value })}
+                    placeholder="e.g. sarah@example.com"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Phone (optional)</label>
+                  <input
+                    type="tel"
+                    value={builderData.phone}
+                    onChange={(e) => setBuilderData({ ...builderData, phone: e.target.value })}
+                    placeholder="e.g. +1 234 567 890"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Project Details</label>
+                  <textarea
+                    value={builderData.details}
+                    onChange={(e) => setBuilderData({ ...builderData, details: e.target.value })}
+                    placeholder="Tell us about your vision, location, guest count, or any special requirements..."
+                    rows={3}
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-none"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
 
-          {/* Right Experience Card - Corporate */}
-          <div id="corporate-experience" className="group relative rounded-3xl overflow-hidden glass-panel border border-[#c5a880]/15 flex flex-col h-full min-h-[460px] justify-between p-8 md:p-12 transition-all duration-500 hover:border-[#c5a880]/40">
-            {/* Background Image with Zoom & Dark Gradient */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
-              <Image
-                src="/conference_card.png"
-                alt="Corporate Events"
-                fill
-                className="object-cover gsap-reveal-bg-img transition-transform duration-7000 ease-out group-hover:scale-105"
-                style={{ opacity: 0.1 }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/85 to-transparent z-10" />
-            </div>
+          {/* Step 5: Summary & Quote-Ready CTA */}
+          {builderStep === 4 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="space-y-8 max-w-lg mx-auto"
+            >
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-[#c5a880]/15 flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-7 h-7 text-[#c5a880]" />
+                </div>
+                <h3 className="text-xl font-serif text-white font-light">Your Brief Is Ready</h3>
+                <p className="text-xs text-[#f4ebd0]/60 mt-2">Review your selections below. We&apos;ll create a custom quote based on your brief.</p>
+              </div>
 
-            {/* Top Text content */}
-            <div className="relative z-10 space-y-4">
-              <span className="text-[10px] tracking-[0.3em] text-[#c5a880] uppercase font-bold block">CORPORATE & EVENTS</span>
+              <div className="space-y-3">
+                {[
+                  { label: "Project Goal", value: builderData.goal ? builderData.goal.charAt(0).toUpperCase() + builderData.goal.slice(1) : "Not selected" },
+                  { label: "Audience / Event Type", value: builderData.audience ? builderData.audience.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") : "Not selected" },
+                  { label: "Timeline", value: builderData.timeline ? builderData.timeline.charAt(0).toUpperCase() + builderData.timeline.slice(1) : "Not selected" },
+                  { label: "Name", value: builderData.name || "Not provided" },
+                  { label: "Email", value: builderData.email || "Not provided" },
+                  { label: "Phone", value: builderData.phone || "Not provided" },
+                  { label: "Details", value: builderData.details ? (builderData.details.length > 60 ? builderData.details.slice(0, 60) + "..." : builderData.details) : "Not provided" },
+                ].map((item) => (
+                  <div key={item.label} className="flex justify-between items-center py-2 border-b border-[#c5a880]/10">
+                    <span className="text-[10px] uppercase tracking-widest text-[#c5a880]/70 font-semibold">{item.label}</span>
+                    <span className="text-xs text-white font-medium text-right max-w-[60%]">{item.value}</span>
+                  </div>
+                ))}
+              </div>
 
-              {/* Bullet Points list */}
-              <ul className="space-y-3 pt-6 font-sans text-sm text-[#f4ebd0]/85 font-light">
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Conferences</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Live Streaming</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Corporate Events</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <span>Brand Productions</span>
-                </li>
-              </ul>
-            </div>
+              <div className="text-center pt-4">
+                <button
+                  onClick={() => {
+                    const message = encodeURIComponent(
+                      `New Project Inquiry\n\nGoal: ${builderData.goal}\nAudience: ${builderData.audience}\nTimeline: ${builderData.timeline}\nName: ${builderData.name}\nEmail: ${builderData.email}\nPhone: ${builderData.phone}\nDetails: ${builderData.details}`
+                    );
+                    window.location.href = `mailto:hello@mmscreatives.com?subject=New%20Project%20Inquiry%20-%20${builderData.name || "New Lead"}&body=${message}`;
+                  }}
+                  disabled={!builderData.name || !builderData.email}
+                  className="inline-flex items-center justify-center px-8 py-3 text-xs uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-bold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  Send My Brief & Get a Free Quote
+                </button>
+                <p className="text-[10px] text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
+              </div>
+            </motion.div>
+          )}
 
-            {/* Bottom Button */}
-            <div className="relative z-10 pt-8">
-              <a
-                href="#contact"
-                className="group/btn inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-[#c5a880] group-hover:text-white transition-colors duration-300 font-semibold"
-              >
-                <span>Explore Event Solutions</span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1.5 transition-transform duration-300" />
-              </a>
+          {/* Navigation Buttons */}
+          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#c5a880]/10">
+            <button
+              onClick={() => setBuilderStep((prev) => Math.max(0, prev - 1))}
+              disabled={builderStep === 0}
+              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#f4ebd0]/50 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            >
+              <ChevronLeft className="w-3 h-3" />
+              Back
+            </button>
+
+            <div className="flex items-center gap-3">
+              {builderStep < 4 && (
+                <button
+                  onClick={() => {
+                    // Validate current step before proceeding
+                    if (builderStep === 0 && !builderData.goal) return;
+                    if (builderStep === 1 && !builderData.audience) return;
+                    if (builderStep === 2 && !builderData.timeline) return;
+                    if (builderStep === 3 && (!builderData.name || !builderData.email)) return;
+                    setBuilderStep((prev) => Math.min(4, prev + 1));
+                  }}
+                  className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest bg-[#c5a880] text-[#050507] px-5 py-2.5 rounded-full font-semibold hover:brightness-110 transition-all duration-300 cursor-pointer"
+                >
+                  {builderStep === 3 ? "Review Brief" : "Continue"}
+                  <ChevronRight className="w-3 h-3" />
+                </button>
+              )}
+              {builderStep > 0 && builderStep < 5 && (
+                <button
+                  onClick={() => {
+                    setBuilderStep(0);
+                    setBuilderData({ goal: "", audience: "", timeline: "", name: "", email: "", phone: "", details: "" });
+                  }}
+                  className="text-[10px] uppercase tracking-widest text-[#f4ebd0]/40 hover:text-[#f4ebd0]/70 transition-colors cursor-pointer"
+                >
+                  Reset
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -1204,9 +1427,9 @@ export default function Home() {
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.2 }}
+            style={{ opacity: 0.3 }}
           />
-          <div className="absolute inset-0 bg-black/60 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
 
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1255,7 +1478,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7) TESTIMONIALS / CLIENT REACTIONS (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
+      {/* 7) TESTIMONIALS / CLIENT REACTIONS */}
       <section id="clients" className="relative py-16 md:py-24 border-b border-[#c5a880]/15 gsap-section-bg overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
@@ -1264,9 +1487,9 @@ export default function Home() {
             alt="Wedding scenic background"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.2 }}
+            style={{ opacity: 0.3 }}
           />
-          <div className="absolute inset-0 bg-black/60 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
 
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1275,135 +1498,86 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">What Our Clients Say</h2>
           </div>
 
-          {/* 2 Testimonial Cards Side by Side */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Testimonial Carousel */}
+          <div className="relative max-w-3xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={testimonialSlide}
+                initial={{ opacity: 0, y: 50, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -50, scale: 0.96 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="glass-panel p-8 md:p-12 rounded-3xl border border-[#c5a880]/15 relative overflow-hidden"
+              >
+                <Quote className="absolute top-6 left-6 w-10 h-10 text-[#c5a880]/15" />
 
-            {/* Testimonial Card 1 */}
-            <div className="glass-panel p-8 rounded-3xl border border-[#c5a880]/15 flex flex-col sm:flex-row gap-6 items-start gsap-fade-up">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-[#c5a880]/30 shadow-md">
-                <Image
-                  src="/mms/videographer-2.webp"
-                  alt="Videographer portrait"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex-1 space-y-3">
-                <div className="space-y-1">
-                  <h4 className="text-lg font-medium text-white leading-tight">Wedding Client</h4>
-                  <div className="flex items-center text-[#c5a880]">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-current" />
+                <div className="flex flex-col items-center text-center space-y-6 relative z-10">
+                  <div className="flex items-center text-[#c5a880] space-x-1">
+                    {[...Array(testimonials[testimonialSlide].rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
                   </div>
-                </div>
-                <p className="text-xs text-[#f4ebd0]/80 leading-relaxed font-light italic">
-                  "From the moment we spoke, they made us feel at ease. On the day, they were invisible but captured everything. We treasure our film forever."
-                </p>
-                <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">— Tanya, Bride</p>
-              </div>
-            </div>
 
-            {/* Testimonial Card 2 */}
-            <div className="glass-panel p-8 rounded-3xl border border-[#c5a880]/15 flex flex-col sm:flex-row gap-6 items-start gsap-fade-up">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-[#c5a880]/30 shadow-md bg-[#121218] flex items-center justify-center">
-                <span className="text-lg font-serif font-bold text-[#c5a880]">JP</span>
-              </div>
-              <div className="flex-1 space-y-3">
-                <div className="space-y-1">
-                  <h4 className="text-lg font-medium text-white leading-tight">International Corporate Client</h4>
-                  <div className="flex items-center text-[#c5a880]">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-current" />
-                    ))}
+                  <p className="text-base md:text-xl text-[#f4ebd0]/90 leading-relaxed font-light italic">
+                    "{testimonials[testimonialSlide].content}"
+                  </p>
+
+                  <div className="flex flex-col items-center space-y-2 pt-2">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border border-[#c5a880]/30 shadow-md">
+                      {testimonials[testimonialSlide].avatar ? (
+                        <Image
+                          src={testimonials[testimonialSlide].avatar}
+                          alt={testimonials[testimonialSlide].name}
+                          width={56}
+                          height={56}
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#121218] flex items-center justify-center">
+                          <span className="text-lg font-serif font-bold text-[#c5a880]">JP</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-lg font-medium text-white">{testimonials[testimonialSlide].name}</h4>
+                      <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">{testimonials[testimonialSlide].role}</p>
+                    </div>
                   </div>
                 </div>
-                <p className="text-xs text-[#f4ebd0]/80 leading-relaxed font-light italic">
-                  "Communications were fast, clear and professional. The team delivered beyond expectations. Highly recommended for global events."
-                </p>
-                <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">— Jason P., Events Manager</p>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
 
+            {/* Carousel Controls */}
+            <div className="flex items-center justify-center mt-8 space-x-6">
+              <button
+                onClick={() => setTestimonialSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+                className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <div className="flex space-x-2">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setTestimonialSlide(idx)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === testimonialSlide ? "bg-[#c5a880] w-6" : "bg-[#f4ebd0]/30"}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={() => setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+                className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 8) WHY VICTORIA FALLS BANNER SECTION */}
-      <section className="relative w-full overflow-hidden py-24 md:py-32 border-b border-[#c5a880]/15">
-        {/* Background Scenic Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/victoria_falls_banner.png"
-            alt="Scenic view of Victoria Falls"
-            fill
-            className="object-cover gsap-reveal-bg-img"
-            style={{ opacity: 0.15 }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050507] via-[#050507]/90 to-[#050507]/45 z-10" />
-          <div className="absolute inset-0 bg-[#050507]/50 z-10" />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-            {/* Left Column Content */}
-            <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl font-light text-white font-serif leading-tight">
-                WHY VICTORIA FALLS?<br />
-                More than a destination.<br />
-                It's a feeling.
-              </h2>
-
-              {/* 2x2 Feature points */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
-                    <Compass className="w-4 h-4 text-[#c5a880]" />
-                  </div>
-                  <span className="text-[10px] tracking-wider uppercase text-white font-medium">Breathtaking Landscapes</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
-                    <Sun className="w-4 h-4 text-[#c5a880]" />
-                  </div>
-                  <span className="text-[10px] tracking-wider uppercase text-white font-medium">Unique Light & Atmosphere</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
-                    <Award className="w-4 h-4 text-[#c5a880]" />
-                  </div>
-                  <span className="text-[10px] tracking-wider uppercase text-white font-medium">Exclusive Destination</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
-                    <Users className="w-4 h-4 text-[#c5a880]" />
-                  </div>
-                  <span className="text-[10px] tracking-wider uppercase text-white font-medium">Unforgettable Experience</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column Action Overlaid card */}
-            <div className="flex flex-col lg:items-end justify-center">
-              <div className="glass-panel p-8 rounded-2xl max-w-md border border-[#c5a880]/20 space-y-6 lg:text-left">
-                <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">
-                  From the roar of the falls to the golden sunsets, Victoria Falls provides the perfect backdrop for stories that last.
-                </p>
-                <a
-                  href="#contact"
-                  className="inline-flex items-center justify-center px-6 py-2.5 text-xs uppercase tracking-widest bg-transparent border border-[#c5a880] text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] rounded-full transition-all duration-300 font-semibold"
-                >
-                  Discover the Art
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 9) FINAL CTA SECTION & FOOTER (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
+      {/* 8) FINAL CTA SECTION & FOOTER (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
       <section id="contact" className="relative py-20 md:py-28 gsap-section-bg overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
@@ -1412,9 +1586,9 @@ export default function Home() {
             alt="Scenic Falls Parallax"
             fill
             className="object-cover gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.2 }}
+            style={{ opacity: 0.3 }}
           />
-          <div className="absolute inset-0 bg-black/60 z-10" />
+          <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
 
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1422,7 +1596,7 @@ export default function Home() {
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
             <p className="text-sm text-[#f4ebd0]/70 font-light">
-              Let's bring your vision to life in one of the world's most extraordinary places.
+              Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
             </p>
           </div>
 
@@ -1439,9 +1613,9 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-[#c5a880]/15 flex items-center justify-center">
                   <Heart className="w-5 h-5 text-[#c5a880]" />
                 </div>
-                <h3 className="text-2xl font-light text-white font-serif">Let's Create Your Wedding Story</h3>
+                <h3 className="text-2xl font-light text-white font-serif">Let&apos;s Create Your Wedding Story</h3>
                 <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">
-                  Tell us your vision and we'll help craft an unforgettable experience.
+                  Tell us your vision and we&lsquo;ll help craft an unforgettable experience.
                 </p>
               </div>
               <div>
@@ -1449,7 +1623,7 @@ export default function Home() {
                   onClick={() => alert("Thank you! Wedding Inquiry Form Coming Soon.")}
                   className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2.5 text-[10px] uppercase tracking-widest bg-[#c5a880] text-[#050507] hover:bg-white transition-colors duration-300 rounded-full font-bold cursor-pointer"
                 >
-                  Start Planning Your Wedding
+                  Get Your Free Wedding Quote
                 </button>
               </div>
             </div>
@@ -1470,7 +1644,7 @@ export default function Home() {
                   onClick={() => alert("Thank you! Event Inquiry Form Coming Soon.")}
                   className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2.5 text-[10px] uppercase tracking-widest bg-violet-600 text-white hover:bg-violet-500 transition-colors duration-300 rounded-full font-bold cursor-pointer"
                 >
-                  Plan Your Event Production
+                  Get Your Free Event Quote
                 </button>
               </div>
             </div>
@@ -1493,7 +1667,7 @@ export default function Home() {
                   />
                 </div>
                 <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">
-                  Crafting luxury wedding films and world-class event productions across the globe, set in the natural wonder of Victoria Falls.
+                  Crafting luxury wedding films and world-class event productions across the globe, blending cinematic artistry with brand storytelling that converts attention into bookings.
                 </p>
               </div>
 

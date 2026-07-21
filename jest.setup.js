@@ -77,6 +77,7 @@ jest.mock('lucide-react', () => ({
   Video: () => null,
   Award: () => null,
   Star: () => null,
+  Quote: () => null,
   ArrowRight: () => null,
   ChevronLeft: () => null,
   ChevronRight: () => null,

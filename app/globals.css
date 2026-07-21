@@ -110,7 +110,7 @@ h1, h2 {
 .past-work-heading {
   position: absolute;
   left: 50%;
-  top: 12vh;
+  top: 10vh;
   max-width: min(86vw, 820px);
   width: min(86vw, 820px);
   transform: translateX(-50%);
@@ -122,8 +122,8 @@ h1, h2 {
   position: absolute;
   left: 0;
   right: 0;
-  top: 46vh;
-  height: 48vh;
+  top: 42vh;
+  height: 44vh;
   overflow: visible;
   perspective: 1800px;
 }
@@ -139,10 +139,10 @@ h1, h2 {
 
 .pw-card {
   will-change: transform, opacity, filter;
-  width: clamp(760px, 72vw, 1180px);
-  max-width: min(92vw, 1180px);
-  min-height: 480px;
-  height: clamp(480px, 58vh, 680px);
+  width: clamp(580px, 64vw, 980px);
+  max-width: min(92vw, 980px);
+  min-height: 380px;
+  height: clamp(380px, 50vh, 560px);
 }
 
 .pw-card-inner {
@@ -203,7 +203,7 @@ h1, h2 {
 
 @media (max-width: 1024px) {
   .pw-card {
-    width: min(92vw, 900px);
+    width: min(92vw, 780px);
   }
   .past-work-track {
     gap: clamp(4vw, 5vw, 7vw);
@@ -213,7 +213,7 @@ h1, h2 {
 
 @media (max-width: 768px) {
   .pw-card {
-    width: min(94vw, 760px);
+    width: min(94vw, 640px);
     min-height: auto;
     height: auto;
   }
@@ -224,16 +224,16 @@ h1, h2 {
     height: auto;
   }
   .past-work-heading {
-    top: 8vh;
+    top: 7vh;
     padding-inline: 1.5rem;
   }
   .past-work-viewport {
-    top: 36vh;
+    top: 34vh;
     min-height: auto;
     height: auto;
   }
   .pw-card-content {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
   .past-work-track {
     gap: 6vw;
@@ -243,13 +243,13 @@ h1, h2 {
 
 @media (max-width: 640px) {
   .pw-card {
-    width: min(96vw, 700px);
+    width: min(96vw, 560px);
   }
   .past-work-heading {
     top: 7vh;
   }
   .past-work-viewport {
-    top: 32vh;
+    top: 30vh;
   }
 }
 

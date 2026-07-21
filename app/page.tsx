@@ -20,7 +20,7 @@ import {
   Award,
   Star,
   Quote,
-   ArrowRight,
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Camera,
@@ -472,6 +472,20 @@ export default function Home() {
       content: "Communications were fast, clear and professional. The team delivered beyond expectations. Highly recommended for global events.",
       avatar: null,
       rating: 5
+    },
+    {
+      name: "Sarah M.",
+      role: "Luxury Wedding Planner",
+      content: "The cinematic quality was breathtaking. Every frame felt intentional, emotional, and perfectly aligned with our clients' vision.",
+      avatar: "/mms/MMss.webp",
+      rating: 5
+    },
+    {
+      name: "David K.",
+      role: "Brand Marketing Director",
+      content: "They transformed our product launch into a visual story that still gets compliments months later. Truly world-class production.",
+      avatar: null,
+      rating: 5
     }
   ];
 
@@ -569,6 +583,13 @@ export default function Home() {
     const t2 = setInterval(() => setCinematicSlide((p) => (p === cinematicSlides.length - 1 ? 0 : p + 1)), 7000);
     return () => { clearInterval(t1); clearInterval(t2); };
   }, [conferenceSlides.length, cinematicSlides.length]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [testimonials.length]);
 
   return (
     <div className="min-h-screen bg-[#050507] text-[#f4ebd0] overflow-x-hidden font-sans selection:bg-[#b48a3d] selection:text-[#050507]">
@@ -1053,38 +1074,38 @@ export default function Home() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
                     </div>
-                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-8 lg:p-10 bg-[#09090d]">
-                      <div className="space-y-4">
-                        <span className="text-[10px] uppercase tracking-[0.32em] text-[#c5a880] font-semibold block">
+                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#09090d]">
+                      <div className="space-y-3">
+                        <span className="text-[10px] uppercase tracking-[0.28em] text-[#c5a880] font-semibold block">
                           {item.category}
                         </span>
-                        <h3 className="text-3xl md:text-4xl font-light text-white font-serif leading-tight">
+                        <h3 className="text-2xl md:text-3xl font-light text-white font-serif leading-tight">
                           {item.title}
                         </h3>
-                        <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light max-w-xl">
+                        <p className="text-xs md:text-sm text-[#f4ebd0]/70 leading-relaxed font-light max-w-xl">
                           {item.desc}
                         </p>
                       </div>
-                      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="mt-5 flex flex-wrap items-center gap-3">
                         <div className="flex flex-wrap gap-2">
                           {item.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="text-[10px] uppercase tracking-[0.18em] bg-[#c5a880]/10 text-[#f4ebd0] px-3 py-1.5 rounded-full border border-[#c5a880]/15"
+                              className="text-[10px] uppercase tracking-[0.18em] bg-[#c5a880]/10 text-[#f4ebd0] px-2.5 py-1 rounded-full border border-[#c5a880]/15"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <div className="flex items-center gap-3 sm:ml-auto">
                           <a
                             href={item.link}
-                            className="inline-flex items-center justify-center px-6 py-2.5 text-[10px] uppercase tracking-[0.32em] bg-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 transition-all duration-300"
+                            className="inline-flex items-center justify-center px-5 py-2 text-[10px] uppercase tracking-[0.32em] bg-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 transition-all duration-300"
                           >
                             View Project
                           </a>
-                          <span className="pw-card-counter text-xs uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-mono">
-                            {String(idx + 1).padStart(2, "0")} / {String(pastWorkItems.length).padStart(2, "0")}
+                          <span className="pw-card-counter text-[10px] uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-mono">
+                            {String(idx + 1).padStart(2, "0")} / {String(pastWorkItems.length).padStart(2, "00")}
                           </span>
                         </div>
                       </div>
@@ -1577,7 +1598,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8) FINAL CTA SECTION & FOOTER (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
+
       <section id="contact" className="relative py-20 md:py-28 gsap-section-bg overflow-hidden bg-black">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">

@@ -26,15 +26,21 @@ import {
   Camera,
   Megaphone,
   Palette,
-  PenTool
+  PenTool,
+  Menu,
+  X
 } from "lucide-react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [conferenceSlide, setConferenceSlide] = useState(0);
   const [cinematicSlide, setCinematicSlide] = useState(0);
   const [testimonialSlide, setTestimonialSlide] = useState(0);
   const pastWorkRef = useRef<HTMLElement | null>(null);
+  const navbarRef = useRef<HTMLDivElement | null>(null);
+  const [activeNav, setActiveNav] = useState("Home");
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [builderStep, setBuilderStep] = useState(0);
   const [builderData, setBuilderData] = useState({
     goal: "",
@@ -54,10 +60,53 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  // Close mobile menu on desktop resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Navbar mouse follow tilt
+  const handleNavMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!navbarRef.current) return;
+    const rect = navbarRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -0.5;
+    const rotateY = ((x - centerX) / centerX) * 0.5;
+    navbarRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handleNavMouseLeave = () => {
+    if (!navbarRef.current) return;
+    navbarRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+  };
+
   // Initialize GSAP ScrollTrigger Animations
   useLayoutEffect(() => {
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
+
+      // Navbar entrance animation
+      const navbar = document.querySelector(".gsap-nav-entrance");
+      if (navbar) {
+        gsap.fromTo(
+          navbar,
+          { opacity: 0, y: -20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            delay: 0.2,
+          }
+        );
+      }
 
       // GSAP Reveal for card/scenic background images (increases opacity from 0.15 to 0.5 on scroll)
       gsap.utils.toArray<HTMLElement>(".gsap-reveal-bg-img").forEach((img) => {
@@ -621,44 +670,103 @@ export default function Home() {
       {/* 1) TOP NAVIGATION BAR & HERO SECTION */}
       <header className="relative w-full z-50">
 
-        {/* Navigation Bar - Fixed and showing throughout the page */}
-        <nav className="fixed top-0 left-0 w-full bg-[#050507] border-b border-[#c5a880]/15 py-4 px-4 sm:px-6 lg:px-8 shadow-xl z-50">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            {/* Logo - Untouched white logo */}
-            <div className="flex items-center gsap-nav-logo">
-              <Image
-                src="/mmslogo.webp"
-                alt="MMS Logo"
-                width={130}
-                height={38}
-                className="object-contain"
-                priority
-              />
-            </div>
+        {/* Navigation Bar - Liquid Glass Pill */}
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 gsap-nav-entrance">
+          <div
+            ref={navbarRef}
+            className="glass-navbar-wrapper"
+            onMouseMove={handleNavMouseMove}
+            onMouseLeave={handleNavMouseLeave}
+          >
+            <div className="glass-navbar flex items-center gap-3 rounded-full pl-6 pr-5 py-3.5">
+              {/* Logo */}
+              <a href="#" className="relative z-10 flex items-center logo-glow" style={{ minWidth: 140 }}>
+                <Image
+                  src="/mmslogo.webp"
+                  alt="MMS Logo"
+                  width={140}
+                  height={38}
+                  className="object-contain"
+                  priority
+                />
+              </a>
 
-            {/* Nav Links */}
-            <div className="hidden md:flex items-center space-x-8 gsap-nav-links">
-              {["Home", "Services", "Builder", "Gallery", "About", "Clients", "Contact"].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="text-xs uppercase tracking-widest text-[#f4ebd0]/70 hover:text-white transition-colors duration-200 underline-link gsap-nav-link"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
+              {/* Divider */}
+              <div className="w-px h-7 bg-white/20 mx-2" />
 
-            {/* CTA Button */}
-            <div>
+              {/* Nav Links */}
+              <div className="hidden md:flex items-center gap-2">
+                {["Home", "Services", "Builder", "Gallery", "About", "Clients", "Contact"].map((item) => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    onClick={() => setActiveNav(item)}
+                    className={`nav-item relative px-5 py-2.5 text-xs uppercase tracking-widest ${
+                      activeNav === item ? "active text-white" : "text-[#f4ebd0]/70 hover:text-white"
+                    }`}
+                  >
+                    {activeNav === item && (
+                      <motion.div
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full"
+                        style={{ background: "rgba(255,255,255,0.12)" }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{item}</span>
+                  </a>
+                ))}
+              </div>
+
+              {/* CTA Button */}
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center px-5 py-2 text-xs uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 premium-button gsap-nav-cta"
+                className="relative z-10 ml-4 inline-flex items-center justify-center px-7 py-2.5 text-[10px] uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 transition-all duration-300"
               >
                 Get a Quote
               </a>
+
+              {/* Mobile Menu Button */}
+              <button
+                className="nav-icon-btn md:hidden relative z-10 p-3 text-white ml-2"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label="Toggle menu"
+              >
+                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
             </div>
           </div>
+
+          {/* Mobile Menu Dropdown */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="md:hidden mt-2 mobile-menu-glass rounded-2xl p-4 flex flex-col gap-2"
+              >
+                {["Home", "Services", "Builder", "Gallery", "About", "Clients", "Contact"].map((item) => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    onClick={() => {
+                      setActiveNav(item);
+                      setMobileOpen(false);
+                    }}
+                    className={`px-4 py-2.5 rounded-full text-xs uppercase tracking-widest text-center transition-colors duration-200 ${
+                      activeNav === item
+                        ? "bg-white/15 text-white"
+                        : "text-[#f4ebd0]/70 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
 
         {/* Hero Carousel Section - offset for fixed navbar */}

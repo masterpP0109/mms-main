@@ -427,7 +427,7 @@ export default function Home() {
       link: "#weddings-experience"
     },
     {
-      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+      image: "/mms/DSC_7906.jpg",
       tag: "Conferences & Live Storytelling",
       title: "Events That Spark Genuine Connection.",
       desc: "From large screens and podcast capture to digital podiums and brand briefs, we create conferences that feel emotional, cinematic and unforgettable.",
@@ -435,7 +435,7 @@ export default function Home() {
       link: "#corporate-experience"
     },
     {
-      image: "/mms/DSC_7504.jpg",
+      image: "/mms/DSC_8497.jpg",
       tag: "Brand Storytelling",
       title: "Where Moments Become Movies — Live, Cinematic, Unforgettable.",
       desc: "We turn events into emotional experiences — powered by world-class equipment, social amplification, and stunning cinematic craft.",
@@ -610,7 +610,7 @@ export default function Home() {
 
   const pastWorkItems = [
     {
-      image: "/mms/wedding-sparkler-machine-grand-entrance-exit-1024x683.jpg",
+      image: "/mms/_DSC7098.jpg",
       category: "Wedding Film",
       title: "Victoria Falls Wedding Film",
       desc: "An emotional, intimate film captured across waterfall light and golden celebration.",
@@ -628,16 +628,16 @@ export default function Home() {
     {
       image: "/mms/creative-designer-photographer-workspace-desk-setup-free-photo.webp",
       category: "Brand Campaign",
-      title: "Luxury Brand Campaign",
-      desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
+      title: "Corporate Event Experience",
+      desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
       tags: ["Brand Strategy", "Motion Design", "Content Creation"],
       link: "#gallery"
     },
     {
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
       category: "Corporate Event",
-      title: "Corporate Event Experience",
-      desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
+      title: "Luxury Brand Campaign",
+      desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
       tags: ["Corporate Events", "Digital Displays", "Live Capture"],
       link: "#gallery"
     },
@@ -778,15 +778,15 @@ export default function Home() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full bg-[#050507]"
             >
               {/* Background Image of current slide */}
               <Image
                 src={slides[currentSlide].image}
                 alt={slides[currentSlide].tag}
                 fill
-                className="object-cover scale-105 animate-[zoom_20s_infinite_alternate] bright-image"
-                style={{ opacity: 0.7 }}
+                className="object-contain object-center scale-105 animate-[zoom_20s_infinite_alternate] bright-image"
+                style={{ opacity: 0.7, objectPosition: "center" }}
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
@@ -874,7 +874,7 @@ export default function Home() {
           </div>
           <div className="glass-panel p-6 rounded-2xl border border-[#c5a880]/15">
             <h4 className="text-lg font-medium text-white">Amplified Reach</h4>
-            <p className="text-sm text-[#f4ebd0]/70 mt-2">Social-first content, live streaming and digital billboards — the moment doesn’t end at the venue; it multiplies across feeds and screens.</p>
+            <p className="text-sm text-[#f4ebd0]/70 mt-2">Social-first content, live streaming and digital billboards — the moment doesn't end at the venue; it multiplies across feeds and screens.</p>
           </div>
         </div>
         <div className="text-center mt-8">
@@ -1013,14 +1013,14 @@ export default function Home() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full bg-[#050507]"
             >
               <Image
                 src={conferenceSlides[conferenceSlide].image}
                 alt={conferenceSlides[conferenceSlide].title}
                 fill
-                className="object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.65 }}
+                className="object-contain object-center scale-105 animate-[zoom_20s_infinite_alternate]"
+                style={{ opacity: 0.65, objectPosition: "center" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
             </motion.div>
@@ -1098,14 +1098,14 @@ export default function Home() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full bg-[#050507]"
             >
               <Image
                 src={cinematicSlides[cinematicSlide].image}
                 alt={cinematicSlides[cinematicSlide].title}
                 fill
-                className="object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.65 }}
+                className="object-contain object-center scale-105 animate-[zoom_20s_infinite_alternate]"
+                style={{ opacity: 0.65, objectPosition: "center" }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/60" />
             </motion.div>

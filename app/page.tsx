@@ -422,7 +422,7 @@ export default function Home() {
       image: "/mms/wedding1.jpg",
       tag: "Weddings & Elopements",
       title: "Your Love Story, Beautifully Told.",
-      desc: "We capture every glance, every laugh, every tear that makes your day yours — a cinematic love story you'll treasure forever.",
+      desc: "We capture every glance, every laugh, every tear that makes your day yours , a cinematic love story you'll treasure forever.",
       btnText: "Begin Your Story",
       link: "#weddings-experience"
     },
@@ -438,7 +438,7 @@ export default function Home() {
       image: "/mms/DSC_8497.jpg",
       tag: "Brand Storytelling",
       title: "Where Moments Become Movies — Live, Cinematic, Unforgettable.",
-      desc: "We turn events into emotional experiences — powered by world-class equipment, social amplification, and stunning cinematic craft.",
+      desc: "We turn events into emotional experiences, powered by world-class equipment, social amplification, and stunning cinematic craft.",
       btnText: "Build Your Project",
       link: "#builder"
     }

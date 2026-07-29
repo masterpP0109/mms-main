@@ -1252,13 +1252,7 @@ export default function Home() {
           </div>
 
           <section id="builder" className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative gsap-section-bg">
-        <div className="text-center mb-12 gsap-fade-up">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Plan Your Project</span>
-          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Build Your Creative Brief</h2>
-          <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
-            Tell us what you need — we&apos;ll craft a custom quote and creative roadmap for your vision.
-          </p>
-        </div>
+     
 
         <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-10 gsap-fade-up">
           {/* Step Progress Indicator */}

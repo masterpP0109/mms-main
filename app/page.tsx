@@ -1068,7 +1068,190 @@ export default function Home() {
       </section>
 
       {/* 3) INTERACTIVE BUILDER: PLAN YOUR PROJECT */}
-      <section id="builder" className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative gsap-section-bg">
+     
+    {/* 6) OUR PROCESS SECTION (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
+      <section id="about" className="relative py-16 md:py-24 border-t border-b border-[#c5a880]/15 gsap-section-bg overflow-hidden bg-black">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <Image
+            src="/victoria_falls_banner.png"
+            alt="Scenic Falls Parallax"
+            fill
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
+            style={{ opacity: 0.3 }}
+          />
+          <div className="absolute inset-0 bg-black/40 z-10" />
+        </div>
+
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 gsap-fade-up">
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Our Workflow</span>
+            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Our Process: A Smooth Journey To Your Story</h2>
+          </div>
+
+          {/* 4-column timeline */}
+          <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4 gsap-timeline-container">
+            {/* Connector Line (Desktop Only) */}
+            <div className="absolute top-12 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-[#c5a880]/10 via-[#c5a880]/30 to-[#c5a880]/10 z-0 hidden md:block" />
+
+            {[
+              {
+                step: "1",
+                title: "Discovery & Vision",
+                desc: "We get to know you, your story and what matters most."
+              },
+              {
+                step: "2",
+                title: "Planning Together",
+                desc: "We craft a custom plan and align every detail with your goals."
+              },
+              {
+                step: "3",
+                title: "Capturing the Experience",
+                desc: "Our expert team captures every moment with creativity and precision."
+              },
+              {
+                step: "4",
+                title: "Delivering Your Story",
+                desc: "You receive a cinematic masterpiece to relive for years to come."
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="relative z-10 flex flex-col items-center text-center px-4 gsap-timeline-step">
+                {/* Step Number Circle */}
+                <div className="w-14 h-14 rounded-full bg-[#050507] border border-[#c5a880]/30 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-[#c5a880] transition-colors duration-300">
+                  <span className="text-sm font-serif font-semibold text-[#c5a880]">{item.step}</span>
+                </div>
+                <h3 className="text-lg font-medium text-white mb-2">{item.title}</h3>
+                <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7) TESTIMONIALS / CLIENT REACTIONS */}
+      <section id="clients" className="relative py-16 md:py-24 border-b border-[#c5a880]/15 gsap-section-bg overflow-hidden bg-black">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <Image
+            src="/mms/wedding1.jpg"
+            alt="Wedding scenic background"
+            fill
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
+            style={{ opacity: 0.3 }}
+          />
+          <div className="absolute inset-0 bg-black/40 z-10" />
+        </div>
+
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 gsap-fade-up">
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Client Feedback</span>
+            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">What Our Clients Say</h2>
+          </div>
+
+          {/* Testimonial Carousel */}
+          <div className="relative max-w-3xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={testimonialSlide}
+                initial={{ opacity: 0, y: 50, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -50, scale: 0.96 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="glass-panel p-8 md:p-12 rounded-3xl border border-[#c5a880]/15 relative overflow-hidden"
+              >
+                <Quote className="absolute top-6 left-6 w-10 h-10 text-[#c5a880]/15" />
+
+                <div className="flex flex-col items-center text-center space-y-6 relative z-10">
+                  <div className="flex items-center text-[#c5a880] space-x-1">
+                    {[...Array(testimonials[testimonialSlide].rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" />
+                    ))}
+                  </div>
+
+                  <p className="text-base md:text-xl text-[#f4ebd0]/90 leading-relaxed font-light italic">
+                    "{testimonials[testimonialSlide].content}"
+                  </p>
+
+                  <div className="flex flex-col items-center space-y-2 pt-2">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border border-[#c5a880]/30 shadow-md">
+                      {testimonials[testimonialSlide].avatar ? (
+                        <Image
+                          src={testimonials[testimonialSlide].avatar}
+                          alt={testimonials[testimonialSlide].name}
+                          width={56}
+                          height={56}
+                          className="object-cover object-center"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#121218] flex items-center justify-center">
+                          <span className="text-lg font-serif font-bold text-[#c5a880]">JP</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-lg font-medium text-white">{testimonials[testimonialSlide].name}</h4>
+                      <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">{testimonials[testimonialSlide].role}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Carousel Controls */}
+            <div className="flex items-center justify-center mt-8 space-x-6">
+              <button
+                onClick={() => setTestimonialSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
+                className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              <div className="flex space-x-2">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setTestimonialSlide(idx)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === testimonialSlide ? "bg-[#c5a880] w-6" : "bg-[#f4ebd0]/30"}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={() => setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
+                className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="contact" className="relative py-12 md:py-16 gsap-section-bg overflow-hidden bg-black">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0 w-full h-full">
+          <Image
+            src="/victoria_falls_banner.png"
+            alt="Scenic Falls Parallax"
+            fill
+            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
+            style={{ opacity: 0.3 }}
+          />
+          <div className="absolute inset-0 bg-black/50 z-10" />
+        </div>
+
+        <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-3 gsap-fade-up">
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
+            <h2 className="text-2xl md:text-4xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
+            <p className="text-xs text-[#f4ebd0]/70 font-light">
+              Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
+            </p>
+          </div>
+
+          <section id="builder" className="py-16 md:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative gsap-section-bg">
         <div className="text-center mb-12 gsap-fade-up">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Plan Your Project</span>
           <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Build Your Creative Brief</h2>
@@ -1382,252 +1565,6 @@ export default function Home() {
         </div>
       </section>
       
-    {/* 6) OUR PROCESS SECTION (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
-      <section id="about" className="relative py-16 md:py-24 border-t border-b border-[#c5a880]/15 gsap-section-bg overflow-hidden bg-black">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/victoria_falls_banner.png"
-            alt="Scenic Falls Parallax"
-            fill
-            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.3 }}
-          />
-          <div className="absolute inset-0 bg-black/40 z-10" />
-        </div>
-
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 gsap-fade-up">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Our Workflow</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Our Process: A Smooth Journey To Your Story</h2>
-          </div>
-
-          {/* 4-column timeline */}
-          <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4 gsap-timeline-container">
-            {/* Connector Line (Desktop Only) */}
-            <div className="absolute top-12 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-[#c5a880]/10 via-[#c5a880]/30 to-[#c5a880]/10 z-0 hidden md:block" />
-
-            {[
-              {
-                step: "1",
-                title: "Discovery & Vision",
-                desc: "We get to know you, your story and what matters most."
-              },
-              {
-                step: "2",
-                title: "Planning Together",
-                desc: "We craft a custom plan and align every detail with your goals."
-              },
-              {
-                step: "3",
-                title: "Capturing the Experience",
-                desc: "Our expert team captures every moment with creativity and precision."
-              },
-              {
-                step: "4",
-                title: "Delivering Your Story",
-                desc: "You receive a cinematic masterpiece to relive for years to come."
-              }
-            ].map((item, idx) => (
-              <div key={idx} className="relative z-10 flex flex-col items-center text-center px-4 gsap-timeline-step">
-                {/* Step Number Circle */}
-                <div className="w-14 h-14 rounded-full bg-[#050507] border border-[#c5a880]/30 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-[#c5a880] transition-colors duration-300">
-                  <span className="text-sm font-serif font-semibold text-[#c5a880]">{item.step}</span>
-                </div>
-                <h3 className="text-lg font-medium text-white mb-2">{item.title}</h3>
-                <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7) TESTIMONIALS / CLIENT REACTIONS */}
-      <section id="clients" className="relative py-16 md:py-24 border-b border-[#c5a880]/15 gsap-section-bg overflow-hidden bg-black">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/mms/wedding1.jpg"
-            alt="Wedding scenic background"
-            fill
-            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.3 }}
-          />
-          <div className="absolute inset-0 bg-black/40 z-10" />
-        </div>
-
-        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 gsap-fade-up">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Client Feedback</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">What Our Clients Say</h2>
-          </div>
-
-          {/* Testimonial Carousel */}
-          <div className="relative max-w-3xl mx-auto">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={testimonialSlide}
-                initial={{ opacity: 0, y: 50, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -50, scale: 0.96 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-panel p-8 md:p-12 rounded-3xl border border-[#c5a880]/15 relative overflow-hidden"
-              >
-                <Quote className="absolute top-6 left-6 w-10 h-10 text-[#c5a880]/15" />
-
-                <div className="flex flex-col items-center text-center space-y-6 relative z-10">
-                  <div className="flex items-center text-[#c5a880] space-x-1">
-                    {[...Array(testimonials[testimonialSlide].rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                  </div>
-
-                  <p className="text-base md:text-xl text-[#f4ebd0]/90 leading-relaxed font-light italic">
-                    "{testimonials[testimonialSlide].content}"
-                  </p>
-
-                  <div className="flex flex-col items-center space-y-2 pt-2">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border border-[#c5a880]/30 shadow-md">
-                      {testimonials[testimonialSlide].avatar ? (
-                        <Image
-                          src={testimonials[testimonialSlide].avatar}
-                          alt={testimonials[testimonialSlide].name}
-                          width={56}
-                          height={56}
-                          className="object-cover object-center"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-[#121218] flex items-center justify-center">
-                          <span className="text-lg font-serif font-bold text-[#c5a880]">JP</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="space-y-1">
-                      <h4 className="text-lg font-medium text-white">{testimonials[testimonialSlide].name}</h4>
-                      <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">{testimonials[testimonialSlide].role}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Carousel Controls */}
-            <div className="flex items-center justify-center mt-8 space-x-6">
-              <button
-                onClick={() => setTestimonialSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-                className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <div className="flex space-x-2">
-                {testimonials.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setTestimonialSlide(idx)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === testimonialSlide ? "bg-[#c5a880] w-6" : "bg-[#f4ebd0]/30"}`}
-                  />
-                ))}
-              </div>
-
-              <button
-                onClick={() => setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-                className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      <section id="contact" className="relative py-12 md:py-16 gsap-section-bg overflow-hidden bg-black">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/victoria_falls_banner.png"
-            alt="Scenic Falls Parallax"
-            fill
-            className="object-cover object-center gsap-reveal-bg-img pointer-events-none"
-            style={{ opacity: 0.3 }}
-          />
-          <div className="absolute inset-0 bg-black/50 z-10" />
-        </div>
-
-        <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-3 gsap-fade-up">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
-            <h2 className="text-2xl md:text-4xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
-            <p className="text-xs text-[#f4ebd0]/70 font-light">
-              Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {/* Primary Card - Wedding Story */}
-            <div className="glass-panel rounded-2xl border border-[#c5a880]/20 bg-gradient-to-r from-[#161310]/95 to-[#1a1410]/95 p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 gsap-bento-card group hover:shadow-[0_0_30px_rgba(197,168,128,0.08)] transition-all duration-500">
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
-                  <Heart className="w-5 h-5 text-[#c5a880]" />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-lg md:text-xl font-light text-white font-serif">Let&apos;s Create Your Wedding Story</h3>
-                  <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light max-w-lg">
-                    Tell us your vision and we&lsquo;ll help craft an unforgettable experience. From intimate elopements to grand celebrations, we capture every golden moment.
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => alert("Thank you! Wedding Inquiry Form Coming Soon.")}
-                className="shrink-0 inline-flex items-center justify-center px-5 py-2 text-[10px] uppercase tracking-widest bg-[#c5a880] text-[#050507] hover:bg-white transition-colors duration-300 rounded-full font-bold cursor-pointer"
-              >
-                Get Your Free Wedding Quote
-              </button>
-            </div>
-
-            {/* Secondary Cards Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Event Production */}
-              <div className="glass-panel rounded-2xl border border-violet-500/20 bg-[#120f1a]/95 p-5 flex items-start justify-between gap-4 gsap-bento-card group hover:border-violet-500/40 transition-all duration-500">
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-full bg-violet-500/10 flex items-center justify-center shrink-0">
-                    <Briefcase className="w-4 h-4 text-violet-400" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-light text-white font-serif">Plan Your Next Production</h3>
-                    <p className="text-[11px] text-[#f4ebd0]/70 leading-relaxed font-light">
-                      Professional coverage and cinematic content tailored to your needs.
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => alert("Thank you! Event Inquiry Form Coming Soon.")}
-                  className="shrink-0 inline-flex items-center justify-center px-4 py-1.5 text-[9px] uppercase tracking-widest bg-violet-600 text-white hover:bg-violet-500 transition-colors duration-300 rounded-full font-bold cursor-pointer"
-                >
-                  Get Quote
-                </button>
-              </div>
-
-              {/* Discovery Call */}
-              <div className="glass-panel rounded-2xl border border-[#c5a880]/15 bg-[#0e0e12]/95 p-5 flex items-start justify-between gap-4 gsap-bento-card group hover:border-[#c5a880]/40 transition-all duration-500">
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#c5a880]/10 flex items-center justify-center shrink-0">
-                    <MessageSquare className="w-4 h-4 text-[#c5a880]" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-light text-white font-serif">Discovery Call</h3>
-                    <p className="text-[11px] text-[#f4ebd0]/70 leading-relaxed font-light">
-                      Book a free 15-minute call to discuss your vision.
-                    </p>
-                  </div>
-                </div>
-                <a href="#contact" className="shrink-0 inline-flex items-center justify-center px-4 py-1.5 text-[9px] uppercase tracking-widest border border-[#c5a880]/30 text-[#f4ebd0] hover:bg-[#c5a880] hover:text-[#050507] transition-all duration-300 rounded-full font-bold cursor-pointer">
-                  Book Now
-                </a>
-              </div>
-            </div>
-          </div>
 
           {/* Footer */}
           <footer className="pt-10 border-t border-[#c5a880]/15 gsap-fade-up relative z-10">

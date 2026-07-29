@@ -858,30 +858,7 @@ export default function Home() {
       </header>
 
       {/* Inserted AI hero intro copy */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 gsap-section-bg">
-        <div className="text-center mb-6 gsap-fade-up">
-          <h2 className="text-4xl md:text-5xl font-light text-white font-serif gsap-heading">Where Moments Become Movies — Live, Cinematic, Unforgettable.</h2>
-          <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-2xl mx-auto mt-4 gsap-copy">We turn events into emotional experiences — powered by world-class equipment, social amplification, and stunning cinematic craft.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="glass-panel p-6 rounded-2xl border border-[#c5a880]/15 gsap-small-card">
-            <h4 className="text-lg font-medium text-white">Live Events</h4>
-            <p className="text-sm text-[#f4ebd0]/70 mt-2">Full AV staging, LED canvases, digital podiums and PA systems — so your message lands with clarity, power, and emotional resonance.</p>
-          </div>
-          <div className="glass-panel p-6 rounded-2xl border border-[#c5a880]/15">
-            <h4 className="text-lg font-medium text-white">Cinematic Experiences</h4>
-            <p className="text-sm text-[#f4ebd0]/70 mt-2">End-to-end film, animation, drone cinematography and podcast studios — crafted to feel like cinema, built to live on any screen.</p>
-          </div>
-          <div className="glass-panel p-6 rounded-2xl border border-[#c5a880]/15">
-            <h4 className="text-lg font-medium text-white">Amplified Reach</h4>
-            <p className="text-sm text-[#f4ebd0]/70 mt-2">Social-first content, live streaming and digital billboards — the moment doesn't end at the venue; it multiplies across feeds and screens.</p>
-          </div>
-        </div>
-        <div className="text-center mt-8">
-          <a href="#contact" className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] rounded-full font-semibold premium-button gsap-action">Book a creative brief</a>
-        </div>
-      </section>
-
+     
       {/* 2) TRUST / VALUE ICON STRIP (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
       <section className="relative -mt-4 z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 gsap-section-bg overflow-hidden rounded-3xl border border-[#c5a880]/20 shadow-2xl bg-black">
         {/* Parallax Background Image */}

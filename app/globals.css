@@ -63,6 +63,24 @@ h1, h2 {
   filter: brightness(1.15) saturate(1.2);
 }
 
+/* Prevent animation flash before GSAP initializes */
+.gsap-section-bg {
+  transform: translateY(25px);
+}
+
+.gsap-fade-up,
+.gsap-service-card,
+.gsap-testimonial,
+.gsap-cta-card,
+.gsap-small-card,
+.gsap-button,
+.gsap-bento-card,
+.gsap-experience-card,
+.gsap-timeline-step {
+  opacity: 0;
+  transform: translateY(35px);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -344,6 +362,12 @@ h1, h2 {
   z-index: 2;
 }
 
+/* Hero zoom animation */
+@keyframes zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
 @keyframes liquid-glass {
   0%,
   100% {
@@ -352,6 +376,29 @@ h1, h2 {
   50% {
     transform: translateX(30%) translateY(0) rotate(0deg);
   }
+}
+
+/* Glow border pulse */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.15),
+      0 0 20px rgba(255, 255, 255, 0.06),
+      0 0 30px rgba(197, 168, 128, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.15),
+      0 0 25px rgba(255, 255, 255, 0.08),
+      0 0 45px rgba(197, 168, 128, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+.glass-navbar {
+  animation: glow-pulse 4s ease-in-out infinite;
 }
 
 .nav-item {
@@ -404,44 +451,6 @@ h1, h2 {
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-}
-
-/* Floating animation for navbar */
-@keyframes float-nav {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-2px);
-  }
-}
-
-.glass-navbar {
-  animation: float-nav 6s ease-in-out infinite;
-}
-
-/* Glow border pulse */
-@keyframes glow-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.15),
-      0 0 20px rgba(255, 255, 255, 0.06),
-      0 0 30px rgba(197, 168, 128, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-  50% {
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.15),
-      0 0 25px rgba(255, 255, 255, 0.08),
-      0 0 45px rgba(197, 168, 128, 0.14),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  }
-}
-
-.glass-navbar {
-  animation: glow-pulse 4s ease-in-out infinite;
 }
 
 /* Logo glow */

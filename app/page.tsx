@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -24,18 +25,15 @@ import {
   Megaphone,
   Palette,
   PenTool,
-  Menu,
-  X
 } from "lucide-react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [testimonialSlide, setTestimonialSlide] = useState(0);
   const pageRef = useRef<HTMLDivElement | null>(null);
   const pastWorkRef = useRef<HTMLElement | null>(null);
-  const navbarRef = useRef<HTMLDivElement | null>(null);
-  const [activeNav, setActiveNav] = useState("Home");
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [builderStep, setBuilderStep] = useState(0);
   const [builderData, setBuilderData] = useState({
     goal: "",
@@ -54,33 +52,6 @@ export default function Home() {
     }, 6000);
     return () => clearInterval(timer);
   }, []);
-
-  // Close mobile menu on desktop resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) setMobileOpen(false);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Navbar mouse follow tilt
-  const handleNavMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!navbarRef.current) return;
-    const rect = navbarRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -0.5;
-    const rotateY = ((x - centerX) / centerX) * 0.5;
-    navbarRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  };
-
-  const handleNavMouseLeave = () => {
-    if (!navbarRef.current) return;
-    navbarRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-  };
 
   // Keep normal page content visible by default. GSAP is used only for the
   // navbar entrance and the dedicated horizontal Past Work carousel.
@@ -104,22 +75,6 @@ export default function Home() {
       gsap.registerPlugin(ScrollTrigger);
 
       ctx = gsap.context(() => {
-        const navbar = pageRef.current?.querySelector<HTMLElement>(".gsap-nav-entrance");
-        if (navbar) {
-          gsap.fromTo(
-            navbar,
-            { autoAlpha: 0, y: -20 },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 0.7,
-              ease: "power2.out",
-              delay: 0.2,
-              immediateRender: false,
-            }
-          );
-        }
-
         const section = pastWorkRef.current;
         if (!section) return;
 
@@ -359,7 +314,7 @@ export default function Home() {
       title: "Your Love Story, Beautifully Told.",
       desc: "We capture every glance, every laugh and every tear that makes the day yours—a cinematic love story you'll treasure forever.",
       btnText: "Begin Your Story",
-      link: "#builder"
+      link: "/contact"
     },
     {
       image: "/mms/_DSC7098.jpg",
@@ -368,7 +323,7 @@ export default function Home() {
       title: "Your Story, Seen and Remembered.",
       desc: "We turn real people, bold ideas and meaningful moments into films, photographs and campaigns that feel honest, cinematic and unmistakably yours.",
       btnText: "Tell Your Story",
-      link: "#builder"
+      link: "/contact"
     }
   ];
 
@@ -481,7 +436,7 @@ export default function Home() {
       title: "Victoria Falls Wedding Film",
       desc: "An emotional, intimate film captured across waterfall light and golden celebration.",
       tags: ["Cinematography", "Editing", "Color Grading"],
-      link: "#gallery"
+      link: "/gallery"
     },
     {
       image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
@@ -489,7 +444,7 @@ export default function Home() {
       title: "Global Summit Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
       tags: ["Event Production", "Live Streaming", "AV Staging"],
-      link: "#gallery"
+      link: "/gallery"
     },
     {
       image: "/mms/DSC_7607.jpg",
@@ -497,7 +452,7 @@ export default function Home() {
       title: "Corporate Event Experience",
       desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
       tags: ["Brand Strategy", "Motion Design", "Content Creation"],
-      link: "#gallery"
+      link: "/gallery"
     },
     {
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
@@ -505,7 +460,7 @@ export default function Home() {
       title: "Luxury Brand Campaign",
       desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
       tags: ["Corporate Events", "Digital Displays", "Live Capture"],
-      link: "#gallery"
+      link: "/gallery"
     },
     {
       image: "/mms/_MG_0072.jpg",
@@ -513,7 +468,7 @@ export default function Home() {
       title: "Immersive Media Production",
       desc: "360 capture, drone sequences and podcast experiences that transformed events into shareable stories.",
       tags: ["Immersive Tech", "Drone Cinematography", "360 Capture"],
-      link: "#gallery"
+      link: "/gallery"
     }
   ];
 
@@ -532,112 +487,7 @@ export default function Home() {
 
       {/* 1) TOP NAVIGATION BAR & HERO SECTION */}
       <header id="home" className="relative w-full z-40">
-
-        {/* Navigation Bar - Liquid Glass Pill */}
-        <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%_-_1.5rem)] sm:w-[calc(100%_-_3rem)] xl:max-w-[1540px] gsap-nav-entrance">
-          <div
-            ref={navbarRef}
-            className="glass-navbar-wrapper w-full"
-            onMouseMove={handleNavMouseMove}
-            onMouseLeave={handleNavMouseLeave}
-          >
-            <div className="glass-navbar flex w-full items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5">
-              {/* Logo */}
-              <a href="#home" className="relative z-10 flex shrink-0 items-center logo-glow" style={{ minWidth: 132 }}>
-                <Image
-                  src="/mmslogo.webp"
-                  alt="MMS Logo"
-                  width={140}
-                  height={38}
-                  className="object-contain"
-                  priority
-                />
-              </a>
-
-              {/* Divider */}
-              <div className="w-px h-7 bg-white/20 mx-2" />
-
-              {/* Nav Links */}
-              <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-2">
-                {[
-                  "Home",
-                  "Conference Production",
-                  "Services",
-                  "Projects",
-                  "About",
-                  "Contact",
-                ].map((item) => (
-                  <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    onClick={() => setActiveNav(item)}
-                    className={`nav-item relative px-3 xl:px-5 py-2.5 text-[11px] xl:text-xs uppercase tracking-widest ${
-                      activeNav === item ? "active text-white" : "text-[#f4ebd0]/70 hover:text-white"
-                    }`}
-                  >
-                    {activeNav === item && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className="absolute inset-0 rounded-full"
-                        style={{ background: "rgba(255,255,255,0.12)" }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                      />
-                    )}
-                    <span className="relative z-10">{item}</span>
-                  </a>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <a
-                href="/conference-production#enquiry"
-                className={`${goldGlowButtonBase} relative z-10 hidden sm:inline-flex shrink-0 px-6 xl:px-7 py-2.5 text-[10px] uppercase tracking-widest`}
-              >
-                <span className="relative z-10">Plan Your Conference</span>
-              </a>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="nav-icon-btn lg:hidden relative z-10 p-3 text-white ml-2"
-                onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu Dropdown */}
-          <AnimatePresence>
-            {mobileOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.96 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="lg:hidden mt-2 mobile-menu-glass rounded-2xl p-4 flex flex-col gap-2"
-              >
-                {["Home", "Conference Production", "Services", "Projects", "About", "Contact"].map((item) => (
-                  <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    onClick={() => {
-                      setActiveNav(item);
-                      setMobileOpen(false);
-                    }}
-                    className={`px-4 py-2.5 rounded-full text-xs uppercase tracking-widest text-center transition-colors duration-200 ${
-                      activeNav === item
-                        ? "bg-white/15 text-white"
-                        : "text-[#f4ebd0]/70 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {item}
-                  </a>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </nav>
+        <Navbar />
 
         {/* Hero Carousel Section - offset for fixed navbar */}
         <div className="relative h-[80vh] min-h-[580px] w-full overflow-hidden bg-black flex items-center justify-center z-10 pt-16 md:pt-20">
@@ -665,7 +515,7 @@ export default function Home() {
           </AnimatePresence>
 
           {/* Slide Text Content - Left Aligned with Shade */}
-          <div className="relative z-20 w-full h-full flex items-center">
+          <div className="relative z-20 w-full h-full flex items-center pointer-events-none">
             <div className="w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-20">
             <AnimatePresence mode="wait">
               <motion.div
@@ -689,7 +539,7 @@ export default function Home() {
                   {slides[currentSlide].desc}
                 </p>
 
-                <div className="pt-6 gsap-action">
+                <div className="pt-6 gsap-action pointer-events-auto">
                   <a
                     href={slides[currentSlide].link}
                     className={`${goldGlowButtonBase} px-7 py-3.5 text-[11px] sm:text-xs uppercase tracking-[0.18em] premium-button`}
@@ -840,12 +690,12 @@ export default function Home() {
                 </div>
 
                 <div className="pt-4">
-                  <a
-                    href="#contact"
+                  <Link
+                    href={service.title === "Conference & Seminar Production" ? "/conference-production" : "/contact"}
                     className="inline-flex items-center justify-center px-6 py-2.5 text-xs uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 premium-button"
                   >
                     {service.cta}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1070,6 +920,8 @@ export default function Home() {
             {/* Carousel Controls */}
             <div className="flex items-center justify-center mt-8 space-x-6">
               <button
+                type="button"
+                aria-label="Previous testimonial"
                 onClick={() => setTestimonialSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
                 className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
               >
@@ -1079,7 +931,9 @@ export default function Home() {
               <div className="flex space-x-2">
                 {testimonials.map((_, idx) => (
                   <button
+                    type="button"
                     key={idx}
+                    aria-label={`Go to testimonial ${idx + 1}`}
                     onClick={() => setTestimonialSlide(idx)}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === testimonialSlide ? "bg-[#c5a880] w-6" : "bg-[#f4ebd0]/30"}`}
                   />
@@ -1087,6 +941,8 @@ export default function Home() {
               </div>
 
               <button
+                type="button"
+                aria-label="Next testimonial"
                 onClick={() => setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
                 className="p-2.5 rounded-full border border-[#c5a880]/30 text-[#c5a880] hover:bg-[#c5a880] hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
               >
@@ -1424,80 +1280,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
-
-          {/* Footer */}
-          <footer className="pt-10 border-t border-[#c5a880]/15 relative z-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8">
-
-              {/* Column 1 */}
-              <div className="col-span-2 md:col-span-1 space-y-4">
-                <div className="flex items-center">
-                  <Image
-                    src="/mmslogo.webp"
-                    alt="MMS Logo"
-                    width={130}
-                    height={38}
-                  className="object-contain"
-                  />
-                </div>
-                <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">
-                  Mosi Media Solutions is a Victoria Falls-based conference and media production company serving ministries, government agencies, international organisations, professional institutions and businesses.
-                </p>
-                <div className="mt-3">
-                  <a href="/conference-production#enquiry" className="inline-flex items-center px-4 py-2 rounded-full bg-[#b48a3d] text-[#050507] font-semibold">Planning a conference or seminar? Talk to our production team.</a>
-                </div>
-              </div>
-
-              {/* Column 2 */}
-              <div className="space-y-4">
-                <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold">Experiences</h4>
-                <ul className="space-y-2 text-xs text-[#f4ebd0]/60 font-light">
-                  <li><a href="#experiences" className="hover:text-white transition-colors">Destination Weddings</a></li>
-                  <li><a href="#experiences" className="hover:text-white transition-colors">Luxury Elopements</a></li>
-                  <li><a href="#experiences" className="hover:text-white transition-colors">Corporate Summits</a></li>
-                  <li><a href="#experiences" className="hover:text-white transition-colors">Live Streaming Services</a></li>
-                </ul>
-              </div>
-
-              {/* Column 3 */}
-              <div className="space-y-4">
-                <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold">Gallery</h4>
-                <ul className="space-y-2 text-xs text-[#f4ebd0]/60 font-light">
-                  <li><a href="#gallery" className="hover:text-white transition-colors">Wedding Highlights</a></li>
-                  <li><a href="#gallery" className="hover:text-white transition-colors">Corporate Keynotes</a></li>
-                  <li><a href="#gallery" className="hover:text-white transition-colors">Scenic Drones</a></li>
-                  <li><a href="#gallery" className="hover:text-white transition-colors">Client Work</a></li>
-                </ul>
-              </div>
-
-              {/* Column 4 */}
-              <div className="space-y-4">
-                <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold">Company</h4>
-                <ul className="space-y-2 text-xs text-[#f4ebd0]/60 font-light">
-                  <li><a href="#about" className="hover:text-white transition-colors">About Our Team</a></li>
-                  <li><a href="#about" className="hover:text-white transition-colors">Partnerships</a></li>
-                  <li><a href="#contact" className="hover:text-white transition-colors">Contact Us</a></li>
-                  <li><a href="#about" className="hover:text-white transition-colors">FAQS</a></li>
-                </ul>
-              </div>
-
-            </div>
-
-            {/* Bottom Copyright bar */}
-            <div className="pt-8 border-t border-[#c5a880]/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#f4ebd0]/40 gap-4">
-              <p>© {new Date().getFullYear()} Mosi Media Solutions. All rights reserved.</p>
-              <div className="flex space-x-6">
-                <a href="#" className="hover:text-[#c5a880] transition-colors">Privacy Policy</a>
-                <a href="#" className="hover:text-[#c5a880] transition-colors">Terms of Service</a>
-              </div>
-            </div>
-          </footer>
         </div>
       </section>
 
+      <Footer />
+
       {/* Persistent CTA */}
-      <a href="/conference-production#enquiry" className="fixed bottom-6 right-6 z-50 inline-flex items-center px-4 py-3 rounded-full bg-[#b48a3d] text-[#050507] font-semibold shadow-lg">Plan Your Conference</a>
+      <Link href="/conference-production#enquiry" className="fixed bottom-6 right-6 z-50 inline-flex items-center px-4 py-3 rounded-full bg-[#b48a3d] text-[#050507] font-semibold shadow-lg">Plan Your Conference</Link>
 
     </div>
   );

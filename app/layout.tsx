@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MMS | Cinematic Wedding, Event & Brand Productions",
-  description: "MMS creates premium cinematic wedding films, event productions and branded content that turn visitors into leads and sales. We help clients convert attention into bookings with polished creative experiences.",
-  keywords: ["luxury wedding films", "corporate event production", "brand storytelling", "lead generation video", "MMS cinematic experiences"],
+  title: "MMS | Conference & Seminar Production Victoria Falls",
+  description: "Mosi Media Solutions provides professional conference, seminar and institutional event production for ministries, government agencies, international organisations and professional institutions.",
+  keywords: ["conference production Victoria Falls", "seminar production Zimbabwe", "event audiovisual services", "conference live streaming"],
 };
 
 export default function RootLayout({

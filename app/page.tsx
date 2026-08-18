@@ -341,8 +341,17 @@ export default function Home() {
     };
   }, []);
 
-  // Slides configuration
+  // Slides configuration (conference-first)
   const slides = [
+    {
+      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
+      imagePosition: "center 46%",
+      tag: "CONFERENCE & SEMINAR PRODUCTION",
+      title: "Professional production for important conversations.",
+      desc: "Mosi Media Solutions delivers professional conference, seminar and institutional event production for ministries, government agencies, international organisations and professional bodies.",
+      btnText: "Plan Your Conference",
+      link: "/conference-production#enquiry"
+    },
     {
       image: "/mms/wedding1.jpg",
       imagePosition: "center",
@@ -350,15 +359,6 @@ export default function Home() {
       title: "Your Love Story, Beautifully Told.",
       desc: "We capture every glance, every laugh and every tear that makes the day yours—a cinematic love story you'll treasure forever.",
       btnText: "Begin Your Story",
-      link: "#builder"
-    },
-    {
-      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
-      imagePosition: "center 46%",
-      tag: "Conferences & Live Experiences",
-      title: "Your Event, Seamlessly Brought to Life.",
-      desc: "We take care of the sound, screens, streaming and every behind-the-scenes detail, so your speakers feel confident and your guests stay connected.",
-      btnText: "Bring Your Event to Life",
       link: "#builder"
     },
     {
@@ -413,10 +413,26 @@ export default function Home() {
   // Our Services configuration
   const services = [
     {
+      title: "Conference & Seminar Production",
+      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
+      alt: "Conference and seminar production",
+      desc: "End-to-end production for conferences, seminars, government meetings and institutional gatherings — technical planning, AV, streaming, photography and post-event content.",
+      subtitle: "Conference & seminar expertise",
+      items: [
+        { label: "Production Planning", icon: Users },
+        { label: "Audiovisual Systems", icon: Play },
+        { label: "Live & Hybrid Streaming", icon: Video },
+        { label: "Event Branding", icon: PenTool },
+        { label: "Photography & Video", icon: Camera }
+      ],
+      cta: "Plan Your Conference"
+    },
+    {
       title: "Visual Storytelling",
       image: "/mms/wedding1.jpg",
       alt: "Visual storytelling through photography and videography",
-      desc: "Corporate events, social media marketing, billboards and digital podiums sit above our visual storytelling — pairing creative capture with high-impact campaigns.",
+      desc: "Creative capture and campaign content that supports institutional communications and post-event reporting.",
+      subtitle: "Branded visual campaigns",
       items: [
         { label: "Photography", icon: Camera },
         { label: "Videography", icon: Video },
@@ -431,6 +447,7 @@ export default function Home() {
       image: "/mms/2.jpg",
       alt: "Event experiences, planning and coordination",
       desc: "Large screens, interpretation systems, audio equipment, interactive digital displays and live streaming come together for seamless event production.",
+      subtitle: "End-to-end event delivery",
       items: [
         { label: "Corporate Events", icon: Users },
         { label: "Large Screens", icon: Globe },
@@ -445,6 +462,7 @@ export default function Home() {
       image: "/mms/IMG_9198.jpeg",
       alt: "Digital presence, social media and branding",
       desc: "Advertisements, animation, posters, graphic design and creative campaigns shape cinematic experiences for brands, weddings and destination stories.",
+      subtitle: "Creative media production",
       items: [
         { label: "Advertisements", icon: Palette },
         { label: "Animation", icon: PenTool },
@@ -453,21 +471,6 @@ export default function Home() {
         { label: "Drone Footage", icon: Camera }
       ],
       cta: "See Cinematic Work"
-    },
-    {
-      title: "Corporate & Conferences",
-      subtitle: "Conferences & Large-Scale Events",
-      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
-      alt: "Corporate conferences and large-scale event production",
-      desc: "From conferences and summits to large-scale corporate events, we deliver seamless AV production, live streaming, and branded stage design that amplifies every presentation.",
-      items: [
-        { label: "Conferences & Summits", icon: Users },
-        { label: "Large Screens", icon: Globe },
-        { label: "PA & Audio Systems", icon: Play },
-        { label: "Hybrid Streaming", icon: Video },
-        { label: "Digital Podiums", icon: PenTool }
-      ],
-      cta: "Plan Your Conference"
     }
   ];
 
@@ -556,7 +559,14 @@ export default function Home() {
 
               {/* Nav Links */}
               <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-2">
-                {["Home", "Services", "Builder", "Gallery", "About", "Clients", "Contact"].map((item) => (
+                {[
+                  "Home",
+                  "Conference Production",
+                  "Services",
+                  "Projects",
+                  "About",
+                  "Contact",
+                ].map((item) => (
                   <a
                     key={item}
                     href={`#${item.toLowerCase()}`}
@@ -580,10 +590,10 @@ export default function Home() {
 
               {/* CTA Button */}
               <a
-                href="#contact"
+                href="/conference-production#enquiry"
                 className={`${goldGlowButtonBase} relative z-10 hidden sm:inline-flex shrink-0 px-6 xl:px-7 py-2.5 text-[10px] uppercase tracking-widest`}
               >
-                <span className="relative z-10">Get a Quote</span>
+                <span className="relative z-10">Plan Your Conference</span>
               </a>
 
               {/* Mobile Menu Button */}
@@ -607,7 +617,7 @@ export default function Home() {
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 className="lg:hidden mt-2 mobile-menu-glass rounded-2xl p-4 flex flex-col gap-2"
               >
-                {["Home", "Services", "Builder", "Gallery", "About", "Clients", "Contact"].map((item) => (
+                {["Home", "Conference Production", "Services", "Projects", "About", "Contact"].map((item) => (
                   <a
                     key={item}
                     href={`#${item.toLowerCase()}`}
@@ -726,7 +736,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Inserted AI hero intro copy */}
+      {/* Inserted homepage copy removed — conference section will follow Services below */}
      
       {/* 2) TRUST / VALUE ICON STRIP (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
       <section style={{ opacity: 1, visibility: "visible" }} className="relative -mt-4 z-30 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 overflow-hidden rounded-3xl border border-[#c5a880]/20 shadow-2xl bg-black">
@@ -1029,7 +1039,7 @@ export default function Home() {
                   </div>
 
                   <p className="text-base md:text-xl text-[#f4ebd0]/90 leading-relaxed font-light italic">
-                    "{testimonials[testimonialSlide].content}"
+                    {`"${testimonials[testimonialSlide].content}"`}
                   </p>
 
                   <div className="flex flex-col items-center space-y-2 pt-2">
@@ -1171,12 +1181,9 @@ export default function Home() {
                         : "border-[#c5a880]/15 bg-[#050507]/50 hover:border-[#c5a880]/40"
                     }`}
                   >
-                    <div className="w-10 h-10 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0 mt-1">
-                      <opt.icon className="w-4 h-4 text-[#c5a880]" />
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-white block">{opt.label}</span>
-                      <span className="text-[11px] text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                    <div className="grow text-left">
+                      <h4 className="text-sm font-medium text-white">{opt.label}</h4>
+                      <p className="text-xs text-[#f4ebd0]/70 mt-1">{opt.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -1215,9 +1222,9 @@ export default function Home() {
                     <div className="w-8 h-8 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
                       <Users className="w-4 h-4 text-[#c5a880]" />
                     </div>
-                    <div>
-                      <span className="text-sm font-medium text-white block">{opt.label}</span>
-                      <span className="text-[11px] text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                    <div className="grow text-left">
+                      <h4 className="text-sm font-medium text-white">{opt.label}</h4>
+                      <p className="text-xs text-[#f4ebd0]/70 mt-1">{opt.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -1435,8 +1442,11 @@ export default function Home() {
                   />
                 </div>
                 <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">
-                  Crafting luxury wedding films and world-class event productions across the globe, blending cinematic artistry with brand storytelling that converts attention into bookings.
+                  Mosi Media Solutions is a Victoria Falls-based conference and media production company serving ministries, government agencies, international organisations, professional institutions and businesses.
                 </p>
+                <div className="mt-3">
+                  <a href="/conference-production#enquiry" className="inline-flex items-center px-4 py-2 rounded-full bg-[#b48a3d] text-[#050507] font-semibold">Planning a conference or seminar? Talk to our production team.</a>
+                </div>
               </div>
 
               {/* Column 2 */}
@@ -1476,7 +1486,7 @@ export default function Home() {
 
             {/* Bottom Copyright bar */}
             <div className="pt-8 border-t border-[#c5a880]/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#f4ebd0]/40 gap-4">
-              <p>© {new Date().getFullYear()} MMS Cinematic Experiences. All rights reserved.</p>
+              <p>© {new Date().getFullYear()} Mosi Media Solutions. All rights reserved.</p>
               <div className="flex space-x-6">
                 <a href="#" className="hover:text-[#c5a880] transition-colors">Privacy Policy</a>
                 <a href="#" className="hover:text-[#c5a880] transition-colors">Terms of Service</a>
@@ -1485,6 +1495,10 @@ export default function Home() {
           </footer>
         </div>
       </section>
+
+      {/* Persistent CTA */}
+      <a href="/conference-production#enquiry" className="fixed bottom-6 right-6 z-50 inline-flex items-center px-4 py-3 rounded-full bg-[#b48a3d] text-[#050507] font-semibold shadow-lg">Plan Your Conference</a>
+
     </div>
   );
 }

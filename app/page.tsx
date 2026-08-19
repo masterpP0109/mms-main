@@ -308,8 +308,8 @@ export default function Home() {
       link: "/conference-production#enquiry"
     },
     {
-      image: "/mms/wedding1.jpg",
-      imagePosition: "center",
+      image: "/mms/AllanLinda-31.jpg",
+      imagePosition: "center center",
       tag: "Weddings & Elopements",
       title: "Your Love Story, Beautifully Told.",
       desc: "We capture every glance, every laugh and every tear that makes the day yours—a cinematic love story you'll treasure forever.",
@@ -339,7 +339,7 @@ export default function Home() {
       name: "Tanya, Bride",
       role: "Wedding Client",
       content: "From the moment we spoke, they made us feel at ease. On the day, they were invisible but captured everything. We treasure our film forever.",
-      avatar: "/mms/wedding1.jpg",
+      avatar: "/mms/DSC_0453.jpg",
       rating: 5
     },
     {
@@ -353,7 +353,7 @@ export default function Home() {
       name: "Maria R.",
       role: "Destination Wedding Bride",
       content: "Our wedding in Victoria Falls was pure magic on film. The team captured every tear, every laugh, and every golden sunset moment flawlessly.",
-      avatar: "/mms/wedding1.jpg",
+      avatar: "/mms/DSC_0453.jpg",
       rating: 5
     },
     {
@@ -384,7 +384,7 @@ export default function Home() {
     },
     {
       title: "Visual Storytelling",
-      image: "/mms/wedding1.jpg",
+      image: "/mms/AllanLinda-31.jpg",
       alt: "Visual storytelling through photography and videography",
       desc: "Creative capture and campaign content that supports institutional communications and post-event reporting.",
       subtitle: "Branded visual campaigns",

@@ -301,6 +301,7 @@ export default function Home() {
     {
       image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
       imagePosition: "center 46%",
+      objectFit: "cover" as const,
       tag: "CONFERENCE & SEMINAR PRODUCTION",
       title: "Professional production for important conversations.",
       desc: "Mosi Media Solutions delivers professional conference, seminar and institutional event production for ministries, government agencies, international organisations and professional bodies.",
@@ -310,6 +311,7 @@ export default function Home() {
     {
       image: "/mms/wedding1.jpg",
       imagePosition: "center center",
+      objectFit: "contain" as const,
       tag: "Weddings & Elopements",
       title: "Your Love Story, Beautifully Told.",
       desc: "We capture every glance, every laugh and every tear that makes the day yours—a cinematic love story you'll treasure forever.",
@@ -319,6 +321,7 @@ export default function Home() {
     {
       image: "/mms/_DSC7098.jpg",
       imagePosition: "center 42%",
+      objectFit: "cover" as const,
       tag: "Film, Photography & Brand Stories",
       title: "Your Story, Seen and Remembered.",
       desc: "We turn real people, bold ideas and meaningful moments into films, photographs and campaigns that feel honest, cinematic and unmistakably yours.",
@@ -505,7 +508,7 @@ export default function Home() {
                 src={slides[currentSlide].image}
                 alt={slides[currentSlide].tag}
                 fill
-                className="object-cover scale-105 animate-[zoom_20s_infinite_alternate] bright-image"
+                className={`bright-image ${slides[currentSlide].objectFit === "contain" ? "object-contain" : "object-cover scale-105 animate-[zoom_20s_infinite_alternate]"}`}
                 style={{ opacity: 0.72, objectPosition: slides[currentSlide].imagePosition }}
                 priority
               />

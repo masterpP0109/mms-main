@@ -1,7 +1,7 @@
 import React from 'react'
-import { render, screen, waitFor, within } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, screen, waitFor } from '@testing-library/react'
 import Home from '@/app/page'
+import { gsap } from 'gsap'
 
 // Mock the useRef hook to avoid errors with GSAP animations
 jest.mock('react', () => ({
@@ -105,7 +105,6 @@ describe('Home Component - Functional Tests', () => {
 
   describe('GSAP Animations Integration', () => {
     test('should register GSAP ScrollTrigger plugin', async () => {
-      const { gsap } = require('gsap')
       render(<Home />)
       
       await waitFor(() => {
@@ -115,7 +114,6 @@ describe('Home Component - Functional Tests', () => {
     })
 
     test('should set up scroll animations on mount', async () => {
-      const { gsap } = require('gsap')
       render(<Home />)
       
       await waitFor(() => {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import Home from '@/app/page'
+import { gsap } from 'gsap'
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -32,7 +33,6 @@ describe('Home Component - Regression Tests', () => {
     test('carousel should not break with animation library updates', async () => {
       const { container } = render(<Home />)
       
-      const gsap = require('gsap')
       expect(gsap.registerPlugin).toHaveBeenCalled()
       
       jest.advanceTimersByTime(6000)
@@ -52,7 +52,6 @@ describe('Home Component - Regression Tests', () => {
 
   describe('GSAP Animations Regression', () => {
     test('ScrollTrigger animations should initialize correctly', async () => {
-      const { gsap } = require('gsap')
       render(<Home />)
       
       await waitFor(() => {
@@ -61,7 +60,6 @@ describe('Home Component - Regression Tests', () => {
     })
 
     test('should properly register GSAP plugins on mount', () => {
-      const { gsap } = require('gsap')
       const { unmount } = render(<Home />)
       
       expect(gsap.registerPlugin).toHaveBeenCalled()
@@ -70,7 +68,6 @@ describe('Home Component - Regression Tests', () => {
     })
 
     test('animation utilities should find elements correctly', async () => {
-      const { gsap } = require('gsap')
       render(<Home />)
       
       await waitFor(() => {

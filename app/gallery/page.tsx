@@ -107,10 +107,6 @@ function GalleryContent() {
   const [active, setActive] = useState<Category>(initCat);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
-  // sync URL param on mount
-  useEffect(() => {
-    if (paramCat && cats.includes(paramCat)) setActive(paramCat);
-  }, [paramCat]);
 
   const filtered = active === "All" ? items : items.filter((i) => i.cat === active);
 

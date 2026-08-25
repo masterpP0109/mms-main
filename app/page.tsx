@@ -34,6 +34,7 @@ export default function Home() {
   const [testimonialSlide, setTestimonialSlide] = useState(0);
   const pageRef = useRef<HTMLDivElement | null>(null);
   const pastWorkRef = useRef<HTMLElement | null>(null);
+  const heroTouchStartX = useRef<number | null>(null);
   const [builderStep, setBuilderStep] = useState(0);
   const [builderData, setBuilderData] = useState({
     goal: "",
@@ -45,12 +46,13 @@ export default function Home() {
     details: ""
   });
 
-  // Auto-play Hero carousel every 6 seconds
+  // Auto-play the four main hero service categories every 6 seconds.
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 3);
+    const timer = window.setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 4);
     }, 6000);
-    return () => clearInterval(timer);
+
+    return () => window.clearInterval(timer);
   }, []);
 
   // Keep normal page content visible by default. GSAP is used only for the
@@ -296,37 +298,43 @@ export default function Home() {
     };
   }, []);
 
-  // Slides configuration (conference-first)
+  // Hero carousel: the four main MMS service categories from the company profile.
   const slides = [
     {
-      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
-      imagePosition: "center 46%",
-      objectFit: "cover" as const,
-      tag: "CONFERENCE & SEMINAR PRODUCTION",
-      title: "Professional production for important conversations.",
-      desc: "Mosi Media Solutions delivers professional conference, seminar and institutional event production for ministries, government agencies, international organisations and professional bodies.",
-      btnText: "Plan Your Conference",
-      link: "/conference-production#enquiry"
-    },
-    {
-      image: "/mms/wedding1.jpg",
+      image: "/mms/IMG_9203.jpeg",
       imagePosition: "center center",
-      objectFit: "contain" as const,
-      tag: "Weddings & Elopements",
-      title: "Your Love Story, Beautifully Told.",
-      desc: "We capture every glance, every laugh and every tear that makes the day yours—a cinematic love story you'll treasure forever.",
-      btnText: "Begin Your Story",
-      link: "/contact"
+      tag: "MOSI MEDIA SOLUTIONS",
+      title: "Audio Solutions",
+      desc: "Professional PA systems, microphones, conference audio and interpretation technology for clear, reliable communication at every event.",
+      btnText: "Explore Audio Solutions",
+      link: "#services"
     },
     {
-      image: "/mms/_DSC7098.jpg",
-      imagePosition: "center 42%",
-      objectFit: "cover" as const,
-      tag: "Film, Photography & Brand Stories",
-      title: "Your Story, Seen and Remembered.",
-      desc: "We turn real people, bold ideas and meaningful moments into films, photographs and campaigns that feel honest, cinematic and unmistakably yours.",
-      btnText: "Tell Your Story",
-      link: "/contact"
+      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+      imagePosition: "center center",
+      tag: "MOSI MEDIA SOLUTIONS",
+      title: "Media Production",
+      desc: "Photography, videography, live streaming, drone filming and podcast production brought together through professional visual storytelling.",
+      btnText: "Explore Media Production",
+      link: "#services"
+    },
+    {
+      image: "/mms/IMG_9264.jpeg",
+      imagePosition: "center center",
+      tag: "MOSI MEDIA SOLUTIONS",
+      title: "Display & Advertisement Solutions",
+      desc: "LED screens, interactive displays, vertical screens and digital podiums designed to increase visibility, engagement and presentation impact.",
+      btnText: "Explore Display Solutions",
+      link: "#services"
+    },
+    {
+      image: "/mms/360 booth 2.jpg",
+      imagePosition: "center center",
+      tag: "MOSI MEDIA SOLUTIONS",
+      title: "Special Services",
+      desc: "Cold sparks, low-lying cloud effects, digital advertising billboards and immersive 360 booth experiences that elevate events and create memorable visual moments.",
+      btnText: "Explore Special Services",
+      link: "#services"
     }
   ];
 
@@ -493,7 +501,29 @@ export default function Home() {
         <Navbar />
 
         {/* Hero Carousel Section - offset for fixed navbar */}
-        <div className="relative h-[80vh] min-h-[580px] w-full overflow-hidden bg-black flex items-center justify-center z-10 pt-16 md:pt-20">
+        <div
+          className="relative h-[82vh] min-h-[640px] md:min-h-[620px] w-full overflow-hidden bg-black flex items-center justify-center z-10 pt-16 md:pt-20"
+          onTouchStart={(event) => {
+            heroTouchStartX.current = event.touches[0]?.clientX ?? null;
+          }}
+          onTouchEnd={(event) => {
+            const startX = heroTouchStartX.current;
+            const endX = event.changedTouches[0]?.clientX;
+            heroTouchStartX.current = null;
+
+            if (startX !== null && endX !== undefined) {
+              const deltaX = endX - startX;
+              if (Math.abs(deltaX) > 45) {
+                setCurrentSlide((prev) =>
+                  deltaX < 0
+                    ? (prev + 1) % slides.length
+                    : (prev - 1 + slides.length) % slides.length
+                );
+              }
+            }
+
+          }}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -506,14 +536,15 @@ export default function Home() {
               {/* Background Image of current slide */}
               <Image
                 src={slides[currentSlide].image}
-                alt={slides[currentSlide].tag}
+                alt={`${slides[currentSlide].title} — Mosi Media Solutions`}
                 fill
-                className={`bright-image ${slides[currentSlide].objectFit === "contain" ? "object-contain" : "object-cover scale-105 animate-[zoom_20s_infinite_alternate]"}`}
-                style={{ opacity: 0.72, objectPosition: slides[currentSlide].imagePosition }}
-                priority
+                sizes="100vw"
+                className="bright-image object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
+                style={{ opacity: 0.74, objectPosition: slides[currentSlide].imagePosition }}
+                priority={currentSlide === 0}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-[#050507]/55" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/90 via-[#050507]/42 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/90 via-transparent to-[#050507]/55" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/95 via-[#050507]/48 to-transparent" />
             </motion.div>
           </AnimatePresence>
 
@@ -534,21 +565,27 @@ export default function Home() {
                   {slides[currentSlide].tag}
                 </span>
 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-light text-white leading-[1.05] font-serif gsap-heading">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-light text-white leading-[1.05] font-serif gsap-heading">
                   {slides[currentSlide].title}
                 </h1>
 
-                <p className="text-sm md:text-base xl:text-lg text-[#f4ebd0]/80 tracking-wide font-light leading-relaxed max-w-xl gsap-copy">
+                <p className="text-sm md:text-base xl:text-lg text-[#f4ebd0]/82 tracking-wide font-light leading-relaxed max-w-lg gsap-copy">
                   {slides[currentSlide].desc}
                 </p>
 
-                <div className="pt-6 gsap-action pointer-events-auto">
+                <div className="pt-6 gsap-action pointer-events-auto flex flex-col sm:flex-row sm:items-center gap-3">
                   <a
                     href={slides[currentSlide].link}
-                    className={`${goldGlowButtonBase} px-7 py-3.5 text-[11px] sm:text-xs uppercase tracking-[0.18em] premium-button`}
+                    className={`${goldGlowButtonBase} px-7 py-3.5 text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.18em] premium-button`}
                   >
                     <span className="relative z-10">{slides[currentSlide].btnText}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </a>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/25 px-7 py-3.5 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.18em] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#c5a880] hover:bg-[#c5a880]/10 hover:text-[#f4ebd0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
+                  >
+                    Request a Quote
                   </a>
                 </div>
               </motion.div>
@@ -561,7 +598,7 @@ export default function Home() {
             type="button"
             aria-label="Previous hero slide"
             onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-            className="absolute left-3 sm:left-6 lg:left-8 top-1/2 -translate-y-1/2 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
+            className="absolute left-3 sm:left-6 lg:left-8 top-[46%] md:top-1/2 -translate-y-1/2 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -569,22 +606,33 @@ export default function Home() {
             type="button"
             aria-label="Next hero slide"
             onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-            className="absolute right-3 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
+            className="absolute right-3 sm:right-6 lg:right-8 top-[46%] md:top-1/2 -translate-y-1/2 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Dots Indicator */}
-          <div className="absolute bottom-10 left-0 w-full flex items-center justify-center space-x-3 z-30">
-            {slides.map((_, idx) => (
-              <button
-                type="button"
-                key={idx}
-                aria-label={`Go to hero slide ${idx + 1}`}
-                onClick={() => setCurrentSlide(idx)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentSlide ? "bg-[#c5a880] w-6" : "bg-[#f4ebd0]/30"}`}
-              />
-            ))}
+          <div className="absolute bottom-7 sm:bottom-10 left-0 w-full z-30 px-6">
+            <div className="mx-auto flex max-w-xl items-center justify-center gap-2 sm:gap-3">
+              <span className="hidden sm:inline text-[9px] font-mono tracking-[0.22em] text-[#f4ebd0]/55">
+                {String(currentSlide + 1).padStart(2, "0")}
+              </span>
+              <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+                {slides.map((slide, idx) => (
+                  <button
+                    type="button"
+                    key={slide.title}
+                    aria-label={`Go to ${slide.title} slide`}
+                    aria-current={idx === currentSlide ? "true" : undefined}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide ? "bg-[#c5a880] w-5 sm:w-7" : "bg-[#f4ebd0]/30 w-1.5 sm:w-2"}`}
+                  />
+                ))}
+              </div>
+              <span className="hidden sm:inline text-[9px] font-mono tracking-[0.22em] text-[#f4ebd0]/55">
+                {String(slides.length).padStart(2, "0")}
+              </span>
+            </div>
           </div>
         </div>
       </header>

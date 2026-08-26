@@ -36,26 +36,23 @@ export default function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%_-_1.5rem)] sm:w-[calc(100%_-_3rem)] xl:max-w-[1540px]">
-      <div className="glass-navbar-wrapper w-full">
-        <div className="glass-navbar flex w-full items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5">
-          {/* Logo */}
-          <Link href="/" className="relative z-10 flex shrink-0 items-center logo-glow" style={{ minWidth: 132 }}>
-            <Image
-              src="/mmslogo.webp"
-              alt="MMS Logo"
-              width={140}
-              height={38}
-              className="object-contain"
-              priority
-            />
-          </Link>
+    <>
+      <Link href="/" className="fixed top-4 md:top-6 left-4 sm:left-6 xl:left-[calc((100vw-1540px)/2+1.5rem)] z-50 flex shrink-0 items-center logo-glow" style={{ minWidth: 132 }}>
+        <Image
+          src="/mmslogo.webp"
+          alt="MMS Logo"
+          width={140}
+          height={38}
+          className="object-contain"
+          priority
+        />
+      </Link>
 
-          {/* Divider */}
-          <div className="w-px h-7 bg-white/20 mx-2" />
-
-          {/* Nav Links */}
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-2">
+      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%_-_1.5rem)] sm:w-[calc(100%_-_3rem)] xl:max-w-[1540px]">
+        <div className="glass-navbar-wrapper w-full">
+          <div className="glass-navbar flex w-full items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5">
+            {/* Nav Links */}
+            <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-2">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
@@ -125,5 +122,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </nav>
+    </>
   );
 }

@@ -301,7 +301,7 @@ export default function Home() {
   // Hero carousel: the four main MMS service categories from the company profile.
   const slides = [
     {
-      image: "/mms/IMG_9203.jpeg",
+      image: "/mms/audio1.jpg",
       imagePosition: "center center",
       tag: "MOSI MEDIA SOLUTIONS",
       title: "Audio Solutions",
@@ -310,7 +310,7 @@ export default function Home() {
       link: "#services"
     },
     {
-      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+      image: "/mms/media-prodction.jpg.jpeg",
       imagePosition: "center center",
       tag: "MOSI MEDIA SOLUTIONS",
       title: "Media Production",
@@ -319,7 +319,7 @@ export default function Home() {
       link: "#services"
     },
     {
-      image: "/mms/IMG_9264.jpeg",
+      image: "/mms/screens.jpg.jpeg",
       imagePosition: "center center",
       tag: "MOSI MEDIA SOLUTIONS",
       title: "Display & Advertisement Solutions",
@@ -328,12 +328,12 @@ export default function Home() {
       link: "#services"
     },
     {
-      image: "/mms/360 booth 2.jpg",
+      image: "/mms/special-effects.jpg.jpeg",
       imagePosition: "center center",
       tag: "MOSI MEDIA SOLUTIONS",
-      title: "Special Services",
+      title: "Special Effects",
       desc: "Cold sparks, low-lying cloud effects, digital advertising billboards and immersive 360 booth experiences that elevate events and create memorable visual moments.",
-      btnText: "Explore Special Services",
+      btnText: "Explore Special Effects",
       link: "#services"
     }
   ];
@@ -379,64 +379,44 @@ export default function Home() {
   // Our Services configuration
   const services = [
     {
-      title: "Conference & Seminar Production",
-      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
-      alt: "Conference and seminar production",
-      desc: "End-to-end production for conferences, seminars, government meetings and institutional gatherings — technical planning, AV, streaming, photography and post-event content.",
-      subtitle: "Conference & seminar expertise",
-      items: [
-        { label: "Production Planning", icon: Users },
-        { label: "Audiovisual Systems", icon: Play },
-        { label: "Live & Hybrid Streaming", icon: Video },
-        { label: "Event Branding", icon: PenTool },
-        { label: "Photography & Video", icon: Camera }
-      ],
-      cta: "Plan Your Conference"
+      title: "Media Production",
+      image: "/mms/media-prodction.jpg.jpeg",
+      alt: "MMS professional camera setup for media production",
+      desc: "Professional photography, videography, drone filming and podcast production that transform ideas, brands and events into engaging visual stories.",
+      cta: "Explore Service",
+      href: "/gallery"
     },
     {
-      title: "Visual Storytelling",
-      image: "/mms/wedding1.jpg",
-      alt: "Visual storytelling through photography and videography",
-      desc: "Creative capture and campaign content that supports institutional communications and post-event reporting.",
-      subtitle: "Branded visual campaigns",
-      items: [
-        { label: "Photography", icon: Camera },
-        { label: "Videography", icon: Video },
-        { label: "Social Media Marketing", icon: Megaphone },
-        { label: "Billboards", icon: Globe },
-        { label: "Digital Podium", icon: PenTool }
-      ],
-      cta: "Start Visual Storytelling"
+      title: "Live Streaming",
+      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+      alt: "Live streaming production control setup",
+      desc: "Multi-camera live streaming and hybrid event solutions that connect audiences in the room and online with reliable, professional coverage.",
+      cta: "Explore Service",
+      href: "/contact"
     },
     {
-      title: "Event Experiences",
-      image: "/mms/2.jpg",
-      alt: "Event experiences, planning and coordination",
-      desc: "Large screens, interpretation systems, audio equipment, interactive digital displays and live streaming come together for seamless event production.",
-      subtitle: "End-to-end event delivery",
-      items: [
-        { label: "Corporate Events", icon: Users },
-        { label: "Large Screens", icon: Globe },
-        { label: "PA System", icon: Play },
-        { label: "Live Streaming", icon: Video },
-        { label: "Equipment Hire", icon: Briefcase }
-      ],
-      cta: "Build Your Event"
+      title: "Audio Solutions",
+      image: "/mms/audio1.jpg",
+      alt: "Professional event audio mixing equipment",
+      desc: "Professional sound, microphone and conference audio systems designed to deliver clear, reliable communication for events of every scale.",
+      cta: "Explore Service",
+      href: "#services"
     },
     {
-      title: "Cinematic Experiences",
-      image: "/mms/IMG_9198.jpeg",
-      alt: "Digital presence, social media and branding",
-      desc: "Advertisements, animation, posters, graphic design and creative campaigns shape cinematic experiences for brands, weddings and destination stories.",
-      subtitle: "Creative media production",
-      items: [
-        { label: "Advertisements", icon: Palette },
-        { label: "Animation", icon: PenTool },
-        { label: "Graphic Design", icon: Palette },
-        { label: "Podcast Capture", icon: MessageSquare },
-        { label: "Drone Footage", icon: Camera }
-      ],
-      cta: "See Cinematic Work"
+      title: "Screen Solutions",
+      image: "/mms/screens.jpg.jpeg",
+      alt: "Large LED display used during a conference",
+      desc: "LED, interactive and digital display technology designed to make presentations, live content and brand messaging impossible to miss.",
+      cta: "Explore Service",
+      href: "#services"
+    },
+    {
+      title: "Special Services",
+      image: "/mms/special-effects.jpg.jpeg",
+      alt: "Cold spark effects operating at a live event",
+      desc: "Creative event enhancements and immersive experiences that add atmosphere, excitement and memorable moments to live events and celebrations.",
+      cta: "Explore Service",
+      href: "#services"
     }
   ];
 
@@ -687,70 +667,123 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2b) OUR SERVICES SECTION */}
-      <section style={{ opacity: 1, visibility: "visible" }} id="services" className="relative py-16 md:py-24 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
-        <div className="text-center mb-16">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 gsap-eyebrow">What We Offer</span>
-          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4 gsap-heading">Our Services</h2>
-          <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto gsap-copy">
-            End-to-end multimedia crafted with creativity and precision.
-          </p>
-        </div>
-
-        <div className="space-y-20 md:space-y-28">
-          {services.map((service, idx) => (
-            <div
-              key={service.title}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center"
-            >
-              {/* Image side */}
-              <div
-                className={`relative rounded-3xl overflow-hidden glass-panel border border-[#c5a880]/15 aspect-[4/3] group gsap-image-card ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}
-              >
-                <Image
-                  src={service.image}
-                  alt={service.alt}
-                  fill
-                  className="object-cover object-center bright-image transition-transform duration-7000 ease-out group-hover:scale-105"
-                  style={{ opacity: 0.85 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-transparent z-10" />
+      {/* 2a) ABOUT US SECTION */}
+      <section className="relative py-20 md:py-28 bg-[#050507]">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+            {/* Left — Text + CTA */}
+            <div className="w-full lg:w-[45%] space-y-6">
+              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">About Mosi Media Solutions</span>
+              <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
+              <p className="text-sm md:text-base text-[#f4ebd0]/70 leading-relaxed font-light">
+                Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
+              </p>
+              <p className="text-sm md:text-base text-[#f4ebd0]/70 leading-relaxed font-light">
+                We combine creativity with cutting edge technology to create immersive experiences that elevate events and brands. Our services are tailored to meet each client’s unique needs, ensuring professionalism, reliability, and exceptional delivery.
+              </p>
+              <div className="pt-2">
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center px-6 py-2.5 text-xs uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 premium-button"
+                >
+                  Learn More About Us
+                </Link>
               </div>
+            </div>
 
-              {/* Text side */}
-              <div className={`space-y-6  ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
-                <h3 className="text-2xl md:text-3xl font-light text-white font-serif">{service.title}</h3>
-                {service.subtitle && (
-                  <p className="text-xs text-[#c5a880] uppercase tracking-[0.2em] font-semibold">{service.subtitle}</p>
-                )}
-                <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
-                  {service.desc}
-                </p>
+            {/* Right — Bento cards */}
+            <div className="w-full lg:w-[55%]">
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service." },
+                  { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives." },
+                  { title: "Reliable", desc: "Professional execution from planning through delivery." },
+                ].map((card) => (
+                  <div
+                    key={card.title}
+                    className="group relative rounded-xl bg-[#0b0b0f] p-5 transition-all duration-200"
+                  >
+                    <h4 className="text-xs font-medium text-white mb-1">{card.title}</h4>
+                    <p className="text-[11px] text-[#f4ebd0]/50 leading-relaxed font-light">{card.desc}</p>
+                    <ArrowRight className="absolute top-5 right-5 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                {/* Sub-service cards */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-2">
-                  {service.items.map((item) => (
-                    <div
-                      key={item.label}
-                      className="glass-panel flex flex-col items-center justify-center gap-3 min-h-[100px] rounded-2xl border border-[#c5a880]/20 hover:border-[#c5a880]/50 transition-all duration-300 text-center px-3"
-                    >
-                      <span className="text-xs text-white font-medium leading-tight">{item.label}</span>
-                      <item.icon className="w-5 h-5 text-[#c5a880]" />
-                    </div>
-                  ))}
+      {/* 2b) OUR SERVICES SECTION */}
+      <section id="services" className="relative py-16 md:py-24 bg-[#050507]">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+          <div className="text-center mb-12 md:mb-16">
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What We Offer</span>
+            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Our Services</h2>
+            <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
+              From media production and live broadcasting to professional audio, screen technology and event enhancements, MMS delivers the creative and technical solutions needed to bring every experience to life.
+            </p>
+          </div>
+
+          {/* Row 1 — 3 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {services.slice(0, 3).map((service) => (
+              <div key={service.title} className="group">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    className="object-cover object-center bright-image transition-transform duration-500 group-hover:scale-105"
+                    style={{ opacity: 0.85 }}
+                  />
                 </div>
-
-                <div className="pt-4">
+                <div className="mt-6">
+                  <h3 className="text-lg font-medium text-white font-serif">{service.title}</h3>
+                  <p className="mt-2 text-sm text-[#f4ebd0]/60 leading-relaxed font-light">
+                    {service.desc}
+                  </p>
                   <Link
-                    href={service.title === "Conference & Seminar Production" ? "/conference-production" : "/contact"}
-                    className="inline-flex items-center justify-center px-6 py-2.5 text-xs uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 premium-button"
+                    href={service.href}
+                    className="inline-flex items-center mt-4 text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
                   >
                     {service.cta}
+                    <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Row 2 — 2 columns, centered */}
+          <div className="flex justify-center gap-6 md:gap-8 mt-6 md:mt-8">
+            {services.slice(3, 5).map((service) => (
+              <div key={service.title} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-[480px] group">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                  <Image
+                    src={service.image}
+                    alt={service.alt}
+                    fill
+                    className="object-cover object-center bright-image transition-transform duration-500 group-hover:scale-105"
+                    style={{ opacity: 0.85 }}
+                  />
+                </div>
+                <div className="mt-6">
+                  <h3 className="text-lg font-medium text-white font-serif">{service.title}</h3>
+                  <p className="mt-2 text-sm text-[#f4ebd0]/60 leading-relaxed font-light">
+                    {service.desc}
+                  </p>
+                  <Link
+                    href={service.href}
+                    className="inline-flex items-center mt-4 text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
+                  >
+                    {service.cta}
+                    <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

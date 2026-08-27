@@ -46,10 +46,10 @@ export default function Home() {
     details: ""
   });
 
-  // Auto-play the four main hero service categories every 6 seconds.
+  // Auto-play the hero service categories every 6 seconds.
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 4);
+      setCurrentSlide((prev) => (prev + 1) % 5);
     }, 6000);
 
     return () => window.clearInterval(timer);
@@ -300,6 +300,15 @@ export default function Home() {
 
   // Hero carousel: the four main MMS service categories from the company profile.
   const slides = [
+    {
+      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
+      imagePosition: "center center",
+      tag: "MOSI MEDIA SOLUTIONS",
+      title: "Conferences & Corporate Events",
+      desc: "From screens and digital displays to desktop setups and digital podiums with lapels — comprehensive AV solutions for professional conferences and corporate events.",
+      btnText: "Explore Conference Solutions",
+      link: "/conference-production"
+    },
     {
       image: "/mms/audio1.jpg",
       imagePosition: "center center",

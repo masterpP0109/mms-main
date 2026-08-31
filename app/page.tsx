@@ -25,6 +25,11 @@ import {
   Megaphone,
   Palette,
   PenTool,
+  Music,
+  Mic,
+  Monitor,
+  Volume2,
+  Zap,
 } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -301,7 +306,7 @@ export default function Home() {
   // Hero carousel: the four main MMS service categories from the company profile.
   const slides = [
     {
-      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
+      image: "/mms/DSC_9244.jpg",
       imagePosition: "center center",
       tag: "MOSI MEDIA SOLUTIONS",
       title: "Conferences & Corporate Events",
@@ -388,44 +393,92 @@ export default function Home() {
   // Our Services configuration
   const services = [
     {
-      title: "Media Production",
-      image: "/mms/media-prodction.jpg.jpeg",
-      alt: "MMS professional camera setup for media production",
-      desc: "Professional photography, videography, drone filming and podcast production that transform ideas, brands and events into engaging visual stories.",
-      cta: "Explore Service",
-      href: "/gallery"
+      title: "Special Effects",
+      icon: Zap,
+      image: "/mms/special-effects.jpg.jpeg",
+      alt: "Cold spark and atmospheric effects at a live event",
+      desc: "Creative effects for conferences, corporate events, weddings, concerts, celebrations, and live productions. Services may include cold sparks, low-lying cloud effects, bubble machines, and other visually engaging event enhancements.",
+      href: "/services"
     },
     {
-      title: "Live Streaming",
+      title: "Conference & Interpretation Systems",
+      icon: Globe,
+      image: "/mms/DSC_9244.jpg",
+      alt: "Conference hall with screens and projection setup",
+      desc: "Professional conference technology and interpretation systems that support multilingual communication, clear presentations, and smooth interaction between speakers and audiences.",
+      href: "/services"
+    },
+    {
+      title: "Videography & Filming",
+      icon: Video,
+      image: "/mms/DSC_2327-Edit.jpg",
+      alt: "Cinematic filming of a wedding ceremony",
+      desc: "Professional coverage for conferences, weddings, corporate functions, tourism campaigns, and special events. Services include high-definition and 4K production, promotional videos, highlight reels, and documentary-style editing.",
+      href: "/services"
+    },
+    {
+      title: "Video Live Streaming",
+      icon: Play,
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
-      alt: "Live streaming production control setup",
-      desc: "Multi-camera live streaming and hybrid event solutions that connect audiences in the room and online with reliable, professional coverage.",
-      cta: "Explore Service",
-      href: "/contact"
+      alt: "Multi-camera live streaming control setup",
+      desc: "Professional multi-camera streaming for physical, virtual, and hybrid events. Include PTZ camera operation and integration with platforms such as YouTube, Facebook, Zoom, and Microsoft Teams.",
+      href: "/services"
+    },
+    {
+      title: "Drone Services",
+      icon: Camera,
+      image: "/mms/_MG_2920.jpg",
+      alt: "Aerial drone filming over a landscape",
+      desc: "Licensed aerial photography and videography for events, tourism, landscapes, property showcases, promotional campaigns, and corporate content.",
+      href: "/services"
+    },
+    {
+      title: "Podcast Production Services",
+      icon: Mic,
+      image: "/mms/DSC_7598.jpg",
+      alt: "Professional podcast recording studio setup",
+      desc: "Professional podcast recording, multi-camera filming, audio and video editing, and studio or on-location production.",
+      href: "/services"
+    },
+    {
+      title: "DJ Services & Lighting",
+      icon: Music,
+      image: "/mms/DSC_7356.jpg",
+      alt: "Event lighting and stage setup at a venue",
+      desc: "Professional DJ entertainment and event lighting designed to create the right atmosphere for corporate functions, weddings, celebrations, concerts, and special occasions.",
+      href: "/services"
+    },
+    {
+      title: "Overhead 360 Booth Experience",
+      icon: Camera,
+      image: "/mms/360 booth 2.jpg",
+      alt: "Overhead 360-degree photo booth experience",
+      desc: "An interactive overhead 360-degree video experience that produces engaging, branded, and social-media-ready content for guests and event audiences.",
+      href: "/services"
+    },
+    {
+      title: "LED & Display Solutions",
+      icon: Monitor,
+      image: "/mms/screens.jpg.jpeg",
+      alt: "Large LED screens and display technology at an event",
+      desc: "LED rental screens, vertical displays, interactive screens, and digital podiums for conferences, exhibitions, outdoor activations, advertisements, presentations, and live event feeds.",
+      href: "/services"
+    },
+    {
+      title: "Photography",
+      icon: Camera,
+      image: "/mms/DSC_7317.jpg",
+      alt: "Professional photography coverage at an event",
+      desc: "Corporate, conference, event, portrait, tourism, and branding photography, with high-resolution images prepared for both digital and print use.",
+      href: "/services"
     },
     {
       title: "Audio Solutions",
+      icon: Volume2,
       image: "/mms/audio1.jpg",
-      alt: "Professional event audio mixing equipment",
-      desc: "Professional sound, microphone and conference audio systems designed to deliver clear, reliable communication for events of every scale.",
-      cta: "Explore Service",
-      href: "#services"
-    },
-    {
-      title: "Screen Solutions",
-      image: "/mms/screens.jpg.jpeg",
-      alt: "Large LED display used during a conference",
-      desc: "LED, interactive and digital display technology designed to make presentations, live content and brand messaging impossible to miss.",
-      cta: "Explore Service",
-      href: "#services"
-    },
-    {
-      title: "Special Services",
-      image: "/mms/special-effects.jpg.jpeg",
-      alt: "Cold spark effects operating at a live event",
-      desc: "Creative event enhancements and immersive experiences that add atmosphere, excitement and memorable moments to live events and celebrations.",
-      cta: "Explore Service",
-      href: "#services"
+      alt: "Professional event audio and PA system setup",
+      desc: "Professional sound systems, microphones, conference audio equipment, podcast setups, and technical support for clear and reliable sound delivery.",
+      href: "/services"
     }
   ];
 
@@ -439,7 +492,7 @@ export default function Home() {
       link: "/gallery"
     },
     {
-      image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
+      image: "/mms/DSC_9244.jpg",
       category: "Live Production",
       title: "Global Summit Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
@@ -734,29 +787,35 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Row 1 — 3 columns */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.slice(0, 3).map((service) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            {services.slice(0, 6).map((service) => (
               <div key={service.title} className="group">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5">
                   <Image
                     src={service.image}
                     alt={service.alt}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover object-center bright-image transition-transform duration-500 group-hover:scale-105"
                     style={{ opacity: 0.85 }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-transparent to-transparent opacity-60 transition-opacity duration-300" />
+                  <div className="absolute bottom-3 left-3">
+                    <div className="w-8 h-8 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center">
+                      <service.icon className="w-4 h-4 text-[#c5a880]" />
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-6">
-                  <h3 className="text-lg font-medium text-white font-serif">{service.title}</h3>
-                  <p className="mt-2 text-sm text-[#f4ebd0]/60 leading-relaxed font-light">
-                    {service.desc}
-                  </p>
+                <h3 className="text-center text-lg font-medium text-white font-serif mb-2">{service.title}</h3>
+                <p className="text-center text-sm text-[#f4ebd0]/60 leading-relaxed font-light mb-4">
+                  {service.desc}
+                </p>
+                <div className="text-center">
                   <Link
-                    href={service.href}
-                    className="inline-flex items-center mt-4 text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
+                    href="/services"
+                    className="inline-flex items-center text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
                   >
-                    {service.cta}
+                    Learn More
                     <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -764,34 +823,13 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Row 2 — 2 columns, centered */}
-          <div className="flex justify-center gap-6 md:gap-8 mt-6 md:mt-8">
-            {services.slice(3, 5).map((service) => (
-              <div key={service.title} className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] max-w-[480px] group">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                  <Image
-                    src={service.image}
-                    alt={service.alt}
-                    fill
-                    className="object-cover object-center bright-image transition-transform duration-500 group-hover:scale-105"
-                    style={{ opacity: 0.85 }}
-                  />
-                </div>
-                <div className="mt-6">
-                  <h3 className="text-lg font-medium text-white font-serif">{service.title}</h3>
-                  <p className="mt-2 text-sm text-[#f4ebd0]/60 leading-relaxed font-light">
-                    {service.desc}
-                  </p>
-                  <Link
-                    href={service.href}
-                    className="inline-flex items-center mt-4 text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
-                  >
-                    {service.cta}
-                    <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
-            ))}
+          <div className="mt-12 text-center">
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center px-6 py-2.5 text-xs uppercase tracking-widest border border-[#c5a880]/30 text-[#f4ebd0] rounded-full hover:border-[#c5a880] hover:text-white transition-all duration-300"
+            >
+              Explore All Services
+            </Link>
           </div>
         </div>
       </section>

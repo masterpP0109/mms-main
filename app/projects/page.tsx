@@ -15,7 +15,7 @@ type Category = "All" | "Conference" | "Wedding" | "Brand" | "Immersive";
 
 const projects = [
   {
-    image: "/mms/DSC_7208.jpg",
+    image: "/mms/DSC_9244.jpg",
     category: "Conference" as Category,
     title: "Global Summit Production",
     desc: "A fully produced conference experience with multiple screens, live streaming and branded stages for an international delegation.",
@@ -137,7 +137,7 @@ export default function ProjectsPage() {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden bg-black pt-28 pb-12">
         <div className="absolute inset-0 z-0">
-          <Image src="/mms/DSC_7208.jpg" alt="MMS Projects" fill className="object-cover object-center" style={{ opacity: 0.5 }} priority />
+          <Image src="/mms/DSC_9244.jpg" alt="MMS Projects" fill className="object-cover object-center" style={{ opacity: 0.5 }} priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/50 to-[#050507]/10 z-10" />
         <div className="relative z-20 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full">

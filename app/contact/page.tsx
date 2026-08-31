@@ -16,7 +16,7 @@ type ProjectType = "" | "conference" | "wedding" | "brand" | "event" | "other";
 // Recent work thumbnails shown in the sidebar
 const recentWork = [
   { src: "/mms/DSC_1257.jpg",    label: "Wedding Film" },
-  { src: "/mms/DSC_7208.jpg",    label: "Conference Production" },
+  { src: "/mms/DSC_9244.jpg",    label: "Conference Production" },
   { src: "/mms/DSC_2484.jpg",    label: "Brand Campaign" },
   { src: "/mms/IMG_9198.jpeg",   label: "360° Immersive" },
 ];
@@ -233,7 +233,7 @@ export default function ContactPage() {
       {/* Conference CTA with scenic background */}
       <section className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg" alt="Conference" fill className="object-cover object-center opacity-30" />
+          <Image src="/mms/DSC_9244.jpg" alt="Conference" fill className="object-cover object-center opacity-30" />
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">

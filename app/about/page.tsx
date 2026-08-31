@@ -90,7 +90,7 @@ export default function AboutPage() {
           {/* 2×2 photo grid */}
           <div className="grid grid-cols-2 gap-3">
             {[
-              "/mms/DSC_7208.jpg",
+               "/mms/DSC_9244.jpg",
               "/mms/DSC_7218.jpg",
               "/mms/DSC_7176.jpg",
               "/mms/Victoria-Falls-Video-Conference-Hire.webp",

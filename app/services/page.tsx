@@ -16,8 +16,8 @@ const goldBtn =
 const services = [
   {
     title: "Conference & Seminar Production",
-    image: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg",
-    gallery: ["/mms/DSC_7176.jpg", "/mms/DSC_7208.jpg", "/mms/DSC_7218.jpg"],
+    image: "/mms/DSC_9244.jpg",
+    gallery: ["/mms/DSC_7176.jpg", "/mms/DSC_9244.jpg", "/mms/DSC_7218.jpg"],
     tag: "Institutional Events",
     desc: "End-to-end production for conferences, seminars, government meetings and institutional gatherings — technical planning, AV, streaming, photography and post-event content.",
     items: [

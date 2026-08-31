@@ -42,7 +42,7 @@ const items: GalleryItem[] = [
   { src: "/mms/wedding 12.jpg",     alt: "Wedding celebration 2",           cat: "Wedding",    title: "Joyful Celebration",           tall: true  },
 
   // Conferences
-  { src: "/mms/the_Conference_Hall_of_the_Federal_Tax_Service_1.jpg", alt: "Conference hall", cat: "Conference", title: "Grand Conference Hall", tall: true },
+  { src: "/mms/DSC_9244.jpg", alt: "Conference hall", cat: "Conference", title: "Grand Conference Hall", tall: true },
   { src: "/mms/Victoria-Falls-Video-Conference-Hire.webp", alt: "Video conference hire", cat: "Conference", title: "Video Conference Setup"  },
   { src: "/mms/DSC_7176.jpg",       alt: "Conference session",              cat: "Conference", title: "Plenary Session",              tall: true  },
   { src: "/mms/DSC_7188.jpg",       alt: "Conference panel",                cat: "Conference", title: "Expert Panel"                          },

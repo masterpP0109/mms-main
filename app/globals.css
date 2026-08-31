@@ -52,13 +52,6 @@ h1, h2 {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
-.glass-panel-accent {
-  background: rgba(18, 18, 24, 0.85);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(197, 168, 128, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
-}
-
 .bright-image {
   filter: brightness(1.15) saturate(1.2);
 }
@@ -308,6 +301,16 @@ h1, h2 {
   }
 }
 
+/* Logo glow */
+.logo-glow {
+  filter: drop-shadow(0 0 6px rgba(197, 168, 128, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.logo-glow:hover {
+  filter: drop-shadow(0 0 10px rgba(197, 168, 128, 0.5));
+}
+
 /* Liquid Glass Navbar */
 .glass-navbar-wrapper {
   transition: transform 0.2s ease-out;
@@ -325,6 +328,17 @@ h1, h2 {
     0 0 20px rgba(255, 255, 255, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: visible;
+  transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+.glass-navbar-scrolled {
+  background: linear-gradient(135deg, #1e3a5f 0%, #4a1e3a 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    0 0 20px rgba(30, 58, 95, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .glass-navbar::before {
@@ -362,12 +376,6 @@ h1, h2 {
   z-index: 2;
 }
 
-/* Hero zoom animation */
-@keyframes zoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
-}
-
 @keyframes liquid-glass {
   0%,
   100% {
@@ -378,7 +386,6 @@ h1, h2 {
   }
 }
 
-/* Glow border pulse */
 @keyframes glow-pulse {
   0%,
   100% {
@@ -453,30 +460,14 @@ h1, h2 {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* Logo glow */
-.logo-glow {
-  filter: drop-shadow(0 0 6px rgba(197, 168, 128, 0.3));
-  transition: filter 0.3s ease;
-}
-
-.logo-glow:hover {
-  filter: drop-shadow(0 0 10px rgba(197, 168, 128, 0.5));
-}
-
-/* Service card reveal */
-@keyframes serviceReveal {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.service-reveal {
-  opacity: 0;
-  animation: serviceReveal 0.4s ease-out forwards;
 }
 

@@ -17,12 +17,13 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const goldGlowButtonBase =
-  "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-[transform,filter,box-shadow] duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
+const ctaBase =
+  "relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] text-[10px] uppercase tracking-widest font-semibold hover:brightness-110 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,96 +33,141 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 80);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <>
-      <Link href="/" className="fixed top-4 md:top-6 left-4 sm:left-6 xl:left-[calc((100vw-1540px)/2+1.5rem)] z-50 flex shrink-0 items-center logo-glow" style={{ minWidth: 132 }}>
-        <Image
-          src="/mmslogo.webp"
-          alt="MMS Logo"
-          width={140}
-          height={38}
-          className="object-contain"
-          priority
-        />
-      </Link>
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-8 flex items-center justify-between">
+        <Link
+          href="/"
+          className="relative z-50 flex shrink-0 items-center"
+          style={{ minWidth: 132 }}
+          aria-label="MMS Home"
+        >
+          <Image
+            src="/mmslogo.webp"
+            alt="MMS Logo"
+            width={140}
+            height={38}
+            className="object-contain"
+            priority
+          />
+        </Link>
 
-      <nav className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%_-_1.5rem)] sm:w-[calc(100%_-_3rem)] xl:max-w-[1540px]">
-        <div className="glass-navbar-wrapper w-full">
-          <div className="glass-navbar flex w-full items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5">
-            {/* Nav Links */}
-            <div className="hidden lg:flex flex-1 items-center justify-center gap-1 xl:gap-2">
-            {navLinks.map((item) => (
+        <nav
+          className={`relative z-40 transition-all duration-500 ease-out ${
+            scrolled ? "py-2" : "py-3"
+          }`}
+          role="navigation"
+          aria-label="Main navigation"
+        >
+          <div className="glass-navbar-wrapper">
+            <div className={`glass-navbar flex items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5 ${scrolled ? "glass-navbar-scrolled" : ""}`}>
+              <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+                {navLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`nav-item relative px-3 xl:px-5 py-2.5 text-[11px] xl:text-xs uppercase tracking-widest ${
+                      isActive(item.href) ? "active text-white" : "text-[#f4ebd0]/70 hover:text-white"
+                    }`}
+                  >
+                    {isActive(item.href) && (
+                      <motion.div
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-full"
+                        style={{ background: "rgba(255,255,255,0.12)" }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10">{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+
               <Link
-                key={item.href}
-                href={item.href}
-                className={`nav-item relative px-3 xl:px-5 py-2.5 text-[11px] xl:text-xs uppercase tracking-widest ${
-                  isActive(item.href) ? "active text-white" : "text-[#f4ebd0]/70 hover:text-white"
-                }`}
+                href="/contact"
+                className={`${ctaBase} relative z-10 hidden sm:inline-flex shrink-0 px-6 xl:px-7 py-2.5`}
               >
-                {isActive(item.href) && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: "rgba(255,255,255,0.12)" }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{item.label}</span>
+                <span className="relative z-10">Start a Project</span>
               </Link>
-            ))}
+
+              <button
+                type="button"
+                className="nav-icon-btn lg:hidden relative z-10 p-3 text-white ml-2"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-menu"
+              >
+                {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
-
-          {/* CTA Button */}
-          <Link
-            href="/conference-production#enquiry"
-            className={`${goldGlowButtonBase} relative z-10 hidden sm:inline-flex shrink-0 px-6 xl:px-7 py-2.5 text-[10px] uppercase tracking-widest`}
-          >
-            <span className="relative z-10">Plan Your Conference</span>
-          </Link>
-
-          {/* Mobile Menu Button */}
-          <button
-            type="button"
-            className="nav-icon-btn lg:hidden relative z-10 p-3 text-white ml-2"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
+        </nav>
       </div>
 
-      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.96 }}
+            id="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="lg:hidden mt-2 mobile-menu-glass rounded-2xl p-4 flex flex-col gap-2"
+            className="lg:hidden fixed inset-0 z-40 bg-[#050507]/95 backdrop-blur-xl"
+            onClick={() => setMobileOpen(false)}
           >
-            {navLinks.map((item) => (
+            <div
+              className="flex flex-col items-center justify-center h-full gap-8 p-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {navLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`text-2xl font-light tracking-widest uppercase transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a880] rounded-sm ${
+                    isActive(item.href) ? "text-white" : "text-[#f4ebd0]/70 hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
               <Link
-                key={item.href}
-                href={item.href}
+                href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className={`px-4 py-2.5 rounded-full text-xs uppercase tracking-widest text-center transition-colors duration-200 ${
-                  isActive(item.href)
-                    ? "bg-white/15 text-white"
-                    : "text-[#f4ebd0]/70 hover:text-white hover:bg-white/5"
-                }`}
+                className={`${ctaBase} mt-4 px-8 py-3`}
               >
-                {item.label}
+                <span className="relative z-10">Start a Project</span>
               </Link>
-            ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
-    </>
+    </header>
   );
 }

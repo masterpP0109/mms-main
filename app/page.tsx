@@ -695,7 +695,7 @@ export default function Home() {
       </section>
 
       {/* 2a) ABOUT US SECTION */}
-      <section className="relative py-20 md:py-28 bg-[#050507]">
+      <section className="relative pt-6 md:pt-8 pb-8 md:pb-12 bg-[#050507]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
             {/* Left — Text + CTA */}
@@ -748,7 +748,7 @@ export default function Home() {
       </section>
 
       {/* 2b) OUR SERVICES SECTION */}
-      <section id="services" className="relative py-16 md:py-24 bg-[#050507]">
+      <section id="services" className="relative pt-8 md:pt-12 pb-16 md:pb-24 bg-[#050507]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-12 md:mb-16">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What We Offer</span>

@@ -720,7 +720,7 @@ export default function Home() {
 
             {/* Right — Cards list */}
             <div className="w-full lg:w-[55%]">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3">
                 {[
                   { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service.", icon: Shield },
                   { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives.", icon: Palette },
@@ -729,14 +729,14 @@ export default function Home() {
                 ].map((card) => (
                   <div
                     key={card.title}
-                    className="group relative flex items-center gap-3 rounded-xl bg-[#0b0b0f] border border-[#c5a880]/15 px-4 py-3 transition-all duration-200 hover:border-[#c5a880]/40 hover:bg-[#0f0f14] hover:shadow-[0_0_24px_rgba(197,168,128,0.08)]"
+                    className="group relative flex items-center gap-3 rounded-xl bg-[#0b0b0f] border border-[#c5a880]/15 px-4 py-2.5 transition-all duration-200 hover:border-[#c5a880]/40 hover:bg-[#0f0f14] hover:shadow-[0_0_24px_rgba(197,168,128,0.08)]"
                   >
                     <div className="flex-shrink-0 w-7 h-7 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center">
                       <card.icon className="w-3.5 h-3.5 text-[#c5a880]" />
                     </div>
-                    <div className="flex-1 space-y-0.5">
+                    <div className="flex-1">
                       <h4 className="text-xs font-medium text-white">{card.title}</h4>
-                      <p className="text-[11px] text-[#f4ebd0]/55 leading-relaxed font-light">{card.desc}</p>
+                      <p className="text-[11px] text-[#f4ebd0]/55 leading-normal font-light">{card.desc}</p>
                     </div>
                     <ArrowRight className="flex-shrink-0 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-1" />
                   </div>

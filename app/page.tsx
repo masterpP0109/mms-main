@@ -6,7 +6,6 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Globe,
   MessageSquare,
   Shield,
   Users,
@@ -24,10 +23,7 @@ import {
   Camera,
   Megaphone,
   Palette,
-  PenTool,
-  Music,
   Mic,
-  Monitor,
   Volume2,
   Zap,
 } from "lucide-react";
@@ -393,91 +389,51 @@ export default function Home() {
   // Our Services configuration
   const services = [
     {
-      title: "Special Effects",
-      icon: Zap,
-      image: "/mms/special-effects.jpg.jpeg",
-      alt: "Cold spark and atmospheric effects at a live event",
-      desc: "Creative effects for conferences, corporate events, weddings, concerts, celebrations, and live productions. Services may include cold sparks, low-lying cloud effects, bubble machines, and other visually engaging event enhancements.",
+      title: "Conference Microphone & Interpretation Equipment",
+      icon: Mic,
+      image: "/mms/DSC_7204.jpg",
+      alt: "Conference microphones and interpretation booth setup",
+      desc: "Professional conference audio, microphone systems and simultaneous interpretation booths for multilingual institutional events, government meetings and international conferences.",
       href: "/services"
     },
     {
-      title: "Conference & Interpretation Systems",
-      icon: Globe,
-      image: "/mms/DSC_9244.jpg",
-      alt: "Conference hall with screens and projection setup",
-      desc: "Professional conference technology and interpretation systems that support multilingual communication, clear presentations, and smooth interaction between speakers and audiences.",
-      href: "/services"
-    },
-    {
-      title: "Videography & Filming",
-      icon: Video,
-      image: "/mms/DSC_2327-Edit.jpg",
-      alt: "Cinematic filming of a wedding ceremony",
-      desc: "Professional coverage for conferences, weddings, corporate functions, tourism campaigns, and special events. Services include high-definition and 4K production, promotional videos, highlight reels, and documentary-style editing.",
-      href: "/services"
-    },
-    {
-      title: "Video Live Streaming",
-      icon: Play,
+      title: "Professional Sound Systems",
+      icon: Volume2,
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+      alt: "Professional sound system and PA setup at an event",
+      desc: "Comprehensive PA systems, line arrays, mixing consoles and wireless microphones engineered for clear, reliable sound at every venue size.",
+      href: "/services"
+    },
+    {
+      title: "Live Streaming Production",
+      icon: Play,
+      image: "/mms/DSC_9244.jpg",
       alt: "Multi-camera live streaming control setup",
-      desc: "Professional multi-camera streaming for physical, virtual, and hybrid events. Include PTZ camera operation and integration with platforms such as YouTube, Facebook, Zoom, and Microsoft Teams.",
+      desc: "Full-service live streaming with multi-camera switching, platform integration, virtual backdrops and real-time graphics for hybrid and virtual events.",
+      href: "/services"
+    },
+    {
+      title: "Videography & Photography",
+      icon: Camera,
+      image: "/mms/DSC_2327-Edit.jpg",
+      alt: "Cinematic filming and photography at an event",
+      desc: "Cinematic event videography and professional photography from same-day edits and highlight reels to full event archives and brand campaign imagery.",
       href: "/services"
     },
     {
       title: "Drone Services",
-      icon: Camera,
-      image: "/mms/_MG_2920.jpg",
+      icon: Video,
+      image: "/mms/_MG_0072.jpg",
       alt: "Aerial drone filming over a landscape",
-      desc: "Licensed aerial photography and videography for events, tourism, landscapes, property showcases, promotional campaigns, and corporate content.",
+      desc: "Licensed drone cinematography and aerial photography for events, venues, landscapes and brand campaigns with 4K RAW footage delivered.",
       href: "/services"
     },
     {
-      title: "Podcast Production Services",
-      icon: Mic,
-      image: "/mms/DSC_7598.jpg",
-      alt: "Professional podcast recording studio setup",
-      desc: "Professional podcast recording, multi-camera filming, audio and video editing, and studio or on-location production.",
-      href: "/services"
-    },
-    {
-      title: "DJ Services & Lighting",
-      icon: Music,
+      title: "Event Lighting & Stage Setup",
+      icon: Zap,
       image: "/mms/DSC_7356.jpg",
       alt: "Event lighting and stage setup at a venue",
-      desc: "Professional DJ entertainment and event lighting designed to create the right atmosphere for corporate functions, weddings, celebrations, concerts, and special occasions.",
-      href: "/services"
-    },
-    {
-      title: "Overhead 360 Booth Experience",
-      icon: Camera,
-      image: "/mms/360 booth 2.jpg",
-      alt: "Overhead 360-degree photo booth experience",
-      desc: "An interactive overhead 360-degree video experience that produces engaging, branded, and social-media-ready content for guests and event audiences.",
-      href: "/services"
-    },
-    {
-      title: "LED & Display Solutions",
-      icon: Monitor,
-      image: "/mms/screens.jpg.jpeg",
-      alt: "Large LED screens and display technology at an event",
-      desc: "LED rental screens, vertical displays, interactive screens, and digital podiums for conferences, exhibitions, outdoor activations, advertisements, presentations, and live event feeds.",
-      href: "/services"
-    },
-    {
-      title: "Photography",
-      icon: Camera,
-      image: "/mms/DSC_7317.jpg",
-      alt: "Professional photography coverage at an event",
-      desc: "Corporate, conference, event, portrait, tourism, and branding photography, with high-resolution images prepared for both digital and print use.",
-      href: "/services"
-    },
-    {
-      title: "Audio Solutions",
-      icon: Volume2,
-      image: "/mms/audio1.jpg",
-      alt: "Professional event audio and PA system setup",
-      desc: "Professional sound systems, microphones, conference audio equipment, podcast setups, and technical support for clear and reliable sound delivery.",
+      desc: "Complete stage design, theatrical lighting, truss rigging and branded backdrops that transform any venue into a professional production space.",
       href: "/services"
     }
   ];

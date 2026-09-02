@@ -24,6 +24,7 @@ import {
   Megaphone,
   Palette,
   Mic,
+  Monitor,
   Volume2,
   Zap,
 } from "lucide-react";
@@ -397,6 +398,14 @@ export default function Home() {
       href: "/services"
     },
     {
+      title: "LED Screen Rental",
+      icon: Monitor,
+      image: "/mms/DSC_7215.jpg",
+      alt: "Large LED screens and display technology at an event",
+      desc: "High-brightness LED screens, video walls and digital displays for conferences, brand activations and outdoor events available in any size with on-site support.",
+      href: "/services"
+    },
+    {
       title: "Professional Sound Systems",
       icon: Volume2,
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
@@ -716,14 +725,15 @@ export default function Home() {
                   { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service." },
                   { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives." },
                   { title: "Reliable", desc: "Professional execution from planning through delivery." },
+                  { title: "Innovative", desc: "Cutting-edge technology and creative solutions that push boundaries." },
                 ].map((card) => (
                   <div
                     key={card.title}
                     className="group relative rounded-xl bg-[#0b0b0f] p-5 transition-all duration-200"
                   >
-                    <h4 className="text-xs font-medium text-white mb-1">{card.title}</h4>
-                    <p className="text-[11px] text-[#f4ebd0]/50 leading-relaxed font-light">{card.desc}</p>
-                    <ArrowRight className="absolute top-5 right-5 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <h4 className="text-xs font-medium text-white mb-1 text-right">{card.title}</h4>
+                    <p className="text-[11px] text-[#f4ebd0]/50 leading-relaxed font-light text-right">{card.desc}</p>
+                    <ArrowRight className="absolute top-5 left-5 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 ))}
               </div>
@@ -744,7 +754,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {services.slice(0, 6).map((service) => (
+            {services.slice(0, 7).map((service) => (
               <div key={service.title} className="group">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5">
                   <Image

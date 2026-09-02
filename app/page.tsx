@@ -720,20 +720,33 @@ export default function Home() {
 
             {/* Right — Bento cards */}
             <div className="w-full lg:w-[55%]">
-              <div className="grid grid-cols-1 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 auto-rows-auto">
                 {[
-                  { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service." },
-                  { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives." },
-                  { title: "Reliable", desc: "Professional execution from planning through delivery." },
-                  { title: "Innovative", desc: "Cutting-edge technology and creative solutions that push boundaries." },
+                  { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service.", icon: Shield, size: "big" },
+                  { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives.", icon: Palette, size: "small" },
+                  { title: "Reliable", desc: "Professional execution from planning through delivery.", icon: Award, size: "small" },
+                  { title: "Innovative", desc: "Cutting-edge technology and creative solutions that push boundaries.", icon: Zap, size: "wide" },
                 ].map((card) => (
                   <div
                     key={card.title}
-                    className="group relative rounded-xl bg-[#0b0b0f] p-5 transition-all duration-200"
+                    className={`group relative rounded-xl bg-[#0b0b0f] transition-all duration-200 ${
+                      card.size === "big"
+                        ? "sm:row-span-2 sm:col-span-1 p-6 min-h-[260px]"
+                        : card.size === "wide"
+                        ? "sm:col-span-2 p-5"
+                        : "sm:col-span-1 p-4"
+                    }`}
                   >
-                    <h4 className="text-xs font-medium text-white mb-1 text-right">{card.title}</h4>
-                    <p className="text-[11px] text-[#f4ebd0]/50 leading-relaxed font-light text-right">{card.desc}</p>
-                    <ArrowRight className="absolute top-5 left-5 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <div className="w-8 h-8 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center mb-3">
+                      <card.icon className="w-4 h-4 text-[#c5a880]" />
+                    </div>
+                    <h4 className={`font-medium text-white mb-1.5 ${
+                      card.size === "big" ? "text-base" : card.size === "wide" ? "text-sm" : "text-xs"
+                    }`}>{card.title}</h4>
+                    <p className={`text-[#f4ebd0]/60 leading-relaxed font-light ${
+                      card.size === "big" ? "text-sm" : card.size === "wide" ? "text-xs" : "text-[11px]"
+                    }`}>{card.desc}</p>
+                    <ArrowRight className="absolute top-4 right-4 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 ))}
               </div>
@@ -754,7 +767,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            {services.slice(0, 7).map((service) => (
+            {services.slice(0, 6).map((service) => (
               <div key={service.title} className="group">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5">
                   <Image

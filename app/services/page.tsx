@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight
+  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, Palette, PenTool, Briefcase, ArrowRight
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -29,6 +29,22 @@ const services = [
     ],
     cta: "Plan Your Conference",
     href: "/conference-production",
+  },
+  {
+    title: "LED Screen Rental",
+    image: "/mms/DSC_7215.jpg",
+    gallery: ["/mms/DSC_7215.jpg", "/mms/DSC_7176.jpg", "/mms/DSC_7208.jpg"],
+    tag: "Visual Display",
+    desc: "High-brightness LED screens, video walls and digital displays for conferences, brand activations and outdoor events — available in any size with on-site technical support.",
+    items: [
+      { label: "LED Screens", icon: Globe },
+      { label: "Indoor & Outdoor", icon: Play },
+      { label: "Video Walls", icon: Video },
+      { label: "Custom Content", icon: PenTool },
+      { label: "On-site Support", icon: Briefcase },
+    ],
+    cta: "Build Your Event",
+    href: "/contact",
   },
   {
     title: "Professional Sound Systems",
@@ -109,6 +125,22 @@ const services = [
     ],
     cta: "Build Your Event",
     href: "/contact",
+  },
+  {
+    title: "Special Effects Services",
+    image: "/mms/Iconic Final Look with Pyro.jpg",
+    gallery: ["/mms/Iconic Final Look with Pyro.jpg", "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", "/mms/IMG_9198.jpeg"],
+    tag: "FX & Atmosphere",
+    desc: "High-impact special effects including pyrotechnics, cold spark machines, haze, confetti and custom atmospheric effects for galas, launches and grand finales.",
+    items: [
+      { label: "Pyrotechnics", icon: Play },
+      { label: "Cold Sparks", icon: Palette },
+      { label: "Haze & Fog", icon: Video },
+      { label: "Confetti", icon: Globe },
+      { label: "Custom Effects", icon: MessageSquare },
+    ],
+    cta: "See Cinematic Work",
+    href: "/gallery",
   },
 ];
 

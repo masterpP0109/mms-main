@@ -166,9 +166,9 @@ export default function ServicesPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/55 to-[#050507]/20 z-10" />
         <div className="relative z-20 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block">What We Offer</span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight font-serif">Our Services</h1>
-            <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed">
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-bold block">What We Offer</span>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-light text-white leading-tight font-serif">Our Services</h1>
+            <p className="text-lg md:text-xl text-[#f4ebd0]/75 font-light leading-relaxed">
               End-to-end multimedia production crafted with creativity and precision — from conference AV to cinematic films and brand campaigns.
             </p>
           </motion.div>
@@ -189,8 +189,8 @@ export default function ServicesPage() {
             >
               {/* Main grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                {/* Primary image */}
-                <div className={`relative rounded-3xl overflow-hidden glass-panel border border-[#c5a880]/15 aspect-[4/3] group ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
+                 {/* Primary image */}
+                <div className={`relative rounded-3xl overflow-hidden border border-[#c5a880]/10 aspect-[4/3] group ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
                   <Image
                     src={service.image}
                     alt={service.title}
@@ -200,7 +200,7 @@ export default function ServicesPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-[#050507]/20 to-transparent z-10" />
                   <div className="absolute bottom-4 left-4 z-20">
-                    <span className="text-[9px] uppercase tracking-[0.25em] bg-[#c5a880]/20 text-[#c5a880] border border-[#c5a880]/30 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                    <span className="text-xs uppercase tracking-[0.25em] bg-[#c5a880]/20 text-[#c5a880] border border-[#c5a880]/30 px-3 py-1.5 rounded-full">
                       {service.tag}
                     </span>
                   </div>
@@ -208,19 +208,19 @@ export default function ServicesPage() {
 
                 {/* Text */}
                 <div className={`space-y-6 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
-                  <h2 className="text-2xl md:text-4xl font-light text-white font-serif">{service.title}</h2>
-                  <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">{service.desc}</p>
+                  <h2 className="text-3xl md:text-5xl font-light text-white font-serif">{service.title}</h2>
+                  <p className="text-lg text-[#f4ebd0]/70 leading-relaxed font-light">{service.desc}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
                     {service.items.map((item) => (
-                      <div key={item.label} className="glass-panel flex flex-col items-center justify-center gap-2.5 min-h-[90px] rounded-2xl border border-[#c5a880]/20 hover:border-[#c5a880]/50 transition-all duration-300 text-center px-3">
-                        <item.icon className="w-4 h-4 text-[#c5a880]" />
-                        <span className="text-[10px] text-white font-medium leading-tight">{item.label}</span>
+                      <div key={item.label} className="bg-[#050507] flex flex-col items-center justify-center gap-2.5 min-h-[90px] rounded-2xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all duration-300 text-center px-3">
+                        <item.icon className="w-5 h-5 text-[#c5a880]" />
+                        <span className="text-sm text-white font-medium leading-tight">{item.label}</span>
                       </div>
                     ))}
                   </div>
-                  <Link href={service.href} className={`${goldBtn} px-6 py-3 text-[10px] uppercase tracking-[0.18em] inline-flex`}>
+                  <Link href={service.href} className={`${goldBtn} px-7 py-3.5 text-xs uppercase tracking-[0.18em] inline-flex`}>
                     <span className="relative z-10">{service.cta}</span>
-                    <ArrowRight className="relative z-10 ml-2 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                 </div>
               </div>
@@ -228,9 +228,9 @@ export default function ServicesPage() {
               {/* 3-image thumbnail strip */}
               <div className="grid grid-cols-3 gap-3">
                 {service.gallery.map((img, i) => (
-                  <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/10 group">
+                  <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group">
                     <Image src={img} alt={`${service.title} ${i + 1}`} fill className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-[#050507]/30 group-hover:bg-[#050507]/10 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-[#050507]/20 group-hover:bg-[#050507]/5 transition-colors duration-300" />
                   </div>
                 ))}
               </div>
@@ -243,8 +243,8 @@ export default function ServicesPage() {
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="text-center mb-14">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Optional Add-Ons</span>
-            <h2 className="text-3xl md:text-4xl font-light text-white font-serif">Enhance Your Production</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Optional Add-Ons</span>
+            <h2 className="text-4xl md:text-5xl font-light text-white font-serif">Enhance Your Production</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {addOns.map((addon, idx) => (
@@ -254,20 +254,20 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.06 }}
-                className="glass-panel rounded-2xl border border-[#c5a880]/15 overflow-hidden hover:border-[#c5a880]/35 transition-all duration-300 group"
+                className="bg-[#050507] rounded-2xl border border-[#c5a880]/10 overflow-hidden hover:border-[#c5a880]/25 transition-all duration-300 group"
               >
                 <div className="relative h-40 overflow-hidden">
                   <Image src={addon.img} alt={addon.label} fill className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/30 to-transparent" />
                   <div className="absolute bottom-3 left-4">
-                    <div className="w-8 h-8 rounded-full bg-[#c5a880]/20 backdrop-blur-sm flex items-center justify-center border border-[#c5a880]/30">
-                      <addon.icon className="w-4 h-4 text-[#c5a880]" />
+                    <div className="w-10 h-10 rounded-full bg-[#c5a880]/20 flex items-center justify-center border border-[#c5a880]/25">
+                      <addon.icon className="w-5 h-5 text-[#c5a880]" />
                     </div>
                   </div>
                 </div>
                 <div className="p-5">
-                  <h3 className="text-sm font-medium text-white mb-1.5">{addon.label}</h3>
-                  <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">{addon.desc}</p>
+                  <h3 className="text-lg font-medium text-white mb-1.5">{addon.label}</h3>
+                  <p className="text-base text-[#f4ebd0]/60 leading-relaxed font-light">{addon.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -282,15 +282,15 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-[#050507]/75" />
         </div>
         <div className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get Started</span>
-          <h2 className="text-3xl md:text-4xl font-light text-white font-serif">Ready to create something memorable?</h2>
-          <p className="text-sm text-[#f4ebd0]/60 font-light leading-relaxed">Tell us about your project and we&apos;ll respond within 24 hours with a tailored proposal.</p>
+          <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get Started</span>
+          <h2 className="text-4xl md:text-5xl font-light text-white font-serif">Ready to create something memorable?</h2>
+          <p className="text-lg text-[#f4ebd0]/60 font-light leading-relaxed">Tell us about your project and we&apos;ll respond within 24 hours with a tailored proposal.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link href="/contact" className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
+            <Link href="/contact" className={`${goldBtn} px-8 py-3.5 text-sm uppercase tracking-[0.18em]`}>
               <span className="relative z-10">Start a Project</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link href="/conference-production#enquiry" className="inline-flex items-center px-8 py-3.5 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+            <Link href="/conference-production#enquiry" className="inline-flex items-center px-8 py-3.5 rounded-full border border-[#c5a880]/20 text-[#f4ebd0]/80 text-sm uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
               Conference Enquiry
             </Link>
           </div>

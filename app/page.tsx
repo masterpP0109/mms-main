@@ -568,29 +568,29 @@ export default function Home() {
                 className="space-y-6 max-w-2xl xl:max-w-3xl relative z-10"
               >
                 {/* shade removed per request */}
-                <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block gsap-eyebrow">
+                <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-bold block gsap-eyebrow">
                   {slides[currentSlide].tag}
                 </span>
 
-                <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-light text-white leading-[1.05] font-serif gsap-heading">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl xl:text-8xl font-light text-white leading-[1.05] font-serif gsap-heading">
                   {slides[currentSlide].title}
                 </h1>
 
-                <p className="text-sm md:text-base xl:text-lg text-[#f4ebd0]/82 tracking-wide font-light leading-relaxed max-w-lg gsap-copy">
+                <p className="text-base md:text-lg xl:text-xl text-[#f4ebd0]/82 tracking-wide font-light leading-relaxed max-w-lg gsap-copy">
                   {slides[currentSlide].desc}
                 </p>
 
                 <div className="pt-6 gsap-action pointer-events-auto flex flex-col sm:flex-row sm:items-center gap-3">
                   <a
                     href={slides[currentSlide].link}
-                    className={`${goldGlowButtonBase} px-7 py-3.5 text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.18em] premium-button`}
+                    className={`${goldGlowButtonBase} px-7 py-3.5 text-xs sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.18em] premium-button`}
                   >
                     <span className="relative z-10">{slides[currentSlide].btnText}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                   <a
                     href="#contact"
-                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/25 px-7 py-3.5 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.18em] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#c5a880] hover:bg-[#c5a880]/10 hover:text-[#f4ebd0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
+                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/25 px-7 py-3.5 text-xs sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.18em] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#c5a880] hover:bg-[#c5a880]/10 hover:text-[#f4ebd0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
                   >
                     Request a Quote
                   </a>
@@ -621,7 +621,7 @@ export default function Home() {
           {/* Dots Indicator */}
           <div className="absolute bottom-7 sm:bottom-10 left-0 w-full z-30 px-6">
             <div className="mx-auto flex max-w-xl items-center justify-center gap-2 sm:gap-3">
-              <span className="hidden sm:inline text-[9px] font-mono tracking-[0.22em] text-[#f4ebd0]/55">
+              <span className="hidden sm:inline text-xs font-mono tracking-[0.22em] text-[#f4ebd0]/55">
                 {String(currentSlide + 1).padStart(2, "0")}
               </span>
               <div className="flex items-center justify-center gap-1.5 sm:gap-2">
@@ -636,7 +636,7 @@ export default function Home() {
                   />
                 ))}
               </div>
-              <span className="hidden sm:inline text-[9px] font-mono tracking-[0.22em] text-[#f4ebd0]/55">
+              <span className="hidden sm:inline text-xs font-mono tracking-[0.22em] text-[#f4ebd0]/55">
                 {String(slides.length).padStart(2, "0")}
               </span>
             </div>
@@ -662,30 +662,30 @@ export default function Home() {
 
         <div className="relative z-20 p-8 md:p-10">
           {/* Icon Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center items-stretch divide-y md:divide-y-0 md:divide-x divide-[#c5a880]/15">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center items-stretch">
             {/* Item 1 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <MessageSquare className="w-5 h-5 text-[#c5a880] mb-3" />
-              <p className="text-[9px] tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">24hr</p>
-              <p className="text-xs text-white font-medium">Avg. Response Time</p>
+              <MessageSquare className="w-6 h-6 text-[#c5a880] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">24hr</p>
+              <p className="text-base text-white font-medium">Avg. Response Time</p>
             </div>
             {/* Item 2 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <Shield className="w-5 h-5 text-[#c5a880] mb-3" />
-              <p className="text-[9px] tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Licensed, Insured</p>
-              <p className="text-xs text-white font-medium">& Drone Certified</p>
+              <Shield className="w-6 h-6 text-[#c5a880] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Licensed, Insured</p>
+              <p className="text-base text-white font-medium">& Drone Certified</p>
             </div>
             {/* Item 3 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <Users className="w-5 h-5 text-[#c5a880] mb-3" />
-              <p className="text-[9px] tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Trusted by Tourism</p>
-              <p className="text-xs text-white font-medium">& Corporate Brands</p>
+              <Users className="w-6 h-6 text-[#c5a880] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Trusted by Tourism</p>
+              <p className="text-base text-white font-medium">& Corporate Brands</p>
             </div>
             {/* Item 4 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <Lock className="w-5 h-5 text-[#c5a880] mb-3" />
-              <p className="text-[9px] tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Secure Payments</p>
-              <p className="text-xs text-white font-medium">100% Protected</p>
+              <Lock className="w-6 h-6 text-[#c5a880] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Secure Payments</p>
+              <p className="text-base text-white font-medium">100% Protected</p>
             </div>
           </div>
 
@@ -700,7 +700,7 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
             {/* Left — Text + CTA */}
             <div className="w-full lg:w-[45%] space-y-6">
-              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">About Mosi Media Solutions</span>
+              <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">About Mosi Media Solutions</span>
               <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
               <p className="text-sm md:text-base text-[#f4ebd0]/70 leading-relaxed font-light">
                 Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
@@ -718,9 +718,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right — Cards list */}
-            <div className="w-full lg:w-[55%]">
-              <div className="flex flex-col gap-3">
+            {/* Right — Text list */}
+            <div className="w-full lg:w-[55%] lg:pt-[42px]">
+              <div className="flex flex-col gap-4">
                 {[
                   { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service.", icon: Shield },
                   { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives.", icon: Palette },
@@ -729,16 +729,16 @@ export default function Home() {
                 ].map((card) => (
                   <div
                     key={card.title}
-                    className="group relative flex items-center gap-3 rounded-xl bg-[#0b0b0f] border border-[#c5a880]/15 px-4 py-2.5 transition-all duration-200 hover:border-[#c5a880]/40 hover:bg-[#0f0f14] hover:shadow-[0_0_24px_rgba(197,168,128,0.08)]"
+                    className="flex items-center gap-4 group transition-all duration-200"
                   >
-                    <div className="flex-shrink-0 w-7 h-7 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center">
-                      <card.icon className="w-3.5 h-3.5 text-[#c5a880]" />
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-[#c5a880]/20 bg-[#050507] flex items-center justify-center">
+                      <card.icon className="w-4 h-4 text-[#c5a880]" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-xs font-medium text-white">{card.title}</h4>
-                      <p className="text-[11px] text-[#f4ebd0]/55 leading-normal font-light">{card.desc}</p>
+                      <h4 className="text-lg font-medium text-white mb-0.5">{card.title}</h4>
+                      <p className="text-base text-[#f4ebd0]/55 leading-normal font-light">{card.desc}</p>
                     </div>
-                    <ArrowRight className="flex-shrink-0 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-1" />
+                    <ArrowRight className="flex-shrink-0 w-3.5 h-3.5 text-[#c5a880] opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
                   </div>
                 ))}
               </div>
@@ -751,9 +751,9 @@ export default function Home() {
       <section id="services" className="relative py-16 md:py-24 bg-[#050507]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-12 md:mb-16">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What We Offer</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Our Services</h2>
-            <p className="text-sm md:text-base text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What We Offer</span>
+            <h2 className="text-4xl md:text-6xl font-light text-white font-serif mb-4">Our Services</h2>
+            <p className="text-lg md:text-xl text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
               From media production and live broadcasting to professional audio, screen technology and event enhancements, MMS delivers the creative and technical solutions needed to bring every experience to life.
             </p>
           </div>
@@ -772,13 +772,13 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-transparent to-transparent opacity-60 transition-opacity duration-300" />
                   <div className="absolute bottom-3 left-3">
-                    <div className="w-8 h-8 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center">
-                      <service.icon className="w-4 h-4 text-[#c5a880]" />
+                    <div className="w-10 h-10 rounded-full border border-[#c5a880]/20 bg-[#050507] flex items-center justify-center">
+                      <service.icon className="w-5 h-5 text-[#c5a880]" />
                     </div>
                   </div>
                 </div>
-                <h3 className="text-center text-lg font-medium text-white font-serif mb-2">{service.title}</h3>
-                <p className="text-center text-sm text-[#f4ebd0]/60 leading-relaxed font-light mb-4">
+                <h3 className="text-center text-2xl font-medium text-white font-serif mb-2">{service.title}</h3>
+                <p className="text-center text-lg text-[#f4ebd0]/60 leading-relaxed font-light mb-4">
                   {service.desc}
                 </p>
                 <div className="text-center">
@@ -834,7 +834,7 @@ export default function Home() {
               {pastWorkItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="pw-card relative flex-shrink-0 w-[clamp(760px,72vw,1180px)] h-[clamp(480px,58vh,680px)] min-h-[480px] rounded-[30px] border border-[#c5a880]/15 bg-[#09090d] shadow-[0_35px_100px_rgba(0,0,0,0.65),0_10px_35px_rgba(0,0,0,0.45),0_0_45px_rgba(190,145,73,0.08)] overflow-hidden will-change-transform"
+                  className="pw-card relative flex-shrink-0 w-[clamp(760px,72vw,1180px)] h-[clamp(480px,58vh,680px)] min-h-[480px] rounded-[30px] border border-[#c5a880]/10 bg-[#050507] shadow-[0_35px_100px_rgba(0,0,0,0.65),0_10px_35px_rgba(0,0,0,0.45)] overflow-hidden will-change-transform"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <div className="relative flex h-full flex-col overflow-hidden rounded-[30px] md:flex-row">
@@ -848,9 +848,9 @@ export default function Home() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
                     </div>
-                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#09090d]">
+                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#050507]">
                       <div className="space-y-3">
-                        <span className="text-[10px] uppercase tracking-[0.28em] text-[#c5a880] font-semibold block">
+                        <span className="text-xs uppercase tracking-[0.28em] text-[#c5a880] font-semibold block">
                           {item.category}
                         </span>
                         <h3 className="text-2xl md:text-3xl font-light text-white font-serif leading-tight">
@@ -865,7 +865,7 @@ export default function Home() {
                           {item.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="text-[10px] uppercase tracking-[0.18em] bg-[#c5a880]/10 text-[#f4ebd0] px-2.5 py-1 rounded-full border border-[#c5a880]/15"
+                              className="text-xs uppercase tracking-[0.18em] bg-[#c5a880]/10 text-[#f4ebd0] px-2.5 py-1 rounded-full border border-[#c5a880]/15"
                             >
                               {tag}
                             </span>
@@ -874,11 +874,11 @@ export default function Home() {
                         <div className="flex items-center gap-3 sm:ml-auto">
                           <a
                             href={item.link}
-                            className="inline-flex items-center justify-center px-5 py-2 text-[10px] uppercase tracking-[0.32em] bg-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 transition-all duration-300"
+                            className="inline-flex items-center justify-center px-5 py-2.5 text-xs uppercase tracking-[0.32em] bg-[#c5a880] text-[#050507] font-semibold rounded-full hover:brightness-110 transition-all duration-300"
                           >
                             View Project
                           </a>
-                          <span className="pw-card-counter text-[10px] uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-mono">
+                            <span className="pw-card-counter text-xs uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-mono">
                             {String(idx + 1).padStart(2, "00")} / {String(pastWorkItems.length).padStart(2, "00")}
                           </span>
                         </div>
@@ -916,8 +916,8 @@ export default function Home() {
 
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-16">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Our Workflow</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Our Process: A Smooth Journey To Your Story</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Our Workflow</span>
+            <h2 className="text-4xl md:text-6xl font-light text-white font-serif mb-4">Our Process: A Smooth Journey To Your Story</h2>
           </div>
 
           {/* 4-column timeline */}
@@ -949,11 +949,11 @@ export default function Home() {
             ].map((item, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center text-center px-4">
                 {/* Step Number Circle */}
-                <div className="w-14 h-14 rounded-full bg-[#050507] border border-[#c5a880]/30 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-[#c5a880] transition-colors duration-300">
-                  <span className="text-sm font-serif font-semibold text-[#c5a880]">{item.step}</span>
+                <div className="w-16 h-16 rounded-full bg-[#050507] border border-[#c5a880]/30 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-[#c5a880] transition-colors duration-300">
+                  <span className="text-xl font-serif font-semibold text-[#c5a880]">{item.step}</span>
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">{item.title}</h3>
-                <p className="text-xs text-[#f4ebd0]/70 leading-relaxed font-light">{item.desc}</p>
+                <h3 className="text-xl font-medium text-white mb-2">{item.title}</h3>
+                <p className="text-base text-[#f4ebd0]/70 leading-relaxed font-light">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -966,21 +966,21 @@ export default function Home() {
 
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-16">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Client Feedback</span>
+            <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Client Feedback</span>
             <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">What Our Clients Say</h2>
           </div>
 
           {/* Testimonial Carousel */}
           <div className="relative max-w-3xl mx-auto">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={testimonialSlide}
-                initial={{ opacity: 0, y: 50, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -50, scale: 0.96 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="glass-panel p-8 md:p-12 rounded-3xl border border-[#c5a880]/15 relative overflow-hidden"
-              >
+                <motion.div
+                  key={testimonialSlide}
+                  initial={{ opacity: 0, y: 50, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -50, scale: 0.96 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="bg-[#050507] p-8 md:p-12 rounded-3xl border border-[#c5a880]/10 relative overflow-hidden"
+                >
                 <Quote className="absolute top-6 left-6 w-10 h-10 text-[#c5a880]/15" />
 
                 <div className="flex flex-col items-center text-center space-y-6 relative z-10">
@@ -990,12 +990,12 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <p className="text-base md:text-xl text-[#f4ebd0]/90 leading-relaxed font-light italic">
+                  <p className="text-xl md:text-2xl text-[#f4ebd0]/90 leading-relaxed font-light italic">
                     {`"${testimonials[testimonialSlide].content}"`}
                   </p>
 
                   <div className="flex flex-col items-center space-y-2 pt-2">
-                    <div className="w-14 h-14 rounded-full overflow-hidden border border-[#c5a880]/30 shadow-md">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border border-[#c5a880]/30 shadow-md">
                       {testimonials[testimonialSlide].avatar ? (
                         <Image
                           src={testimonials[testimonialSlide].avatar}
@@ -1006,13 +1006,13 @@ export default function Home() {
                         />
                       ) : (
                         <div className="w-full h-full bg-[#121218] flex items-center justify-center">
-                          <span className="text-lg font-serif font-bold text-[#c5a880]">JP</span>
+                          <span className="text-2xl font-serif font-bold text-[#c5a880]">JP</span>
                         </div>
                       )}
                     </div>
                     <div className="space-y-1">
-                      <h4 className="text-lg font-medium text-white">{testimonials[testimonialSlide].name}</h4>
-                      <p className="text-[10px] tracking-widest text-[#c5a880] uppercase font-medium">{testimonials[testimonialSlide].role}</p>
+                      <h4 className="text-xl font-medium text-white">{testimonials[testimonialSlide].name}</h4>
+                      <p className="text-sm tracking-widest text-[#c5a880] uppercase font-medium">{testimonials[testimonialSlide].role}</p>
                     </div>
                   </div>
                 </div>
@@ -1071,9 +1071,9 @@ export default function Home() {
 
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
-            <h2 className="text-2xl md:text-4xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
-            <p className="text-xs text-[#f4ebd0]/70 font-light">
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
+            <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
+            <p className="text-base text-[#f4ebd0]/70 font-light">
               Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
             </p>
           </div>
@@ -1081,7 +1081,7 @@ export default function Home() {
           <section style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative">
      
 
-        <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-10">
+        <div className="bg-[#050507] rounded-3xl border border-[#c5a880]/10 p-8 md:p-10">
           {/* Step Progress Indicator */}
           <div className="flex items-center justify-between mb-10 max-w-md mx-auto">
             {["Goal", "Audience", "Timeline", "Contact", "Review"].map((label, idx) => {
@@ -1091,7 +1091,7 @@ export default function Home() {
               return (
                 <div key={label} className="flex flex-col items-center">
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-300 ${
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                       isActive
                         ? "bg-[#c5a880] text-[#050507] scale-110"
                         : isDone
@@ -1101,7 +1101,7 @@ export default function Home() {
                   >
                     {isDone ? "✓" : stepNum}
                   </div>
-                  <span className={`text-[8px] uppercase tracking-widest mt-1.5 ${
+                  <span className={`text-xs uppercase tracking-widest mt-1.5 ${
                     isActive ? "text-[#c5a880]" : isDone ? "text-[#c5a880]/60" : "text-[#f4ebd0]/30"
                   }`}>
                     {label}
@@ -1120,8 +1120,8 @@ export default function Home() {
               className="space-y-6"
             >
               <div className="text-center mb-6">
-                <h3 className="text-xl font-serif text-white font-light">What type of project are you planning?</h3>
-                <p className="text-xs text-[#f4ebd0]/60 mt-2">Select the option that best describes your needs</p>
+                <h3 className="text-2xl font-serif text-white font-light">What type of project are you planning?</h3>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">Select the option that best describes your needs</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -1158,8 +1158,8 @@ export default function Home() {
               className="space-y-6"
             >
               <div className="text-center mb-6">
-                <h3 className="text-xl font-serif text-white font-light">Tell us about your event or audience</h3>
-                <p className="text-xs text-[#f4ebd0]/60 mt-2">This helps us tailor the creative approach</p>
+                <h3 className="text-2xl font-serif text-white font-light">Tell us about your event or audience</h3>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">This helps us tailor the creative approach</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -1199,8 +1199,8 @@ export default function Home() {
               className="space-y-6"
             >
               <div className="text-center mb-6">
-                <h3 className="text-xl font-serif text-white font-light">What&apos;s your timeline?</h3>
-                <p className="text-xs text-[#f4ebd0]/60 mt-2">We work with all timelines — urgent to flexible</p>
+                <h3 className="text-2xl font-serif text-white font-light">What&apos;s your timeline?</h3>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">We work with all timelines — urgent to flexible</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -1222,8 +1222,8 @@ export default function Home() {
                       <span className="text-xs font-bold text-[#c5a880]">{opt.days}</span>
                     </div>
                     <div>
-                      <span className="text-sm font-medium text-white block">{opt.label}</span>
-                      <span className="text-[11px] text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                      <span className="text-base font-medium text-white block">{opt.label}</span>
+                      <span className="text-sm text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
                     </div>
                   </button>
                 ))}
@@ -1240,48 +1240,48 @@ export default function Home() {
               className="space-y-6 max-w-lg mx-auto"
             >
               <div className="text-center mb-6">
-                <h3 className="text-xl font-serif text-white font-light">Where should we send your custom quote?</h3>
-                <p className="text-xs text-[#f4ebd0]/60 mt-2">We&apos;ll respond within 24 hours</p>
+                <h3 className="text-2xl font-serif text-white font-light">Where should we send your custom quote?</h3>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">We&apos;ll respond within 24 hours</p>
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Your Name</label>
+                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Your Name</label>
                   <input
                     type="text"
                     value={builderData.name}
                     onChange={(e) => setBuilderData({ ...builderData, name: e.target.value })}
                     placeholder="e.g. Sarah Johnson"
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Email Address</label>
+                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Email Address</label>
                   <input
                     type="email"
                     value={builderData.email}
                     onChange={(e) => setBuilderData({ ...builderData, email: e.target.value })}
                     placeholder="e.g. sarah@example.com"
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Phone (optional)</label>
+                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Phone (optional)</label>
                   <input
                     type="tel"
                     value={builderData.phone}
                     onChange={(e) => setBuilderData({ ...builderData, phone: e.target.value })}
                     placeholder="e.g. +1 234 567 890"
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Project Details</label>
+                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Project Details</label>
                   <textarea
                     value={builderData.details}
                     onChange={(e) => setBuilderData({ ...builderData, details: e.target.value })}
                     placeholder="Tell us about your vision, location, guest count, or any special requirements..."
                     rows={3}
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-none"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-none"
                   />
                 </div>
               </div>
@@ -1300,11 +1300,11 @@ export default function Home() {
                 <div className="w-16 h-16 rounded-full bg-[#c5a880]/15 flex items-center justify-center mx-auto mb-4">
                   <Award className="w-7 h-7 text-[#c5a880]" />
                 </div>
-                <h3 className="text-xl font-serif text-white font-light">Your Brief Is Ready</h3>
-                <p className="text-xs text-[#f4ebd0]/60 mt-2">Review your selections below. We&apos;ll create a custom quote based on your brief.</p>
+                <h3 className="text-2xl font-serif text-white font-light">Your Brief Is Ready</h3>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">Review your selections below. We&apos;ll create a custom quote based on your brief.</p>
               </div>
 
-              <div className="space-y-3">
+                <div className="space-y-3">
                 {[
                   { label: "Project Goal", value: builderData.goal ? builderData.goal.charAt(0).toUpperCase() + builderData.goal.slice(1) : "Not selected" },
                   { label: "Audience / Event Type", value: builderData.audience ? builderData.audience.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") : "Not selected" },
@@ -1315,8 +1315,8 @@ export default function Home() {
                   { label: "Details", value: builderData.details ? (builderData.details.length > 60 ? builderData.details.slice(0, 60) + "..." : builderData.details) : "Not provided" },
                 ].map((item) => (
                   <div key={item.label} className="flex justify-between items-center py-2 border-b border-[#c5a880]/10">
-                    <span className="text-[10px] uppercase tracking-widest text-[#c5a880]/70 font-semibold">{item.label}</span>
-                    <span className="text-xs text-white font-medium text-right max-w-[60%]">{item.value}</span>
+                    <span className="text-xs uppercase tracking-widest text-[#c5a880]/70 font-semibold">{item.label}</span>
+                    <span className="text-base text-white font-medium text-right max-w-[60%]">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -1330,11 +1330,11 @@ export default function Home() {
                     window.location.href = `mailto:hello@mmscreatives.com?subject=New%20Project%20Inquiry%20-%20${builderData.name || "New Lead"}&body=${message}`;
                   }}
                   disabled={!builderData.name || !builderData.email}
-                  className="inline-flex items-center justify-center px-8 py-3 text-xs uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-bold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="inline-flex items-center justify-center px-8 py-3.5 text-sm uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-bold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   Send My Brief & Get a Free Quote
                 </button>
-                <p className="text-[10px] text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
+                <p className="text-sm text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
               </div>
             </motion.div>
           )}
@@ -1344,9 +1344,9 @@ export default function Home() {
             <button
               onClick={() => setBuilderStep((prev) => Math.max(0, prev - 1))}
               disabled={builderStep === 0}
-              className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#f4ebd0]/50 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#f4ebd0]/50 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
-              <ChevronLeft className="w-3 h-3" />
+              <ChevronLeft className="w-4 h-4" />
               Back
             </button>
 
@@ -1361,10 +1361,10 @@ export default function Home() {
                     if (builderStep === 3 && (!builderData.name || !builderData.email)) return;
                     setBuilderStep((prev) => Math.min(4, prev + 1));
                   }}
-                  className="inline-flex items-center gap-2 text-[10px] uppercase tracking-widest bg-[#c5a880] text-[#050507] px-5 py-2.5 rounded-full font-semibold hover:brightness-110 transition-all duration-300 cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-widest bg-[#c5a880] text-[#050507] px-5 py-3 rounded-full font-semibold hover:brightness-110 transition-all duration-300 cursor-pointer"
                 >
                   {builderStep === 3 ? "Review Brief" : "Continue"}
-                  <ChevronRight className="w-3 h-3" />
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               )}
               {builderStep > 0 && builderStep < 5 && (
@@ -1373,7 +1373,7 @@ export default function Home() {
                     setBuilderStep(0);
                     setBuilderData({ goal: "", audience: "", timeline: "", name: "", email: "", phone: "", details: "" });
                   }}
-                  className="text-[10px] uppercase tracking-widest text-[#f4ebd0]/40 hover:text-[#f4ebd0]/70 transition-colors cursor-pointer"
+                  className="text-xs uppercase tracking-widest text-[#f4ebd0]/40 hover:text-[#f4ebd0]/70 transition-colors cursor-pointer"
                 >
                   Reset
                 </button>

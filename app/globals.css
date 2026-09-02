@@ -31,8 +31,9 @@
 
 body {
   background-color: var(--color-dark-bg);
-  color: #f3f4f6; /* Ivory / light grey body */
+  color: #f3f4f6;
   font-family: var(--font-sans);
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -46,9 +47,8 @@ h1, h2 {
 
 /* Glassmorphism custom classes */
 .glass-panel {
-  background: rgba(18, 18, 24, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(197, 168, 128, 0.12);
+  background: #050507;
+  border: 1px solid rgba(197, 168, 128, 0.10);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 

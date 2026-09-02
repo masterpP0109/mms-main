@@ -718,35 +718,27 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right — Bento cards */}
+            {/* Right — Cards list */}
             <div className="w-full lg:w-[55%]">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 auto-rows-auto">
+              <div className="flex flex-col gap-2">
                 {[
-                  { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service.", icon: Shield, size: "big" },
-                  { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives.", icon: Palette, size: "small" },
-                  { title: "Reliable", desc: "Professional execution from planning through delivery.", icon: Award, size: "small" },
-                  { title: "Innovative", desc: "Cutting-edge technology and creative solutions that push boundaries.", icon: Zap, size: "wide" },
+                  { title: "Trusted", desc: "We build lasting relationships through professionalism and dependable service.", icon: Shield },
+                  { title: "Creative", desc: "Ideas shaped around your audience, brand and objectives.", icon: Palette },
+                  { title: "Reliable", desc: "Professional execution from planning through delivery.", icon: Award },
+                  { title: "Innovative", desc: "Cutting-edge technology and creative solutions that push boundaries.", icon: Zap },
                 ].map((card) => (
                   <div
                     key={card.title}
-                    className={`group relative rounded-xl bg-[#0b0b0f] transition-all duration-200 ${
-                      card.size === "big"
-                        ? "sm:row-span-2 sm:col-span-1 p-6 min-h-[260px]"
-                        : card.size === "wide"
-                        ? "sm:col-span-2 p-5"
-                        : "sm:col-span-1 p-4"
-                    }`}
+                    className="group relative flex items-center gap-3 rounded-xl bg-[#0b0b0f] border border-[#c5a880]/15 px-4 py-3 transition-all duration-200 hover:border-[#c5a880]/40 hover:bg-[#0f0f14] hover:shadow-[0_0_24px_rgba(197,168,128,0.08)]"
                   >
-                    <div className="w-8 h-8 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center mb-3">
-                      <card.icon className="w-4 h-4 text-[#c5a880]" />
+                    <div className="flex-shrink-0 w-7 h-7 rounded-full border border-[#c5a880]/20 bg-[#0b0b0f] flex items-center justify-center">
+                      <card.icon className="w-3.5 h-3.5 text-[#c5a880]" />
                     </div>
-                    <h4 className={`font-medium text-white mb-1.5 ${
-                      card.size === "big" ? "text-base" : card.size === "wide" ? "text-sm" : "text-xs"
-                    }`}>{card.title}</h4>
-                    <p className={`text-[#f4ebd0]/60 leading-relaxed font-light ${
-                      card.size === "big" ? "text-sm" : card.size === "wide" ? "text-xs" : "text-[11px]"
-                    }`}>{card.desc}</p>
-                    <ArrowRight className="absolute top-4 right-4 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <div className="flex-1 space-y-0.5">
+                      <h4 className="text-xs font-medium text-white">{card.title}</h4>
+                      <p className="text-[11px] text-[#f4ebd0]/55 leading-relaxed font-light">{card.desc}</p>
+                    </div>
+                    <ArrowRight className="flex-shrink-0 w-3 h-3 text-[#c5a880] opacity-0 group-hover:opacity-100 transition-all duration-200 group-hover:translate-x-1" />
                   </div>
                 ))}
               </div>

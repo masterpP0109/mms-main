@@ -392,7 +392,7 @@ export default function Home() {
     {
       title: "Conference Microphone & Interpretation Equipment",
       icon: Mic,
-      image: "/mms/DSC_7204.jpg",
+      image: "/services%20images/5e3c3df339009497f72d40842dd6c19b.jpg",
       alt: "Conference microphones and interpretation booth setup",
       desc: "Professional conference audio, microphone systems and simultaneous interpretation booths for multilingual institutional events, government meetings and international conferences.",
       href: "/services"
@@ -400,7 +400,7 @@ export default function Home() {
     {
       title: "LED Screen Rental",
       icon: Monitor,
-      image: "/mms/DSC_7215.jpg",
+      image: "/services%20images/LED%20Screen%20Rental.jpg",
       alt: "Large LED screens and display technology at an event",
       desc: "High-brightness LED screens, video walls and digital displays for conferences, brand activations and outdoor events available in any size with on-site support.",
       href: "/services"
@@ -408,7 +408,7 @@ export default function Home() {
     {
       title: "Professional Sound Systems",
       icon: Volume2,
-      image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+      image: "/services%20images/Professional%20Sound%20Systems.jpg",
       alt: "Professional sound system and PA setup at an event",
       desc: "Comprehensive PA systems, line arrays, mixing consoles and wireless microphones engineered for clear, reliable sound at every venue size.",
       href: "/services"
@@ -416,7 +416,7 @@ export default function Home() {
     {
       title: "Live Streaming Production",
       icon: Play,
-      image: "/mms/DSC_9244.jpg",
+      image: "/services%20images/Live%20Streaming%20Production.jpg",
       alt: "Multi-camera live streaming control setup",
       desc: "Full-service live streaming with multi-camera switching, platform integration, virtual backdrops and real-time graphics for hybrid and virtual events.",
       href: "/services"
@@ -424,7 +424,7 @@ export default function Home() {
     {
       title: "Videography & Photography",
       icon: Camera,
-      image: "/mms/DSC_2327-Edit.jpg",
+      image: "/services%20images/Videography%20&%20Photography.jpg",
       alt: "Cinematic filming and photography at an event",
       desc: "Cinematic event videography and professional photography from same-day edits and highlight reels to full event archives and brand campaign imagery.",
       href: "/services"
@@ -432,7 +432,7 @@ export default function Home() {
     {
       title: "Drone Services",
       icon: Video,
-      image: "/mms/_MG_0072.jpg",
+      image: "/services%20images/Drone%20Services.jpg",
       alt: "Aerial drone filming over a landscape",
       desc: "Licensed drone cinematography and aerial photography for events, venues, landscapes and brand campaigns with 4K RAW footage delivered.",
       href: "/services"

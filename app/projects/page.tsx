@@ -142,8 +142,8 @@ export default function ProjectsPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/50 to-[#050507]/10 z-10" />
         <div className="relative z-20 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block">Our Featured Work</span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight font-serif">
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Our Featured Work</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading">
               Stories That Became Memories
             </h1>
             <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed">
@@ -217,7 +217,7 @@ export default function ProjectsPage() {
 
               {/* Content */}
               <div className="p-6 space-y-3">
-                <h3 className="text-lg font-light text-white font-serif">{project.title}</h3>
+                <h3 className="text-lg font-semibold text-white font-heading">{project.title}</h3>
                 <p className="text-xs text-[#f4ebd0]/65 leading-relaxed font-light">{project.desc}</p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {project.tags.map((tag) => (
@@ -254,7 +254,7 @@ export default function ProjectsPage() {
               { number: "5★", label: "Average Client Rating" },
             ].map((stat) => (
               <div key={stat.label} className="space-y-2">
-                <p className="text-3xl md:text-4xl font-serif font-light text-[#c5a880]">{stat.number}</p>
+                <p className="text-3xl md:text-4xl font-semibold text-[#c5a880] font-heading">{stat.number}</p>
                 <p className="text-xs uppercase tracking-[0.15em] text-[#f4ebd0]/55 font-light">{stat.label}</p>
               </div>
             ))}
@@ -269,8 +269,8 @@ export default function ProjectsPage() {
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
         <div className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Start Your Project</span>
-          <h2 className="text-3xl md:text-4xl font-light text-white font-serif">Your story deserves to be told beautifully.</h2>
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Start Your Project</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Your story deserves to be told beautifully.</h2>
           <p className="text-sm text-[#f4ebd0]/60 font-light leading-relaxed">Let&apos;s discuss your vision and build something worth remembering.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link href="/contact" className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>

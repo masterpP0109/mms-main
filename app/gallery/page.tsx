@@ -305,8 +305,8 @@ export default function GalleryPage() {
             transition={{ duration: 0.7 }}
             className="space-y-4"
           >
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block">Our Portfolio</span>
-            <h1 className="text-4xl sm:text-5xl font-light text-white leading-tight font-serif">Gallery</h1>
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Our Portfolio</span>
+            <h1 className="text-4xl sm:text-5xl font-semibold text-white font-heading">Gallery</h1>
             <p className="text-sm text-[#f4ebd0]/70 font-light">
               Weddings, conferences, brand campaigns, drone aerials and immersive productions — browse our full body of work.
             </p>
@@ -323,7 +323,7 @@ export default function GalleryPage() {
       <section className="py-16 border-t border-[#c5a880]/10 bg-black">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="text-xl md:text-2xl font-light text-white font-serif">Ready to be in our gallery?</h3>
+            <h3 className="text-xl md:text-2xl font-semibold text-white font-heading">Ready to be in our gallery?</h3>
             <p className="text-sm text-[#f4ebd0]/55 font-light mt-1">Let&apos;s create something beautiful together.</p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">

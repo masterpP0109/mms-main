@@ -23,7 +23,7 @@ export default function Footer() {
 
           {/* Services */}
           <div className="space-y-4">
-            <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold">Services</h4>
+            <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold font-heading">Services</h4>
             <ul className="space-y-2 text-xs text-[#f4ebd0]/60 font-light">
               <li><Link href="/conference-production" className="hover:text-white transition-colors">Conference Production</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">Visual Storytelling</Link></li>
@@ -34,7 +34,7 @@ export default function Footer() {
 
           {/* Gallery */}
           <div className="space-y-4">
-            <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold">Gallery</h4>
+            <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold font-heading">Gallery</h4>
             <ul className="space-y-2 text-xs text-[#f4ebd0]/60 font-light">
               <li><Link href="/gallery?cat=Wedding" className="hover:text-white transition-colors">Wedding Highlights</Link></li>
               <li><Link href="/gallery?cat=Conference" className="hover:text-white transition-colors">Corporate Keynotes</Link></li>
@@ -45,7 +45,7 @@ export default function Footer() {
 
           {/* Company */}
           <div className="space-y-4">
-            <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold">Company</h4>
+            <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold font-heading">Company</h4>
             <ul className="space-y-2 text-xs text-[#f4ebd0]/60 font-light">
               <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>

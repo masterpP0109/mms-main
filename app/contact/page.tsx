@@ -54,8 +54,8 @@ export default function ContactPage() {
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block">Get In Touch</span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight font-serif">
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Get In Touch</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
               Ready to Create Something Unforgettable?
             </h1>
             <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed">
@@ -72,8 +72,8 @@ export default function ContactPage() {
           {/* Info Panel */}
           <div className="lg:col-span-2 space-y-8">
             <div>
-              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-4">Contact Details</span>
-              <h2 className="text-2xl md:text-3xl font-light text-white font-serif mb-5">We&apos;d love to hear from you.</h2>
+              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-4 font-heading">Contact Details</span>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading mb-5">We&apos;d love to hear from you.</h2>
               <p className="text-sm text-[#f4ebd0]/65 font-light leading-relaxed">
                 Whether you are planning a government conference, a destination wedding, a brand campaign or just exploring — send us a message and let&apos;s talk.
               </p>
@@ -141,7 +141,7 @@ export default function ContactPage() {
           <div className="lg:col-span-3">
             {!submitted ? (
               <form onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-10 space-y-5">
-                <h3 className="text-xl font-light text-white font-serif mb-2">Send us a message</h3>
+                <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -206,7 +206,7 @@ export default function ContactPage() {
             ) : (
               <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-12 text-center space-y-4">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto" />
-                <h3 className="text-xl font-light text-white font-serif">Message received — thank you!</h3>
+                <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
                 <p className="text-sm text-[#f4ebd0]/60 font-light">Our team will review your enquiry and respond within 24 hours.</p>
                 <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#c5a880] hover:text-white transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
@@ -239,8 +239,8 @@ export default function ContactPage() {
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold block">Institutional Production</span>
-              <h2 className="text-2xl md:text-3xl font-light text-white font-serif">Planning a conference or government event?</h2>
+              <span className="text-[9px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold block font-heading">Institutional Production</span>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Planning a conference or government event?</h2>
               <p className="text-sm text-[#f4ebd0]/60 font-light">Use the dedicated conference enquiry form to give us all the details we need — organisation type, delegate count, venue and required services.</p>
             </div>
             <Link href="/conference-production#enquiry" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] shrink-0`}>

@@ -48,8 +48,8 @@ export default function AboutPage() {
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full pb-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block">About Us</span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white leading-tight font-serif">
+<span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">About Us</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
               We help organisations deliver important events professionally.
             </h1>
             <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed max-w-2xl">
@@ -63,8 +63,8 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
           <div className="space-y-6">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Who We Are</span>
-            <h2 className="text-3xl md:text-4xl font-light text-white font-serif">A dedicated team built around institutional excellence.</h2>
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Who We Are</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">A dedicated team built around institutional excellence.</h2>
             <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
               We are a small, professional production team specialising in institutional events and conference delivery. Our core work focuses on conferences, seminars, workshops and institutional gatherings for government, development, professional and corporate organisations.
             </p>
@@ -142,8 +142,8 @@ export default function AboutPage() {
           </div>
           {/* Text */}
           <div className="space-y-6">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Our Base</span>
-            <h2 className="text-3xl md:text-4xl font-light text-white font-serif">Why Victoria Falls</h2>
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Our Base</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Why Victoria Falls</h2>
             <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
               Victoria Falls offers strategic proximity to regional events and unique world-class venues that attract international delegations. Our local knowledge of the venue landscape, logistics networks and regulatory environment helps us deliver seamless productions for visiting organisations.
             </p>
@@ -162,8 +162,8 @@ export default function AboutPage() {
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="text-center mb-16">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What Guides Us</span>
-            <h2 className="text-3xl md:text-4xl font-light text-white font-serif">Our Values</h2>
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What Guides Us</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Our Values</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, idx) => (
@@ -196,7 +196,7 @@ export default function AboutPage() {
       {/* Selected work teaser — 5 images */}
       <section className="py-16 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="flex items-end justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-light text-white font-serif">Selected Work</h2>
+          <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Selected Work</h2>
           <Link href="/gallery" className="text-xs text-[#c5a880] hover:text-white transition-colors flex items-center gap-1.5">
             Full Gallery <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -225,8 +225,8 @@ export default function AboutPage() {
       <section className="py-16 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[900px] mx-auto px-6 sm:px-10">
           <div className="text-center mb-12">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Quick Answers</span>
-            <h2 className="text-3xl md:text-4xl font-light text-white font-serif">Frequently Asked Questions</h2>
+            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Quick Answers</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Frequently Asked Questions</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {faqs.map((faq) => (
@@ -246,7 +246,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-[#050507]/80" />
           <div className="relative z-10 p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
-              <h2 className="text-2xl md:text-3xl font-light text-white font-serif">Ready to work together?</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Ready to work together?</h2>
               <p className="text-sm text-[#f4ebd0]/60 font-light">Tell us about your event or project and our team will respond within 24 hours.</p>
             </div>
             <div className="flex flex-wrap gap-4 shrink-0">

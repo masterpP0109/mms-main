@@ -166,8 +166,8 @@ export default function ServicesPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/55 to-[#050507]/20 z-10" />
         <div className="relative z-20 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
-            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-bold block">What We Offer</span>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-light text-white leading-tight font-serif">Our Services</h1>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">What We Offer</span>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-semibold text-white font-heading leading-tight">Our Services</h1>
             <p className="text-lg md:text-xl text-[#f4ebd0]/75 font-light leading-relaxed">
               End-to-end multimedia production crafted with creativity and precision — from conference AV to cinematic films and brand campaigns.
             </p>
@@ -208,7 +208,7 @@ export default function ServicesPage() {
 
                 {/* Text */}
                 <div className={`space-y-6 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
-                  <h2 className="text-3xl md:text-5xl font-light text-white font-serif">{service.title}</h2>
+                  <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading">{service.title}</h2>
                   <p className="text-lg text-[#f4ebd0]/70 leading-relaxed font-light">{service.desc}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
                     {service.items.map((item) => (
@@ -243,8 +243,8 @@ export default function ServicesPage() {
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="text-center mb-14">
-            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Optional Add-Ons</span>
-            <h2 className="text-4xl md:text-5xl font-light text-white font-serif">Enhance Your Production</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Optional Add-Ons</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white font-heading">Enhance Your Production</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {addOns.map((addon, idx) => (
@@ -282,8 +282,8 @@ export default function ServicesPage() {
           <div className="absolute inset-0 bg-[#050507]/75" />
         </div>
         <div className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
-          <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get Started</span>
-          <h2 className="text-4xl md:text-5xl font-light text-white font-serif">Ready to create something memorable?</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get Started</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white font-heading">Ready to create something memorable?</h2>
           <p className="text-lg text-[#f4ebd0]/60 font-light leading-relaxed">Tell us about your project and we&apos;ll respond within 24 hours with a tailored proposal.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link href="/contact" className={`${goldBtn} px-8 py-3.5 text-sm uppercase tracking-[0.18em]`}>

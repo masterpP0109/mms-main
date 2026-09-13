@@ -509,7 +509,7 @@ export default function Home() {
 
         {/* Hero Carousel Section - offset for fixed navbar */}
         <div
-          className="relative h-[82vh] min-h-[640px] md:min-h-[620px] w-full overflow-hidden bg-black flex items-center justify-center z-10 pt-16 md:pt-20"
+          className="relative h-[70vh] min-h-[500px] md:min-h-[560px] w-full overflow-hidden bg-black flex items-center justify-center z-10 pt-16 md:pt-20"
           onTouchStart={(event) => {
             heroTouchStartX.current = event.touches[0]?.clientX ?? null;
           }}
@@ -557,7 +557,7 @@ export default function Home() {
 
           {/* Slide Text Content - Left Aligned with Shade */}
           <div className="relative z-20 w-full h-full flex items-center pointer-events-none">
-            <div className="w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-20">
+            <div className="w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-20 flex justify-start pl-8 sm:pl-12 2xl:pl-20">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -568,29 +568,29 @@ export default function Home() {
                 className="space-y-6 max-w-2xl xl:max-w-3xl relative z-10"
               >
                 {/* shade removed per request */}
-                <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-bold block gsap-eyebrow">
+               <span className="text-[10px] tracking-[0.25em] text-[#c5a880] uppercase font-bold block gsap-eyebrow font-heading">
                   {slides[currentSlide].tag}
                 </span>
 
-                <h1 className="text-4xl sm:text-6xl md:text-7xl xl:text-8xl font-light text-white leading-[1.05] font-serif gsap-heading">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-semibold text-white font-heading leading-[1.05] gsap-heading">
                   {slides[currentSlide].title}
                 </h1>
 
-                <p className="text-base md:text-lg xl:text-xl text-[#f4ebd0]/82 tracking-wide font-light leading-relaxed max-w-lg gsap-copy">
+                <p className="text-sm md:text-base xl:text-lg text-[#f4ebd0]/82 tracking-wide font-light leading-relaxed max-w-lg gsap-copy">
                   {slides[currentSlide].desc}
                 </p>
 
                 <div className="pt-6 gsap-action pointer-events-auto flex flex-col sm:flex-row sm:items-center gap-3">
                   <a
                     href={slides[currentSlide].link}
-                    className={`${goldGlowButtonBase} px-7 py-3.5 text-xs sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.18em] premium-button`}
+                    className={`${goldGlowButtonBase} px-6 py-3 text-[10px] uppercase tracking-[0.1em] premium-button`}
                   >
                     <span className="relative z-10">{slides[currentSlide].btnText}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                   <a
                     href="#contact"
-                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/25 px-7 py-3.5 text-xs sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.18em] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#c5a880] hover:bg-[#c5a880]/10 hover:text-[#f4ebd0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
+                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/25 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#c5a880] hover:bg-[#c5a880]/10 hover:text-[#f4ebd0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
                   >
                     Request a Quote
                   </a>
@@ -700,8 +700,8 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
             {/* Left — Text + CTA */}
             <div className="w-full lg:w-[45%] space-y-6">
-              <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">About Mosi Media Solutions</span>
-              <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
+            <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">About Mosi Media Solutions</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-white leading-tight font-heading">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
               <p className="text-sm md:text-base text-[#f4ebd0]/70 leading-relaxed font-light">
                 Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
               </p>
@@ -751,8 +751,8 @@ export default function Home() {
       <section id="services" className="relative pt-8 md:pt-12 pb-16 md:pb-24 bg-[#050507]">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-12 md:mb-16">
-            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What We Offer</span>
-            <h2 className="text-4xl md:text-6xl font-light text-white font-serif mb-4">Our Services</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What We Offer</span>
+            <h2 className="text-4xl md:text-6xl font-semibold text-white font-heading mb-4">Our Services</h2>
             <p className="text-lg md:text-xl text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
               From media production and live broadcasting to professional audio, screen technology and event enhancements, MMS delivers the creative and technical solutions needed to bring every experience to life.
             </p>
@@ -777,7 +777,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <h3 className="text-center text-2xl font-medium text-white font-serif mb-2">{service.title}</h3>
+                <h3 className="text-center text-2xl font-semibold text-white font-heading mb-2">{service.title}</h3>
                 <p className="text-center text-lg text-[#f4ebd0]/60 leading-relaxed font-light mb-4">
                   {service.desc}
                 </p>
@@ -816,11 +816,11 @@ export default function Home() {
       >
         <div className="past-work-pin relative w-full h-screen min-h-[700px] bg-[#050507]">
           <div className="past-work-heading z-20 text-center">
-            <span className="pw-eyebrow text-[12px] uppercase tracking-[0.28em] text-[#c5a880] font-semibold block mb-4">
+            <span className="pw-eyebrow text-[12px] uppercase tracking-[0.28em] text-[#c5a880] font-semibold block mb-4 font-heading">
               OUR FEATURED WORK
             </span>
             <div className="overflow-hidden">
-              <h2 className="pw-heading-line text-3xl md:text-5xl leading-[0.98] md:leading-[1.02] font-serif font-light text-white tracking-tight">
+              <h2 className="pw-heading-line text-3xl md:text-5xl leading-[0.98] md:leading-[1.02] font-semibold text-white tracking-tight font-heading">
                 Stories That Became Memories
               </h2>
             </div>
@@ -850,10 +850,10 @@ export default function Home() {
                     </div>
                     <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#050507]">
                       <div className="space-y-3">
-                        <span className="text-xs uppercase tracking-[0.28em] text-[#c5a880] font-semibold block">
+                        <span className="text-xs uppercase tracking-[0.28em] text-[#c5a880] font-semibold block font-heading">
                           {item.category}
                         </span>
-                        <h3 className="text-2xl md:text-3xl font-light text-white font-serif leading-tight">
+                        <h3 className="text-2xl md:text-3xl font-semibold text-white font-heading leading-tight">
                           {item.title}
                         </h3>
                         <p className="text-xs md:text-sm text-[#f4ebd0]/70 leading-relaxed font-light max-w-xl">
@@ -878,7 +878,7 @@ export default function Home() {
                           >
                             View Project
                           </a>
-                            <span className="pw-card-counter text-xs uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-mono">
+                          <span className="pw-card-counter text-xs uppercase tracking-[0.3em] text-[#f4ebd0]/70 font-heading">
                             {String(idx + 1).padStart(2, "00")} / {String(pastWorkItems.length).padStart(2, "00")}
                           </span>
                         </div>
@@ -916,8 +916,8 @@ export default function Home() {
 
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-16">
-            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Our Workflow</span>
-            <h2 className="text-4xl md:text-6xl font-light text-white font-serif mb-4">Our Process: A Smooth Journey To Your Story</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Our Workflow</span>
+            <h2 className="text-4xl md:text-6xl font-semibold text-white font-heading mb-4">Our Process: A Smooth Journey To Your Story</h2>
           </div>
 
           {/* 4-column timeline */}
@@ -950,7 +950,7 @@ export default function Home() {
               <div key={idx} className="relative z-10 flex flex-col items-center text-center px-4">
                 {/* Step Number Circle */}
                 <div className="w-16 h-16 rounded-full bg-[#050507] border border-[#c5a880]/30 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-[#c5a880] transition-colors duration-300">
-                  <span className="text-xl font-serif font-semibold text-[#c5a880]">{item.step}</span>
+                  <span className="text-xl font-semibold text-[#c5a880] font-heading">{item.step}</span>
                 </div>
                 <h3 className="text-xl font-medium text-white mb-2">{item.title}</h3>
                 <p className="text-base text-[#f4ebd0]/70 leading-relaxed font-light">{item.desc}</p>
@@ -966,8 +966,8 @@ export default function Home() {
 
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-16">
-            <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Client Feedback</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">What Our Clients Say</h2>
+            <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Client Feedback</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">What Our Clients Say</h2>
           </div>
 
           {/* Testimonial Carousel */}
@@ -1006,7 +1006,7 @@ export default function Home() {
                         />
                       ) : (
                         <div className="w-full h-full bg-[#121218] flex items-center justify-center">
-                          <span className="text-2xl font-serif font-bold text-[#c5a880]">JP</span>
+                          <span className="text-2xl font-bold text-[#c5a880] font-heading">JP</span>
                         </div>
                       )}
                     </div>
@@ -1071,8 +1071,8 @@ export default function Home() {
 
         <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">Get In Touch</span>
-            <h2 className="text-3xl md:text-5xl font-light text-white font-serif leading-tight">Ready to Create Something Unforgettable?</h2>
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get In Touch</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
             <p className="text-base text-[#f4ebd0]/70 font-light">
               Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
             </p>
@@ -1101,7 +1101,7 @@ export default function Home() {
                   >
                     {isDone ? "✓" : stepNum}
                   </div>
-                  <span className={`text-xs uppercase tracking-widest mt-1.5 ${
+                  <span className={`text-xs uppercase tracking-widest mt-1.5 font-heading ${
                     isActive ? "text-[#c5a880]" : isDone ? "text-[#c5a880]/60" : "text-[#f4ebd0]/30"
                   }`}>
                     {label}
@@ -1120,7 +1120,7 @@ export default function Home() {
               className="space-y-6"
             >
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-serif text-white font-light">What type of project are you planning?</h3>
+                <h3 className="text-2xl font-semibold text-white font-heading">What type of project are you planning?</h3>
                 <p className="text-base text-[#f4ebd0]/60 mt-2">Select the option that best describes your needs</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1158,7 +1158,7 @@ export default function Home() {
               className="space-y-6"
             >
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-serif text-white font-light">Tell us about your event or audience</h3>
+                <h3 className="text-2xl font-semibold text-white font-heading">Tell us about your event or audience</h3>
                 <p className="text-base text-[#f4ebd0]/60 mt-2">This helps us tailor the creative approach</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1199,7 +1199,7 @@ export default function Home() {
               className="space-y-6"
             >
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-serif text-white font-light">What&apos;s your timeline?</h3>
+                <h3 className="text-2xl font-semibold text-white font-heading">What&apos;s your timeline?</h3>
                 <p className="text-base text-[#f4ebd0]/60 mt-2">We work with all timelines — urgent to flexible</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1240,7 +1240,7 @@ export default function Home() {
               className="space-y-6 max-w-lg mx-auto"
             >
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-serif text-white font-light">Where should we send your custom quote?</h3>
+                <h3 className="text-2xl font-semibold text-white font-heading">Where should we send your custom quote?</h3>
                 <p className="text-base text-[#f4ebd0]/60 mt-2">We&apos;ll respond within 24 hours</p>
               </div>
               <div className="space-y-4">
@@ -1300,7 +1300,7 @@ export default function Home() {
                 <div className="w-16 h-16 rounded-full bg-[#c5a880]/15 flex items-center justify-center mx-auto mb-4">
                   <Award className="w-7 h-7 text-[#c5a880]" />
                 </div>
-                <h3 className="text-2xl font-serif text-white font-light">Your Brief Is Ready</h3>
+                <h3 className="text-2xl font-semibold text-white font-heading">Your Brief Is Ready</h3>
                 <p className="text-base text-[#f4ebd0]/60 mt-2">Review your selections below. We&apos;ll create a custom quote based on your brief.</p>
               </div>
 
@@ -1388,7 +1388,7 @@ export default function Home() {
       <Footer />
 
       {/* Persistent CTA */}
-      <Link href="/conference-production#enquiry" className="fixed bottom-6 right-6 z-50 inline-flex items-center px-4 py-3 rounded-full bg-[#b48a3d] text-[#050507] font-semibold shadow-lg">Plan Your Conference</Link>
+      <Link href="/conference-production#enquiry" className="fixed bottom-6 right-6 z-50 inline-flex items-center px-4 py-2.5 rounded-full bg-[#b48a3d] text-[#050507] font-semibold text-[10px] shadow-lg">Plan Your Conference</Link>
 
     </div>
   );

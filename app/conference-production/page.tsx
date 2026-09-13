@@ -92,7 +92,7 @@ export default function ConferenceProduction() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/80 via-transparent to-transparent" />
         <div className="relative z-10 max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 w-full pt-24">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-4">Conference & Seminar Production</span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-light text-white leading-[1.05] font-serif max-w-3xl mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-semibold text-white font-heading leading-[1.05] max-w-3xl mb-6">
             Production you can depend on.
           </h1>
           <p className="text-sm md:text-base text-[#f4ebd0]/80 font-light leading-relaxed max-w-xl mb-8">
@@ -132,8 +132,8 @@ export default function ConferenceProduction() {
       {/* Capabilities */}
       <section id="capabilities" className="py-20 md:py-28 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">What We Provide</span>
-          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Production Capabilities</h2>
+          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What We Provide</span>
+          <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Production Capabilities</h2>
           <p className="text-sm text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
             Everything your event needs, coordinated by one team.
           </p>
@@ -160,8 +160,8 @@ export default function ConferenceProduction() {
         <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
-              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Event Types</span>
-              <h2 className="text-3xl md:text-4xl font-light text-white font-serif mb-8">Events We Support</h2>
+              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Event Types</span>
+              <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-8">Events We Support</h2>
               <ul className="space-y-3">
                 {eventTypes.map((t) => (
                   <li key={t} className="flex items-center gap-3 text-sm text-[#f4ebd0]/80">
@@ -172,8 +172,8 @@ export default function ConferenceProduction() {
               </ul>
             </div>
             <div>
-              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Clients</span>
-              <h2 className="text-3xl md:text-4xl font-light text-white font-serif mb-8">Who We Serve</h2>
+              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Clients</span>
+              <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-8">Who We Serve</h2>
               <ul className="space-y-3">
                 {clients.map((c) => (
                   <li key={c} className="flex items-center gap-3 text-sm text-[#f4ebd0]/80">
@@ -190,15 +190,15 @@ export default function ConferenceProduction() {
       {/* Process */}
       <section className="py-20 md:py-28 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">How We Work</span>
-          <h2 className="text-3xl md:text-5xl font-light text-white font-serif mb-4">Our Production Process</h2>
+          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">How We Work</span>
+          <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Our Production Process</h2>
         </div>
         <div className="relative grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-4">
           <div className="absolute top-10 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#c5a880]/30 to-transparent hidden md:block" />
           {process.map((item) => (
             <div key={item.step} className="relative z-10 flex flex-col items-center text-center px-4">
               <div className="w-14 h-14 rounded-full bg-[#050507] border border-[#c5a880]/30 flex items-center justify-center mb-5 shadow-xl">
-                <span className="text-sm font-serif font-semibold text-[#c5a880]">{item.step}</span>
+                <span className="text-sm font-semibold text-[#c5a880] font-heading">{item.step}</span>
               </div>
               <h3 className="text-base font-medium text-white mb-2">{item.title}</h3>
               <p className="text-xs text-[#f4ebd0]/65 leading-relaxed font-light">{item.desc}</p>
@@ -212,8 +212,8 @@ export default function ConferenceProduction() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1510]/60 via-[#050507] to-[#050507] z-0" />
         <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3">Get In Touch</span>
-            <h2 className="text-3xl md:text-4xl font-light text-white font-serif mb-4">Conference Enquiry</h2>
+          <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Get In Touch</span>
+          <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-4">Conference Enquiry</h2>
             <p className="text-sm text-[#f4ebd0]/70 font-light max-w-md mx-auto">Fill in the form below and our production team will respond within 24 hours with a tailored proposal.</p>
           </div>
 
@@ -279,7 +279,7 @@ export default function ConferenceProduction() {
             ) : (
               <div className="text-center py-12">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto mb-4" />
-                <h3 className="text-xl font-light text-white font-serif mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
+                <h3 className="text-xl font-semibold text-white font-heading mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
                 <p className="text-sm text-[#f4ebd0]/60">Our production team will respond within 24 hours.</p>
               </div>
             )}

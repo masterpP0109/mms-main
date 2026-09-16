@@ -305,7 +305,6 @@ export default function Home() {
     {
       image: "/mms/DSC_9244.jpg",
       imagePosition: "center center",
-      tag: "MOSI MEDIA SOLUTIONS",
       title: "Conferences & Corporate Events",
       desc: "From screens and digital displays to desktop setups and digital podiums with lapels — comprehensive AV solutions for professional conferences and corporate events.",
       btnText: "Explore Conference Solutions",
@@ -314,7 +313,6 @@ export default function Home() {
     {
       image: "/mms/audio1.jpg",
       imagePosition: "center center",
-      tag: "MOSI MEDIA SOLUTIONS",
       title: "Audio Solutions",
       desc: "Professional PA systems, microphones, conference audio and interpretation technology for clear, reliable communication at every event.",
       btnText: "Explore Audio Solutions",
@@ -323,7 +321,6 @@ export default function Home() {
     {
       image: "/mms/media-prodction.jpg.jpeg",
       imagePosition: "center center",
-      tag: "MOSI MEDIA SOLUTIONS",
       title: "Media Production",
       desc: "Photography, videography, live streaming, drone filming and podcast production brought together through professional visual storytelling.",
       btnText: "Explore Media Production",
@@ -332,7 +329,6 @@ export default function Home() {
     {
       image: "/mms/screens.jpg.jpeg",
       imagePosition: "center center",
-      tag: "MOSI MEDIA SOLUTIONS",
       title: "Display & Advertisement Solutions",
       desc: "LED screens, interactive displays, vertical screens and digital podiums designed to increase visibility, engagement and presentation impact.",
       btnText: "Explore Display Solutions",
@@ -341,7 +337,6 @@ export default function Home() {
     {
       image: "/mms/special-effects.jpg.jpeg",
       imagePosition: "center center",
-      tag: "MOSI MEDIA SOLUTIONS",
       title: "Special Effects",
       desc: "Cold sparks, low-lying cloud effects, digital advertising billboards and immersive 360 booth experiences that elevate events and create memorable visual moments.",
       btnText: "Explore Special Effects",
@@ -567,11 +562,6 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="space-y-6 max-w-2xl xl:max-w-3xl relative z-10"
               >
-                {/* shade removed per request */}
-               <span className="text-[10px] tracking-[0.25em] text-[#c5a880] uppercase font-bold block gsap-eyebrow font-heading">
-                  {slides[currentSlide].tag}
-                </span>
-
                 <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-semibold text-white font-heading leading-[1.05] gsap-heading">
                   {slides[currentSlide].title}
                 </h1>

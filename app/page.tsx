@@ -303,7 +303,7 @@ export default function Home() {
   // Hero carousel: the four main MMS service categories from the company profile.
   const slides = [
     {
-      image: "/mms/DSC_9244.jpg",
+      image: "/mms/conference%20hero%20img.png",
       imagePosition: "center center",
       title: "Conferences & Corporate Events",
       desc: "From screens and digital displays to desktop setups and digital podiums with lapels — comprehensive AV solutions for professional conferences and corporate events.",

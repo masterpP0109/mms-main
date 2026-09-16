@@ -551,7 +551,7 @@ export default function Home() {
           </AnimatePresence>
 
           {/* Slide Text Content - Left Aligned with Shade */}
-          <div className="relative z-20 w-full h-full flex items-center pointer-events-none">
+          <div className="relative z-30 w-full h-full flex items-center pointer-events-none">
             <div className="w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-20 flex justify-start pl-8 sm:pl-12 2xl:pl-20">
             <AnimatePresence mode="wait">
               <motion.div
@@ -560,13 +560,13 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="space-y-6 max-w-2xl xl:max-w-3xl relative z-10"
+                className="space-y-5 max-w-2xl xl:max-w-3xl relative z-20"
               >
-                <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-7xl font-semibold text-white font-heading leading-[1.05] gsap-heading">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl xl:text-6xl font-semibold text-white font-heading leading-[1.05] gsap-heading drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
                   {slides[currentSlide].title}
                 </h1>
 
-                <p className="text-sm md:text-base xl:text-lg text-[#f4ebd0]/82 tracking-wide font-light leading-relaxed max-w-lg gsap-copy">
+                <p className="text-xs md:text-sm xl:text-base text-[#f4ebd0]/85 tracking-wide font-light leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
                   {slides[currentSlide].desc}
                 </p>
 

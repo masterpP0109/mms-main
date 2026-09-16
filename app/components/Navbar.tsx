@@ -68,7 +68,7 @@ export default function Navbar() {
           aria-label="MMS Home"
         >
           <Image
-            src="/mmslogo.webp"
+            src="/mms/MMS%20LOGO.png"
             alt="MMS Logo"
             width={140}
             height={38}

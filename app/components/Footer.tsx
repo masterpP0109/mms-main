@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1 space-y-4">
-            <Image src="/mmslogo.webp" alt="MMS Logo" width={130} height={38} className="object-contain" />
+            <Image src="/mms/MMS%20LOGO.png" alt="MMS Logo" width={130} height={38} className="object-contain" />
             <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">
               Mosi Media Solutions is a Victoria Falls-based conference and media production company serving ministries, government agencies, international organisations and businesses.
             </p>

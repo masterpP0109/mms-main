@@ -81,7 +81,7 @@ export default function ConferenceProduction() {
       {/* Hero */}
       <section className="relative h-[70vh] min-h-[520px] w-full overflow-hidden flex items-center justify-center">
         <Image
-          src="/mms/DSC_9244.jpg"
+          src="/mms/conference%20hero%20img.png"
           alt="Conference production"
           fill
           className="object-cover object-center"

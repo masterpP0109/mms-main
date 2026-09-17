@@ -742,7 +742,7 @@ export default function Home() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
           <div className="text-center mb-12 md:mb-16">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What We Offer</span>
-            <h2 className="text-4xl md:text-6xl font-semibold text-white font-heading mb-4">Our Services</h2>
+            <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Our Services</h2>
             <p className="text-lg md:text-xl text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
               From media production and live broadcasting to professional audio, screen technology and event enhancements, MMS delivers the creative and technical solutions needed to bring every experience to life.
             </p>

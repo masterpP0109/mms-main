@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Users, Video, Camera, Play, PenTool, Mic, Monitor, Globe,
+  Users, Video, Camera, Play, PenTool, Monitor, Globe, Sparkles,
   ChevronRight, CheckCircle, ArrowRight
 } from "lucide-react";
 import Navbar from "../components/Navbar";
@@ -19,7 +19,7 @@ const capabilities = [
   { icon: Video, title: "Multi-Camera Video", desc: "Multi-camera setups with professional editing and highlight reels delivered post-event." },
   { icon: Monitor, title: "Live Streaming", desc: "Hybrid and fully virtual conference streaming to national and international audiences." },
   { icon: PenTool, title: "Event Branding", desc: "Stage design, branded backdrops, digital slides and signage aligned to your identity." },
-  { icon: Mic, title: "Speaker Interviews", desc: "On-site speaker interviews and post-event content packages for communications teams." },
+  { icon: Sparkles, title: "Event Lighting & Stage Setup", desc: "Professional stage setups and corporate lighting design customized for conferences, award ceremonies and high-level summits." },
   { icon: Globe, title: "Interpretation Systems", desc: "Simultaneous interpretation booth setup and management for multilingual events." },
   { icon: Users, title: "Staffing & Coordination", desc: "Fully coordinated production crew — one point of contact for the entire event." },
 ];
@@ -46,7 +46,7 @@ const process = [
   { step: "05", title: "Post-Event Delivery", desc: "Edited video, photography and content packages delivered for reports and archives." },
 ];
 
-const services = ["Sound and microphones", "Screens and projection", "Photography", "Video recording", "Multi-camera production", "Live streaming", "Event branding", "Speaker interviews", "Highlight video", "Post-event content"];
+const services = ["Sound and microphones", "Screens and projection", "Photography", "Video recording", "Multi-camera production", "Live streaming", "Event branding", "Event lighting and stage setup", "Highlight video", "Post-event content"];
 
 export default function ConferenceProduction() {
   const [submitted, setSubmitted] = useState(false);

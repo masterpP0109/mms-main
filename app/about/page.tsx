@@ -53,7 +53,7 @@ export default function AboutPage() {
               We help organisations deliver important events professionally.
             </h1>
             <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed max-w-2xl">
-              Mosi Media Solutions is a Victoria Falls-based conference and media production company supporting institutions that need their events professionally presented, documented and shared.
+              Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
             </p>
           </motion.div>
         </div>
@@ -64,12 +64,12 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
           <div className="space-y-6">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Who We Are</span>
-            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">A dedicated team built around institutional excellence.</h2>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
             <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
-              We are a small, professional production team specialising in institutional events and conference delivery. Our core work focuses on conferences, seminars, workshops and institutional gatherings for government, development, professional and corporate organisations.
+              Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
             </p>
             <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
-              We prioritise preparation, discretion and reliable technical delivery. Every event receives the same rigorous pre-production process — whether an intimate ministerial workshop or a multi-day international summit.
+              We combine creativity with cutting edge technology to create immersive experiences that elevate events and brands. Our services are tailored to meet each client&rsquo;s unique needs, ensuring professionalism, reliability, and exceptional delivery.
             </p>
             <div className="space-y-3 pt-2">
               {[

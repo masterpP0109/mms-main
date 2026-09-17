@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, Palette, PenTool, Briefcase, ArrowRight
+  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -95,22 +95,6 @@ const services = [
     href: "/contact",
   },
   {
-    title: "Drone Services",
-    image: "/mms/_MG_0072.jpg",
-    gallery: ["/mms/_MG_0072.jpg", "/mms/_MG_2920.jpg", "/mms/IMG_9198.jpeg"],
-    tag: "Aerial Capture",
-    desc: "Licensed drone cinematography and aerial photography for events, venues, landscapes and brand campaigns — 4K RAW footage delivered with full regulatory compliance.",
-    items: [
-      { label: "Aerial Videography", icon: Camera },
-      { label: "Drone Photography", icon: Video },
-      { label: "Site Survey", icon: Play },
-      { label: "Licensed Pilots", icon: Globe },
-      { label: "4K & RAW", icon: Users },
-    ],
-    cta: "See Cinematic Work",
-    href: "/gallery",
-  },
-  {
     title: "Event Lighting & Stage Setup",
     image: "/mms/DSC_7356.jpg",
     gallery: ["/mms/DSC_7356.jpg", "/mms/DSC_7317.jpg", "/mms/DSC_7343.jpg"],
@@ -126,31 +110,13 @@ const services = [
     cta: "Build Your Event",
     href: "/contact",
   },
-  {
-    title: "Special Effects Services",
-    image: "/mms/Iconic Final Look with Pyro.jpg",
-    gallery: ["/mms/Iconic Final Look with Pyro.jpg", "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", "/mms/IMG_9198.jpeg"],
-    tag: "FX & Atmosphere",
-    desc: "High-impact special effects including pyrotechnics, cold spark machines, haze, confetti and custom atmospheric effects for galas, launches and grand finales.",
-    items: [
-      { label: "Pyrotechnics", icon: Play },
-      { label: "Cold Sparks", icon: Palette },
-      { label: "Haze & Fog", icon: Video },
-      { label: "Confetti", icon: Globe },
-      { label: "Custom Effects", icon: MessageSquare },
-    ],
-    cta: "See Cinematic Work",
-    href: "/gallery",
-  },
 ];
 
 const addOns = [
   { icon: Camera,       label: "Drone Cinematography",  img: "/mms/_MG_2920.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
   { icon: Video,        label: "360° Capture",           img: "/mms/IMG_9203.jpeg",          desc: "Immersive 360-degree video experiences for events and digital platforms." },
   { icon: MessageSquare,label: "Podcast Production",     img: "/mms/DSC_7598.jpg",           desc: "On-location podcast capture with multi-track audio and professional editing." },
-  { icon: Globe,        label: "Interpretation Systems", img: "/mms/DSC_7204.jpg",           desc: "Simultaneous interpretation booths and receiver units for multilingual events." },
   { icon: Megaphone,    label: "Social Media Packages",  img: "/mms/DSC_2505.jpg",           desc: "Edited reels, clips and graphics delivered for immediate post-event publishing." },
-  { icon: Briefcase,    label: "Equipment Hire",         img: "/mms/Victoria-Falls-Video-Conference-Hire.webp", desc: "Standalone hire of PA systems, screens, cameras and broadcast equipment." },
 ];
 
 export default function ServicesPage() {

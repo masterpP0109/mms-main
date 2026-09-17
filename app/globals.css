@@ -316,21 +316,23 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(197, 168, 128, 0.22);
   box-shadow:
     0 12px 40px rgba(0, 0, 0, 0.15),
-    0 0 20px rgba(255, 255, 255, 0.06),
+    0 0 20px rgba(229, 62, 62, 0.10),
+    0 0 20px rgba(197, 168, 128, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: visible;
   transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
 }
 
 .glass-navbar-scrolled {
-  background: linear-gradient(135deg, #1e3a5f 0%, #4a1e3a 100%);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, #5a1a28 0%, #4a1520 35%, #1a1510 65%, #050507 100%);
+  border-color: rgba(197, 168, 128, 0.30);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.25),
-    0 0 20px rgba(30, 58, 95, 0.2);
+    0 12px 40px rgba(0, 0, 0, 0.35),
+    0 0 24px rgba(229, 62, 62, 0.20),
+    0 0 18px rgba(180, 138, 61, 0.14);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -387,6 +389,7 @@ h1, h2, h3, h4, h5, h6 {
       0 12px 40px rgba(0, 0, 0, 0.15),
       0 0 20px rgba(255, 255, 255, 0.06),
       0 0 30px rgba(197, 168, 128, 0.08),
+      0 0 22px rgba(229, 62, 62, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   50% {
@@ -394,6 +397,7 @@ h1, h2, h3, h4, h5, h6 {
       0 12px 40px rgba(0, 0, 0, 0.15),
       0 0 25px rgba(255, 255, 255, 0.08),
       0 0 45px rgba(197, 168, 128, 0.14),
+      0 0 34px rgba(229, 62, 62, 0.14),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
@@ -414,7 +418,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(229, 62, 62, 0.35), rgba(255, 255, 255, 0.12));
   opacity: 0;
   transform: scale(0.85);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -433,6 +437,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-item.active {
   color: #ffffff;
+  text-shadow: 0 0 12px rgba(229, 62, 62, 0.45);
 }
 
 .nav-icon-btn {

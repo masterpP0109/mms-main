@@ -106,9 +106,17 @@ function GalleryContent() {
 
   const [active, setActive] = useState<Category>(initCat);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-
+  const [expanded, setExpanded] = useState(false);
 
   const filtered = active === "All" ? items : items.filter((i) => i.cat === active);
+  const INITIAL_COUNT = 12;
+  const visible = expanded ? filtered : filtered.slice(0, INITIAL_COUNT);
+
+  const setActiveCat = (cat: Category) => {
+    setActive(cat);
+    setExpanded(false);
+    setLightboxIdx(null);
+  };
 
   // Navigate lightbox
   const prev = () => setLightboxIdx((n) => (n === null ? null : (n - 1 + filtered.length) % filtered.length));
@@ -134,7 +142,7 @@ function GalleryContent() {
             <button
               key={cat}
               type="button"
-              onClick={() => setActive(cat)}
+              onClick={() => setActiveCat(cat)}
               className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-medium transition-all duration-250 cursor-pointer ${
                 active === cat
                   ? "bg-[#c5a880] text-[#050507]"
@@ -145,7 +153,7 @@ function GalleryContent() {
             </button>
           ))}
           <span className="ml-auto shrink-0 text-[10px] text-[#f4ebd0]/35 font-light pl-4 border-l border-[#c5a880]/12">
-            {filtered.length} photos
+            {visible.length} of {filtered.length} photos
           </span>
         </div>
       </div>
@@ -157,7 +165,7 @@ function GalleryContent() {
           className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3 space-y-0"
         >
           <AnimatePresence mode="popLayout">
-            {filtered.map((item, idx) => (
+            {visible.map((item, idx) => (
               <motion.div
                 key={item.src}
                 layout
@@ -203,6 +211,37 @@ function GalleryContent() {
 
         {filtered.length === 0 && (
           <div className="text-center py-24 text-[#f4ebd0]/40 text-sm">No images in this category yet.</div>
+        )}
+
+        {filtered.length > INITIAL_COUNT && !expanded && (
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <span className="text-xs text-[#f4ebd0]/40 font-light">
+              Showing {visible.length} of {filtered.length} photos
+            </span>
+            <button
+              type="button"
+              onClick={() => setExpanded(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300 cursor-pointer"
+            >
+              View More
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {expanded && (
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <span className="text-xs text-[#f4ebd0]/40 font-light">
+              Showing all {filtered.length} photos
+            </span>
+            <button
+              type="button"
+              onClick={() => { setExpanded(false); setLightboxIdx(null); }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300 cursor-pointer"
+            >
+              Show Less
+            </button>
+          </div>
         )}
       </div>
 

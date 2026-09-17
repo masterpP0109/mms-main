@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, X } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -128,7 +128,16 @@ const categories: Category[] = ["All", "Conference", "Wedding", "Brand", "Immers
 
 export default function ProjectsPage() {
   const [active, setActive] = useState<Category>("All");
-  const filtered = active === "All" ? projects : projects.filter((p) => p.category === active);
+  const [selected, setSelected] = useState<typeof projects[0] | null>(null);
+  const allFiltered = active === "All" ? projects : projects.filter((p) => p.category === active);
+  const displayed = allFiltered.slice(0, 6);
+
+  useEffect(() => {
+    document.body.style.overflow = selected ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
 
   return (
     <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
@@ -170,21 +179,22 @@ export default function ProjectsPage() {
               {cat}
             </button>
           ))}
-          <span className="ml-auto text-[10px] text-[#f4ebd0]/30 pl-4 border-l border-[#c5a880]/10 shrink-0">{filtered.length} projects</span>
+          <span className="ml-auto text-[10px] text-[#f4ebd0]/30 pl-4 border-l border-[#c5a880]/10 shrink-0">{allFiltered.length} projects</span>
         </div>
       </div>
 
       {/* Grid — each card has a primary image + two small sub-images */}
       <section className="py-14 md:py-20 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {filtered.map((project, idx) => (
+          {displayed.map((project, idx) => (
             <motion.div
               key={project.title}
               layout
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="group glass-panel rounded-3xl border border-[#c5a880]/15 overflow-hidden hover:border-[#c5a880]/35 transition-all duration-300"
+              className="group glass-panel rounded-3xl border border-[#c5a880]/15 overflow-hidden hover:border-[#c5a880]/35 transition-all duration-300 cursor-pointer"
+              onClick={() => setSelected(project)}
             >
               {/* Primary image */}
               <div className="relative aspect-[4/3] overflow-hidden">
@@ -230,6 +240,21 @@ export default function ProjectsPage() {
             </motion.div>
           ))}
         </div>
+
+        {allFiltered.length > 6 && (
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+            <span className="text-xs text-[#f4ebd0]/40 font-light">
+              Showing {displayed.length} of {allFiltered.length} projects
+            </span>
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+            >
+              View More Projects
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
       </section>
 
       {/* Full-bleed image strip */}
@@ -283,6 +308,91 @@ export default function ProjectsPage() {
           </div>
         </div>
       </section>
+
+      {/* Project detail modal */}
+      <AnimatePresence>
+        {selected && (
+          <motion.div
+            key="project-detail"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/92 backdrop-blur-lg p-4 sm:p-8"
+            onClick={() => setSelected(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setSelected(null)}
+              className="absolute top-5 right-5 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-[#c5a880] hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <motion.div
+              key={selected.title}
+              initial={{ opacity: 0, scale: 0.96, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto glass-panel rounded-3xl border border-[#c5a880]/20 shadow-2xl"
+            >
+              <div className="relative aspect-[16/9] overflow-hidden rounded-t-3xl">
+                <Image src={selected.image} alt={selected.title} fill className="object-cover object-center" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/80 via-transparent to-transparent" />
+                <div className="absolute top-4 left-4 flex items-center gap-3">
+                  <span className="text-[9px] uppercase tracking-[0.2em] bg-black/55 backdrop-blur-sm text-[#c5a880] border border-[#c5a880]/25 px-3 py-1.5 rounded-full">
+                    {selected.category}
+                  </span>
+                  <span className="text-[9px] text-white/60 font-mono">{selected.year}</span>
+                </div>
+              </div>
+
+              <div className="p-7 sm:p-9 space-y-5">
+                <div>
+                  <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">{selected.title}</h2>
+                </div>
+                <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">{selected.desc}</p>
+
+                <div className="flex flex-wrap gap-2">
+                  {selected.tags.map((tag) => (
+                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-[#c5a880]/10 text-[#f4ebd0]/70 border border-[#c5a880]/15 px-2.5 py-1 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {selected.images.length > 0 && (
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    {selected.images.map((img, i) => (
+                      <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[#c5a880]/10">
+                        <Image src={img} alt={`${selected.title} detail ${i + 1}`} fill className="object-cover object-center" />
+                        <div className="absolute inset-0 bg-[#050507]/20" />
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex flex-wrap items-center gap-3 pt-3">
+                  <Link href="/contact" className={`${goldBtn} px-6 py-3 text-[11px] uppercase tracking-[0.18em] inline-flex items-center`}>
+                    <span className="relative z-10">Start a Project</span>
+                    <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={close}
+                    className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

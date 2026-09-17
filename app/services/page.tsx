@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight
+  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight, X
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -120,6 +120,18 @@ const addOns = [
 ];
 
 export default function ServicesPage() {
+  const [selected, setSelected] = useState<typeof services[0] | null>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = selected ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
+
+  const open = (s: typeof services[0]) => setSelected(s);
+  const close = () => setSelected(null);
+
   return (
     <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
       <Navbar />
@@ -153,6 +165,19 @@ export default function ServicesPage() {
               transition={{ duration: 0.6 }}
               className="space-y-8"
             >
+              <div
+                className="group cursor-pointer"
+                onClick={() => open(service)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    open(service);
+                  }
+                }}
+                aria-label={`View details for ${service.title}`}
+              >
               {/* Main grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                  {/* Primary image */}
@@ -190,22 +215,104 @@ export default function ServicesPage() {
                   </Link>
                 </div>
               </div>
+            </div>
 
-              {/* 3-image thumbnail strip */}
-              <div className="grid grid-cols-3 gap-3">
-                {service.gallery.map((img, i) => (
-                  <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group">
-                    <Image src={img} alt={`${service.title} ${i + 1}`} fill className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-[#050507]/20 group-hover:bg-[#050507]/5 transition-colors duration-300" />
+            {/* 3-image thumbnail strip */}
+            <div className="grid grid-cols-3 gap-3">
+              {service.gallery.map((img, i) => (
+                <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group">
+                  <Image src={img} alt={`${service.title} ${i + 1}`} fill className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-[#050507]/20 group-hover:bg-[#050507]/5 transition-colors duration-300" />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+
+    {/* Service detail modal */}
+    <AnimatePresence>
+      {selected && (
+        <motion.div
+          key="service-detail"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/92 backdrop-blur-lg p-4 sm:p-8"
+onClick={() => setSelected(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setSelected(null)}
+              className="absolute top-5 right-5 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-[#c5a880] hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+          <motion.div
+            key={selected.title}
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto glass-panel rounded-3xl border border-[#c5a880]/20 shadow-2xl"
+          >
+            <div className="relative aspect-[16/9] overflow-hidden rounded-t-3xl">
+              <Image src={selected.image} alt={selected.title} fill className="object-cover object-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className="text-xs uppercase tracking-[0.25em] bg-[#c5a880]/20 text-[#c5a880] border border-[#c5a880]/30 px-3 py-1.5 rounded-full">
+                  {selected.tag}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-7 sm:p-9 space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">{selected.title}</h2>
+              <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">{selected.desc}</p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                {selected.items.map((item) => (
+                  <div key={item.label} className="bg-[#050507] flex flex-col items-center justify-center gap-2.5 min-h-[90px] rounded-2xl border border-[#c5a880]/10 text-center px-3">
+                    <item.icon className="w-5 h-5 text-[#c5a880]" />
+                    <span className="text-sm text-white font-medium leading-tight">{item.label}</span>
                   </div>
                 ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
 
-      {/* Add-Ons — cards with image thumbnails */}
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                {selected.gallery.map((img, i) => (
+                  <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[#c5a880]/10">
+                    <Image src={img} alt={`${selected.title} ${i + 1}`} fill className="object-cover object-center" />
+                    <div className="absolute inset-0 bg-[#050507]/20" />
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-3">
+                <Link href={selected.href} className={`${goldBtn} px-6 py-3 text-[11px] uppercase tracking-[0.18em] inline-flex items-center`}>
+                  <span className="relative z-10">{selected.cta}</span>
+                  <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={close}
+                  className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Add-Ons — cards with image thumbnails */}
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="text-center mb-14">

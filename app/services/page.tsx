@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight, X
+  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight, X, Sparkles
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -115,6 +115,8 @@ const services = [
 const addOns = [
   { icon: Camera,       label: "Drone Cinematography",  img: "/mms/_MG_2920.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
   { icon: Video,        label: "360° Capture",           img: "/mms/IMG_9203.jpeg",          desc: "Immersive 360-degree video experiences for events and digital platforms." },
+  { icon: Sparkles,     label: "Cold Sparks",            img: "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", desc: "Cold spark pyrotechnic effects for grand entrances, finales and photo moments without open flame." },
+  { icon: Globe,        label: "360° Booth",             img: "/mms/IMG_9203.jpeg",          desc: "Interactive 360-degree photo and video booths for guest engagement and shareable content." },
   { icon: MessageSquare,label: "Podcast Production",     img: "/mms/DSC_7598.jpg",           desc: "On-location podcast capture with multi-track audio and professional editing." },
   { icon: Megaphone,    label: "Social Media Packages",  img: "/mms/DSC_2505.jpg",           desc: "Edited reels, clips and graphics delivered for immediate post-event publishing." },
 ];

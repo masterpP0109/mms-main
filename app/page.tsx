@@ -340,7 +340,7 @@ export default function Home() {
       image: "/mms/conference%20hero%20img.png",
       imagePosition: "center center",
       title: "Conferences & Corporate Events",
-      desc: "From screens and digital displays to desktop setups and digital podiums with lapels — comprehensive AV solutions for professional conferences and corporate events.",
+      desc: "From screens and digital displays, to desktop setups and digital podiums with lapels, comprehensive AV solutions for professional conferences and corporate events.",
       btnText: "Explore Conference Solutions",
       link: "/conference-production"
     },
@@ -588,7 +588,7 @@ export default function Home() {
 
           {/* Slide Text Content - Left Aligned with Shade */}
           <div className="relative z-30 w-full h-full flex items-center pointer-events-none">
-            <div className="w-full max-w-[1600px] mx-auto mms-wide-gutter hero-copy-gutter 2xl:px-20 flex justify-start">
+            <div className="w-full max-w-[1600px] mx-auto pl-10 md:pl-14 lg:pl-20 xl:pl-24 2xl:pl-28 flex justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -1235,7 +1235,7 @@ export default function Home() {
             >
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-semibold text-white font-heading">What&apos;s your timeline?</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">We work with all timelines — urgent to flexible</p>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">We work with all timelines, from urgent to flexible</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[

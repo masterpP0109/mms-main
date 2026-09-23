@@ -38,15 +38,15 @@ export default function AboutPage() {
           <Image
             src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg"
             alt="Victoria Falls"
-            fill
+            fill sizes="100vw"
             className="object-cover object-center"
             style={{ opacity: 0.6 }}
-            priority
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/45 to-[#050507]/10" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/70 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full pb-6">
+        <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter w-full pb-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl space-y-5">
 <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">About Us</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
@@ -60,8 +60,8 @@ export default function AboutPage() {
       </section>
 
       {/* Who We Are — text + 2×2 image grid */}
-      <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+      <section className="py-12 sm:py-20 md:py-28 max-w-[1400px] mx-auto mms-gutter">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-8 md:gap-12 lg:gap-20 items-center">
           <div className="space-y-6">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Who We Are</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
@@ -96,7 +96,7 @@ export default function AboutPage() {
               "/mms/Victoria-Falls-Video-Conference-Hire.webp",
             ].map((src, i) => (
               <div key={i} className={`relative rounded-2xl overflow-hidden border border-[#c5a880]/12 ${i === 0 ? "aspect-[4/3]" : i === 3 ? "aspect-[4/3]" : "aspect-square"}`}>
-                <Image src={src} alt="MMS production" fill className="object-cover object-center" />
+                <Image src={src} alt="MMS production" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
                 <div className="absolute inset-0 bg-[#050507]/25" />
               </div>
             ))}
@@ -106,7 +106,7 @@ export default function AboutPage() {
 
       {/* Work in pictures — horizontal image strip */}
       <section className="overflow-hidden border-y border-[#c5a880]/10">
-        <div className="flex h-52 md:h-72">
+        <div className="photo-strip flex h-52 md:h-72">
           {[
             "/mms/DSC_2349.jpg",
             "/mms/DSC_7317.jpg",
@@ -116,7 +116,7 @@ export default function AboutPage() {
             "/mms/DSC_7343.jpg",
           ].map((src, i) => (
             <div key={i} className="relative flex-1 overflow-hidden group">
-              <Image src={src} alt="MMS work" fill className="object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+              <Image src={src} alt="MMS work" fill sizes="(max-width:639px) 50vw, 17vw" className="object-cover object-center transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-[#050507]/30 group-hover:bg-[#050507]/10 transition-colors duration-300" />
             </div>
           ))}
@@ -124,19 +124,19 @@ export default function AboutPage() {
       </section>
 
       {/* Victoria Falls — with scenic image pair */}
-      <section className="py-20 md:py-28 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+      <section className="py-12 sm:py-20 md:py-28 max-w-[1400px] mx-auto mms-gutter">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-8 md:gap-12 lg:gap-20 items-center">
           {/* Images */}
           <div className="grid grid-cols-2 gap-3">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-[#c5a880]/12">
-              <Image src="/mms/vic falls bridge.jpg" alt="Victoria Falls Bridge" fill className="object-cover object-center" />
+              <Image src="/mms/vic falls bridge.jpg" alt="Victoria Falls Bridge" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
             </div>
             <div className="space-y-3">
               <div className="relative aspect-square rounded-2xl overflow-hidden border border-[#c5a880]/12">
-                <Image src="/mms/bridge.jpg" alt="Falls bridge aerial" fill className="object-cover object-center" />
+                <Image src="/mms/bridge.jpg" alt="Falls bridge aerial" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
               </div>
               <div className="relative aspect-square rounded-2xl overflow-hidden border border-[#c5a880]/12">
-                <Image src="/mms/_MG_2920.jpg" alt="Aerial landscape" fill className="object-cover object-center" />
+                <Image src="/mms/_MG_2920.jpg" alt="Aerial landscape" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function AboutPage() {
 
       {/* Values */}
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="max-w-[1400px] mx-auto mms-gutter">
           <div className="text-center mb-16">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What Guides Us</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Our Values</h2>
@@ -194,8 +194,8 @@ export default function AboutPage() {
       </section>
 
       {/* Selected work teaser — 5 images */}
-      <section className="py-16 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="flex items-end justify-between mb-8">
+      <section className="py-16 max-w-[1400px] mx-auto mms-gutter">
+        <div className="flex flex-wrap gap-4 items-end justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Selected Work</h2>
           <Link href="/gallery" className="text-xs text-[#c5a880] hover:text-white transition-colors flex items-center gap-1.5">
             Full Gallery <ArrowRight className="w-3.5 h-3.5" />
@@ -214,7 +214,7 @@ export default function AboutPage() {
               href="/gallery"
               className={`relative overflow-hidden rounded-2xl border border-[#c5a880]/10 group ${tall ? "row-span-2 aspect-[3/4]" : "aspect-square"}`}
             >
-              <Image src={src} alt="work" fill className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+              <Image src={src} alt="work" fill sizes="(max-width:767px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
               <div className="absolute inset-0 bg-[#050507]/35 group-hover:bg-[#050507]/10 transition-colors duration-300" />
             </Link>
           ))}
@@ -240,11 +240,11 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
+      <section className="py-20 max-w-[1400px] mx-auto mms-gutter">
         <div className="relative rounded-3xl overflow-hidden border border-[#c5a880]/20">
-          <Image src="/mms/DSC_7590.jpg" alt="CTA background" fill className="object-cover object-center opacity-25" />
+          <Image src="/mms/DSC_7590.jpg" alt="CTA background" fill sizes="100vw" className="object-cover object-center opacity-25" />
           <div className="absolute inset-0 bg-[#050507]/80" />
-          <div className="relative z-10 p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="relative z-10 p-5 sm:p-10 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Ready to work together?</h2>
               <p className="text-sm text-[#f4ebd0]/60 font-light">Tell us about your event or project and our team will respond within 24 hours.</p>

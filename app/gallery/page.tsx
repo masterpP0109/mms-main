@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ArrowRight, ZoomIn } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useModalFocus } from "../components/useModalFocus";
 
 type Category = "All" | "Wedding" | "Conference" | "Brand" | "Drone" | "Events";
 
@@ -79,7 +80,7 @@ const items: GalleryItem[] = [
   { src: "/mms/DSC_7362.jpg",       alt: "Awards night",                    cat: "Events",     title: "Awards Evening"                        },
   { src: "/mms/DSC_7368.jpg",       alt: "Gala dinner",                     cat: "Events",     title: "Gala Dinner"                   },
   { src: "/mms/Iconic Final Look with Pyro.jpg", alt: "Pyro finale", cat: "Events", title: "Pyro Grand Finale",           tall: true  },
-  { src: "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", alt: "Cold spark machines", cat: "Events", title: "Cold Spark Machines" },
+  { src: "/mms/cold-spark-machine.jpg", alt: "Cold spark machines", cat: "Events", title: "Cold Spark Machines" },
 
   // Drone / Scenic
   { src: "/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg", alt: "Victoria Falls aerial", cat: "Drone", title: "Victoria Falls Aerial", tall: true },
@@ -107,6 +108,9 @@ function GalleryContent() {
   const [active, setActive] = useState<Category>(initCat);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const touchStart = useRef<{x: number; y: number} | null>(null);
+  useModalFocus(lightboxIdx !== null, modalRef, () => setLightboxIdx(null));
 
   const filtered = active === "All" ? items : items.filter((i) => i.cat === active);
   const INITIAL_COUNT = 12;
@@ -124,6 +128,7 @@ function GalleryContent() {
 
   // Close lightbox on Escape / arrow keys
   useEffect(() => {
+    if (lightboxIdx === null) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxIdx(null);
       if (e.key === "ArrowRight") next();
@@ -137,7 +142,7 @@ function GalleryContent() {
     <>
       {/* Sticky filter bar */}
       <div className="sticky top-[72px] z-30 bg-[#050507]/92 backdrop-blur-md border-b border-[#c5a880]/12 py-3.5">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-2.5 overflow-x-auto scrollbar-none">
+        <div className="max-w-[1600px] mx-auto mms-gutter flex items-center gap-2.5 overflow-x-auto scrollbar-none">
           {cats.map((cat) => (
             <button
               key={cat}
@@ -162,7 +167,7 @@ function GalleryContent() {
       <div className="max-w-[1600px] mx-auto px-4 sm:px-5 lg:px-8 py-8 md:py-12">
         <motion.div
           layout
-          className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3 space-y-0"
+          className="columns-1 min-[400px]:columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3 space-y-0"
         >
           <AnimatePresence mode="popLayout">
             {visible.map((item, idx) => (
@@ -176,6 +181,10 @@ function GalleryContent() {
                 className={`break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-[#c5a880]/10 cursor-pointer bg-[#0d0d10] ${
                   item.tall ? "row-span-2" : ""
                 }`}
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${item.title}`}
+                onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setLightboxIdx(idx); } }}
                 onClick={() => setLightboxIdx(idx)}
               >
                 <div className={`relative w-full ${item.tall ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
@@ -183,7 +192,7 @@ function GalleryContent() {
                     src={item.src}
                     alt={item.alt}
                     fill
-                    sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
+                    sizes="(max-width:399px) calc(100vw - 32px), (max-width:639px) 50vw, (max-width:1023px) 33vw, (max-width:1279px) 25vw, 20vw"
                     className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* hover overlay */}
@@ -250,18 +259,24 @@ function GalleryContent() {
         {lightboxIdx !== null && (
           <motion.div
             key="lightbox"
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Gallery image viewer"
+            onTouchStart={(event) => { const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY }; }}
+            onTouchEnd={(event) => { const start = touchStart.current; const end = event.changedTouches[0]; if (start && Math.abs(end.clientX - start.x) > 45 && Math.abs(end.clientX - start.x) > Math.abs(end.clientY - start.y)) { if (end.clientX < start.x) next(); else prev(); } touchStart.current = null; }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.22 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/92 backdrop-blur-lg"
+            className="lightbox-overlay fixed inset-0 z-[200] flex items-center justify-center bg-black/92 backdrop-blur-lg"
             onClick={() => setLightboxIdx(null)}
           >
             {/* Close */}
             <button
               type="button"
               onClick={() => setLightboxIdx(null)}
-              className="absolute top-5 right-5 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="modal-close absolute z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5 text-white" />
@@ -297,14 +312,15 @@ function GalleryContent() {
               className="relative max-w-[90vw] max-h-[85vh] w-full flex flex-col items-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full max-h-[78vh] flex items-center justify-center">
+              <div className="relative w-full lightbox-image h-auto flex items-center justify-center">
                 <Image
                   src={filtered[lightboxIdx].src}
                   alt={filtered[lightboxIdx].alt}
                   width={1400}
                   height={1000}
-                  className="object-contain max-h-[78vh] rounded-xl shadow-2xl"
-                  priority
+                  sizes="(max-width: 640px) 100vw, 90vw"
+                  className="object-contain lightbox-image h-auto rounded-xl shadow-2xl"
+                  preload
                 />
               </div>
               <div className="mt-3 text-center space-y-0.5">
@@ -331,9 +347,9 @@ export default function GalleryPage() {
           <Image
             src="/mms/DSC_7598.jpg"
             alt="MMS Gallery"
-            fill
+            fill sizes="100vw"
             className="object-cover object-center opacity-40"
-            priority
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/55 to-[#050507]/20" />
         </div>
@@ -360,7 +376,7 @@ export default function GalleryPage() {
 
       {/* CTA */}
       <section className="py-16 border-t border-[#c5a880]/10 bg-black">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-[1400px] mx-auto mms-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-xl md:text-2xl font-semibold text-white font-heading">Ready to be in our gallery?</h3>
             <p className="text-sm text-[#f4ebd0]/55 font-light mt-1">Let&apos;s create something beautiful together.</p>

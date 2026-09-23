@@ -69,14 +69,14 @@ describe('Home Component - Non-Functional Tests', () => {
 
   describe('Load Time Tests', () => {
     test('should measure initial load performance', () => {
-      const marks = {
+      const marks: { start: number; end?: number } = {
         start: performance.now(),
       }
 
       render(<Home />)
       marks.end = performance.now()
 
-      const loadTime = marks.end - marks.start
+      const loadTime = marks.end! - marks.start
       expect(loadTime).toBeLessThan(3000)
     })
 
@@ -151,7 +151,7 @@ describe('Home Component - Non-Functional Tests', () => {
     })
 
     test('should support reduced motion preference', () => {
-      const { container } = render(<Home />)
+      render(<Home />)
       
       // Component should respect prefers-reduced-motion
       const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -196,7 +196,6 @@ describe('Home Component - Non-Functional Tests', () => {
 
   describe('Memory and Resource Tests', () => {
     test('should not create memory leaks with event listeners', () => {
-      const initialListenerCount = Object.keys(window).length
       const { unmount } = render(<Home />)
       
       unmount()

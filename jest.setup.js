@@ -2,7 +2,7 @@
 require('@testing-library/jest-dom')
 
 // Mock window.matchMedia
-Object.defineProperty(window, 'matchMedia', {
+if (typeof window !== 'undefined') Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
@@ -21,12 +21,16 @@ jest.mock('gsap', () => ({
   gsap: {
     registerPlugin: jest.fn(),
     utils: {
-      toArray: jest.fn((selector) => []),
+      toArray: jest.fn(() => []),
     },
     fromTo: jest.fn(),
     from: jest.fn(),
     to: jest.fn(),
     set: jest.fn(),
+    matchMedia: jest.fn(() => ({
+      add: jest.fn((_query, callback) => callback()),
+      revert: jest.fn(),
+    })),
     context: jest.fn((callback) => {
       // Execute the callback and return a context object with revert method
       callback()
@@ -48,8 +52,8 @@ jest.mock('gsap', () => ({
 // Mock Framer Motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }) => children,
-    section: ({ children, ...props }) => children,
+    div: ({ children }) => children,
+    section: ({ children }) => children,
   },
   AnimatePresence: ({ children }) => children,
 }))
@@ -57,8 +61,7 @@ jest.mock('framer-motion', () => ({
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props) => {
-    // eslint-disable-next-line jsx-a11y/alt-text
+  default: () => {
     return '<img />'
   },
 }))
@@ -86,6 +89,12 @@ jest.mock('lucide-react', () => ({
   Megaphone: () => null,
   Palette: () => null,
   PenTool: () => null,
+  Menu: () => null,
+  X: () => null,
+  Mic: () => null,
+  Monitor: () => null,
+  Volume2: () => null,
+  Zap: () => null,
 }))
 
 // Suppress specific React warnings

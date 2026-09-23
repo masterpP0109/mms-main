@@ -1,9 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import MotionProvider from "./components/MotionProvider";
+import ScrollEffects from "./components/ScrollEffects";
 
 const poppins = Poppins({
-  variable: "--font-heading",
+  variable: "--font-poppins",
   display: "swap",
   subsets: ["latin"],
   weight: ["500", "600", "700"],
@@ -15,6 +17,8 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export const metadata: Metadata = {
   title: "MMS | Conference & Seminar Production Victoria Falls",
@@ -33,7 +37,10 @@ export default function RootLayout({
       className="h-full antialiased dark"
     >
       <body className={`${poppins.variable} ${inter.variable} min-h-full flex flex-col bg-[#050507] text-[#f3f4f6]`}>
-        {children}
+        <MotionProvider>
+          <ScrollEffects />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import Home from '@/app/page'
 import { gsap } from 'gsap'
 
@@ -26,9 +26,8 @@ describe('Home Component - Functional Tests', () => {
     })
 
     test('should render hero section with initial slide', () => {
-      render(<Home />)
-      const heroSection = screen.getByRole('region', { hidden: true })
-      expect(heroSection).toBeTruthy()
+      const { container } = render(<Home />)
+      expect(container.querySelector('#home')).toBeTruthy()
     })
 
     test('should render all main sections', () => {

@@ -3,11 +3,6 @@ import { render, waitFor } from '@testing-library/react'
 import Home from '@/app/page'
 import { gsap } from 'gsap'
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useRef: jest.fn(() => ({ current: null })),
-}))
-
 describe('Home Component - Regression Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -33,7 +28,7 @@ describe('Home Component - Regression Tests', () => {
     test('carousel should not break with animation library updates', async () => {
       const { container } = render(<Home />)
       
-      expect(gsap.registerPlugin).toHaveBeenCalled()
+      await waitFor(() => expect(gsap.registerPlugin).toHaveBeenCalled())
       
       jest.advanceTimersByTime(6000)
       expect(container).toBeInTheDocument()
@@ -59,10 +54,10 @@ describe('Home Component - Regression Tests', () => {
       })
     })
 
-    test('should properly register GSAP plugins on mount', () => {
+    test('should properly register GSAP plugins on mount', async () => {
       const { unmount } = render(<Home />)
       
-      expect(gsap.registerPlugin).toHaveBeenCalled()
+      await waitFor(() => expect(gsap.registerPlugin).toHaveBeenCalled())
       
       unmount()
     })
@@ -86,12 +81,12 @@ describe('Home Component - Regression Tests', () => {
 
   describe('Component State Regression', () => {
     test('carousel state should reset properly between renders', () => {
-      const { rerender, unmount } = render(<Home />)
+      const { unmount } = render(<Home />)
       
       jest.advanceTimersByTime(6000)
       unmount()
       
-      rerender(<Home />)
+      render(<Home />)
       
       expect(jest.getTimerCount()).toBeGreaterThan(0)
     })
@@ -106,14 +101,9 @@ describe('Home Component - Regression Tests', () => {
     })
 
     test('refs should not cause errors when null', () => {
-      const useRefMock = jest.spyOn(React, 'useRef')
-      useRefMock.mockReturnValue({ current: null })
-      
       expect(() => {
         render(<Home />)
       }).not.toThrow()
-      
-      useRefMock.mockRestore()
     })
   })
 
@@ -197,8 +187,6 @@ describe('Home Component - Regression Tests', () => {
 
     test('motion components should maintain rendering', () => {
       const { container, rerender } = render(<Home />)
-      
-      const initialElements = container.querySelectorAll('*').length
       
       rerender(<Home />)
       

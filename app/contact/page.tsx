@@ -24,14 +24,30 @@ const recentWork = [
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [projectType, setProjectType] = useState<ProjectType>("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(null);
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    const form = e.currentTarget;
+    const body = Object.fromEntries(new FormData(form).entries());
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
+        body: JSON.stringify(body),
+      });
+      const result = await response.json().catch(() => ({})) as { error?: string };
+      if (!response.ok) throw new Error(result.error || "We could not send your message.");
+      setSubmitted(true);
+      form.reset();
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : "We could not send your message.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,15 +60,15 @@ export default function ContactPage() {
           <Image
             src="/mms/DSC_7590.jpg"
             alt="Victoria Falls contact"
-            fill
+            fill sizes="100vw"
             className="object-cover object-center"
             style={{ opacity: 0.5 }}
-            priority
+            preload
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/50 to-[#050507]/15" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/65 via-transparent to-transparent" />
         </div>
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 w-full">
+        <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Get In Touch</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
@@ -66,8 +82,8 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info + Form */}
-      <section className="py-16 md:py-24 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
+      <section className="py-16 md:py-24 max-w-[1400px] mx-auto mms-gutter">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
 
           {/* Info Panel */}
           <div className="lg:col-span-2 space-y-8">
@@ -104,7 +120,7 @@ export default function ContactPage() {
               <div className="grid grid-cols-2 gap-2">
                 {recentWork.map((item) => (
                   <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#c5a880]/12">
-                    <Image src={item.src} alt={item.label} fill className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+                    <Image src={item.src} alt={item.label} fill sizes="(max-width:1023px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/20 transition-colors duration-300" />
                     <div className="absolute bottom-2 left-2">
                       <span className="text-[8px] text-white/80 font-light">{item.label}</span>
@@ -140,25 +156,25 @@ export default function ContactPage() {
           {/* Form */}
           <div className="lg:col-span-3">
             {!submitted ? (
-              <form onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-10 space-y-5">
+              <form onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-10 space-y-5">
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Name</label>
-                    <input type="text" name="name" placeholder="e.g. Sarah Johnson" required
+                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Name</label>
+                    <input type="text" id="contact-name" autoComplete="name" name="name" placeholder="e.g. Sarah Johnson" required
                       className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
                   </div>
                   <div>
-                    <label className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Email Address</label>
-                    <input type="email" name="email" placeholder="you@organisation.com" required
+                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Email Address</label>
+                    <input type="email" id="contact-email" autoComplete="email" name="email" placeholder="you@organisation.com" required
                       className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Phone Number (optional)</label>
-                  <input type="tel" name="phone" placeholder="+263 ..."
+                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Phone Number (optional)</label>
+                  <input type="tel" id="contact-phone" autoComplete="tel" name="phone" placeholder="+263 ..."
                     className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
                 </div>
 
@@ -175,6 +191,7 @@ export default function ContactPage() {
                       <button
                         type="button"
                         key={opt.id}
+                        aria-pressed={projectType === opt.id}
                         onClick={() => setProjectType(opt.id)}
                         className={`py-2.5 px-3 rounded-xl text-xs border transition-all duration-200 cursor-pointer ${
                           projectType === opt.id
@@ -190,9 +207,9 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Message</label>
-                  <textarea name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-none" />
+                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Message</label>
+                  <textarea id="contact-message" name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-y" />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
@@ -202,6 +219,8 @@ export default function ContactPage() {
                   </button>
                   <p className="text-[10px] text-[#f4ebd0]/35">We respect your privacy. No spam, ever.</p>
                 </div>
+                {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </form>
             ) : (
               <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-12 text-center space-y-4">
@@ -218,7 +237,7 @@ export default function ContactPage() {
             <div className="mt-6 grid grid-cols-4 gap-2">
               {["/mms/DSC_7551.jpg", "/mms/DSC_7589.jpg", "/mms/DSC_7640.jpg", "/mms/DSC_7703.jpg"].map((src, i) => (
                 <Link key={i} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#c5a880]/10">
-                  <Image src={src} alt="gallery preview" fill className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
+                  <Image src={src} alt="gallery preview" fill sizes="(max-width:1023px) 25vw, 15vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/10 transition-colors duration-300" />
                 </Link>
               ))}
@@ -233,11 +252,11 @@ export default function ContactPage() {
       {/* Conference CTA with scenic background */}
       <section className="relative py-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src="/mms/DSC_9244.jpg" alt="Conference" fill className="object-cover object-center opacity-30" />
+          <Image src="/mms/DSC_9244.jpg" alt="Conference" fill sizes="100vw" className="object-cover object-center opacity-30" />
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter">
+          <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
               <span className="text-[9px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold block font-heading">Institutional Production</span>
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Planning a conference or government event?</h2>

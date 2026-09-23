@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id                  String   @id @default(cuid())
+  source              String
+  name                String
+  email               String?
+  phone               String?
+  organisation        String?
+  projectType         String?
+  message             String
+  metadata            Json?
+  idempotencyKey      String   @unique
+  externalId          String?  @unique
+  emailStatus         String   @default("pending")
+  emailProviderId     String?
+  whatsappStatus      String   @default("not_requested")
+  whatsappProviderId  String?
+  notificationError   String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([email])
+  @@index([phone])
+}
+
+model WebhookEvent {
+  id          String   @id @default(cuid())
+  provider    String
+  externalId  String
+  eventType   String
+  payload     Json
+  processedAt DateTime @default(now())
+
+  @@unique([provider, externalId])
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  category    String
+  description String
+  heroImage   String
+  gallery     String[]
+  features    String[]
+  ctaLabel    String   @default("Start a Project")
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  category    String
+  description String
+  year        Int
+  heroImage   String
+  gallery     String[]
+  tags        String[]
+  published   Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

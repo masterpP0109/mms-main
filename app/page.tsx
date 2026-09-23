@@ -37,7 +37,13 @@ export default function Home() {
   const pageRef = useRef<HTMLDivElement | null>(null);
   const pastWorkRef = useRef<HTMLElement | null>(null);
   const heroTouchStartX = useRef<number | null>(null);
+  const workViewportRef = useRef<HTMLDivElement>(null);
+  const [workIndex, setWorkIndex] = useState(0);
+  const [carouselPaused, setCarouselPaused] = useState(false);
   const [builderStep, setBuilderStep] = useState(0);
+  const [builderLoading, setBuilderLoading] = useState(false);
+  const [builderError, setBuilderError] = useState<string | null>(null);
+  const [builderSubmitted, setBuilderSubmitted] = useState(false);
   const [builderData, setBuilderData] = useState({
     goal: "",
     audience: "",
@@ -50,18 +56,19 @@ export default function Home() {
 
   // Auto-play the hero service categories every 6 seconds.
   useEffect(() => {
+    if (carouselPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % 5);
     }, 6000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [carouselPaused]);
 
   // Keep normal page content visible by default. GSAP is used only for the
   // navbar entrance and the dedicated horizontal Past Work carousel.
   useLayoutEffect(() => {
     let cancelled = false;
-    let ctx: gsap.Context | undefined;
+    let ctx: ReturnType<typeof gsap.matchMedia> | undefined;
     const cleanupFunctions: Array<() => void> = [];
 
     const initializeAnimations = async () => {
@@ -78,7 +85,8 @@ export default function Home() {
 
       gsap.registerPlugin(ScrollTrigger);
 
-      ctx = gsap.context(() => {
+      ctx = gsap.matchMedia();
+      ctx.add("(min-width: 1024px) and (min-height: 650px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
         const section = pastWorkRef.current;
         if (!section) return;
 
@@ -284,6 +292,32 @@ export default function Home() {
 
       }, pageRef);
 
+      ctx.add("(max-width: 1023px), (max-height: 649px), (hover: none), (pointer: coarse)", () => {
+        const section = pastWorkRef.current;
+        if (!section) return;
+        const eyebrow = section.querySelector<HTMLElement>(".pw-eyebrow");
+        const title = section.querySelector<HTMLElement>(".pw-heading-line");
+        const supporting = section.querySelector<HTMLElement>(".pw-supporting");
+        const cards = gsap.utils.toArray<HTMLElement>(section.querySelectorAll(".pw-card"));
+
+        const reveal = gsap.timeline({ paused: true })
+          .fromTo(eyebrow, { y: 14, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.55, ease: "power2.out" })
+          .fromTo(title, { yPercent: 80, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease: "power3.out" }, "-=0.3")
+          .fromTo(supporting, { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.55, ease: "power2.out" }, "-=0.35")
+          .fromTo(cards, { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.65, stagger: 0.08, ease: "power2.out" }, "-=0.25");
+
+        const trigger = ScrollTrigger.create({
+          trigger: section,
+          start: "top 78%",
+          once: true,
+          onEnter: () => reveal.play(),
+        });
+        return () => {
+          trigger.kill();
+          reveal.kill();
+        };
+      }, pageRef);
+
       const handleWindowLoad = () => ScrollTrigger.refresh();
       window.addEventListener("load", handleWindowLoad);
       cleanupFunctions.push(() => window.removeEventListener("load", handleWindowLoad));
@@ -419,7 +453,7 @@ export default function Home() {
     {
       title: "Videography & Photography",
       icon: Camera,
-      image: "/services%20images/Videography%20&%20Photography.jpg",
+      image: "/services%20images/videography-photography.jpg",
       alt: "Cinematic filming and photography at an event",
       desc: "Cinematic event videography and professional photography from same-day edits and highlight reels to full event archives and brand campaign imagery.",
       href: "/services"
@@ -486,17 +520,18 @@ export default function Home() {
   ];
 
   useEffect(() => {
+    if (carouselPaused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = setInterval(() => {
       setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(timer);
-  }, [testimonials.length]);
+  }, [testimonials.length, carouselPaused]);
 
   const goldGlowButtonBase =
     "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-[transform,filter,box-shadow] duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 after:absolute after:inset-0 after:rounded-full after:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.2),inset_0_0_18px_rgba(255,244,211,0.12)] after:opacity-70 after:transition-opacity after:duration-300 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] hover:after:opacity-100 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]";
 
   return (
-    <div ref={pageRef} className="mms-page min-h-screen bg-[#050507] text-[#f4ebd0] overflow-x-hidden font-sans selection:bg-[#b48a3d] selection:text-[#050507]">
+    <div ref={pageRef} className="mms-page min-h-screen bg-[#050507] text-[#f4ebd0] font-sans selection:bg-[#b48a3d] selection:text-[#050507]">
 
       {/* 1) TOP NAVIGATION BAR & HERO SECTION */}
       <header id="home" className="relative w-full z-40">
@@ -504,7 +539,7 @@ export default function Home() {
 
         {/* Hero Carousel Section - offset for fixed navbar */}
         <div
-          className="relative h-[70vh] min-h-[500px] md:min-h-[560px] w-full overflow-hidden bg-black flex items-center justify-center z-10 pt-16 md:pt-20"
+          className="home-hero relative w-full overflow-hidden bg-black flex items-center justify-center z-10"
           onTouchStart={(event) => {
             heroTouchStartX.current = event.touches[0]?.clientX ?? null;
           }}
@@ -543,7 +578,8 @@ export default function Home() {
                 sizes="100vw"
                 className="bright-image object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
                 style={{ opacity: 0.74, objectPosition: slides[currentSlide].imagePosition }}
-                priority={currentSlide === 0}
+                loading="eager"
+                fetchPriority={currentSlide === 0 ? "high" : "auto"}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/90 via-transparent to-[#050507]/55" />
               <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/95 via-[#050507]/48 to-transparent" />
@@ -552,7 +588,7 @@ export default function Home() {
 
           {/* Slide Text Content - Left Aligned with Shade */}
           <div className="relative z-30 w-full h-full flex items-center pointer-events-none">
-            <div className="w-full max-w-[1600px] mx-auto px-6 sm:px-10 lg:px-16 2xl:px-20 flex justify-start pl-8 sm:pl-12 2xl:pl-20">
+            <div className="w-full max-w-[1600px] mx-auto mms-wide-gutter hero-copy-gutter 2xl:px-20 flex justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -562,11 +598,11 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="space-y-5 max-w-2xl xl:max-w-3xl relative z-20"
               >
-                <h1 className="text-2xl sm:text-4xl md:text-5xl xl:text-6xl font-semibold text-white font-heading leading-[1.05] gsap-heading drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
+                <h1 className="text-[clamp(1.875rem,5vw,3.75rem)] font-semibold text-white font-heading leading-[1.05] gsap-heading drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
                   {slides[currentSlide].title}
                 </h1>
 
-                <p className="text-xs md:text-sm xl:text-base text-[#f4ebd0]/85 tracking-wide font-light leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
+                <p className="text-sm xl:text-base text-[#f4ebd0]/85 tracking-wide font-light leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
                   {slides[currentSlide].desc}
                 </p>
 
@@ -595,7 +631,7 @@ export default function Home() {
             type="button"
             aria-label="Previous hero slide"
             onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-            className="absolute left-3 sm:left-6 lg:left-8 top-[46%] md:top-1/2 -translate-y-1/2 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
+            className="hero-arrow hero-arrow-prev absolute left-3 sm:left-6 lg:left-8 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -603,13 +639,13 @@ export default function Home() {
             type="button"
             aria-label="Next hero slide"
             onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-            className="absolute right-3 sm:right-6 lg:right-8 top-[46%] md:top-1/2 -translate-y-1/2 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
+            className="hero-arrow hero-arrow-next absolute right-3 sm:right-6 lg:right-8 z-40 p-2.5 sm:p-3 rounded-full border border-[#c5a880]/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(197,168,128,0.16)] hover:bg-[#c5a880] hover:text-[#050507] hover:border-[#e5cf9a] hover:shadow-[0_0_28px_rgba(197,168,128,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] transition-all duration-300 cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
 
           {/* Dots Indicator */}
-          <div className="absolute bottom-7 sm:bottom-10 left-0 w-full z-30 px-6">
+          <div className="hero-dots absolute bottom-7 left-0 w-full z-30 px-6">
             <div className="mx-auto flex max-w-xl items-center justify-center gap-2 sm:gap-3">
               <span className="hidden sm:inline text-xs font-mono tracking-[0.22em] text-[#f4ebd0]/55">
                 {String(currentSlide + 1).padStart(2, "0")}
@@ -622,7 +658,7 @@ export default function Home() {
                     aria-label={`Go to ${slide.title} slide`}
                     aria-current={idx === currentSlide ? "true" : undefined}
                     onClick={() => setCurrentSlide(idx)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentSlide ? "bg-[#c5a880] w-5 sm:w-7" : "bg-[#f4ebd0]/30 w-1.5 sm:w-2"}`}
+                    className={`carousel-dot ${idx === currentSlide ? "is-current" : ""}`}
                   />
                 ))}
               </div>
@@ -637,22 +673,22 @@ export default function Home() {
       {/* Inserted homepage copy removed — conference section will follow Services below */}
      
       {/* 2) TRUST / VALUE ICON STRIP (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
-      <section style={{ opacity: 1, visibility: "visible" }} className="relative -mt-4 z-30 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 overflow-hidden rounded-3xl border border-[#c5a880]/20 shadow-2xl bg-black">
+      <section style={{ opacity: 1, visibility: "visible" }} className="trust-strip relative -mt-4 z-30 max-w-[1600px] mx-auto mms-wide-gutter overflow-hidden rounded-3xl border border-[#c5a880]/20 shadow-2xl bg-black">
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
             src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg"
             alt="MMS Partners Background"
-            fill
+            fill sizes="100vw"
             className="object-cover object-center pointer-events-none"
             style={{ opacity: 0.35 }}
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
 
-        <div className="relative z-20 p-8 md:p-10">
+        <div className="relative z-20 p-5 sm:p-8 md:p-10">
           {/* Icon Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 text-center items-stretch">
+          <div data-stagger className="grid grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-4 gap-4 md:gap-4 text-center items-stretch">
             {/* Item 1 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
               <MessageSquare className="w-6 h-6 text-[#c5a880] mb-3" />
@@ -686,8 +722,8 @@ export default function Home() {
 
       {/* 2a) ABOUT US SECTION */}
       <section className="relative pt-6 md:pt-8 pb-8 md:pb-12 bg-[#050507]">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+        <div className="max-w-[1600px] mx-auto mms-wide-gutter">
+          <div data-stagger className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
             {/* Left — Text + CTA */}
             <div className="w-full lg:w-[45%] space-y-6">
             <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block">About Mosi Media Solutions</span>
@@ -739,8 +775,8 @@ export default function Home() {
 
       {/* 2b) OUR SERVICES SECTION */}
       <section id="services" className="relative pt-8 md:pt-12 pb-16 md:pb-24 bg-[#050507]">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <div className="text-center mb-12 md:mb-16">
+        <div className="max-w-[1600px] mx-auto mms-wide-gutter">
+          <div data-reveal className="text-center mb-12 md:mb-16">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What We Offer</span>
             <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Our Services</h2>
             <p className="text-lg md:text-xl text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
@@ -748,9 +784,9 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          <div data-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {services.slice(0, 6).map((service) => (
-              <div key={service.title} className="group">
+              <div key={service.title} data-lift className="group min-w-0 flex flex-col">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5">
                   <Image
                     src={service.image}
@@ -771,7 +807,7 @@ export default function Home() {
                 <p className="text-center text-lg text-[#f4ebd0]/60 leading-relaxed font-light mb-4">
                   {service.desc}
                 </p>
-                <div className="text-center">
+                <div className="text-center mt-auto">
                   <Link
                     href="/services"
                     className="inline-flex items-center text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
@@ -804,7 +840,7 @@ export default function Home() {
         ref={pastWorkRef}
         className="past-work-section relative w-full bg-[#050507] isolation-isolate z-10"
       >
-        <div className="past-work-pin relative w-full h-screen min-h-[700px] bg-[#050507]">
+        <div className="past-work-pin relative w-full bg-[#050507]">
           <div className="past-work-heading z-20 text-center">
             <span className="pw-eyebrow text-[12px] uppercase tracking-[0.28em] text-[#c5a880] font-semibold block mb-4 font-heading">
               OUR FEATURED WORK
@@ -819,20 +855,20 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="past-work-viewport">
-            <div className="past-work-track flex items-center gap-[clamp(6vw,7vw,9vw)] w-max px-[14vw] will-change-transform">
+          <div className="past-work-viewport" ref={workViewportRef} tabIndex={0} role="region" aria-label="Featured projects, swipe or use arrow keys" onScroll={(event) => { const cards = event.currentTarget.querySelectorAll<HTMLElement>(".pw-card"); const left = event.currentTarget.getBoundingClientRect().left; let closest = 0; let distance = Infinity; cards.forEach((card, index) => { const delta = Math.abs(card.getBoundingClientRect().left - left - 16); if (delta < distance) { distance = delta; closest = index; } }); setWorkIndex(closest); }}>
+            <div className="past-work-track">
               {pastWorkItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="pw-card relative flex-shrink-0 w-[clamp(760px,72vw,1180px)] h-[clamp(480px,58vh,680px)] min-h-[480px] rounded-[30px] border border-[#c5a880]/10 bg-[#050507] shadow-[0_35px_100px_rgba(0,0,0,0.65),0_10px_35px_rgba(0,0,0,0.45)] overflow-hidden will-change-transform"
+                  className="pw-card relative flex-shrink-0 rounded-[30px] border border-[#c5a880]/10 bg-[#050507] shadow-[0_35px_100px_rgba(0,0,0,0.65),0_10px_35px_rgba(0,0,0,0.45)] overflow-hidden will-change-transform"
                   style={{ transformStyle: "preserve-3d" }}
                 >
-                  <div className="relative flex h-full flex-col overflow-hidden rounded-[30px] md:flex-row">
-                    <div className="pw-card-image relative w-full md:w-[58%] min-h-[240px] h-[40vh] md:h-full overflow-hidden">
+                  <div className="pw-card-inner relative rounded-[30px]">
+                    <div className="pw-card-image relative overflow-hidden">
                       <Image
                         src={item.image}
                         alt={item.title}
-                        fill
+                        fill sizes="(max-width:767px) calc(100vw - 32px), (max-width:1279px) 55vw, 36vw"
                         className="object-cover object-center"
                         style={{ transform: "scale(1.05)" }}
                       />
@@ -880,9 +916,14 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="past-work-progress absolute left-1/2 top-[9vh] -translate-x-1/2 z-20 w-[calc(100vw-3rem)] max-w-[720px]">
+          <div className="work-controls flex items-center justify-center gap-5 mt-6">
+            <button type="button" aria-label="Previous featured project" disabled={workIndex === 0} onClick={() => { const viewport = workViewportRef.current; if (viewport) viewport.scrollBy({ left: -viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }} className="rounded-full border border-[#c5a880]/30 p-3 disabled:opacity-30"><ChevronLeft /></button>
+            <span className="text-sm text-[#c5a880]" aria-live="polite">{workIndex + 1} / {pastWorkItems.length}</span>
+            <button type="button" aria-label="Next featured project" disabled={workIndex === pastWorkItems.length - 1} onClick={() => { const viewport = workViewportRef.current; if (viewport) viewport.scrollBy({ left: viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }} className="rounded-full border border-[#c5a880]/30 p-3 disabled:opacity-30"><ChevronRight /></button>
+          </div>
+          <div className="past-work-progress">
             <div className="relative h-1 rounded-full bg-white/10 overflow-hidden">
-              <div className="progress-fill absolute inset-y-0 left-0 origin-left scale-x-0 bg-[#c5a880]" />
+              <div className="progress-fill absolute inset-0 origin-left scale-x-0 bg-[#c5a880]" />
             </div>
           </div>
         </div>
@@ -897,23 +938,23 @@ export default function Home() {
           <Image
             src="/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
-            fill
+            fill sizes="100vw"
             className="object-cover object-center pointer-events-none"
             style={{ opacity: 0.3 }}
           />
           <div className="absolute inset-0 bg-black/40 z-10" />
         </div>
 
-        <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <div className="text-center mb-16">
+        <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
+          <div data-reveal className="text-center mb-16">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Our Workflow</span>
             <h2 className="text-4xl md:text-6xl font-semibold text-white font-heading mb-4">Our Process: A Smooth Journey To Your Story</h2>
           </div>
 
           {/* 4-column timeline */}
-          <div className="relative grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4">
+          <div data-stagger className="process-timeline relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-4">
             {/* Connector Line (Desktop Only) */}
-            <div className="absolute top-12 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-[#c5a880]/10 via-[#c5a880]/30 to-[#c5a880]/10 z-0 hidden md:block" />
+            <div className="absolute top-12 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-[#c5a880]/10 via-[#c5a880]/30 to-[#c5a880]/10 z-0 hidden lg:block" />
 
             {[
               {
@@ -954,12 +995,13 @@ export default function Home() {
       <section style={{ opacity: 1, visibility: "visible" }} id="clients" className="relative py-16 md:py-24 border-b border-[#c5a880]/15 overflow-hidden bg-black">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1510]/60 via-[#050507] to-[#050507] z-0" />
 
-        <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <div className="text-center mb-16">
+        <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
+          <div data-reveal className="text-center mb-16">
             <span className="text-xs tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Client Feedback</span>
             <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">What Our Clients Say</h2>
           </div>
 
+          <div className="flex justify-center mb-4"><button type="button" aria-pressed={carouselPaused} onClick={() => setCarouselPaused(!carouselPaused)} className="text-xs text-[#c5a880] px-4 py-2 rounded-full border border-[#c5a880]/30">{carouselPaused ? "Resume slides" : "Pause slides"}</button></div>
           {/* Testimonial Carousel */}
           <div className="relative max-w-3xl mx-auto">
             <AnimatePresence mode="wait">
@@ -969,7 +1011,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -50, scale: 0.96 }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="bg-[#050507] p-8 md:p-12 rounded-3xl border border-[#c5a880]/10 relative overflow-hidden"
+                  className="bg-[#050507] p-5 sm:p-8 md:p-12 rounded-3xl border border-[#c5a880]/10 relative overflow-hidden"
                 >
                 <Quote className="absolute top-6 left-6 w-10 h-10 text-[#c5a880]/15" />
 
@@ -1027,7 +1069,7 @@ export default function Home() {
                     key={idx}
                     aria-label={`Go to testimonial ${idx + 1}`}
                     onClick={() => setTestimonialSlide(idx)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === testimonialSlide ? "bg-[#c5a880] w-6" : "bg-[#f4ebd0]/30"}`}
+                    className={`carousel-dot ${idx === testimonialSlide ? "is-current" : ""}`}
                   />
                 ))}
               </div>
@@ -1052,15 +1094,15 @@ export default function Home() {
           <Image
             src="/victoria_falls_banner.png"
             alt="Scenic Falls Parallax"
-            fill
+            fill sizes="100vw"
             className="object-cover object-center pointer-events-none"
             style={{ opacity: 0.3 }}
           />
           <div className="absolute inset-0 bg-black/50 z-10" />
         </div>
 
-        <div className="relative z-20 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+        <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
+          <div data-reveal className="text-center max-w-2xl mx-auto mb-10 space-y-3">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
             <p className="text-base text-[#f4ebd0]/70 font-light">
@@ -1068,18 +1110,18 @@ export default function Home() {
             </p>
           </div>
 
-          <section style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 relative">
+          <section style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto mms-gutter relative">
      
 
-        <div className="bg-[#050507] rounded-3xl border border-[#c5a880]/10 p-8 md:p-10">
+        <div data-reveal="scale" className="bg-[#050507] rounded-3xl border border-[#c5a880]/10 p-5 sm:p-8 md:p-10">
           {/* Step Progress Indicator */}
-          <div className="flex items-center justify-between mb-10 max-w-md mx-auto">
+          <div className="builder-progress flex items-center justify-between gap-2 mb-6 max-w-md mx-auto">
             {["Goal", "Audience", "Timeline", "Contact", "Review"].map((label, idx) => {
               const stepNum = idx + 1;
               const isActive = builderStep === idx;
               const isDone = builderStep > idx;
               return (
-                <div key={label} className="flex flex-col items-center">
+                <div key={label} aria-current={isActive ? "step" : undefined} aria-label={`${label}, step ${stepNum}`} className="flex flex-col items-center">
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                       isActive
@@ -1101,6 +1143,7 @@ export default function Home() {
             })}
           </div>
 
+          <p className="text-center text-sm text-[#c5a880] mb-6 sm:hidden" aria-live="polite">Step {builderStep + 1} of 5: {["Goal", "Audience", "Timeline", "Contact", "Review"][builderStep]}</p>
           {/* Step 1: Goal Selection */}
           {builderStep === 0 && (
             <motion.div
@@ -1122,6 +1165,7 @@ export default function Home() {
                 ].map((opt) => (
                   <button
                     key={opt.id}
+                    aria-pressed={builderData.goal === opt.id}
                     onClick={() => setBuilderData({ ...builderData, goal: opt.id })}
                     className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       builderData.goal === opt.id
@@ -1160,6 +1204,7 @@ export default function Home() {
                 ].map((opt) => (
                   <button
                     key={opt.id}
+                    aria-pressed={builderData.audience === opt.id}
                     onClick={() => setBuilderData({ ...builderData, audience: opt.id })}
                     className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       builderData.audience === opt.id
@@ -1201,6 +1246,7 @@ export default function Home() {
                 ].map((opt) => (
                   <button
                     key={opt.id}
+                    aria-pressed={builderData.timeline === opt.id}
                     onClick={() => setBuilderData({ ...builderData, timeline: opt.id })}
                     className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       builderData.timeline === opt.id
@@ -1208,7 +1254,7 @@ export default function Home() {
                         : "border-[#c5a880]/15 bg-[#050507]/50 hover:border-[#c5a880]/40"
                     }`}
                   >
-                    <div className="w-10 h-10 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
+                    <div className="min-w-16 min-h-10 px-2 rounded-full bg-[#c5a880]/15 flex items-center justify-center shrink-0">
                       <span className="text-xs font-bold text-[#c5a880]">{opt.days}</span>
                     </div>
                     <div>
@@ -1235,9 +1281,12 @@ export default function Home() {
               </div>
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Your Name</label>
+                  <label htmlFor="builder-name" className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Your Name</label>
                   <input
                     type="text"
+                    id="builder-name"
+                    name="name"
+                    autoComplete="name"
                     value={builderData.name}
                     onChange={(e) => setBuilderData({ ...builderData, name: e.target.value })}
                     placeholder="e.g. Sarah Johnson"
@@ -1245,9 +1294,12 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Email Address</label>
+                  <label htmlFor="builder-email" className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Email Address</label>
                   <input
                     type="email"
+                    id="builder-email"
+                    name="email"
+                    autoComplete="email"
                     value={builderData.email}
                     onChange={(e) => setBuilderData({ ...builderData, email: e.target.value })}
                     placeholder="e.g. sarah@example.com"
@@ -1255,9 +1307,12 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Phone (optional)</label>
+                  <label htmlFor="builder-phone" className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Phone (optional)</label>
                   <input
                     type="tel"
+                    id="builder-phone"
+                    name="phone"
+                    autoComplete="tel"
                     value={builderData.phone}
                     onChange={(e) => setBuilderData({ ...builderData, phone: e.target.value })}
                     placeholder="e.g. +1 234 567 890"
@@ -1265,13 +1320,15 @@ export default function Home() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Project Details</label>
+                  <label htmlFor="builder-details" className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Project Details</label>
                   <textarea
+                    id="builder-details"
+                    name="details"
                     value={builderData.details}
                     onChange={(e) => setBuilderData({ ...builderData, details: e.target.value })}
                     placeholder="Tell us about your vision, location, guest count, or any special requirements..."
                     rows={3}
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-none"
+                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-y"
                   />
                 </div>
               </div>
@@ -1304,33 +1361,47 @@ export default function Home() {
                   { label: "Phone", value: builderData.phone || "Not provided" },
                   { label: "Details", value: builderData.details ? (builderData.details.length > 60 ? builderData.details.slice(0, 60) + "..." : builderData.details) : "Not provided" },
                 ].map((item) => (
-                  <div key={item.label} className="flex justify-between items-center py-2 border-b border-[#c5a880]/10">
+                  <div key={item.label} className="flex flex-col sm:flex-row gap-2 justify-between sm:items-center py-2 border-b border-[#c5a880]/10">
                     <span className="text-xs uppercase tracking-widest text-[#c5a880]/70 font-semibold">{item.label}</span>
-                    <span className="text-base text-white font-medium text-right max-w-[60%]">{item.value}</span>
+                    <span className="text-base text-white font-medium text-left sm:text-right sm:max-w-[60%]">{item.value}</span>
                   </div>
                 ))}
               </div>
 
               <div className="text-center pt-4">
                 <button
-                  onClick={() => {
-                    const message = encodeURIComponent(
-                      `New Project Inquiry\n\nGoal: ${builderData.goal}\nAudience: ${builderData.audience}\nTimeline: ${builderData.timeline}\nName: ${builderData.name}\nEmail: ${builderData.email}\nPhone: ${builderData.phone}\nDetails: ${builderData.details}`
-                    );
-                    window.location.href = `mailto:hello@mmscreatives.com?subject=New%20Project%20Inquiry%20-%20${builderData.name || "New Lead"}&body=${message}`;
+                  onClick={async () => {
+                    setBuilderError(null);
+                    setBuilderLoading(true);
+                    try {
+                      const response = await fetch("/api/leads", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
+                        body: JSON.stringify(builderData),
+                      });
+                      const result = await response.json().catch(() => ({})) as { error?: string };
+                      if (!response.ok) throw new Error(result.error || "We could not send your brief.");
+                      setBuilderSubmitted(true);
+                    } catch (error) {
+                      setBuilderError(error instanceof Error ? error.message : "We could not send your brief.");
+                    } finally {
+                      setBuilderLoading(false);
+                    }
                   }}
-                  disabled={!builderData.name || !builderData.email}
+                  disabled={!builderData.name || !builderData.email || builderLoading || builderSubmitted}
+                  data-lead-cta
                   className="inline-flex items-center justify-center px-8 py-3.5 text-sm uppercase tracking-widest bg-gradient-to-r from-[#b48a3d] to-[#c5a880] text-[#050507] font-bold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#b48a3d]/20 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  Send My Brief & Get a Free Quote
+                  {builderSubmitted ? "Brief Sent — Thank You" : builderLoading ? "Sending…" : "Send My Brief & Get a Free Quote"}
                 </button>
+                {builderError && <p role="alert" className="text-sm text-red-400 mt-3">{builderError}</p>}
                 <p className="text-sm text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
               </div>
             </motion.div>
           )}
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#c5a880]/10">
+          <div className="builder-actions flex flex-wrap gap-3 items-center justify-between mt-8 pt-6 border-t border-[#c5a880]/10">
             <button
               onClick={() => setBuilderStep((prev) => Math.max(0, prev - 1))}
               disabled={builderStep === 0}
@@ -1340,7 +1411,7 @@ export default function Home() {
               Back
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {builderStep < 4 && (
                 <button
                   onClick={() => {
@@ -1378,7 +1449,7 @@ export default function Home() {
       <Footer />
 
       {/* Persistent CTA */}
-      <Link href="/conference-production#enquiry" className="fixed bottom-6 right-6 z-50 inline-flex items-center px-4 py-2.5 rounded-full bg-[#b48a3d] text-[#050507] font-semibold text-[10px] shadow-lg">Plan Your Conference</Link>
+      <Link href="/conference-production#enquiry" className="persistent-cta fixed z-30 inline-flex items-center px-4 py-2.5 rounded-full bg-[#b48a3d] text-[#050507] font-semibold text-[10px] shadow-lg">Plan Your Conference</Link>
 
     </div>
   );

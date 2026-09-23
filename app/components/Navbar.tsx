@@ -63,7 +63,8 @@ export default function Navbar() {
             alt="MMS Logo"
             width={140}
             height={38}
-            className="w-[112px] sm:w-[140px] h-auto object-contain"
+            style={{ width: "auto", height: "auto", maxWidth: "112px" }}
+            className="sm:[max-width:140px] object-contain"
             preload
           />
         </Link>

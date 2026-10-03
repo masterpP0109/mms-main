@@ -61,7 +61,7 @@ export default function AboutPage() {
 
       {/* Who We Are — text + 2×2 image grid */}
       <section className="py-12 sm:py-20 md:py-28 max-w-[1400px] mx-auto mms-gutter">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-8 md:gap-12 lg:gap-20 items-center">
+        <div data-stagger className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
           <div className="space-y-6">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Who We Are</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
@@ -125,7 +125,7 @@ export default function AboutPage() {
 
       {/* Victoria Falls — with scenic image pair */}
       <section className="py-12 sm:py-20 md:py-28 max-w-[1400px] mx-auto mms-gutter">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-8 md:gap-12 lg:gap-20 items-center">
+        <div data-stagger className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
           {/* Images */}
           <div className="grid grid-cols-2 gap-3">
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-[#c5a880]/12">
@@ -161,11 +161,11 @@ export default function AboutPage() {
       {/* Values */}
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto mms-gutter">
-          <div className="text-center mb-16">
+          <div data-reveal className="text-center mb-16">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What Guides Us</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Our Values</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div data-stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, idx) => (
               <motion.div
                 key={value.title}
@@ -195,13 +195,13 @@ export default function AboutPage() {
 
       {/* Selected work teaser — 5 images */}
       <section className="py-16 max-w-[1400px] mx-auto mms-gutter">
-        <div className="flex flex-wrap gap-4 items-end justify-between mb-8">
+        <div data-reveal className="flex flex-wrap gap-4 items-end justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Selected Work</h2>
           <Link href="/gallery" className="text-xs text-[#c5a880] hover:text-white transition-colors flex items-center gap-1.5">
             Full Gallery <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div data-stagger className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
             { src: "/mms/DSC_7906.jpg",     tall: true  },
             { src: "/mms/DSC_1864.jpg",     tall: false },
@@ -224,11 +224,11 @@ export default function AboutPage() {
       {/* FAQs */}
       <section className="py-16 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[900px] mx-auto px-6 sm:px-10">
-          <div className="text-center mb-12">
+          <div data-reveal className="text-center mb-12">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Quick Answers</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Frequently Asked Questions</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div data-stagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {faqs.map((faq) => (
               <div key={faq.q} className="glass-panel rounded-2xl border border-[#c5a880]/15 p-6 space-y-2">
                 <h3 className="text-sm font-medium text-white">{faq.q}</h3>
@@ -241,7 +241,7 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="py-20 max-w-[1400px] mx-auto mms-gutter">
-        <div className="relative rounded-3xl overflow-hidden border border-[#c5a880]/20">
+        <div data-reveal="scale" className="relative rounded-3xl overflow-hidden border border-[#c5a880]/20">
           <Image src="/mms/DSC_7590.jpg" alt="CTA background" fill sizes="100vw" className="object-cover object-center opacity-25" />
           <div className="absolute inset-0 bg-[#050507]/80" />
           <div className="relative z-10 p-5 sm:p-10 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -250,7 +250,7 @@ export default function AboutPage() {
               <p className="text-sm text-[#f4ebd0]/60 font-light">Tell us about your event or project and our team will respond within 24 hours.</p>
             </div>
             <div className="flex flex-wrap gap-4 shrink-0">
-              <Link href="/contact" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
+              <Link data-lead-cta href="/contact" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
                 <span className="relative z-10">Get in Touch</span>
                 <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>

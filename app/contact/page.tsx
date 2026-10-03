@@ -86,7 +86,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
 
           {/* Info Panel */}
-          <div className="lg:col-span-2 space-y-8">
+          <div data-reveal="left" className="lg:col-span-2 space-y-8">
             <div>
               <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-4 font-heading">Contact Details</span>
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading mb-5">We&apos;d love to hear from you.</h2>
@@ -95,7 +95,7 @@ export default function ContactPage() {
               </p>
             </div>
 
-            <div className="space-y-5">
+            <div data-stagger className="space-y-5">
               {[
                 { icon: MapPin,        label: "Location",      value: "Victoria Falls, Zimbabwe" },
                 { icon: Mail,          label: "Email",         value: "info@mosimediasolutions.com" },
@@ -117,7 +117,7 @@ export default function ContactPage() {
             {/* Recent work thumbnails */}
             <div className="space-y-3">
               <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold">Recent Work</h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div data-stagger className="grid grid-cols-2 gap-2">
                 {recentWork.map((item) => (
                   <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#c5a880]/12">
                     <Image src={item.src} alt={item.label} fill sizes="(max-width:1023px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
@@ -154,7 +154,7 @@ export default function ContactPage() {
           </div>
 
           {/* Form */}
-          <div className="lg:col-span-3">
+          <div data-reveal="right" className="lg:col-span-3">
             {!submitted ? (
               <form onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-10 space-y-5">
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
@@ -213,7 +213,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
-                  <button type="submit" disabled={loading} className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em] disabled:opacity-50`}>
+                  <button data-lead-cta type="submit" disabled={loading} className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em] disabled:opacity-50`}>
                     <span className="relative z-10">{loading ? "Sending…" : "Send Message"}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
@@ -256,13 +256,13 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter">
-          <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div data-reveal="scale" className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
               <span className="text-[9px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold block font-heading">Institutional Production</span>
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Planning a conference or government event?</h2>
               <p className="text-sm text-[#f4ebd0]/60 font-light">Use the dedicated conference enquiry form to give us all the details we need — organisation type, delegate count, venue and required services.</p>
             </div>
-            <Link href="/conference-production#enquiry" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] shrink-0`}>
+            <Link data-lead-cta href="/conference-production#enquiry" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] shrink-0`}>
               <span className="relative z-10">Conference Enquiry Form</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>

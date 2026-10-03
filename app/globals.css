@@ -158,6 +158,11 @@ h1, h2, h3, h4, h5, h6 {
   animation: lead-attention 1.1s ease-out 450ms both;
 }
 
+.home-hero [data-lead-cta],
+.conference-hero [data-lead-cta] {
+  animation: lead-attention 1.1s ease-out 900ms both;
+}
+
 /* Logo glow */
 .logo-glow {
   filter: drop-shadow(0 0 6px rgba(197, 168, 128, 0.3));

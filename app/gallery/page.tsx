@@ -376,7 +376,7 @@ export default function GalleryPage() {
 
       {/* CTA */}
       <section className="py-16 border-t border-[#c5a880]/10 bg-black">
-        <div className="max-w-[1400px] mx-auto mms-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div data-reveal className="max-w-[1400px] mx-auto mms-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-xl md:text-2xl font-semibold text-white font-heading">Ready to be in our gallery?</h3>
             <p className="text-sm text-[#f4ebd0]/55 font-light mt-1">Let&apos;s create something beautiful together.</p>
@@ -384,6 +384,7 @@ export default function GalleryPage() {
           <div className="flex flex-wrap gap-3 shrink-0">
             <Link
               href="/contact"
+              data-lead-cta
               className="group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
             >
               Start a Project

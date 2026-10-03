@@ -609,6 +609,7 @@ export default function Home() {
                 <div className="pt-6 gsap-action pointer-events-auto flex flex-col sm:flex-row sm:items-center gap-3">
                   <a
                     href={slides[currentSlide].link}
+                    data-lead-cta
                     className={`${goldGlowButtonBase} px-6 py-3 text-[10px] uppercase tracking-[0.1em] premium-button`}
                   >
                     <span className="relative z-10">{slides[currentSlide].btnText}</span>

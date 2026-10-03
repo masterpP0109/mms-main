@@ -191,8 +191,9 @@ export default function ProjectsPage() {
               key={project.title}
               layout
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
               className="group glass-panel rounded-3xl border border-[#c5a880]/15 overflow-hidden hover:border-[#c5a880]/35 transition-all duration-300 cursor-pointer"
               role="button"
               tabIndex={0}
@@ -282,7 +283,7 @@ export default function ProjectsPage() {
       {/* Stats */}
       <section className="py-16 bg-black">
         <div className="max-w-[1400px] mx-auto mms-gutter">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div data-stagger className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { number: "50+", label: "Events Produced" },
               { number: "200+", label: "Hours of Film Delivered" },
@@ -304,12 +305,12 @@ export default function ProjectsPage() {
           <Image src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg" alt="" fill sizes="100vw" className="object-cover object-center opacity-30" />
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
-        <div className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
+        <div data-reveal="scale" className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
             <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Start Your Project</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Your story deserves to be told beautifully.</h2>
           <p className="text-sm text-[#f4ebd0]/60 font-light leading-relaxed">Let&apos;s discuss your vision and build something worth remembering.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link href="/contact" className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
+            <Link data-lead-cta href="/contact" className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
               <span className="relative z-10">Start a Project</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>

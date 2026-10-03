@@ -20,8 +20,12 @@ const contentSlug = (title: string) =>
 const services = [
   {
     title: "Conference Microphone & Interpretation Equipment",
-    image: "/mms/DSC_7204.jpg",
-    gallery: ["/mms/DSC_7176.jpg", "/mms/DSC_7204.jpg", "/mms/DSC_7218.jpg"],
+    image: "/services%20images/5e3c3df339009497f72d40842dd6c19b.jpg",
+    gallery: [
+      "/mms/conferenceServicesImagesGallery/How-To-Choose-A-Wireless-Interpretation-System-For-Large-Venues.jpg.jpeg",
+      "/mms/conferenceServicesImagesGallery/images%20(62).jpg.jpeg",
+      "/mms/conferenceServicesImagesGallery/istockphoto-1141955531-612x612.jpg.jpeg",
+    ],
     tag: "Audio & Interpretation",
     desc: "Professional conference audio, microphone systems and simultaneous interpretation booths for multilingual institutional events, government meetings and international conferences.",
     items: [
@@ -36,7 +40,7 @@ const services = [
   },
   {
     title: "LED Screen Rental",
-    image: "/mms/DSC_7215.jpg",
+    image: "/services%20images/LED%20Screen%20Rental.jpg",
     gallery: ["/mms/DSC_7215.jpg", "/mms/DSC_7176.jpg", "/mms/DSC_7208.jpg"],
     tag: "Visual Display",
     desc: "High-brightness LED screens, video walls and digital displays for conferences, brand activations and outdoor events — available in any size with on-site technical support.",
@@ -52,7 +56,7 @@ const services = [
   },
   {
     title: "Professional Sound Systems",
-    image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
+    image: "/services%20images/Professional%20Sound%20Systems.jpg",
     gallery: ["/mms/Victoria-Falls-Video-Conference-Hire.webp", "/mms/DSC_7204.jpg", "/mms/DSC_7218.jpg"],
     tag: "Audio Engineering",
     desc: "Comprehensive PA systems, line arrays, mixing consoles and wireless microphones engineered for clear, reliable sound at every venue size.",
@@ -68,7 +72,7 @@ const services = [
   },
   {
     title: "Live Streaming Production",
-    image: "/mms/DSC_9244.jpg",
+    image: "/services%20images/Live%20Streaming%20Production.jpg",
     gallery: ["/mms/DSC_9244.jpg", "/mms/DSC_7215.jpg", "/mms/DSC_7176.jpg"],
     tag: "Hybrid Events",
     desc: "Full-service live streaming with multi-camera switching, platform integration, virtual backdrops and real-time graphics for hybrid and fully virtual conferences.",
@@ -84,7 +88,7 @@ const services = [
   },
   {
     title: "Videography & Photography",
-    image: "/mms/DSC_2327-Edit.jpg",
+    image: "/services%20images/videography-photography.jpg",
     gallery: ["/mms/DSC_2327-Edit.jpg", "/mms/DSC_2484.jpg", "/mms/DSC_2591.jpg"],
     tag: "Creative Capture",
     desc: "Cinematic event videography and professional photography — from same-day edits and highlight reels to full event archives and brand campaign imagery.",
@@ -117,7 +121,7 @@ const services = [
 ];
 
 const addOns = [
-  { icon: Camera,       label: "Drone Cinematography",  img: "/mms/_MG_2920.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
+  { icon: Camera,       label: "Drone Cinematography",  img: "/services%20images/Drone%20Services.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
   { icon: Sparkles,     label: "Cold Sparks",            img: "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", desc: "Cold spark pyrotechnic effects for grand entrances, finales and photo moments without open flame." },
   { icon: Globe,        label: "360° Booth",             img: "/mms/IMG_9203.jpeg",          desc: "Interactive 360-degree photo and video booths for guest engagement and shareable content." },
   { icon: MessageSquare,label: "Podcast Production",     img: "/mms/DSC_7598.jpg",           desc: "On-location podcast capture with multi-track audio and professional editing." },
@@ -203,7 +207,7 @@ export default function ServicesPage() {
                 <div className={`space-y-6 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
                   <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading">{service.title}</h2>
                   <p className="text-lg text-[#f4ebd0]/70 leading-relaxed font-light">{service.desc}</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-3 pt-2">
+                  <div data-stagger className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-3 pt-2">
                     {service.items.map((item) => (
                       <div key={item.label} className="bg-[#050507] flex flex-col items-center justify-center gap-2.5 min-h-[90px] rounded-2xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all duration-300 text-center px-3">
                         <item.icon className="w-5 h-5 text-[#c5a880]" />
@@ -225,7 +229,7 @@ export default function ServicesPage() {
             </div>
 
             {/* 3-image thumbnail strip */}
-            <div className="grid grid-cols-3 gap-3">
+            <div data-stagger className="grid grid-cols-3 gap-3">
               {service.gallery.map((img, i) => (
                 <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group">
                   <Image src={img} alt={`${service.title} ${i + 1}`} fill sizes="33vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
@@ -329,7 +333,7 @@ onClick={() => setSelected(null)}
     {/* Add-Ons — cards with image thumbnails */}
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto mms-gutter">
-          <div className="text-center mb-14">
+          <div data-reveal className="text-center mb-14">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Optional Add-Ons</span>
             <h2 className="text-4xl md:text-5xl font-semibold text-white font-heading">Enhance Your Production</h2>
           </div>
@@ -368,12 +372,12 @@ onClick={() => setSelected(null)}
           <Image src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg" alt="" fill sizes="100vw" className="object-cover object-center opacity-35" />
           <div className="absolute inset-0 bg-[#050507]/75" />
         </div>
-        <div className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
+        <div data-reveal="scale" className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get Started</span>
             <h2 className="text-4xl md:text-5xl font-semibold text-white font-heading">Ready to create something memorable?</h2>
           <p className="text-lg text-[#f4ebd0]/60 font-light leading-relaxed">Tell us about your project and we&apos;ll respond within 24 hours with a tailored proposal.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link href="/contact" className={`${goldBtn} px-8 py-3.5 text-sm uppercase tracking-[0.18em]`}>
+            <Link data-lead-cta href="/contact" className={`${goldBtn} px-8 py-3.5 text-sm uppercase tracking-[0.18em]`}>
               <span className="relative z-10">Start a Project</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>

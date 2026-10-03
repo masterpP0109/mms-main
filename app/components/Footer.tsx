@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#050507] border-t border-[#c5a880]/15 pt-14 pb-24">
       <div className="max-w-[1600px] mx-auto mms-gutter">
-        <div className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div data-stagger className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="min-[400px]:col-span-2 lg:col-span-1 space-y-4">
             <Image src="/mms/MMS%20LOGO.png" alt="MMS Logo" width={130} height={38} className="object-contain" />
@@ -15,6 +15,7 @@ export default function Footer() {
             </p>
             <Link
               href="/conference-production#enquiry"
+              data-lead-cta
               className="inline-flex items-center px-4 py-2 rounded-full bg-[#b48a3d] text-[#050507] font-semibold text-xs"
             >
               Planning a conference? Talk to our team.

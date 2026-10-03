@@ -100,7 +100,7 @@ export default function ConferenceProduction() {
             MMS delivers coordinated media and technical production for conferences, seminars, workshops and institutional events in Victoria Falls and beyond.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a href="#enquiry" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
+            <a data-lead-cta href="#enquiry" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
               <span className="relative z-10">Request a Proposal</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4" />
             </a>
@@ -114,7 +114,7 @@ export default function ConferenceProduction() {
       {/* Trust strip */}
       <section className="relative z-10 max-w-[1600px] mx-auto mms-gutter -mt-4">
         <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-6 md:p-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-[#c5a880]/15">
+          <div data-stagger className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-[#c5a880]/15">
             {[
               { label: "Response Time", value: "24hr" },
               { label: "Licensed & Insured", value: "Drone Certified" },
@@ -132,16 +132,16 @@ export default function ConferenceProduction() {
 
       {/* Capabilities */}
       <section id="capabilities" className="py-12 sm:py-20 md:py-28 max-w-[1600px] mx-auto mms-gutter">
-        <div className="text-center mb-14">
+        <div data-reveal className="text-center mb-14">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What We Provide</span>
           <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Production Capabilities</h2>
           <p className="text-sm text-[#f4ebd0]/70 font-light max-w-xl mx-auto">
             Everything your event needs, coordinated by one team.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div data-stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {capabilities.map((cap) => (
-            <div key={cap.title} className="glass-panel rounded-2xl border border-[#c5a880]/15 p-6 hover:border-[#c5a880]/40 transition-all duration-300 group">
+            <div key={cap.title} data-lift className="glass-panel rounded-2xl border border-[#c5a880]/15 p-6 hover:border-[#c5a880]/40 transition-all duration-300 group">
               <div className="w-10 h-10 rounded-full bg-[#c5a880]/10 flex items-center justify-center mb-4 group-hover:bg-[#c5a880]/20 transition-colors duration-300">
                 <cap.icon className="w-5 h-5 text-[#c5a880]" />
               </div>
@@ -159,7 +159,7 @@ export default function ConferenceProduction() {
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 max-w-[1600px] mx-auto mms-gutter">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div data-stagger className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div>
               <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Event Types</span>
               <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-8">Events We Support</h2>
@@ -190,11 +190,11 @@ export default function ConferenceProduction() {
 
       {/* Process */}
       <section className="py-12 sm:py-20 md:py-28 max-w-[1600px] mx-auto mms-gutter">
-        <div className="text-center mb-14">
+        <div data-reveal className="text-center mb-14">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">How We Work</span>
           <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Our Production Process</h2>
         </div>
-        <div className="process-timeline relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-8 xl:gap-4">
+        <div data-stagger className="process-timeline relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-8 xl:gap-4">
           <div className="absolute top-10 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#c5a880]/30 to-transparent hidden xl:block" />
           {process.map((item) => (
             <div key={item.step} className="relative z-10 flex flex-col items-center text-center px-4">
@@ -212,13 +212,13 @@ export default function ConferenceProduction() {
       <section id="enquiry" className="relative py-12 sm:py-20 md:py-28 overflow-hidden bg-black border-t border-[#c5a880]/15">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1510]/60 via-[#050507] to-[#050507] z-0" />
         <div className="relative z-10 max-w-[1600px] mx-auto mms-gutter">
-          <div className="text-center mb-12">
+          <div data-reveal className="text-center mb-12">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Get In Touch</span>
           <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-4">Conference Enquiry</h2>
             <p className="text-sm text-[#f4ebd0]/70 font-light max-w-md mx-auto">Fill in the form below and our production team will respond within 24 hours with a tailored proposal.</p>
           </div>
 
-          <div className="max-w-3xl mx-auto glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12">
+          <div data-reveal="scale" className="max-w-3xl mx-auto glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12">
             {!submitted ? (
               <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
@@ -277,7 +277,7 @@ export default function ConferenceProduction() {
                 />
 
                 <div className="md:col-span-2 flex flex-wrap items-center gap-4">
-                  <button type="submit" disabled={loading} className={`${goldBtn} px-8 py-3.5 text-xs uppercase tracking-widest disabled:opacity-50`}>
+                  <button data-lead-cta type="submit" disabled={loading} className={`${goldBtn} px-8 py-3.5 text-xs uppercase tracking-widest disabled:opacity-50`}>
                     <span className="relative z-10">{loading ? "Sending…" : "Request a Conference Proposal"}</span>
                   </button>
                   {error && <span role="alert" className="text-sm text-red-400">{error}</span>}

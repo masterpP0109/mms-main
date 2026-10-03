@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const text = (max: number) => z.string().trim().min(1).max(max);
+const text = (max: number) => z.string().trim().min(1).max(max).refine((value) => !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value), "Invalid characters");
 const optionalText = (max: number) => z.string().trim().max(max).optional().transform((v) => v || undefined);
 const phone = optionalText(32).refine((value) => !value || /^\+?[0-9 ()-]{7,32}$/.test(value), "Invalid phone number");
 
@@ -8,6 +8,9 @@ export const contactLeadSchema = z.object({
   name: text(120),
   email: z.string().trim().email().max(254),
   phone,
+  organisation: optionalText(160),
+  service: optionalText(160),
+  origin: z.string().max(300).regex(/^\/(?:[a-z0-9-]+\/?)*$/).optional(),
   projectType: z.preprocess((value) => value === "" ? undefined : value, z.enum(["conference", "wedding", "brand", "event", "other"]).optional()),
   message: text(5000),
   website: z.string().max(0).optional(),

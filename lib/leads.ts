@@ -23,6 +23,7 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
     const emailSent = email.status === "fulfilled" && Boolean(email.value);
     const whatsappSent = whatsapp.status === "fulfilled" && Boolean(whatsapp.value);
     const failures = notifications.filter((result) => result.status === "rejected") as PromiseRejectedResult[];
+    if (!emailSent && input.email) console.error("Lead email notification failed", { leadId: lead.id, source: input.source });
     await db.lead.update({
       where: { id: lead.id },
       data: {
@@ -33,11 +34,11 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
         notificationError: failures.length ? failures.map((f) => f.reason instanceof Error ? f.reason.message : "Provider failure").join("; ").slice(0, 1000) : null,
       },
     });
-    return { id: lead.id, duplicate: false, notified: emailSent || whatsappSent };
+    return { id: lead.id, duplicate: false, notified: emailSent };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       const existing = await db.lead.findUnique({ where: { idempotencyKey } });
-      if (existing) return { id: existing.id, duplicate: true, notified: existing.emailStatus === "sent" || existing.whatsappStatus === "sent" };
+      if (existing) return { id: existing.id, duplicate: true, notified: existing.emailStatus === "sent" };
     }
     throw error;
   }

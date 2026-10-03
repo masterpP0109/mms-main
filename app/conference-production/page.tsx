@@ -68,8 +68,8 @@ export default function ConferenceProduction() {
       const result = await res.json().catch(() => ({})) as { error?: string };
       if (!res.ok) throw new Error(result.error || "We could not submit your enquiry.");
       setSubmitted(true);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Submission failed");
+    } catch {
+      setError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
     } finally {
       setLoading(false);
     }
@@ -288,7 +288,7 @@ export default function ConferenceProduction() {
               <div className="text-center py-12">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
-                <p className="text-sm text-[#f4ebd0]/60">Our production team will respond within 24 hours.</p>
+                <p className="text-sm text-[#f4ebd0]/60">Thank you. Your enquiry has been sent to the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
               </div>
             )}
           </div>

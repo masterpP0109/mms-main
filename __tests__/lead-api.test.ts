@@ -29,13 +29,13 @@ describe("lead API", () => {
     expect(mockedCreateLead).not.toHaveBeenCalled();
   });
 
-  it("returns accepted when the lead is saved but providers fail", async () => {
+  it("returns failure when email is not accepted", async () => {
     mockedCreateLead.mockResolvedValue({ id: "lead_2", duplicate: false, notified: false });
     const response = await POST(new Request("http://localhost/api/leads", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: "Grace Hopper", email: "grace@example.com", message: "Production enquiry" }),
     }));
-    expect(response.status).toBe(202);
-    await expect(response.json()).resolves.toMatchObject({ notificationPending: true });
+    expect(response.status).toBe(502);
+    await expect(response.json()).resolves.toMatchObject({ error: expect.stringContaining("Please try again") });
   });
 });

@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { projectBriefRows, projectBriefWhatsAppUrl } from "@/lib/project-brief";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -42,6 +43,7 @@ export default function Home() {
   const [carouselPaused, setCarouselPaused] = useState(false);
   const [builderStep, setBuilderStep] = useState(0);
   const [builderLoading, setBuilderLoading] = useState(false);
+  const [builderWebsite, setBuilderWebsite] = useState("");
   const [builderError, setBuilderError] = useState<string | null>(null);
   const [builderSubmitted, setBuilderSubmitted] = useState(false);
   const [builderData, setBuilderData] = useState({
@@ -472,6 +474,22 @@ export default function Home() {
       image: "/mms/DSC_7356.jpg",
       alt: "Event lighting and stage setup at a venue",
       desc: "Complete stage design, theatrical lighting, truss rigging and branded backdrops that transform any venue into a professional production space.",
+      href: "/services"
+    },
+    {
+      title: "Interactive Screens",
+      icon: Monitor,
+      image: "/services%20images/LED%20Screen%20Rental.jpg",
+      alt: "Interactive digital displays and touch screens",
+      desc: "Interactive digital displays, touch screens and smart podiums that elevate audience engagement — from live polling and Q&A to real-time content integration.",
+      href: "/services"
+    },
+    {
+      title: "DJ Services",
+      icon: Megaphone,
+      image: "/services%20images/Professional%20Sound%20Systems.jpg",
+      alt: "Professional DJ and entertainment services",
+      desc: "Professional DJ services with state-of-the-art sound systems, lighting integration and music curation for weddings, corporate events and celebrations.",
       href: "/services"
     }
   ];
@@ -1353,23 +1371,24 @@ export default function Home() {
               </div>
 
                 <div className="space-y-3">
-                {[
-                  { label: "Project Goal", value: builderData.goal ? builderData.goal.charAt(0).toUpperCase() + builderData.goal.slice(1) : "Not selected" },
-                  { label: "Audience / Event Type", value: builderData.audience ? builderData.audience.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ") : "Not selected" },
-                  { label: "Timeline", value: builderData.timeline ? builderData.timeline.charAt(0).toUpperCase() + builderData.timeline.slice(1) : "Not selected" },
-                  { label: "Name", value: builderData.name || "Not provided" },
-                  { label: "Email", value: builderData.email || "Not provided" },
-                  { label: "Phone", value: builderData.phone || "Not provided" },
-                  { label: "Details", value: builderData.details ? (builderData.details.length > 60 ? builderData.details.slice(0, 60) + "..." : builderData.details) : "Not provided" },
-                ].map((item) => (
+                {projectBriefRows(builderData).map((item) => (
                   <div key={item.label} className="flex flex-col sm:flex-row gap-2 justify-between sm:items-center py-2 border-b border-[#c5a880]/10">
                     <span className="text-xs uppercase tracking-widest text-[#c5a880]/70 font-semibold">{item.label}</span>
-                    <span className="text-base text-white font-medium text-left sm:text-right sm:max-w-[60%]">{item.value}</span>
+                    <span className="text-base text-white font-medium text-left sm:text-right sm:max-w-[60%] whitespace-pre-wrap break-words min-w-0">{item.value}</span>
                   </div>
                 ))}
               </div>
 
               <div className="text-center pt-4">
+                <a
+                  href={projectBriefWhatsAppUrl(builderData)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 mb-3 rounded-full bg-[#25d366] text-[#050507] font-bold text-sm hover:brightness-110 transition-all"
+                >
+                  <MessageSquare className="w-5 h-5" /> Send My Brief on WhatsApp
+                </a>
+                <p className="text-sm text-[#f4ebd0]/60 mb-5">Opens WhatsApp to 0788 111 391 with your full brief. Press Send in WhatsApp to request your quote.</p>
                 <button
                   onClick={async () => {
                     setBuilderError(null);
@@ -1378,13 +1397,13 @@ export default function Home() {
                       const response = await fetch("/api/leads", {
                         method: "POST",
                         headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
-                        body: JSON.stringify(builderData),
+                        body: JSON.stringify({ ...builderData, website: builderWebsite }),
                       });
                       const result = await response.json().catch(() => ({})) as { error?: string };
                       if (!response.ok) throw new Error(result.error || "We could not send your brief.");
                       setBuilderSubmitted(true);
-                    } catch (error) {
-                      setBuilderError(error instanceof Error ? error.message : "We could not send your brief.");
+                    } catch {
+                      setBuilderError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
                     } finally {
                       setBuilderLoading(false);
                     }
@@ -1395,6 +1414,8 @@ export default function Home() {
                 >
                   {builderSubmitted ? "Brief Sent — Thank You" : builderLoading ? "Sending…" : "Send My Brief & Get a Free Quote"}
                 </button>
+                {builderSubmitted && <p role="status" className="text-sm text-[#f4ebd0]/60 mt-3">Thank you. Your enquiry has been sent to the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>}
+                <input aria-hidden="true" tabIndex={-1} autoComplete="off" name="website" className="hidden" value={builderWebsite} onChange={(event) => setBuilderWebsite(event.target.value)} />
                 {builderError && <p role="alert" className="text-sm text-red-400 mt-3">{builderError}</p>}
                 <p className="text-sm text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
               </div>

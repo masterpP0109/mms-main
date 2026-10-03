@@ -32,7 +32,8 @@ export default function ContactPage() {
     setError(null);
     setLoading(true);
     const form = e.currentTarget;
-    const body = Object.fromEntries(new FormData(form).entries());
+    const params = new URLSearchParams(window.location.search);
+    const body = { ...Object.fromEntries(new FormData(form).entries()), service: params.get("service") || undefined, origin: params.get("origin") || "/contact" };
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
@@ -43,8 +44,8 @@ export default function ContactPage() {
       if (!response.ok) throw new Error(result.error || "We could not send your message.");
       setSubmitted(true);
       form.reset();
-    } catch (submissionError) {
-      setError(submissionError instanceof Error ? submissionError.message : "We could not send your message.");
+    } catch {
+      setError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
     } finally {
       setLoading(false);
     }
@@ -226,7 +227,7 @@ export default function ContactPage() {
               <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-12 text-center space-y-4">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto" />
                 <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
-                <p className="text-sm text-[#f4ebd0]/60 font-light">Our team will review your enquiry and respond within 24 hours.</p>
+                <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been sent to the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
                 <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#c5a880] hover:text-white transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
                 </Link>

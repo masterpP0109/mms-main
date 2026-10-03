@@ -5,128 +5,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Globe, MessageSquare, Users, Play, Video, Camera, Megaphone, PenTool, Briefcase, ArrowRight, X, Sparkles
+  Globe, MessageSquare, Video, Camera, Megaphone, ArrowRight, X, Sparkles
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useModalFocus } from "../components/useModalFocus";
+import { contentSlug, services } from "@/lib/services";
 
 const goldBtn =
   "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-all duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
 
-const contentSlug = (title: string) =>
-  title.toLowerCase().replace(/&/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-
-const services = [
-  {
-    title: "Conference Microphone & Interpretation Equipment",
-    image: "/services%20images/5e3c3df339009497f72d40842dd6c19b.jpg",
-    gallery: [
-      "/mms/conferenceServicesImagesGallery/How-To-Choose-A-Wireless-Interpretation-System-For-Large-Venues.jpg.jpeg",
-      "/mms/conferenceServicesImagesGallery/images%20(62).jpg.jpeg",
-      "/mms/conferenceServicesImagesGallery/istockphoto-1141955531-612x612.jpg.jpeg",
-    ],
-    tag: "Audio & Interpretation",
-    desc: "Professional conference audio, microphone systems and simultaneous interpretation booths for multilingual institutional events, government meetings and international conferences.",
-    items: [
-      { label: "Microphone Systems", icon: Users },
-      { label: "Interpretation Booths", icon: Globe },
-      { label: "Receivers & Headsets", icon: Play },
-      { label: "Conference Audio", icon: Video },
-      { label: "Multi-language Support", icon: MessageSquare },
-    ],
-    cta: "Plan Your Conference",
-    href: "/conference-production",
-  },
-  {
-    title: "LED Screen Rental",
-    image: "/services%20images/LED%20Screen%20Rental.jpg",
-    gallery: ["/mms/DSC_7215.jpg", "/mms/DSC_7176.jpg", "/mms/DSC_7208.jpg"],
-    tag: "Visual Display",
-    desc: "High-brightness LED screens, video walls and digital displays for conferences, brand activations and outdoor events — available in any size with on-site technical support.",
-    items: [
-      { label: "LED Screens", icon: Globe },
-      { label: "Indoor & Outdoor", icon: Play },
-      { label: "Video Walls", icon: Video },
-      { label: "Custom Content", icon: PenTool },
-      { label: "On-site Support", icon: Briefcase },
-    ],
-    cta: "Build Your Event",
-    href: "/contact",
-  },
-  {
-    title: "Professional Sound Systems",
-    image: "/services%20images/Professional%20Sound%20Systems.jpg",
-    gallery: ["/mms/Victoria-Falls-Video-Conference-Hire.webp", "/mms/DSC_7204.jpg", "/mms/DSC_7218.jpg"],
-    tag: "Audio Engineering",
-    desc: "Comprehensive PA systems, line arrays, mixing consoles and wireless microphones engineered for clear, reliable sound at every venue size.",
-    items: [
-      { label: "PA Systems", icon: Play },
-      { label: "Line Arrays", icon: Users },
-      { label: "Mixing Consoles", icon: Video },
-      { label: "Wireless Mics", icon: Globe },
-      { label: "Acoustics", icon: MessageSquare },
-    ],
-    cta: "Start a Project",
-    href: "/contact",
-  },
-  {
-    title: "Live Streaming Production",
-    image: "/services%20images/Live%20Streaming%20Production.jpg",
-    gallery: ["/mms/DSC_9244.jpg", "/mms/DSC_7215.jpg", "/mms/DSC_7176.jpg"],
-    tag: "Hybrid Events",
-    desc: "Full-service live streaming with multi-camera switching, platform integration, virtual backdrops and real-time graphics for hybrid and fully virtual conferences.",
-    items: [
-      { label: "Multi-camera Streaming", icon: Video },
-      { label: "Platform Integration", icon: Play },
-      { label: "Virtual Backdrops", icon: Globe },
-      { label: "Live Graphics", icon: Camera },
-      { label: "Replay & Editing", icon: PenTool },
-    ],
-    cta: "Plan Your Conference",
-    href: "/conference-production",
-  },
-  {
-    title: "Videography & Photography",
-    image: "/services%20images/videography-photography.jpg",
-    gallery: ["/mms/DSC_2327-Edit.jpg", "/mms/DSC_2484.jpg", "/mms/DSC_2591.jpg"],
-    tag: "Creative Capture",
-    desc: "Cinematic event videography and professional photography — from same-day edits and highlight reels to full event archives and brand campaign imagery.",
-    items: [
-      { label: "Event Videography", icon: Camera },
-      { label: "Photography", icon: Video },
-      { label: "Highlight Reels", icon: Play },
-      { label: "Same-day Edit", icon: PenTool },
-      { label: "Post-production", icon: Globe },
-    ],
-    cta: "Start Visual Storytelling",
-    href: "/contact",
-  },
-  {
-    title: "Event Lighting & Stage Setup",
-    image: "/mms/DSC_7356.jpg",
-    gallery: ["/mms/DSC_7356.jpg", "/mms/DSC_7317.jpg", "/mms/DSC_7343.jpg"],
-    tag: "Stage Design",
-    desc: "Complete stage design, theatrical lighting, truss rigging and branded backdrops that transform any venue into a professional production space.",
-    items: [
-      { label: "Stage Design", icon: Play },
-      { label: "Lighting Design", icon: Globe },
-      { label: "Truss & Rigging", icon: Video },
-      { label: "LED Walls", icon: PenTool },
-      { label: "Backdrops", icon: Users },
-    ],
-    cta: "Build Your Event",
-    href: "/contact",
-  },
-];
-
 const addOns = [
   { icon: Camera,       label: "Drone Cinematography",  img: "/services%20images/Drone%20Services.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
   { icon: Sparkles,     label: "Cold Sparks",            img: "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", desc: "Cold spark pyrotechnic effects for grand entrances, finales and photo moments without open flame." },
-  { icon: Globe,        label: "360° Booth",             img: "/mms/IMG_9203.jpeg",          desc: "Interactive 360-degree photo and video booths for guest engagement and shareable content." },
-  { icon: MessageSquare,label: "Podcast Production",     img: "/mms/DSC_7598.jpg",           desc: "On-location podcast capture with multi-track audio and professional editing." },
+  { icon: Globe,        label: "360° Booth",             img: "/mms/WhatsApp%20Image%202026-01-12%20at%204.20.30%20PM.jpeg", desc: "Interactive 360-degree photo and video booths for guest engagement and shareable content." },
+  { icon: MessageSquare,label: "Podcast Production",     img: "/mms/IMG_9198.jpeg",          desc: "On-location podcast capture with multi-track audio and professional editing." },
   { icon: Megaphone,    label: "Social Media Packages",  img: "/mms/DSC_2505.jpg",           desc: "Edited reels, clips and graphics delivered for immediate post-event publishing." },
-  { icon: Video,        label: "Haze Machine",           img: "/mms/IMG_9198.jpeg",          desc: "Atmospheric haze and fog effects that add depth and drama to stage lighting and beam shows." },
+  { icon: Video,        label: "Low-lying cloud machine", img: "/mms/DSC_3908.jpg",           desc: "Low-lying cloud effects that drift across the floor for dramatic entrances, first dances and memorable event moments." },
 ];
 
 export default function ServicesPage() {
@@ -165,7 +60,7 @@ export default function ServicesPage() {
           {services.map((service, idx) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
@@ -228,11 +123,11 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            {/* 3-image thumbnail strip */}
-            <div data-stagger className="grid grid-cols-3 gap-3">
+            {/* Service gallery thumbnail strip */}
+            <div className={`grid gap-3 ${service.gallery.length === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"}`}>
               {service.gallery.map((img, i) => (
-                <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group">
-                  <Image src={img} alt={`${service.title} ${i + 1}`} fill sizes="33vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+                <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group bg-[#050507] flex items-center justify-center">
+                  <Image src={img} alt={`${service.title} ${i + 1}`} fill sizes={service.gallery.length === 4 ? "(max-width:767px) 50vw, 25vw" : "33vw"} className="object-contain transition-transform duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-[#050507]/20 group-hover:bg-[#050507]/5 transition-colors duration-300" />
                 </div>
               ))}
@@ -299,7 +194,7 @@ onClick={() => setSelected(null)}
                 ))}
               </div>
 
-              <div className="grid grid-cols-3 gap-3 pt-2">
+              <div className={`grid gap-3 pt-2 ${selected.gallery.length === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"}`}>
                 {selected.gallery.map((img, i) => (
                   <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[#c5a880]/10">
                     <Image src={img} alt={`${selected.title} ${i + 1}`} fill sizes="(max-width:960px) 33vw, 299px" className="object-cover object-center" />
@@ -341,7 +236,7 @@ onClick={() => setSelected(null)}
             {addOns.map((addon, idx) => (
               <motion.div
                 key={addon.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.06 }}

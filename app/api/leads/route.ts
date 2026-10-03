@@ -1,5 +1,5 @@
 import { createLead } from "@/lib/leads";
-import { errorResponse, parseJson } from "@/lib/http";
+import { errorResponse, parseJson, RequestError } from "@/lib/http";
 import { contactLeadSchema, projectBriefSchema } from "@/lib/validation/leads";
 
 export const runtime = "nodejs";
@@ -10,8 +10,9 @@ export async function POST(request: Request) {
     const isBrief = "goal" in raw;
     const input = isBrief
       ? { source: "project_builder" as const, name: raw.name, email: raw.email, phone: raw.phone, projectType: raw.goal, message: raw.details || "Project brief submitted", metadata: { audience: raw.audience, timeline: raw.timeline } }
-      : { source: "contact" as const, name: raw.name, email: raw.email, phone: raw.phone, projectType: raw.projectType, message: raw.message };
+      : { source: "contact" as const, name: raw.name, email: raw.email, phone: raw.phone, organisation: raw.organisation, projectType: raw.projectType, message: raw.message, metadata: { service: raw.service, origin: raw.origin } };
     const result = await createLead(input, request.headers.get("idempotency-key"));
-    return Response.json({ success: true, submissionId: result.id, duplicate: result.duplicate, notificationPending: !result.notified }, { status: result.notified || result.duplicate ? 200 : 202 });
+    if (!result.notified) throw new RequestError(502, "Email notification failed");
+    return Response.json({ success: true, submissionId: result.id, duplicate: result.duplicate });
   } catch (error) { return errorResponse(error); }
 }

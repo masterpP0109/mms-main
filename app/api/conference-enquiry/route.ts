@@ -1,5 +1,5 @@
 import { createLead } from "@/lib/leads";
-import { errorResponse, parseJson, RequestError } from "@/lib/http";
+import { errorResponse, parseJson } from "@/lib/http";
 import { conferenceLeadSchema } from "@/lib/validation/leads";
 
 export const runtime = "nodejs";
@@ -13,7 +13,6 @@ export async function POST(request: Request) {
       message: body.details || "Conference proposal requested",
       metadata: { date: body.date, delegates: body.delegates, venue: body.venue, organisationType: body.organisationType, services: body.services },
     }, request.headers.get("idempotency-key"));
-    if (!result.notified) throw new RequestError(502, "Email notification failed");
-    return Response.json({ success: true, submissionId: result.id, duplicate: result.duplicate });
+    return Response.json({ success: true, submissionId: result.id, duplicate: result.duplicate, saved: true, notificationStatus: result.notified ? "accepted" : "pending_retry" });
   } catch (error) { return errorResponse(error); }
 }

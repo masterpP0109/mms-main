@@ -1,5 +1,7 @@
 "use client";
 
+import { submissionKey } from "@/lib/submission-key";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,7 +64,7 @@ export default function ConferenceProduction() {
     try {
       const res = await fetch("/api/conference-enquiry", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": submissionKey(body) },
         body: JSON.stringify(body),
       });
       const result = await res.json().catch(() => ({})) as { error?: string };

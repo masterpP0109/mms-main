@@ -24,7 +24,7 @@ The contact form, conference enquiry, project builder, and inbound WhatsApp mess
 
 1. Create a PostgreSQL database and set `DATABASE_URL`.
 2. Run `npx prisma migrate deploy` (or `npx prisma migrate dev` only against a development database).
-3. In SendLayer, use your existing verified sending domain. Set `SENDLAYER_API_KEY`, `MMS_FROM_EMAIL` (a plain email address on that domain), and `MMS_NOTIFICATION_EMAIL` (the internal inbox) in Vercel, then redeploy. Email uses the server-only REST API; no SMTP credentials are needed.
+3. Configure Resend using the server-only variables documented in `EMAIL_NOTIFICATIONS.md`. Keep Titan business mail and website DNS unchanged.
 4. In Meta Business Manager, configure a WhatsApp Cloud API app and set its callback to `https://YOUR_HOST/api/webhooks/whatsapp`. Use `WHATSAPP_VERIFY_TOKEN` during webhook registration and subscribe to `messages`.
 5. Create and approve a template named by `WHATSAPP_NOTIFICATION_TEMPLATE`. Its body must contain four text variables, in order: lead name, contact detail, source, and lead ID. `WHATSAPP_NOTIFICATION_TO` must be an E.164-format internal team number without `+`.
 
@@ -105,4 +105,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ### Enquiry email behavior
 
-Contact/service enquiries, conference/event proposals, and the homepage quote builder share the SendLayer adapter in `lib/email/sendlayer.ts`. Notifications contain all submitted details and a customer Reply-To. Success means SendLayer accepted the notification; delivery can be checked in SendLayer logs. Provider failures return a generic visitor message and safe server logs. Honeypots, schema validation, same-origin browser checks and a 20 KB body limit provide basic spam protection. The existing PostgreSQL database and migrations are still required. No automatic retry worker or customer confirmation email is enabled.
+Contact/service enquiries, conference/event proposals, and the homepage quote builder share the Resend adapter in `lib/email/resend.ts`. Enquiries persist before notification attempts. API success means saved; `notificationStatus` distinguishes provider acceptance from pending retry. See `EMAIL_NOTIFICATIONS.md` for configuration, safe retries and verification.

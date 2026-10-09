@@ -1,5 +1,7 @@
 "use client";
 
+import { submissionKey } from "@/lib/submission-key";
+
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -1396,7 +1398,7 @@ export default function Home() {
                     try {
                       const response = await fetch("/api/leads", {
                         method: "POST",
-                        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
+                        headers: { "Content-Type": "application/json", "Idempotency-Key": submissionKey({ ...builderData, website: builderWebsite }) },
                         body: JSON.stringify({ ...builderData, website: builderWebsite }),
                       });
                       const result = await response.json().catch(() => ({})) as { error?: string };

@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-const optionalSecret = z.string().trim().min(1).optional();
+const optionalSecret = z.preprocess((value) => value === "" ? undefined : value, z.string().trim().min(1).optional());
 const serverEnvSchema = z.object({
   DATABASE_URL: z.string().trim().min(1),
-  SENDLAYER_API_KEY: optionalSecret,
-  MMS_FROM_EMAIL: z.string().trim().email().optional(),
-  MMS_NOTIFICATION_EMAIL: z.string().email().optional(),
+  RESEND_API_KEY: optionalSecret,
+  MMS_FROM_EMAIL: optionalSecret,
+  MMS_NOTIFICATION_EMAIL: optionalSecret,
   WHATSAPP_ACCESS_TOKEN: optionalSecret,
   WHATSAPP_PHONE_NUMBER_ID: optionalSecret,
   WHATSAPP_BUSINESS_ACCOUNT_ID: optionalSecret,
@@ -26,15 +26,14 @@ export function getServerEnv(): ServerEnv {
   return result.data;
 }
 
-export function requireEmailEnv(env = getServerEnv()) {
-  if (!env.SENDLAYER_API_KEY || !env.MMS_FROM_EMAIL || !env.MMS_NOTIFICATION_EMAIL) {
-    throw new Error("Email provider is not configured");
-  }
-  return {
-    apiKey: env.SENDLAYER_API_KEY,
-    from: env.MMS_FROM_EMAIL,
-    to: env.MMS_NOTIFICATION_EMAIL,
-  };
+export function requireEmailEnv(env = process.env) {
+  const result = z.object({
+    RESEND_API_KEY: z.string().trim().min(1),
+    MMS_FROM_EMAIL: z.string().trim().email(),
+    MMS_NOTIFICATION_EMAIL: z.string().trim().email(),
+  }).safeParse(env);
+  if (!result.success) throw new Error("Email provider is not configured");
+  return { apiKey: result.data.RESEND_API_KEY, from: result.data.MMS_FROM_EMAIL, to: result.data.MMS_NOTIFICATION_EMAIL };
 }
 
 export function requireWhatsAppOutboundEnv(env = getServerEnv()) {

@@ -39,14 +39,18 @@ jest.mock('gsap', () => ({
       }
     }),
     timeline: jest.fn(() => ({
-      fromTo: jest.fn(),
-      from: jest.fn(),
-      to: jest.fn(),
-      play: jest.fn(),
-      pause: jest.fn(),
+      fromTo: jest.fn().mockReturnThis(),
+      from: jest.fn().mockReturnThis(),
+      to: jest.fn().mockReturnThis(),
+      play: jest.fn().mockReturnThis(),
+      pause: jest.fn().mockReturnThis(),
     })),
   },
   ScrollTrigger: jest.fn(),
+}))
+
+jest.mock('gsap/ScrollTrigger', () => ({
+  ScrollTrigger: { create: jest.fn(() => ({ kill: jest.fn() })), refresh: jest.fn() },
 }))
 
 // Mock Framer Motion

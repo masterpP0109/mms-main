@@ -1,5 +1,7 @@
 "use client";
 
+import { submissionKey } from "@/lib/submission-key";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +39,7 @@ export default function ContactPage() {
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": crypto.randomUUID() },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": submissionKey(body) },
         body: JSON.stringify(body),
       });
       const result = await response.json().catch(() => ({})) as { error?: string };

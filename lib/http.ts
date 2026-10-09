@@ -36,6 +36,6 @@ export class RequestError extends Error {
 
 export function errorResponse(error: unknown) {
   if (error instanceof RequestError) return Response.json({ error: "We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly." }, { status: error.status });
-  console.error("Lead request failed", { error: error instanceof Error ? error.message : "Unknown error" });
+  console.error("Lead request failed", { type: error instanceof Error ? error.name : "Unknown error" });
   return Response.json({ error: "We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly." }, { status: 500 });
 }

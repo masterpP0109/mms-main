@@ -27,9 +27,15 @@ Keep secrets out of NEXT_PUBLIC variables, committed files, build output and log
 
 ## Vercel and scheduler
 
-Build uses next build; postinstall generates Prisma. Review Node 22/24 compatibility. vercel.json proposes a five-minute cron invoking /api/internal/notifications. This frequency requires a compatible Vercel plan; if unavailable, replace the cron with an authenticated external scheduler. The worker exports maxDuration=120; confirm the project's function duration allowance. No unawaited promise is used.
+Build uses next build; postinstall generates Prisma. Review Node 22/24 compatibility. The root vercel.json deliberately contains no cron: the connected project uses Hobby, whose daily-only cron limit rejects a five-minute schedule at deployment validation. Do not change notification processing to daily to bypass this limit.
+
+On Hobby, configure an external scheduler to GET https://YOUR_PRODUCTION_HOST/api/internal/notifications every five minutes with Authorization: Bearer <CRON_SECRET>. Store the credential in the scheduler's secret store, not its URL or public configuration. Set the same secret in the server environment and monitor failed invocations and pending-work age. Scheduler activation has not been performed by this change; saved notifications remain pending until it is verified.
+
+If MMS deliberately chooses Vercel Pro, merge the crons entry from docs/vercel-pro.example.json into the root vercel.json. This is an opt-in paid-plan configuration, not the default. The worker exports maxDuration=120; confirm the project's function duration allowance. No unawaited promise is used.
 
 Vercel sends CRON_SECRET as a bearer header: https://vercel.com/docs/cron-jobs/manage-cron-jobs . Scheduling invokes production functions: https://vercel.com/docs/cron-jobs . Configuration in source is not proof of active scheduling.
+
+Plan limits: https://vercel.com/docs/cron-jobs/usage-and-pricing .
 
 Verify unauthenticated calls are rejected, missing secret fails closed, and authenticated invocations process a staging pending lead. Confirm both provider IDs/statuses without sending to customers. Return success to the visitor only for persisted data; the scheduled worker handles delivery independently.
 

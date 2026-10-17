@@ -12,7 +12,7 @@ Do not point development, seeding or tests at the production database. No provid
 
 The API validates and saves an enquiry with pending notification states in one database insert. Success acknowledges persistence, not email/WhatsApp delivery. An authenticated worker processes pending rows independently; see DEPLOYMENT_CHECKLIST.md before deploying this change. A missing scheduler leaves saved enquiries pending. There is no unawaited serverless background task and no extra queue infrastructure.
 
-`CRON_SECRET` must contain at least 32 random characters. The example five-minute Vercel cron needs a compatible plan; alternatively invoke the worker from an authenticated external scheduler. Never deploy the asynchronous notification path without configuring and verifying processing and monitoring.
+`CRON_SECRET` must contain at least 32 random characters. The default Vercel configuration supports Hobby and does not register a cron. Configure an authenticated external scheduler every five minutes, or explicitly opt into the Pro-only example in `docs/vercel-pro.example.json`. Never release the asynchronous notification path without verifying processing and monitoring; a successful preview build does not activate notification delivery.
 
 Email retries are bounded to five attempts and a conservative 23-hour window. Ambiguous WhatsApp sends and stale sending states require operator reconciliation; do not blindly resend. The manual email retry command remains `npm run notifications:retry -- LEAD_ID`.
 

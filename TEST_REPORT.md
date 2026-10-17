@@ -1,5 +1,11 @@
 # Verification evidence
 
+## Hosted checks follow-up
+
+The earlier green Quality checks workflow did not mean all hosted integrations passed. Vercel's PR comment confirmed deployment validation rejected the five-minute cron on Hobby. Root vercel.json now has no native cron; the Pro-only example is separate and the external-scheduler requirement is explicit in DEPLOYMENT_CHECKLIST.md. No scheduler was activated or paid plan purchased.
+
+CodeRabbit skipped its review because its default scope included 120 files, including deleted downloaded HTML/CSS/scripts. The new .coderabbit.yaml excludes public assets and the dependency lockfile, while retaining application code, tests, migrations, scripts and documentation. Asset removals remain documented in the inventories. Review status and CI validation after this follow-up must be read from the latest PR checks, not inferred from an earlier commit.
+
 ## Final local checks (2026-10-17)
 
 - `npm run lint`: passed without diagnostics.

@@ -1,0 +1,8 @@
+# Static media and quarantined browser-capture deletions are inventoried separately.
+# Keep application code, tests, migrations, scripts and documentation in review.
+reviews:
+  path_filters:
+    - "!public/**"
+    - "!package-lock.json"
+  auto_review:
+    drafts: true

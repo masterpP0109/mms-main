@@ -1,0 +1,266 @@
+{
+  "applied": true,
+  "images": [
+    {
+      "path": "public\\DSC_9176 (1).jpg",
+      "before": 30962093,
+      "after": 1168272,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\AllanLinda-31.jpg",
+      "before": 16726123,
+      "after": 783902,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\bridge.jpg",
+      "before": 11818172,
+      "after": 886004,
+      "originalWidth": 3456,
+      "originalHeight": 5184
+    },
+    {
+      "path": "public\\mms\\DSC_0477.jpg",
+      "before": 8084213,
+      "after": 750680,
+      "originalWidth": 5070,
+      "originalHeight": 3380
+    },
+    {
+      "path": "public\\mms\\DSC_1105.jpg",
+      "before": 5283250,
+      "after": 352604,
+      "originalWidth": 4169,
+      "originalHeight": 2779
+    },
+    {
+      "path": "public\\mms\\DSC_2327-Edit.jpg",
+      "before": 13014033,
+      "after": 419388,
+      "originalWidth": 3712,
+      "originalHeight": 5568
+    },
+    {
+      "path": "public\\mms\\DSC_2484.jpg",
+      "before": 13723208,
+      "after": 782384,
+      "originalWidth": 4790,
+      "originalHeight": 3193
+    },
+    {
+      "path": "public\\mms\\DSC_2505.jpg",
+      "before": 14963813,
+      "after": 626092,
+      "originalWidth": 3423,
+      "originalHeight": 5134
+    },
+    {
+      "path": "public\\mms\\DSC_2643 (2).jpg",
+      "before": 7545745,
+      "after": 1042977,
+      "originalWidth": 4378,
+      "originalHeight": 2919
+    },
+    {
+      "path": "public\\mms\\DSC_2660 (2).jpg",
+      "before": 8229395,
+      "after": 782950,
+      "originalWidth": 5217,
+      "originalHeight": 3478
+    },
+    {
+      "path": "public\\mms\\DSC_2689 (2).jpg",
+      "before": 8131588,
+      "after": 1094110,
+      "originalWidth": 4912,
+      "originalHeight": 3275
+    },
+    {
+      "path": "public\\mms\\DSC_2923-Edit.jpg",
+      "before": 6683050,
+      "after": 711620,
+      "originalWidth": 2969,
+      "originalHeight": 3711
+    },
+    {
+      "path": "public\\mms\\DSC_3616-Edit.jpg",
+      "before": 9278029,
+      "after": 1053573,
+      "originalWidth": 2654,
+      "originalHeight": 3981
+    },
+    {
+      "path": "public\\mms\\DSC_3722.jpg",
+      "before": 11906953,
+      "after": 524820,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_3790.jpg",
+      "before": 5844784,
+      "after": 677423,
+      "originalWidth": 2832,
+      "originalHeight": 3540
+    },
+    {
+      "path": "public\\mms\\DSC_3821.jpg",
+      "before": 17570611,
+      "after": 947529,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_3905.jpg",
+      "before": 8036522,
+      "after": 620656,
+      "originalWidth": 2475,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_3908.jpg",
+      "before": 15261705,
+      "after": 462335,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_3966.jpg",
+      "before": 14799518,
+      "after": 668721,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_4022.jpg",
+      "before": 13926025,
+      "after": 627733,
+      "originalWidth": 3712,
+      "originalHeight": 5568
+    },
+    {
+      "path": "public\\mms\\DSC_4073.jpg",
+      "before": 15649231,
+      "after": 661111,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_7550.jpg",
+      "before": 5177938,
+      "after": 1234658,
+      "originalWidth": 4065,
+      "originalHeight": 3252
+    },
+    {
+      "path": "public\\mms\\DSC_7703.jpg",
+      "before": 5392741,
+      "after": 1145103,
+      "originalWidth": 3064,
+      "originalHeight": 4596
+    },
+    {
+      "path": "public\\mms\\DSC_7925-1.jpg",
+      "before": 6372633,
+      "after": 551148,
+      "originalWidth": 2993,
+      "originalHeight": 4489
+    },
+    {
+      "path": "public\\mms\\DSC_7938-1.jpg",
+      "before": 5920488,
+      "after": 498295,
+      "originalWidth": 2931,
+      "originalHeight": 4396
+    },
+    {
+      "path": "public\\mms\\DSC_7941-1.jpg",
+      "before": 6999963,
+      "after": 484781,
+      "originalWidth": 3219,
+      "originalHeight": 4829
+    },
+    {
+      "path": "public\\mms\\DSC_8067.jpg",
+      "before": 8455922,
+      "after": 663077,
+      "originalWidth": 4982,
+      "originalHeight": 3321
+    },
+    {
+      "path": "public\\mms\\DSC_9176 (1).jpg",
+      "before": 30962093,
+      "after": 1168272,
+      "originalWidth": 5568,
+      "originalHeight": 3712
+    },
+    {
+      "path": "public\\mms\\DSC_9244.jpg",
+      "before": 12437715,
+      "after": 856999,
+      "originalWidth": 3629,
+      "originalHeight": 2903
+    },
+    {
+      "path": "public\\mms\\IMG_0615.jpg",
+      "before": 8880911,
+      "after": 446084,
+      "originalWidth": 3456,
+      "originalHeight": 5184
+    },
+    {
+      "path": "public\\mms\\IMG_16221.jpg",
+      "before": 6617442,
+      "after": 987553,
+      "originalWidth": 3828,
+      "originalHeight": 2552
+    },
+    {
+      "path": "public\\mms\\IMG_3980.jpg",
+      "before": 10189265,
+      "after": 564965,
+      "originalWidth": 5184,
+      "originalHeight": 3456
+    },
+    {
+      "path": "public\\mms\\IMG_4085.jpg",
+      "before": 12924957,
+      "after": 880281,
+      "originalWidth": 5184,
+      "originalHeight": 3456
+    },
+    {
+      "path": "public\\mms\\vic falls bridge.jpg",
+      "before": 7155485,
+      "after": 611276,
+      "originalWidth": 3456,
+      "originalHeight": 5184
+    },
+    {
+      "path": "public\\mms\\_DSC7098.jpg",
+      "before": 19064542,
+      "after": 968024,
+      "originalWidth": 7360,
+      "originalHeight": 4912
+    },
+    {
+      "path": "public\\mms\\_MG_0072.jpg",
+      "before": 10451612,
+      "after": 918878,
+      "originalWidth": 3456,
+      "originalHeight": 5184
+    },
+    {
+      "path": "public\\mms\\_MG_0305.jpg",
+      "before": 10494028,
+      "after": 900689,
+      "originalWidth": 2998,
+      "originalHeight": 3747
+    }
+  ],
+  "before": 424935796,
+  "after": 28524967
+}

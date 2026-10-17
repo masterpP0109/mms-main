@@ -1,6 +1,7 @@
 "use client";
 
-import { submissionKey } from "@/lib/submission-key";
+import { submitEnquiry } from "@/lib/submit-enquiry";
+import { contactReferral } from "@/lib/contact-referral";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -35,15 +36,11 @@ export default function ContactPage() {
     setLoading(true);
     const form = e.currentTarget;
     const params = new URLSearchParams(window.location.search);
-    const body = { ...Object.fromEntries(new FormData(form).entries()), service: params.get("service") || undefined, origin: params.get("origin") || "/contact" };
+    const data = new FormData(form);
+    const field = (name: string) => String(data.get(name) ?? "");
+    const body = { name: field("name"), email: field("email"), phone: field("phone"), organisation: field("organisation"), projectType, message: field("message"), website: field("website"), ...contactReferral(params) };
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": submissionKey(body) },
-        body: JSON.stringify(body),
-      });
-      const result = await response.json().catch(() => ({})) as { error?: string };
-      if (!response.ok) throw new Error(result.error || "We could not send your message.");
+      await submitEnquiry("/api/leads", body);
       setSubmitted(true);
       form.reset();
     } catch {
@@ -229,7 +226,7 @@ export default function ContactPage() {
               <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-12 text-center space-y-4">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto" />
                 <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
-                <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been sent to the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
+                <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
                 <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#c5a880] hover:text-white transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
                 </Link>

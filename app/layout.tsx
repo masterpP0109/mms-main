@@ -21,6 +21,8 @@ const inter = Inter({
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.SITE_URL || "https://mms-main.vercel.app"),
+  openGraph: { type: "website", siteName: "Mosi Media Solutions", images: [{ url: "/victoria_falls_banner.png", alt: "Victoria Falls" }] },
   title: "MMS | Conference & Seminar Production Victoria Falls",
   description: "Mosi Media Solutions provides professional conference, seminar and event production for ministries, government agencies, international organisations and professional institutions.",
   keywords: ["conference production Victoria Falls", "seminar production Zimbabwe", "event audiovisual services", "conference live streaming"],

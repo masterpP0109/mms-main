@@ -1,108 +1,46 @@
-# mms-main
+# Mosi Media Solutions
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+MMS is a Next.js App Router website for conference, event and media production. Its existing dark and gold design is preserved. PostgreSQL is authoritative for published services and projects.
 
-## MMS Image Library
+## Local setup
 
-The `public/mms` folder includes visual assets grouped around the main offerings of this site:
+Use Node 22 or 24, install with `npm ci`, copy `.env.example` to `.env`, and configure a **local or staging** PostgreSQL connection. Run `npm run db:generate`, `npm run db:migrate:deploy`, then `npm run content:import` for a dry run. Review existing content before `npm run content:import -- --apply`; existing slugs are never overwritten. Start with `npm run dev`.
 
-- **Weddings & events**: celebration photography, wedding portraits, sparkler exits, and intimate event storytelling.
-- **Conferences & production**: large-screen setups, conference halls, video conferencing, live event staging, and AV presentation hardware.
-- **Destination & scenic visuals**: Victoria Falls, bridges, aerial landscapes, and immersive travel locations.
-- **Creative marketing & branding**: social media campaign imagery, design workspace scenes, ad visuals, and promotional content.
-- **Technical & equipment showcases**: production gear, spark machines, LED presentation monitors, and event technology packages.
+Do not point development, seeding or tests at the production database. No provider sends are needed to run unit tests. Use distinct databases and credentials for development, preview, production and tests.
 
-These images support the page's portfolio, services, and gallery sections.
+## Enquiries and notifications
 
-## Getting Started
+The API validates and saves an enquiry with pending notification states in one database insert. Success acknowledges persistence, not email/WhatsApp delivery. An authenticated worker processes pending rows independently; see DEPLOYMENT_CHECKLIST.md before deploying this change. A missing scheduler leaves saved enquiries pending. There is no unawaited serverless background task and no extra queue infrastructure.
 
-For a beginner-friendly, step-by-step explanation of installing the project, creating the database, applying migrations, seeding content, and starting the website, read [START_PROJECT_GUIDE.md](./START_PROJECT_GUIDE.md).
+`CRON_SECRET` must contain at least 32 random characters. The default Vercel configuration supports Hobby and does not register a cron. Configure an authenticated external scheduler every five minutes, or explicitly opt into the Pro-only example in `docs/vercel-pro.example.json`. Never release the asynchronous notification path without verifying processing and monitoring; a successful preview build does not activate notification delivery.
 
-### Backend setup
+Email retries are bounded to five attempts and a conservative 23-hour window. Ambiguous WhatsApp sends and stale sending states require operator reconciliation; do not blindly resend. The manual email retry command remains `npm run notifications:retry -- LEAD_ID`.
 
-The contact form, conference enquiry, project builder, and inbound WhatsApp messages all persist to PostgreSQL before provider notification is attempted. Copy `.env.example` to `.env.local` and supply server-only values. Do not expose any secret using a `NEXT_PUBLIC_` prefix.
+## Quality commands
 
-1. Create a PostgreSQL database and set `DATABASE_URL`.
-2. Run `npx prisma migrate deploy` (or `npx prisma migrate dev` only against a development database).
-3. Configure Resend using the server-only variables documented in `EMAIL_NOTIFICATIONS.md`. Keep Titan business mail and website DNS unchanged.
-4. In Meta Business Manager, configure a WhatsApp Cloud API app and set its callback to `https://YOUR_HOST/api/webhooks/whatsapp`. Use `WHATSAPP_VERIFY_TOKEN` during webhook registration and subscribe to `messages`.
-5. Create and approve a template named by `WHATSAPP_NOTIFICATION_TEMPLATE`. Its body must contain four text variables, in order: lead name, contact detail, source, and lead ID. `WHATSAPP_NOTIFICATION_TO` must be an E.164-format internal team number without `+`.
+- `npm run lint`
+- `npm run typecheck`
+- `npm test -- --runInBand`
+- `npm run test:coverage -- --runInBand`
+- `npm run media:check`
+- `npm run build`
+- `npm run performance:measure` after building; local synthetic results include explicit limitations.
+- `npm audit --omit=dev --audit-level=high`
+- `npm run test:integration` with `MMS_TEST_DATABASE_URL` set to an isolated local database whose name ends in `_test`.
+- `npm run test:e2e` after installing Chromium with Playwright. Set `PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright` during browser installation. Database-backed journeys require `MMS_TEST_DATABASE_URL`; other journeys mock enquiry APIs and never send to providers.
 
-Webhook POSTs are authenticated with Meta's `X-Hub-Signature-256` HMAC using `WHATSAPP_APP_SECRET`. Event IDs and browser idempotency keys prevent duplicate leads. Provider secrets are read only in Node.js route handlers.
+GitHub Actions provisions its own PostgreSQL service; it never uses production credentials. See TEST_REPORT.md for actual executed checks, failures and unavailable checks.
 
-No customer message is sent automatically. The outbound WhatsApp adapter sends only the approved internal lead-notification template to `WHATSAPP_NOTIFICATION_TO`.
+## Staff content workflow
 
-### Fill a development database
+See docs/CONTENT_MANAGEMENT.md. Use an authenticated managed database editor with a role restricted to Service and Project records. There is no public administrative write endpoint or custom CMS. Staff identity provisioning is an operational prerequisite, not a security placeholder in application code.
 
-The repository now includes database-backed service and project pages, plus an idempotent starter-content seed. Use these commands only with a local or staging PostgreSQL database—not production.
+## Media and private material
 
-1. Copy `.env.example` to `.env.local` and set `DATABASE_URL` to your PostgreSQL connection string.
-2. Install dependencies and generate the Prisma client:
+`ASSET_INVENTORY.csv` inventories public assets. `MEDIA_OPTIMIZATION.json` records actual byte savings. Oversized JPEGs retain stable filenames for database compatibility; Next Image negotiates AVIF/WebP. `npm run media:optimize` defaults to a dry run. `--apply` archives originals in `.private-assets`, which must remain excluded from Git, Vercel and public assets. Back this private directory up securely outside the checkout; it is not included in commits.
 
-   ```bash
-   npm install
-   npx prisma generate
-   ```
+## Operations
 
-3. Create the tables in a local development database:
+Read DEPLOYMENT_CHECKLIST.md, SECURITY_REVIEW.md, CODE_QUALITY_IMPROVEMENTS.md and REMAINING_WORK.md. Retention is owner-configured: set `RETENTION_DAYS`, run `npm run privacy:retention` to inspect counts, and review before `--apply`. Database deletion does not delete email, WhatsApp or backup copies. No retention deletion was executed during implementation.
 
-   ```bash
-   npx prisma migrate dev
-   ```
-
-   For an already provisioned staging database, use `npx prisma migrate deploy` instead. Never run `migrate dev` against production.
-
-4. Add the starter MMS services and projects:
-
-   ```bash
-   npm run db:seed
-   ```
-
-   The seed uses `upsert`, so it can safely be run again in development without creating duplicate slugs. It creates 6 services and 12 projects. It does not create leads or send email/WhatsApp messages.
-
-5. Review or edit development data with:
-
-   ```bash
-   npx prisma studio
-   ```
-
-6. Start the app and verify URLs such as `/services/live-streaming-production` and `/projects/global-summit-production`. These slug pages read published records directly from PostgreSQL; an unknown or unpublished slug returns a 404.
-
-To add content manually, create a `Service` or `Project` in Prisma Studio. Keep `slug` lowercase with words separated by hyphens, use image paths from `public` (for example `/mms/DSC_9244.jpg`), set `published` to true, and use `sortOrder` to control future listing order.
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-### Enquiry email behavior
-
-Contact/service enquiries, conference/event proposals, and the homepage quote builder share the Resend adapter in `lib/email/resend.ts`. Enquiries persist before notification attempts. API success means saved; `notificationStatus` distinguishes provider acceptance from pending retry. See `EMAIL_NOTIFICATIONS.md` for configuration, safe retries and verification.
+Production migrations, content reconciliation, scheduler activation, staff permissions, provider configuration and a staged deployment must be completed before release. No production deployment or history rewrite is part of this local implementation.

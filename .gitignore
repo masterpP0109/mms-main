@@ -40,3 +40,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Quarantined private material must never enter Git or deployment bundles.
+/.private-assets/
+/test-results/
+/playwright-report/
+
+/.cache/

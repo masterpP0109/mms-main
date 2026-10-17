@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CONTACT_ORIGIN_PATTERN } from "@/lib/contact-referral";
 
 const text = (max: number) => z.string().trim().min(1).max(max).refine((value) => !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value), "Invalid characters");
 const optionalText = (max: number) => z.string().trim().max(max).optional().transform((v) => v || undefined);
@@ -10,11 +11,11 @@ export const contactLeadSchema = z.object({
   phone,
   organisation: optionalText(160),
   service: optionalText(160),
-  origin: z.string().max(300).regex(/^\/(?:[a-z0-9-]+\/?)*$/).optional(),
+  origin: z.string().max(300).regex(CONTACT_ORIGIN_PATTERN).optional(),
   projectType: z.preprocess((value) => value === "" ? undefined : value, z.enum(["conference", "wedding", "brand", "event", "other"]).optional()),
   message: text(5000),
   website: z.string().max(0).optional(),
-});
+}).strict();
 
 export const conferenceLeadSchema = z.object({
   organisation: text(160),
@@ -29,7 +30,7 @@ export const conferenceLeadSchema = z.object({
   services: z.array(text(120)).max(20).default([]),
   details: optionalText(5000),
   website: z.string().max(0).optional(),
-});
+}).strict();
 
 export const projectBriefSchema = z.object({
   name: text(120),
@@ -40,7 +41,7 @@ export const projectBriefSchema = z.object({
   timeline: text(80),
   details: optionalText(5000),
   website: z.string().max(0).optional(),
-});
+}).strict();
 
 export type LeadInput = {
   source: "contact" | "conference" | "project_builder" | "whatsapp";

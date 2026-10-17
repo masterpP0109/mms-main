@@ -24,12 +24,53 @@ model Lead {
   whatsappStatus      String   @default("not_requested")
   whatsappProviderId  String?
   notificationError   String?
+  emailAttempts       Int      @default(0)
+  whatsappAttempts    Int      @default(0)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+  conversation        Conversation?
 
   @@index([createdAt])
   @@index([email])
   @@index([phone])
+  @@index([emailStatus, createdAt])
+  @@index([whatsappStatus, createdAt])
+}
+
+model RateLimit {
+  key       String @id
+  count     Int @default(0)
+  expiresAt DateTime
+  @@index([expiresAt])
+}
+
+model Contact {
+  id            String @id @default(cuid())
+  phone         String @unique
+  name          String
+  conversation  Conversation?
+}
+
+// One continuing WhatsApp thread per sender; staff decide when it is an enquiry.
+model Conversation {
+  id        String @id @default(cuid())
+  contactId String @unique
+  contact   Contact @relation(fields: [contactId], references: [id])
+  leadId    String? @unique
+  lead      Lead? @relation(fields: [leadId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id             String @id @default(cuid())
+  externalId     String @unique
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  type           String
+  text           String
+  receivedAt     DateTime @default(now())
+
+  @@index([conversationId, receivedAt])
 }
 
 model WebhookEvent {
@@ -37,40 +78,50 @@ model WebhookEvent {
   provider    String
   externalId  String
   eventType   String
+  providerMessageId String?
   payload     Json
   processedAt DateTime @default(now())
 
   @@unique([provider, externalId])
+  @@index([provider, providerMessageId])
 }
 
 model Service {
-  id          String   @id @default(cuid())
+  id          String   @id @default(dbgenerated("gen_random_uuid()::text"))
   slug        String   @unique
   title       String
   category    String
   description String
   heroImage   String
+  heroAlt     String?
+  galleryAlts String[] @default([])
+  seoTitle    String?
+  seoDescription String?
   gallery     String[]
   features    String[]
   ctaLabel    String   @default("Start a Project")
   published   Boolean  @default(true)
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt   DateTime @default(now()) @updatedAt
 }
 
 model Project {
-  id          String   @id @default(cuid())
+  id          String   @id @default(dbgenerated("gen_random_uuid()::text"))
   slug        String   @unique
   title       String
   category    String
   description String
   year        Int
   heroImage   String
+  heroAlt     String?
+  galleryAlts String[] @default([])
+  seoTitle    String?
+  seoDescription String?
   gallery     String[]
   tags        String[]
   published   Boolean  @default(true)
   sortOrder   Int      @default(0)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  updatedAt   DateTime @default(now()) @updatedAt
 }

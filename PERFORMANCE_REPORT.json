@@ -1,0 +1,17 @@
+{
+  "measuredAt": "2026-10-17T08:50:54.901Z",
+  "nextVersion": "16.4.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "conditions": "Single local production Chromium run; fresh browser context, no network/CPU throttling, reduced motion. Server image cache may be warm. This is not field performance or a Lighthouse score.",
+  "lcpMs": 9588,
+  "cls": 0,
+  "imageTransferBytes": 448714,
+  "javaScriptTransferBytes": 279534,
+  "imageRequests": 13,
+  "javaScriptRequests": 14,
+  "inpMs": null,
+  "inpLimitation": "No representative interaction sample; INP not measured."
+}

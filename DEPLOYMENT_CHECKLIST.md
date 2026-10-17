@@ -44,4 +44,3 @@ Run media:check, lint, typecheck, unit/coverage, isolated integration, browser j
 ## Rollback
 
 Retain a known-good application deployment and database backup. Additive migrations can remain when rolling back application code; do not drop new tables/columns containing customer data. Stop scheduling while investigating worker defects, inspect pending/sending/accepted states and reconcile provider outcomes before resuming. Restoring old synchronous code can resend pending work: do not blindly redeploy and retry. Restore approved catalogue rows individually; never reseed over client edits. Redeploy cleaned assets even if code is rolled back so exposed documents are not republished.
-

@@ -47,4 +47,3 @@ The initial npm report confirmed a critical Next.js advisory and vulnerable shar
 - No claimed Lighthouse, LCP, INP, CLS or JavaScript bundle improvement without measurements. See REMAINING_WORK.md for incomplete verification and operational setup.
 
 Submission retries persist only a SHA-256 fingerprint and expiring UUID in session storage, allowing reload retries without storing raw form data. Signed Meta delivery events reconcile accepted outbound work, including out-of-order arrival. Gallery cards use native keyboard-accessible buttons with explicit focus styling.
-

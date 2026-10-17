@@ -37,3 +37,8 @@ Browser test corrections included an incorrect navigation role, an ambiguous Con
 
 Latest checks: media:check and Prisma schema validation passed. Production npm audit rechecked with network access: zero vulnerabilities. The first performance-helper attempt failed because Playwright was imported before setting its cache path; dynamic import fixed the helper. The completed local sample recorded LCP 9,588 ms, CLS 0, image transfer 448,714 bytes and JavaScript transfer 279,534 bytes. This slow local LCP remains a limitation; no before/after LCP improvement is claimed. The production desktop screenshot was visually inspected.
 
+Final full local browser run before the gallery correction: 11 passed, 2 database journeys skipped, 1 gallery failure. The trace showed the initial filter click before hydration left All selected. Filters now remain disabled until hydrated; the targeted gallery filter, loaded-image, keyboard/Escape and focus-restoration journey passed after the fix. Draft review: https://github.com/masterpP0109/mms-main/pull/2 . CI execution is tracked there.
+
+## Executed CI evidence
+
+GitHub Actions run https://github.com/masterpP0109/mms-main/actions/runs/39019222521 passed all quality steps on commit 1ce7ed5: clean npm ci, PostgreSQL 16 migrations/import, real database integration, lint, TypeScript, 149 unit tests, static media references, production build, production audit and all 14 browser journeys (no database skips). The gallery hydration follow-up is additionally covered by its local targeted passing journey and will run through CI on the next push. Earlier local limitations above remain part of the execution history, not unresolved CI failures.

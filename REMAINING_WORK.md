@@ -1,6 +1,6 @@
 # Remaining work
 
-- Execute and review isolated PostgreSQL integration and the complete browser suite in CI. Local Docker is unavailable; individual local browser journeys and unit checks are documented in TEST_REPORT.md.
+- Recheck CI on the final review-branch head. The first CI run passed real PostgreSQL integration and all 14 browser journeys; local Docker remains unavailable. See TEST_REPORT.md.
 - Review and apply production migrations in staging first, back up the database, and reconcile/import approved catalogue content. The configured database currently has zero Service/Project rows. Imports preserve existing edits and must not be pointed at production casually.
 - Configure and verify the five-minute scheduler, strong CRON_SECRET, notification providers, alert ownership and edge/IP abuse limits before deploying asynchronous enquiries. Saved work depends on an operational worker.
 - Provision named staff identities and content-only permissions in an authenticated managed database editor. The role template is provided; no custom CMS is required.

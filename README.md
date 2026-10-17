@@ -44,4 +44,3 @@ See docs/CONTENT_MANAGEMENT.md. Use an authenticated managed database editor wit
 Read DEPLOYMENT_CHECKLIST.md, SECURITY_REVIEW.md, CODE_QUALITY_IMPROVEMENTS.md and REMAINING_WORK.md. Retention is owner-configured: set `RETENTION_DAYS`, run `npm run privacy:retention` to inspect counts, and review before `--apply`. Database deletion does not delete email, WhatsApp or backup copies. No retention deletion was executed during implementation.
 
 Production migrations, content reconciliation, scheduler activation, staff permissions, provider configuration and a staged deployment must be completed before release. No production deployment or history rewrite is part of this local implementation.
-

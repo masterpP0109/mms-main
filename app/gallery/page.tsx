@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, { useState, useEffect, useRef, useSyncExternalStore, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -100,7 +100,10 @@ const items: GalleryItem[] = [
 
 const cats: Category[] = ["All", "Wedding", "Conference", "Brand", "Events", "Drone"];
 
+const subscribeToHydration = () => () => {};
+
 function GalleryContent() {
+  const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
   const searchParams = useSearchParams();
   const paramCat = searchParams.get("cat") as Category | null;
   const initCat: Category = paramCat && cats.includes(paramCat) ? paramCat : "All";
@@ -147,6 +150,7 @@ function GalleryContent() {
             <button
               key={cat}
               type="button"
+              disabled={!hydrated}
               onClick={() => setActiveCat(cat)}
               aria-pressed={active === cat}
               className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-medium transition-all duration-250 cursor-pointer ${

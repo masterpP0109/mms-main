@@ -36,4 +36,3 @@ Initial production audit: 7 findings (1 critical, 5 high, 1 moderate), including
 ## Required operational actions
 
 Before production: review historical exposure; secure/private backup the quarantine; apply reviewed additive migrations; reconcile content; provision staff roles; configure scheduler, provider credentials and monitoring; add edge/IP abuse limits; confirm backup and restore procedures; approve retention and privacy wording. Do not assume any of these are operational merely because code/configuration exists. See DEPLOYMENT_CHECKLIST.md and REMAINING_WORK.md.
-

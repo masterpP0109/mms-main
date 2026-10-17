@@ -64,6 +64,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    <div className="text-center pb-6"><a href="/privacy" className="text-sm text-[#c5a880] underline">Enquiry privacy</a></div></footer>
   );
 }

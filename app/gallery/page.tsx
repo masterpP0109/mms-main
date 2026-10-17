@@ -84,7 +84,7 @@ const items: GalleryItem[] = [
 
   // Drone / Scenic
   { src: "/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg", alt: "Victoria Falls aerial", cat: "Drone", title: "Victoria Falls Aerial", tall: true },
-  { src: "/mms/victoria_falls_banner.png", alt: "Victoria Falls panorama", cat: "Drone", title: "Falls Panorama"            },
+  { src: "/victoria_falls_banner.png", alt: "Victoria Falls panorama", cat: "Drone", title: "Falls Panorama"            },
   { src: "/mms/vic falls bridge.jpg", alt: "Victoria Falls bridge", cat: "Drone", title: "Falls Bridge",             tall: true  },
   { src: "/mms/bridge.jpg",          alt: "Bridge aerial",                  cat: "Drone",      title: "Bridge Aerial"                         },
   { src: "/mms/_MG_0072.jpg",        alt: "Drone landscape",                cat: "Drone",      title: "Landscape Film",               tall: true  },
@@ -148,6 +148,7 @@ function GalleryContent() {
               key={cat}
               type="button"
               onClick={() => setActiveCat(cat)}
+              aria-pressed={active === cat}
               className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-medium transition-all duration-250 cursor-pointer ${
                 active === cat
                   ? "bg-[#c5a880] text-[#050507]"
@@ -171,20 +172,18 @@ function GalleryContent() {
         >
           <AnimatePresence mode="popLayout">
             {visible.map((item, idx) => (
-              <motion.div
+              <motion.button
+                type="button"
                 key={item.src}
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3, delay: Math.min(idx * 0.02, 0.3) }}
-                className={`break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-[#c5a880]/10 cursor-pointer bg-[#0d0d10] ${
+                className={`block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a880] break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-[#c5a880]/10 cursor-pointer bg-[#0d0d10] ${
                   item.tall ? "row-span-2" : ""
                 }`}
-                role="button"
-                tabIndex={0}
                 aria-label={`View ${item.title}`}
-                onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setLightboxIdx(idx); } }}
                 onClick={() => setLightboxIdx(idx)}
               >
                 <div className={`relative w-full ${item.tall ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
@@ -213,7 +212,7 @@ function GalleryContent() {
                     </span>
                   </div>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </AnimatePresence>
         </motion.div>

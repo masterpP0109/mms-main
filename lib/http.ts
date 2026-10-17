@@ -1,25 +1,37 @@
 import { ZodError, type ZodType } from "zod";
 
+/** Read exact bytes with a limit, including chunked bodies without Content-Length. */
+export async function readBoundedBody(request: Request, limit = 20_000): Promise<Buffer> {
+  const length = request.headers.get("content-length");
+  if (length && (!/^\d+$/.test(length) || Number(length) > limit)) throw new RequestError(413, "Submission too large");
+  const reader = request.body?.getReader();
+  if (!reader) throw new RequestError(400, "Missing body");
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > limit) {
+        await reader.cancel();
+        throw new RequestError(413, "Submission too large");
+      }
+      chunks.push(value);
+    }
+    return Buffer.concat(chunks);
+  } finally { reader.releaseLock(); }
+}
+
 export async function parseJson<T>(request: Request, schema: ZodType<T>): Promise<T> {
   const contentType = request.headers.get("content-type") ?? "";
-  if (!contentType.toLowerCase().includes("application/json")) throw new RequestError(415, "Content-Type must be application/json");
+  if (contentType.split(";", 1)[0].trim().toLowerCase() !== "application/json") throw new RequestError(415, "Content-Type must be application/json");
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) throw new RequestError(403, "Invalid origin");
   if (Number(request.headers.get("content-length")) > 20000) throw new RequestError(413, "Submission too large");
   let body: unknown;
   try {
-    const reader = request.body?.getReader();
-    if (!reader) throw new RequestError(400, "Missing body");
-    const chunks: Uint8Array[] = [];
-    let size = 0;
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      size += value.byteLength;
-      if (size > 20000) { await reader.cancel(); throw new RequestError(413, "Submission too large"); }
-      chunks.push(value);
-    }
-    body = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+    body = JSON.parse((await readBoundedBody(request)).toString("utf8"));
   } catch (error) {
     if (error instanceof RequestError) throw error;
     throw new RequestError(400, "Malformed JSON body");

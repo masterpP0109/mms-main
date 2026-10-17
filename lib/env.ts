@@ -1,8 +1,12 @@
+import "server-only";
 import { z } from "zod";
 
 const optionalSecret = z.preprocess((value) => value === "" ? undefined : value, z.string().trim().min(1).optional());
 const serverEnvSchema = z.object({
-  DATABASE_URL: z.string().trim().min(1),
+  DATABASE_URL: z.string().trim().min(1).refine(value => {
+    try { const url = new URL(value); return ["postgres:", "postgresql:"].includes(url.protocol) && Boolean(url.hostname) && url.pathname.length > 1; }
+    catch { return false; }
+  }, "Use a PostgreSQL connection URL with a database name"),
   RESEND_API_KEY: optionalSecret,
   MMS_FROM_EMAIL: optionalSecret,
   MMS_NOTIFICATION_EMAIL: optionalSecret,

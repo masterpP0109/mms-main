@@ -192,7 +192,7 @@ describe('Home Component - Functional Tests', () => {
     test('should handle Next.js Image component mocking', () => {
       const { container } = render(<Home />)
       const images = container.querySelectorAll('img')
-      expect(images.length).toBeGreaterThanOrEqual(0)
+      expect(images.length).toBeGreaterThan(0)
     })
   })
 

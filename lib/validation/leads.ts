@@ -14,7 +14,7 @@ export const contactLeadSchema = z.object({
   projectType: z.preprocess((value) => value === "" ? undefined : value, z.enum(["conference", "wedding", "brand", "event", "other"]).optional()),
   message: text(5000),
   website: z.string().max(0).optional(),
-});
+}).strict();
 
 export const conferenceLeadSchema = z.object({
   organisation: text(160),
@@ -29,7 +29,7 @@ export const conferenceLeadSchema = z.object({
   services: z.array(text(120)).max(20).default([]),
   details: optionalText(5000),
   website: z.string().max(0).optional(),
-});
+}).strict();
 
 export const projectBriefSchema = z.object({
   name: text(120),
@@ -40,7 +40,7 @@ export const projectBriefSchema = z.object({
   timeline: text(80),
   details: optionalText(5000),
   website: z.string().max(0).optional(),
-});
+}).strict();
 
 export type LeadInput = {
   source: "contact" | "conference" | "project_builder" | "whatsapp";

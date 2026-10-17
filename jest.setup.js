@@ -65,8 +65,10 @@ jest.mock('framer-motion', () => ({
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: () => {
-    return '<img />'
+  default: ({ src, alt, ...props }) => {
+    for (const key of ["priority", "preload", "fill", "unoptimized", "quality", "loader"]) delete props[key]
+    const React = jest.requireActual('react')
+    return React.createElement('img', { ...props, src: typeof src === 'string' ? src : src.src, alt })
   },
 }))
 

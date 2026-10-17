@@ -103,7 +103,8 @@ describe('Home Component - Non-Functional Tests', () => {
       const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6')
       
       // Should have at least one heading
-      expect(headings.length).toBeGreaterThanOrEqual(0)
+      expect(headings.length).toBeGreaterThan(0)
+      expect(container.querySelectorAll("h1")).toHaveLength(1)
     })
 
     test('should have descriptive link text', () => {
@@ -132,15 +133,14 @@ describe('Home Component - Non-Functional Tests', () => {
       const { container } = render(<Home />)
       
       const interactiveElements = container.querySelectorAll('button, a, input, [tabindex]')
-      expect(interactiveElements.length).toBeGreaterThanOrEqual(0)
+      expect(interactiveElements.length).toBeGreaterThan(0)
     })
 
-    test('should have sufficient color contrast (WCAG AA)', () => {
+    test('exposes labelled carousel controls', () => {
       const { container } = render(<Home />)
       
       // This is a simplified check
-      const elements = container.querySelectorAll('[style*="color"]')
-      expect(elements.length >= 0).toBe(true)
+      expect(container.querySelector("button[aria-label=\"Next hero slide\"]")).toBeTruthy()
     })
 
     test('should be screen reader compatible', () => {
@@ -163,7 +163,7 @@ describe('Home Component - Non-Functional Tests', () => {
       
       // Check for semantic landmarks
       const sections = container.querySelectorAll('section, article, [role="region"]')
-      expect(sections.length >= 0).toBe(true)
+      expect(sections.length).toBeGreaterThan(0)
     })
   })
 
@@ -196,12 +196,12 @@ describe('Home Component - Non-Functional Tests', () => {
 
   describe('Memory and Resource Tests', () => {
     test('should not create memory leaks with event listeners', () => {
+      jest.useFakeTimers()
       const { unmount } = render(<Home />)
-      
+      expect(jest.getTimerCount()).toBeGreaterThan(0)
       unmount()
-      
-      // Should clean up resources
-      expect(true).toBe(true)
+      expect(jest.getTimerCount()).toBe(0)
+      jest.useRealTimers()
     })
 
     test('should efficiently manage GSAP timelines', () => {

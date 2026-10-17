@@ -1,6 +1,6 @@
 "use client";
 
-import { submissionKey } from "@/lib/submission-key";
+import { submitEnquiry } from "@/lib/submit-enquiry";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -60,15 +60,10 @@ export default function ConferenceProduction() {
     setError(null);
     setLoading(true);
     const data = new FormData(e.currentTarget);
-    const body = { ...Object.fromEntries(data.entries()), services: data.getAll("services") };
+    const field = (name: string) => String(data.get(name) ?? "");
+    const body = { organisation: field("organisation"), contact: field("contact"), email: field("email"), phone: field("phone"), eventType: field("eventType"), date: field("date"), delegates: field("delegates"), venue: field("venue"), organisationType: field("organisationType"), services: data.getAll("services").map(String), details: field("details"), website: field("website") };
     try {
-      const res = await fetch("/api/conference-enquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": submissionKey(body) },
-        body: JSON.stringify(body),
-      });
-      const result = await res.json().catch(() => ({})) as { error?: string };
-      if (!res.ok) throw new Error(result.error || "We could not submit your enquiry.");
+      await submitEnquiry("/api/conference-enquiry", body);
       setSubmitted(true);
     } catch {
       setError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
@@ -290,7 +285,7 @@ export default function ConferenceProduction() {
               <div className="text-center py-12">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
-                <p className="text-sm text-[#f4ebd0]/60">Thank you. Your enquiry has been sent to the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
+                <p className="text-sm text-[#f4ebd0]/60">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
               </div>
             )}
           </div>

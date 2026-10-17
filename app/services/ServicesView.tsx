@@ -1,0 +1,291 @@
+"use client";
+
+import React, { useState, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Globe, MessageSquare, Video, Camera, Megaphone, ArrowRight, X, Sparkles
+} from "lucide-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { useModalFocus } from "../components/useModalFocus";
+import { serviceFeatureIcons } from "@/lib/service-icons";
+import type { ServiceCardData } from "@/lib/content-types";
+
+const goldBtn =
+  "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-all duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
+
+const addOns = [
+  { icon: Camera,       label: "Drone Cinematography",  img: "/services%20images/Drone%20Services.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
+  { icon: Sparkles,     label: "Cold Sparks",            img: "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", desc: "Cold spark pyrotechnic effects for grand entrances, finales and photo moments without open flame." },
+  { icon: Globe,        label: "360° Booth",             img: "/mms/WhatsApp%20Image%202026-01-12%20at%204.20.30%20PM.jpeg", desc: "Interactive 360-degree photo and video booths for guest engagement and shareable content." },
+  { icon: MessageSquare,label: "Podcast Production",     img: "/mms/IMG_9198.jpeg",          desc: "On-location podcast capture with multi-track audio and professional editing." },
+  { icon: Megaphone,    label: "Social Media Packages",  img: "/mms/DSC_2505.jpg",           desc: "Edited reels, clips and graphics delivered for immediate post-event publishing." },
+  { icon: Video,        label: "Low-lying cloud machine", img: "/mms/DSC_3908.jpg",           desc: "Low-lying cloud effects that drift across the floor for dramatic entrances, first dances and memorable event moments." },
+];
+
+export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }) {
+  const services = catalog.map(service => ({ ...service, items: service.features.map(label => ({ label, icon: serviceFeatureIcons[service.slug]?.[label] ?? Camera })) }));
+  const [selected, setSelected] = useState<typeof services[0] | null>(null);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+  useModalFocus(selected !== null, modalRef, () => setSelected(null));
+
+  const open = (s: typeof services[0]) => setSelected(s);
+  const close = () => setSelected(null);
+
+  return (
+    <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
+      <Navbar />
+
+      {/* Hero */}
+      <section className="relative min-h-[62vh] flex items-end overflow-hidden bg-black pt-28 pb-14">
+        <div className="absolute inset-0 z-0">
+          <Image src="/mms/DSC_7204.jpg" alt="MMS Services" fill sizes="100vw" className="object-cover object-center" style={{ opacity: 0.55 }} preload />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/55 to-[#050507]/20 z-10" />
+        <div className="relative z-20 max-w-[1400px] mx-auto mms-gutter w-full">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">What We Offer</span>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-semibold text-white font-heading leading-tight">Our Services</h1>
+            <p className="text-lg md:text-xl text-[#f4ebd0]/75 font-light leading-relaxed">
+              End-to-end multimedia production crafted with creativity and precision — from conference AV to cinematic films and brand campaigns.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services — alternating layout, each with 3-image gallery strip */}
+      <section className="py-16 md:py-24 max-w-[1400px] mx-auto mms-gutter">
+        <div className="space-y-14 sm:space-y-20 md:space-y-36">
+          {services.map((service, idx) => (
+            <motion.div
+              key={service.title}
+              initial={false}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="space-y-8"
+            >
+              <div
+                className="group cursor-pointer"
+                onClick={() => open(service)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.target === e.currentTarget && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    open(service);
+                  }
+                }}
+                aria-label={`View details for ${service.title}`}
+              >
+              {/* Main grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
+                 {/* Primary image */}
+                <div className={`relative rounded-3xl overflow-hidden border border-[#c5a880]/10 aspect-[4/3] group ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
+                  <Image
+                    src={service.image}
+                    alt={service.heroAlt || service.title}
+                    fill sizes="(max-width:1023px) 100vw, 50vw"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    style={{ opacity: 0.88 }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-[#050507]/20 to-transparent z-10" />
+                  <div className="absolute bottom-4 left-4 z-20">
+                    <span className="text-xs uppercase tracking-[0.25em] bg-[#c5a880]/20 text-[#c5a880] border border-[#c5a880]/30 px-3 py-1.5 rounded-full">
+                      {service.tag}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Text */}
+                <div className={`space-y-6 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
+                  <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading">{service.title}</h2>
+                  <p className="text-lg text-[#f4ebd0]/70 leading-relaxed font-light">{service.desc}</p>
+                  <div data-stagger className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-3 pt-2">
+                    {service.items.map((item) => (
+                      <div key={item.label} className="bg-[#050507] flex flex-col items-center justify-center gap-2.5 min-h-[90px] rounded-2xl border border-[#c5a880]/10 hover:border-[#c5a880]/30 transition-all duration-300 text-center px-3">
+                        <item.icon className="w-5 h-5 text-[#c5a880]" />
+                        <span className="text-sm text-white font-medium leading-tight">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    <Link href={`/services/${service.slug}`} onClick={(event) => event.stopPropagation()} className={`${goldBtn} px-7 py-3.5 text-xs uppercase tracking-[0.18em] inline-flex`}>
+                      <span className="relative z-10">View service</span>
+                      <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </Link>
+                    <Link href={service.href} onClick={(event) => event.stopPropagation()} className="inline-flex items-center px-7 py-3.5 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-xs uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+                      {service.cta}
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Service gallery thumbnail strip */}
+            <div className={`grid gap-3 ${service.gallery.length === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"}`}>
+              {service.gallery.map((img, i) => (
+                <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#c5a880]/5 group bg-[#050507] flex items-center justify-center">
+                  <Image src={img} alt={`${service.title} ${i + 1}`} fill sizes={service.gallery.length === 4 ? "(max-width:767px) 50vw, 25vw" : "33vw"} className="object-contain transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-[#050507]/20 group-hover:bg-[#050507]/5 transition-colors duration-300" />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+
+    {/* Service detail modal */}
+    <AnimatePresence>
+      {selected && (
+        <motion.div
+          key="service-detail"
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selected.title}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="detail-overlay fixed inset-0 z-[200] flex items-center justify-center bg-black/92 backdrop-blur-lg"
+onClick={() => setSelected(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setSelected(null)}
+              className="modal-close absolute z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-[#c5a880] hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+          <motion.div
+            key={selected.title}
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-4xl detail-panel overflow-y-auto glass-panel rounded-3xl border border-[#c5a880]/20 shadow-2xl"
+          >
+            <div className="relative aspect-[16/9] overflow-hidden rounded-t-3xl">
+              <Image src={selected.image} alt={selected.heroAlt || selected.title} fill sizes="(max-width:960px) 100vw, 896px" className="object-cover object-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className="text-xs uppercase tracking-[0.25em] bg-[#c5a880]/20 text-[#c5a880] border border-[#c5a880]/30 px-3 py-1.5 rounded-full">
+                  {selected.tag}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-5 sm:p-9 space-y-6">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">{selected.title}</h2>
+              <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">{selected.desc}</p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-3">
+                {selected.items.map((item) => (
+                  <div key={item.label} className="bg-[#050507] flex flex-col items-center justify-center gap-2.5 min-h-[90px] rounded-2xl border border-[#c5a880]/10 text-center px-3">
+                    <item.icon className="w-5 h-5 text-[#c5a880]" />
+                    <span className="text-sm text-white font-medium leading-tight">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className={`grid gap-3 pt-2 ${selected.gallery.length === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"}`}>
+                {selected.gallery.map((img, i) => (
+                  <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[#c5a880]/10">
+                    <Image src={img} alt={`${selected.title} ${i + 1}`} fill sizes="(max-width:960px) 33vw, 299px" className="object-cover object-center" />
+                    <div className="absolute inset-0 bg-[#050507]/20" />
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 pt-3">
+                <Link href={`/services/${selected.slug}`} className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+                  Full details
+                </Link>
+                <Link href={selected.href} className={`${goldBtn} px-6 py-3 text-[11px] uppercase tracking-[0.18em] inline-flex items-center`}>
+                  <span className="relative z-10">{selected.cta}</span>
+                  <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={close}
+                  className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+    {/* Add-Ons — cards with image thumbnails */}
+      <section className="py-20 bg-black border-t border-[#c5a880]/10">
+        <div className="max-w-[1400px] mx-auto mms-gutter">
+          <div data-reveal className="text-center mb-14">
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Optional Add-Ons</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white font-heading">Enhance Your Production</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {addOns.map((addon, idx) => (
+              <motion.div
+                key={addon.label}
+                initial={false}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.06 }}
+                className="bg-[#050507] rounded-2xl border border-[#c5a880]/10 overflow-hidden hover:border-[#c5a880]/25 transition-all duration-300 group"
+              >
+                <div className="relative h-40 overflow-hidden">
+                  <Image src={addon.img} alt={addon.label} fill sizes="(max-width:639px) 100vw, (max-width:1023px) 50vw, 33vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/30 to-transparent" />
+                  <div className="absolute bottom-3 left-4">
+                    <div className="w-10 h-10 rounded-full bg-[#c5a880]/20 flex items-center justify-center border border-[#c5a880]/25">
+                      <addon.icon className="w-5 h-5 text-[#c5a880]" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-5">
+                  <h3 className="text-lg font-medium text-white mb-1.5">{addon.label}</h3>
+                  <p className="text-base text-[#f4ebd0]/60 leading-relaxed font-light">{addon.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA — full-bleed image background */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg" alt="" fill sizes="100vw" className="object-cover object-center opacity-35" />
+          <div className="absolute inset-0 bg-[#050507]/75" />
+        </div>
+        <div data-reveal="scale" className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
+            <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get Started</span>
+            <h2 className="text-4xl md:text-5xl font-semibold text-white font-heading">Ready to create something memorable?</h2>
+          <p className="text-lg text-[#f4ebd0]/60 font-light leading-relaxed">Tell us about your project and we&apos;ll respond within 24 hours with a tailored proposal.</p>
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <Link data-lead-cta href="/contact" className={`${goldBtn} px-8 py-3.5 text-sm uppercase tracking-[0.18em]`}>
+              <span className="relative z-10">Start a Project</span>
+              <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+            <Link href="/conference-production#enquiry" className="inline-flex items-center px-8 py-3.5 rounded-full border border-[#c5a880]/20 text-[#f4ebd0]/80 text-sm uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+              Conference Enquiry
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}

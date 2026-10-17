@@ -1,65 +1,19 @@
 /** @jest-environment node */
+jest.mock("./db", () => ({ db: { service: { findFirst: jest.fn() } } }));
 import { getService } from "./get-service";
 import { db } from "./db";
-import type { Service } from "@prisma/client";
-import { contentSlug, services } from "./services";
-
-jest.mock("./db", () => ({
-  db: { service: { findFirst: jest.fn() } },
-}));
-
-const originalDatabaseUrl = process.env.DATABASE_URL;
-
-afterEach(() => {
-  if (originalDatabaseUrl === undefined) delete process.env.DATABASE_URL;
-  else process.env.DATABASE_URL = originalDatabaseUrl;
-  jest.clearAllMocks();
+beforeEach(() => jest.resetAllMocks());
+it("uses staff edits for a formerly hardcoded slug", async () => {
+  const record = { slug: "led-screen-rental", title: "Staff approved title", gallery: ["/image.webp"] };
+  jest.mocked(db.service.findFirst).mockResolvedValue(record as never);
+  expect(await getService(record.slug)).toEqual(record);
+  expect(db.service.findFirst).toHaveBeenCalledWith({ where: { slug: record.slug, published: true } });
 });
-
-test("loads local service content and new galleries without querying Prisma", async () => {
-  delete process.env.DATABASE_URL;
-  const led = await getService("led-screen-rental");
-  const sound = await getService("professional-sound-systems");
-  expect(led?.title).toBe("LED Screen Rental");
-  expect(led?.gallery).toHaveLength(3);
-  expect(led?.gallery.every((src) => src.startsWith("/mms/ledScreens/"))).toBe(true);
-  expect(sound?.gallery).toEqual(services.find((item) => contentSlug(item.title) === "professional-sound-systems")?.gallery);
-  expect(await getService("unknown-service")).toBeNull();
-  expect(db.service.findFirst).not.toHaveBeenCalled();
-});
-
-test("queries published database content for services outside the local catalog", async () => {
-  process.env.DATABASE_URL = "postgresql://localhost/test";
+it("does not substitute local content when a record is missing", async () => {
   jest.mocked(db.service.findFirst).mockResolvedValue(null);
-  expect(await getService("database-only-service")).toBeNull();
-  expect(db.service.findFirst).toHaveBeenCalledWith({
-    where: { slug: "database-only-service", published: true },
-  });
+  expect(await getService("led-screen-rental")).toBeNull();
 });
-
-test.each([
-  ["led-screen-rental", "/mms/ledScreens/"],
-  ["professional-sound-systems", "/mms/PaSystem/"],
-])("uses the supplied gallery for %s even with database content", async (slug) => {
-  process.env.DATABASE_URL = "postgresql://localhost/test";
-  const storedService = {
-    slug,
-    title: "CMS title",
-    gallery: ["/mms/old-image.jpg"],
-  } as Service;
-  jest.mocked(db.service.findFirst).mockResolvedValue(storedService);
-  const service = await getService(slug);
-  const local = services.find((item) => contentSlug(item.title) === slug);
-  expect(service?.title).toBe(local?.title);
-  expect(service?.gallery).toEqual(local?.gallery);
-  expect(db.service.findFirst).not.toHaveBeenCalled();
+it("propagates outages rather than serving stale content", async () => {
+  jest.mocked(db.service.findFirst).mockRejectedValue(new Error("Database unavailable"));
+  await expect(getService("led-screen-rental")).rejects.toThrow("Database unavailable");
 });
-
-test.each(services.map((service) => [contentSlug(service.title), service]))(
-  "loads the current catalog entry for %s",
-  async (slug, local) => {
-    const service = await getService(slug as string);
-    expect(service?.title).toBe((local as typeof services[number]).title);
-    expect(service?.gallery).toEqual((local as typeof services[number]).gallery);
-  },
-);

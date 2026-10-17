@@ -26,7 +26,7 @@ Existing safeguards: enquiry request bodies are bounded; Zod validates form inpu
 
 - `npm.cmd test -- --runInBand`: 11 suites passed, 123 tests passed.
 - `npm.cmd run lint`: passed (no diagnostics).
-- `npx.cmd tsc --noEmit`: failed with TS1109 in generated `.next/dev/types/validator.ts`, lines 63â€“67. Requires regeneration and recheck; no source suppression warranted.
+- `npx.cmd tsc --noEmit`: failed with TS1109 in generated `.next/dev/types/validator.ts`, lines 63 to 67. Required regeneration and recheck; subsequent checks passed without source suppressions (see TEST_REPORT.md).
 - Production build: started; outcome recorded in TEST_REPORT.md when available.
 
 ## Limitations

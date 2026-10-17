@@ -45,6 +45,8 @@ Alert on scheduler failures, oldest pending enquiry above the business response 
 
 Email has at most five automatic attempts inside a conservative 23-hour period. Investigate Resend acceptance before manual retry outside that window. Never reset ambiguous WhatsApp sending/reconciliation states to pending until Meta records confirm no acceptance; Meta has no equivalent idempotency key. Keep a record of reviewed manual recovery.
 
+Missing WhatsApp configuration is recorded as not_configured before any attempt is claimed. These rows count toward operator attention but do not consume send attempts or repeatedly fill worker batches. Once the server configuration is valid, the worker can claim this unsent work automatically. This recovery does not replay reconciliation_required or already accepted sends.
+
 Run media:check, lint, typecheck, unit/coverage, isolated integration, browser journeys and production build. Verify contact, conference and quote forms, gallery focus restoration, mobile navigation, 404s, publication changes and all six viewport widths. Review the dependency audit and any remaining advisories. Confirm private documents, browser captures, .private-assets and .cache cannot be fetched from the preview.
 
 ## Rollback

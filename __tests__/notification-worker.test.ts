@@ -1,6 +1,8 @@
 /** @jest-environment node */
 jest.mock("@/lib/db", () => ({ db: { rateLimit: { deleteMany: jest.fn() }, lead: { updateMany: jest.fn(), findMany: jest.fn(), count: jest.fn() } } }));
 jest.mock("@/lib/leads", () => ({ notifyLead: jest.fn(), notifyLeadWhatsApp: jest.fn() }));
+jest.mock("@/lib/env", () => ({ isWhatsAppOutboundConfigured: jest.fn() }));
+import { isWhatsAppOutboundConfigured } from "@/lib/env";
 import { GET } from "@/app/api/internal/notifications/route";
 import { db } from "@/lib/db";
 import { notifyLead, notifyLeadWhatsApp } from "@/lib/leads";
@@ -25,4 +27,12 @@ it("awaits both channels for a bounded authenticated batch", async () => {
   expect(notifyLead).toHaveBeenCalledWith("lead_1");
   expect(notifyLeadWhatsApp).toHaveBeenCalledWith("lead_1");
   expect(db.lead.findMany).toHaveBeenCalledWith(expect.objectContaining({ take: 3 }));
+});
+it.each([true, false])("only requeues configuration-deferred work when configured=%s", async configured => {
+  jest.mocked(isWhatsAppOutboundConfigured).mockReturnValue(configured);
+  jest.mocked(db.lead.findMany).mockResolvedValue([]);
+  jest.mocked(db.lead.count).mockResolvedValue(0);
+  const response = await GET(new Request("https://example.com/api/internal/notifications", { headers: { Authorization: `Bearer ${"a".repeat(32)}` } }));
+  expect(response.status).toBe(200);
+  expect(db.lead.findMany).toHaveBeenCalledWith(expect.objectContaining({ where: expect.objectContaining({ OR: expect.arrayContaining([{ whatsappStatus: { in: configured ? ["pending", "not_configured"] : ["pending"] } }]) }) }));
 });

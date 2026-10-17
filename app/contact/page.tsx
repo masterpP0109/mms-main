@@ -1,6 +1,7 @@
 "use client";
 
 import { submitEnquiry } from "@/lib/submit-enquiry";
+import { contactReferral } from "@/lib/contact-referral";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export default function ContactPage() {
     const params = new URLSearchParams(window.location.search);
     const data = new FormData(form);
     const field = (name: string) => String(data.get(name) ?? "");
-    const body = { name: field("name"), email: field("email"), phone: field("phone"), organisation: field("organisation"), projectType, message: field("message"), website: field("website"), service: params.get("service") || undefined, origin: params.get("origin") || "/contact" };
+    const body = { name: field("name"), email: field("email"), phone: field("phone"), organisation: field("organisation"), projectType, message: field("message"), website: field("website"), ...contactReferral(params) };
     try {
       await submitEnquiry("/api/leads", body);
       setSubmitted(true);

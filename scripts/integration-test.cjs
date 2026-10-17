@@ -15,7 +15,7 @@ const resolve = Module._resolveFilename;
 Module._resolveFilename = function(name, ...args) { return resolve.call(this, name.startsWith("@/") ? path.join(process.cwd(), name.slice(2)) : name, ...args); };
 require.extensions[".ts"] = (module, filename) => module._compile(ts.transpileModule(fs.readFileSync(filename, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText, filename);
 const { db } = require("../lib/db.ts");
-const { createLead } = require("../lib/leads.ts");
+const { createLead, notifyLeadWhatsApp } = require("../lib/leads.ts");
 const { getService } = require("../lib/get-service.ts");
 const { POST } = require("../app/api/webhooks/whatsapp/route.ts");
 async function run() {
@@ -27,6 +27,31 @@ async function run() {
   assert.equal(lead.emailStatus, "pending");
   assert.equal(lead.whatsappStatus, "pending");
   assert.equal(lead.emailAttempts, 0);
+  await notifyLeadWhatsApp(lead.id);
+  const deferred = await db.lead.findUniqueOrThrow({ where: { id: lead.id } });
+  assert.equal(deferred.whatsappStatus, "not_configured");
+  assert.equal(deferred.whatsappAttempts, 0);
+  const previousFetch = global.fetch;
+  const previousPhoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+  let providerCalls = 0;
+  try {
+    process.env.WHATSAPP_ACCESS_TOKEN = "isolated-provider-fixture";
+    process.env.WHATSAPP_PHONE_NUMBER_ID = "fixture-phone-id";
+    global.fetch = async () => {
+      providerCalls++;
+      return Response.json({ messages: [{ id: `wamid.fixture.${token}` }] });
+    };
+    await Promise.all([notifyLeadWhatsApp(lead.id), notifyLeadWhatsApp(lead.id)]);
+    const recovered = await db.lead.findUniqueOrThrow({ where: { id: lead.id } });
+    assert.equal(recovered.whatsappStatus, "accepted");
+    assert.equal(recovered.whatsappAttempts, 1);
+    assert.equal(providerCalls, 1);
+  } finally {
+    global.fetch = previousFetch;
+    delete process.env.WHATSAPP_ACCESS_TOKEN;
+    if (previousPhoneId === undefined) delete process.env.WHATSAPP_PHONE_NUMBER_ID;
+    else process.env.WHATSAPP_PHONE_NUMBER_ID = previousPhoneId;
+  }
   const content = await db.service.create({ data: { slug: `test-${token}`, title: "Private fixture", category: "Test", description: "Isolated content fixture", heroImage: "/victoria_falls_banner.png", gallery: [], features: [], published: false, updatedAt: new Date("2000-01-01") } });
   assert.equal(await getService(content.slug), null);
   await db.$executeRaw`UPDATE "Service" SET "published" = true, "title" = ${"Edited fixture"} WHERE "id" = ${content.id}`;
@@ -47,6 +72,6 @@ async function run() {
   assert.ok(contact.conversation.leadId);
   assert.equal((await (await inbound(ids[0])).json()).duplicates, 1);
   assert.equal(await db.lead.count({ where: { phone } }), 1);
-  console.log("Database integration passed: concurrent lead idempotency, durable pending work, signed webhook persistence, duplicate handling and shared conversation grouping. No provider sends.");
+  console.log("Database integration passed: concurrent lead idempotency, durable pending work, configuration recovery with one mocked provider call, signed webhook persistence, duplicate handling and shared conversation grouping. No real provider sends.");
 }
 run().catch(error => { console.error("Isolated integration failed", { type: error.name }); process.exitCode = 1; }).finally(() => db.$disconnect());

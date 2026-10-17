@@ -1,5 +1,13 @@
 # Verification evidence
 
+## Hands-on regression follow-up
+
+The latest hosted integrations on 0c252f5 were green, including Vercel, CodeRabbit and Quality checks. Review findings were then independently checked while testing the new functionality. Confirmed fixes: the project modal's bottom Close button resolved to window.close; malformed optional referral parameters could block a valid contact enquiry; the origin path regex admitted excessive backtracking; missing WhatsApp configuration consumed its only send attempt despite no provider request.
+
+The new tests cover valid/invalid referral paths, a bounded child-process regex near-match, configuration deferral without an attempt, recovery eligibility, project-modal closure without closing the tab, and a browser contact submission whose payload must pass the real server schema. The isolated integration runner additionally checks recovery with two concurrent workers and exactly one mocked provider call. No real provider notifications are sent by these tests.
+
+Local unit run: 16 suites / 164 tests passed. Lint and TypeScript passed. The first browser launch correctly refused to replace an existing Next development server on port 3000; targeted mocked browser tests instead use an ignored local Playwright config pointing to that existing server. Final browser and CI outcomes are recorded in the PR after execution.
+
 ## Hosted checks follow-up
 
 The earlier green Quality checks workflow did not mean all hosted integrations passed. Vercel's PR comment confirmed deployment validation rejected the five-minute cron on Hobby. Root vercel.json now has no native cron; the Pro-only example is separate and the external-scheduler requirement is explicit in DEPLOYMENT_CHECKLIST.md. No scheduler was activated or paid plan purchased.

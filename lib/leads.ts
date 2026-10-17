@@ -6,6 +6,7 @@ import { sendLeadEmail } from "@/lib/providers/email";
 import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
 import { reconcileWhatsAppStatus } from "@/lib/whatsapp-status";
 import { enforceIdentityLimit } from "@/lib/rate-limit";
+import { isWhatsAppOutboundConfigured } from "@/lib/env";
 import type { LeadInput } from "@/lib/validation/leads";
 
 export function createIdempotencyKey(input: LeadInput, supplied?: string | null) {
@@ -54,7 +55,11 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
 }
 
 export async function notifyLeadWhatsApp(id: string) {
-  const claim = await db.lead.updateMany({ where: { id, whatsappStatus: "pending", whatsappAttempts: { lt: 1 } }, data: { whatsappStatus: "sending", whatsappAttempts: { increment: 1 } } });
+  if (!isWhatsAppOutboundConfigured()) {
+    await db.lead.updateMany({ where: { id, whatsappStatus: "pending" }, data: { whatsappStatus: "not_configured" } });
+    return false;
+  }
+  const claim = await db.lead.updateMany({ where: { id, whatsappStatus: { in: ["pending", "not_configured"] }, whatsappAttempts: { lt: 1 } }, data: { whatsappStatus: "sending", whatsappAttempts: { increment: 1 } } });
   if (!claim.count) return false;
   const lead = await db.lead.findUniqueOrThrow({ where: { id } });
   let providerId: string;

@@ -52,3 +52,8 @@ export function requireWhatsAppOutboundEnv(env = getServerEnv()) {
     apiVersion: env.WHATSAPP_API_VERSION,
   };
 }
+
+export function isWhatsAppOutboundConfigured() {
+  try { requireWhatsAppOutboundEnv(); return true; }
+  catch { return false; }
+}

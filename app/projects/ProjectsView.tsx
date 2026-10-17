@@ -291,7 +291,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                   </Link>
                   <button
                     type="button"
-                    onClick={close}
+                    onClick={() => setSelected(null)}
                     className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
                   >
                     Close

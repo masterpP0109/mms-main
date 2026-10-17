@@ -2,6 +2,8 @@
 jest.mock("@/lib/db", () => ({ db: { webhookEvent: { findMany: jest.fn() }, $queryRaw: jest.fn(), lead: { create: jest.fn(), findUnique: jest.fn(), findUniqueOrThrow: jest.fn(), count: jest.fn(), update: jest.fn(), updateMany: jest.fn() } } }));
 jest.mock("@/lib/providers/email", () => ({ sendLeadEmail: jest.fn() }));
 jest.mock("@/lib/providers/whatsapp", () => ({ sendLeadWhatsApp: jest.fn() }));
+jest.mock("@/lib/env", () => ({ isWhatsAppOutboundConfigured: jest.fn() }));
+import { isWhatsAppOutboundConfigured } from "@/lib/env";
 import { db } from "@/lib/db";
 import { sendLeadEmail } from "@/lib/providers/email";
 import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
@@ -11,6 +13,7 @@ const lead = { ...input, id: "lead_1", createdAt: new Date(), metadata: {}, emai
 describe("lead persistence and notifications", () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.mocked(isWhatsAppOutboundConfigured).mockReturnValue(true);
     jest.spyOn(console, "error").mockImplementation(() => {});
     jest.mocked(db.lead.findUnique).mockResolvedValue(null);
     jest.mocked(db.lead.count).mockResolvedValue(0);
@@ -65,6 +68,18 @@ describe("lead persistence and notifications", () => {
   it("records Meta acceptance with its provider message identifier", async () => {
     await expect(notifyLeadWhatsApp("lead_1")).resolves.toBe(true);
     expect(db.lead.update).toHaveBeenCalledWith(expect.objectContaining({ data: { whatsappStatus: "accepted", whatsappProviderId: "wa_1" } }));
+  });
+  it("defers missing configuration without consuming a provider attempt", async () => {
+    jest.mocked(isWhatsAppOutboundConfigured).mockReturnValue(false);
+    await expect(notifyLeadWhatsApp("lead_1")).resolves.toBe(false);
+    expect(sendLeadWhatsApp).not.toHaveBeenCalled();
+    expect(db.lead.updateMany).toHaveBeenCalledTimes(1);
+    expect(db.lead.updateMany).toHaveBeenCalledWith({ where: { id: "lead_1", whatsappStatus: "pending" }, data: { whatsappStatus: "not_configured" } });
+  });
+  it("claims deferred unsent work once configuration is available", async () => {
+    await expect(notifyLeadWhatsApp("lead_1")).resolves.toBe(true);
+    expect(db.lead.updateMany).toHaveBeenCalledWith(expect.objectContaining({ where: { id: "lead_1", whatsappStatus: { in: ["pending", "not_configured"] }, whatsappAttempts: { lt: 1 } } }));
+    expect(sendLeadWhatsApp).toHaveBeenCalledTimes(1);
   });
   it("retains uncertain Meta attempts for reconciliation", async () => {
     jest.mocked(sendLeadWhatsApp).mockRejectedValue(new Error("private provider details"));

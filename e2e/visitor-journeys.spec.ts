@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { contactLeadSchema } from "../lib/validation/leads";
 
 test("homepage keeps the MMS identity and links to services", async ({ page }) => {
   test.skip(!process.env.MMS_TEST_DATABASE_URL, "Dedicated test PostgreSQL required for the catalogue journey");
@@ -14,6 +15,12 @@ test("homepage keeps the MMS identity and links to services", async ({ page }) =
 test("project links resolve to published case studies", async ({ page }) => {
   test.skip(!process.env.MMS_TEST_DATABASE_URL, "Dedicated test PostgreSQL required for case studies");
   await page.goto("/projects");
+  await page.getByRole("button", { name: /^Preview / }).first().click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("button", { name: "Close", exact: true }).filter({ hasText: "Close" }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  expect(page.isClosed()).toBe(false);
   await page.locator('a[href^="/projects/"]').first().click();
   await expect(page.locator("h1")).toBeVisible();
 });
@@ -34,8 +41,11 @@ test("gallery opens and restores keyboard focus after Escape", async ({ page }) 
   await expect(trigger).toBeFocused();
 });
 test("contact acknowledges persistence with no external send", async ({ page }) => {
-  await page.route("**/api/leads", route => route.fulfill({ json: { success: true, saved: true, submissionId: "e2e_fixture", notificationStatus: "pending_retry" } }));
-  await page.goto("/contact");
+  await page.route("**/api/leads", route => {
+    const valid = contactLeadSchema.safeParse(route.request().postDataJSON()).success;
+    return route.fulfill({ status: valid ? 200 : 422, json: valid ? { success: true, saved: true, submissionId: "e2e_fixture", notificationStatus: "pending_retry" } : { error: "Invalid input" } });
+  });
+  await page.goto(`/contact?origin=${encodeURIComponent("/Services?x=1")}&service=${"a".repeat(200)}`);
   await page.locator('input[name="name"]').fill("Test Visitor");
   await page.locator('input[name="email"]').fill("visitor@example.com");
   await page.locator('textarea[name="message"]').fill("Conference production enquiry");

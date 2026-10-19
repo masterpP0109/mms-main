@@ -1,63 +1,75 @@
-# Website notifications with Resend
+# Titan SMTP and PostgreSQL notifications
 
-Titan continues receiving business mail. No DNS changes or production deployment were made by this implementation. A sending domain must already be verified in Resend; if it is not, domain verification is a separate prerequisite requiring review of Resend's supplied records. Do not change Titan MX or website records, and do not enable Resend receiving.
+The Node.js server uses Nodemailer; Resend has been removed. Configuration and passwords stay server-side. No deployment or production configuration is performed by these local tools.
 
-## Vercel server-side variables
+## Local configuration and provenance
 
-- RESEND_API_KEY: Resend sending API key authorized for the verified domain.
-- MMS_FROM_EMAIL: plain email address on that verified sending domain, for example website@mosimediasolutions.com only if that domain is verified.
-- MMS_NOTIFICATION_EMAIL: info@mosimediasolutions.com.
-- DATABASE_URL: existing PostgreSQL/Prisma connection; retain existing WhatsApp configuration.
+Use ignored `.env.local` or inherited environment variables. Inherited variables take precedence, matching Next.js. Never print environment files, put secrets in `NEXT_PUBLIC_` variables, or commit credentials. `.env.example` contains placeholders.
 
-Never use NEXT_PUBLIC_ for secrets. Remove the obsolete SENDLAYER_API_KEY from Vercel after review and successful preview verification. Do not put real keys in source control. Installation: npm install; npm run build. No database migration is required: existing Lead.emailStatus, emailProviderId, notificationError and unique idempotencyKey fields are reused. Existing records are preserved; historical sent values remain recognized as already notified.
+Set `SMTP_HOST=smtp.titan.email`, `SMTP_PORT=465`, `SMTP_SECURE=true`, `SMTP_USER=info@mosimediasolutions.com`, `CONTACT_EMAIL_TO=info@mosimediasolutions.com`, and set `SMTP_PASSWORD` locally. Password whitespace is preserved.
 
-## Meaning of success
+`email:verify` reports loaded filenames and whether each effective setting matches `.env.local`, without printing passwords or password hashes. Restart an existing server after changing environment values. The standalone command reads current files on every run.
 
-The API returns HTTP 200, success: true, saved: true and submissionId after persistence, even when notification fails. notificationStatus is accepted only when an email is recorded as accepted (historical sent records are also treated as already notified); pending_retry includes failed, pending or uncertain attempts. No response asserts mailbox delivery. Lead.emailStatus values: pending, sending, accepted, retry_required; old sent values are preserved. Use Resend logs and the provider ID to confirm delivery/bounces. Customer email is used only as Reply-To; phone-only inbound enquiries also notify the team.
+Titan documents port 465 with SSL/TLS, the full mailbox address as username, and enabled third-party access: https://support.titan.email/hc/en-us/articles/900001311526-Configure-Titan-Mail-on-Outlook . Authentication rejection `EAUTH` / `535` can indicate invalid credentials or account access restrictions. Do not weaken TLS to address authentication failure.
 
-Notifications contain escaped HTML and plain text, contact information, requested services, event metadata, message, lead ID and stored UTC submission date. Logs contain IDs and numeric provider status only, never provider error messages or customer payloads. WhatsApp behavior remains independent.
+## Independent checks: no emails or database writes
 
-## Duplicate prevention and limits
+```text
+npm run email:verify
+npm run db:check
+npm run db:check -- --schema
+```
 
-An identical payload and submission key returns the existing record without notifying again. Without a key, identical payloads are deduplicated in five-minute buckets. Forms retain their key for identical retries. An atomic status claim prevents concurrent notifications; Resend receives mms-lead/LEAD_ID as its idempotency key. Changed payloads create new enquiries. Database rate limiting permits fewer than ten prior enquiries per email (or phone) in ten minutes. This is a basic customer-based limit, not a replacement for perimeter bot controls; simultaneous requests can exceed the limit. Origin validation, 20 KB body limits and honeypots remain active.
+`email:verify` has no database dependency and never invokes `sendMail`. `email:test:local` is a safe compatibility alias for verification only. Verification confirms connection and authentication, not inbox delivery.
 
-## Retry procedure
+The database diagnostic uses the installed Prisma Client and executes only `SELECT 1` and a read of the current session's TLS status. It forces `sslmode=require` and `sslaccept=strict` in memory without editing the connection string on disk. A proxy's `pg_stat_ssl` result describes its backend hop, not client-to-proxy TLS. Errors are allowlisted and sanitized; connection URLs and raw Prisma error payloads are never logged.
 
-There is no unattended worker. Review retry_required/pending leads in PostgreSQL and fix missing configuration or provider issues, then run from a trusted environment with the matching database and secrets:
+`--schema` additionally reads column metadata and completed migration names, compares them with the checked-in Prisma models, and exits nonzero if required columns are missing. It never applies migrations. The current database is behind four existing migrations: `20261017010000_notification_attempts`, `20261017020000_whatsapp_threads`, `20261017030000_atomic_rate_limit`, and `20261017040000_content_metadata`. This leaves contact-critical attempt columns and the rate-limit table missing, and causes the Services page's `P2022` missing `Service.heroAlt` error. Schema alignment is required before a live contact submission can succeed. The contact-send test checks `Lead` and `RateLimit` metadata before submitting.
 
-    npm run notifications:retry -- LEAD_ID
+The current provider is Prisma Postgres (`db.prisma.io`), with Prisma / Prisma Client 6.19.3 and the native Windows engine. The configured URL originally specified `sslmode=require` without `sslaccept`. Application connections now enforce strict certificate verification through `lib/postgres-url.ts`. Explicitly isolated loopback test databases retain their local SSL mode; remote connections always require TLS.
 
-This sends only the email and uses the same content, stored submission date, and provider idempotency key. The database claim prevents simultaneous runs. It refuses accepted/sent/sending records. For enquiries older than 23 hours it requires explicit operator reconciliation, because Resend's idempotency retention is 24 hours (https://resend.com/docs/dashboard/emails/idempotency-keys). Do not change sender/recipient configuration during ambiguous retries because the request payload must match.
+Observed locally: the restricted Windows process fails with `SEC_E_NO_CREDENTIALS`, OS error `-2146893042`. The same client, credentials and strict TLS query succeed outside that restricted process. This isolates the failure to that Windows execution/security context; it is not evidence of a bad database password, an invalid server certificate, or a need to migrate/reset the database. Run the local server from a normal user terminal with outbound access when reproducing. No Windows security policy, certificate store, database schema or provider settings have been changed.
 
-A sending record can mean the process stopped after Resend acceptance but before recording it. Reconcile Resend logs before changing status. For old or uncertain attempts, verify whether the email was accepted/delivered; record the provider ID and accepted status if found. If verified never accepted, an operator can run `npm run notifications:retry -- LEAD_ID --confirmed-not-accepted` after review. This flag is an operator assertion, not automated delivery verification. Do not blindly reset status or resend after the provider retention window. Existing historical failed notifications are not automatically retried, avoiding SendLayer/Resend duplicates.
+Prisma v6 TLS parameters: https://docs.prisma.io/docs/orm/v6/overview/databases/postgresql . Prisma Postgres connections: https://www.prisma.io/docs/postgres/database/connecting-to-your-database .
 
-## Verification before production review
+## Explicit one-time email send: run only when requested
 
-    npm install
-    npx tsc --noEmit
-    npm run lint
-    npm test -- --runInBand
-    npm run build
+```text
+npm run email:test:send -- --confirm-send
+```
 
-Use a separate preview database and a verified test sender/recipient. Submit contact, homepage quote builder and conference forms; confirm each saved record, Resend acceptance ID, complete email contents and working Reply-To. Disable the API key and confirm the enquiry still saves with retry_required and the visitor sees successful submission. Restore the key, run the reviewed retry command, confirm acceptance, then rerun and confirm no second send. Repeat identical requests with one submission key and confirm a single lead/notification. Check delivery separately in Resend logs and the Titan inbox. Do not deploy production until checks pass and the change is reviewed.
+The command verifies SMTP first, then sends one message with subject **MMS Local Titan SMTP Test** to the authorized MMS mailbox. It refuses other recipients and respects prior attempt state. An exclusively created ignored `.cache/titan-direct-test-once.json` lock prevents concurrent or repeated sends, including after an ambiguous crash. Do not remove locks and blindly retry; reconcile Titan first. Only an accepted intended recipient, a final positive SMTP reply and a Message-ID count as SMTP acceptance. Confirm inbox or spam-folder arrival separately with the recipient.
 
-## Changed files
+## Explicit contact endpoint test: run only when requested
 
-- package.json, package-lock.json: official Resend SDK, server-only marker and retry command.
-- lib/email/resend.ts: new adapter; lib/email/sendlayer.ts removed.
-- lib/providers/email.ts: formatted notification and stored submission date.
-- lib/env.ts: Resend configuration and independent email validation.
-- lib/leads.ts: save-first processing, atomic notification claim, acceptance/retry status, duplicate checks and database rate limit.
-- lib/http.ts: safe error logging.
-- lib/submission-key.ts: stable keys for identical form retries.
-- app/api/leads/route.ts, app/api/conference-enquiry/route.ts: saved/accepted response distinction.
-- app/contact/page.tsx, app/conference-production/page.tsx, app/page.tsx: stable submission keys.
-- scripts/retry-notifications.cjs: controlled operator retry.
-- __tests__/email.test.ts, __tests__/lead-api.test.ts: provider/configuration and API tests.
-- __tests__/lead-persistence.test.ts, __tests__/submission-key.test.ts: persistence, duplicate protection, status claims and retry keys.
-- jest.setup.js: repair chainable GSAP and ScrollTrigger test mocks; production animations unchanged.
-- .env.example, README.md, EMAIL_NOTIFICATIONS.md: configuration and operational documentation.
+After both independent checks pass, build and start a local server in a normal terminal:
 
-## Verification result (9 October 2026)
+```text
+npm run build
+npm run start -- --hostname 127.0.0.1 --port 3300
+npm run contact:test:local -- http://localhost:3300 --confirm-send
+```
 
-TypeScript, lint and the production build passed. Full Jest suite: 11 suites, 123 tests passed. The retry CLI refused missing lead ID as expected. Provider tests mock Resend; persistence tests mock Prisma. No live emails were sent, no database records were modified, no database migration was applied, and no DNS or production deployment changes were made. Preview end-to-end verification and production review remain required.
+Run the last command in a second terminal. It can write one clearly labelled test enquiry and send one notification. Without `--confirm-send` it refuses to proceed. It verifies SMTP and performs the read-only database check before submitting. It tests origin, honeypot and visitor-email rejection; any failed security check blocks the valid submission. Use `localhost` because this Next server constructs its local request URL with that hostname.
+
+For checks that cannot store an enquiry or send mail, use `npm run contact:check:local -- http://localhost:3300`. This checks `/contact` and the database-backed `/services` route plus rejection of invalid contact requests, then exits before the valid submission and notification code.
+
+The command uses the existing `/api/leads` route and a fixed idempotency key, reads the exact stored fixture back, then processes only that test row through the existing notification function. It does not run a worker batch or send WhatsApp notifications. An exclusive `.cache/titan-contact-test-once.json` lock and existing notification claims prevent duplicate notification attempts. A previous stored test must be reconciled instead of blindly submitted again. Failed or uncertain attempts leave their guards intact. Ignored `.cache/titan-smtp-local-test.json` preserves the earlier test history.
+
+## Storage, headers and retry behavior
+
+The existing HTML/plain-text templates, validation, honeypots, body-size limits, origin checks, rate limits, enquiry storage and submission idempotency are preserved. From is always the authenticated mailbox; To is `CONTACT_EMAIL_TO`; Reply-To is the validated visitor email. Phone-only enquiries omit Reply-To. SMTP uses implicit TLS on 465, certificate verification, TLS 1.2 minimum and bounded timeouts. Protocol debugging, file content access and URL content access are disabled.
+
+Forms acknowledge durable storage and queue notifications. The authenticated worker awaits SMTP independently. No email failure deletes a saved enquiry or makes the API claim delivery. Only confirmed SMTP acceptance records `accepted`. Historical `sent` statuses are recognized.
+
+Configuration errors and explicit rejections become `retry_required`. Connection loss or timeouts during/after DATA are uncertain and become `reconciliation_required`. Failure to record acceptance leaves `sending` for reconciliation. SMTP has no Resend-style idempotency guarantee; a stable Message-ID helps identify a message but cannot guarantee deduplication. Legacy provider failures cannot be blindly replayed through SMTP.
+
+```text
+npm run notifications:retry -- LEAD_ID
+```
+
+The retry command uses the shared server bootstrap, correct CommonJS interop and current local environment. It refuses accepted/sent/sending records. After independently verifying that an uncertain attempt was never accepted, an operator can use `--confirmed-not-accepted`. The flag is an operator assertion, not delivery verification. The existing five-attempt cap remains.
+
+## Deployment requirements
+
+No deployment was performed. Before a future deployment, configure the six SMTP settings and `DATABASE_URL` in the hosting environment, retain Node.js runtime and strict TLS, allow outbound port 465 and PostgreSQL connectivity, and verify the authenticated notification scheduler's `CRON_SECRET`. `.env.local` is not deployed or committed. SMTP requires no new schema migration, but the four existing pending migrations must be reviewed and applied to the intended database before the current application can work. Complete the explicitly approved contact test and confirm mailbox arrival before treating delivery as verified.

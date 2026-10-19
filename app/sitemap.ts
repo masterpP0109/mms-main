@@ -8,8 +8,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     db.service.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
     db.project.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } }),
   ]);
-  return ["/", "/about", "/services", "/projects", "/gallery", "/contact", "/conference-production", "/privacy"].map(route => ({ url: new URL(route, base).href })).concat([
-    ...services.map(item => ({ url: new URL(`/services/${encodeURIComponent(item.slug)}`, base).href, lastModified: item.updatedAt })),
+  const dedicatedServices = new Set(["drone", "weddings-elopements"]);
+  return ["/", "/about", "/services", "/services/drone", "/services/weddings-elopements", "/projects", "/gallery", "/contact", "/conference-production", "/privacy"].map(route => ({ url: new URL(route, base).href })).concat([
+    ...services.filter(item => !dedicatedServices.has(item.slug)).map(item => ({ url: new URL(`/services/${encodeURIComponent(item.slug)}`, base).href, lastModified: item.updatedAt })),
     ...projects.map(item => ({ url: new URL(`/projects/${encodeURIComponent(item.slug)}`, base).href, lastModified: item.updatedAt })),
   ]);
 }

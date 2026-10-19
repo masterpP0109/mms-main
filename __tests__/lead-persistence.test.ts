@@ -6,8 +6,9 @@ jest.mock("@/lib/env", () => ({ isWhatsAppOutboundConfigured: jest.fn() }));
 import { isWhatsAppOutboundConfigured } from "@/lib/env";
 import { db } from "@/lib/db";
 import { sendLeadEmail } from "@/lib/providers/email";
+import { SmtpNotificationError } from "@/lib/email/errors";
 import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
-import { createLead, notifyLead, notifyLeadWhatsApp, createIdempotencyKey } from "@/lib/leads";
+import { createLead, submitLead, notifyLead, notifyLeadWhatsApp, createIdempotencyKey } from "@/lib/leads";
 const input = { source: "contact" as const, name: "Ada", email: "ada@example.com", message: "Hello" };
 const lead = { ...input, id: "lead_1", createdAt: new Date(), metadata: {}, emailStatus: "pending" };
 describe("lead persistence and notifications", () => {
@@ -32,8 +33,33 @@ describe("lead persistence and notifications", () => {
     expect(sendLeadEmail).not.toHaveBeenCalled();
     expect(sendLeadWhatsApp).not.toHaveBeenCalled();
   });
+  it("awaits SMTP acceptance after saving a form enquiry", async () => {
+    jest.mocked(sendLeadEmail).mockResolvedValue("smtp_1");
+    await expect(submitLead(input)).resolves.toMatchObject({ id: "lead_1", notified: true });
+    expect(sendLeadEmail).toHaveBeenCalledTimes(1);
+    expect(jest.mocked(db.lead.create).mock.invocationCallOrder[0]).toBeLessThan(jest.mocked(sendLeadEmail).mock.invocationCallOrder[0]);
+    expect(sendLeadWhatsApp).not.toHaveBeenCalled();
+  });
+  it("acknowledges storage honestly when immediate SMTP notification fails", async () => {
+    jest.mocked(sendLeadEmail).mockRejectedValue(new SmtpNotificationError("EAUTH", true, 535));
+    await expect(submitLead(input)).resolves.toMatchObject({ id: "lead_1", notified: false });
+    expect(db.lead.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ emailStatus: "retry_required" }) }));
+  });
+  it("does not send a second form notification for a duplicate or in-flight enquiry", async () => {
+    jest.mocked(db.lead.findUnique).mockResolvedValue({ ...lead, emailStatus: "sending" } as never);
+    await expect(submitLead(input)).resolves.toMatchObject({ duplicate: true, notified: false });
+    expect(sendLeadEmail).not.toHaveBeenCalled();
+    expect(db.lead.updateMany).not.toHaveBeenCalled();
+  });
+  it("retains a saved enquiry if recording SMTP acceptance fails", async () => {
+    jest.mocked(sendLeadEmail).mockResolvedValue("smtp_1");
+    jest.mocked(db.lead.update).mockRejectedValue(new Error("private database detail"));
+    await expect(submitLead(input)).resolves.toMatchObject({ id: "lead_1", notified: false });
+    expect(JSON.stringify(jest.mocked(console.error).mock.calls)).not.toContain("private database detail");
+    expect(sendLeadEmail).toHaveBeenCalledTimes(1);
+  });
   it("retains the saved enquiry on provider or configuration failure", async () => {
-    jest.mocked(sendLeadEmail).mockRejectedValue(new Error("private customer data"));
+    jest.mocked(sendLeadEmail).mockRejectedValue(new SmtpNotificationError("ECONFIG", true));
     await expect(notifyLead("lead_1")).resolves.toBe(false);
     expect(db.lead.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ emailStatus: "retry_required" }) }));
     expect(JSON.stringify(jest.mocked(console.error).mock.calls)).not.toContain("private customer data");
@@ -48,6 +74,17 @@ describe("lead persistence and notifications", () => {
     jest.mocked(db.lead.updateMany).mockResolvedValue({ count: 0 });
     await expect(notifyLead("lead_1")).resolves.toBe(false);
     expect(sendLeadEmail).not.toHaveBeenCalled();
+  });
+  it("retains uncertain SMTP attempts for reconciliation rather than automatic replay", async () => {
+    jest.mocked(sendLeadEmail).mockRejectedValue(new Error("private customer data"));
+    await expect(notifyLead("lead_1")).resolves.toBe(false);
+    expect(db.lead.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ emailStatus: "reconciliation_required", notificationError: "SMTP notification not accepted (EUNKNOWN)" }) }));
+    expect(JSON.stringify(jest.mocked(console.error).mock.calls)).not.toContain("private customer data");
+  });
+  it("only claims fresh work or SMTP failures known not to be accepted", async () => {
+    jest.mocked(sendLeadEmail).mockResolvedValue("smtp_1");
+    await notifyLead("lead_1");
+    expect(db.lead.updateMany).toHaveBeenCalledWith(expect.objectContaining({ where: expect.objectContaining({ OR: [{ emailStatus: "pending" }, { emailStatus: "retry_required", notificationError: { startsWith: "SMTP notification not accepted (" } }] }) }));
   });
   it("leaves sending for reconciliation when recording acceptance fails", async () => {
     jest.mocked(sendLeadEmail).mockResolvedValue("email_1");

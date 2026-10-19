@@ -16,7 +16,12 @@ export async function GET(request: Request) {
     // Bounded batches and backoff keep execution within the function budget.
     const now = Date.now();
     await db.rateLimit.deleteMany({ where: { expiresAt: { lt: new Date(now - 3600_000) } } });
-    await db.lead.updateMany({ where: { emailStatus: { in: ["pending", "retry_required"] }, OR: [{ emailAttempts: { gte: 5 } }, { emailAttempts: { gt: 0 }, createdAt: { lt: new Date(now - 23 * 3600_000) } }] }, data: { emailStatus: "reconciliation_required" } });
+    // Legacy provider failures have no SMTP acceptance history. Reconcile them
+    // before switching providers; SMTP does not deduplicate provider retries.
+    await db.lead.updateMany({ where: { OR: [
+      { emailStatus: { in: ["pending", "retry_required"] }, emailAttempts: { gte: 5 } },
+      { emailStatus: "retry_required", OR: [{ notificationError: null }, { NOT: { notificationError: { startsWith: "SMTP notification not accepted (" } } }] },
+    ] }, data: { emailStatus: "reconciliation_required" } });
     const leads = await db.lead.findMany({
       where: { source: { not: "whatsapp" }, OR: [{ emailStatus: "pending" }, { emailStatus: "retry_required", updatedAt: { lt: new Date(now - 5 * 60_000) } }, { whatsappStatus: { in: isWhatsAppOutboundConfigured() ? ["pending", "not_configured"] : ["pending"] } }] },
       orderBy: { createdAt: "asc" }, take: 3, select: { id: true },

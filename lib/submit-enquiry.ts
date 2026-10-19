@@ -17,7 +17,7 @@ export async function submitEnquiry(endpoint: "/api/leads" | "/api/conference-en
     method: "POST",
     headers: { "Content-Type": "application/json", "Idempotency-Key": await submissionKey(payload) },
     body: JSON.stringify(payload),
-    signal: AbortSignal.timeout(20_000),
+    signal: AbortSignal.timeout(120_000),
   });
   const data: unknown = await response.json();
   if (!response.ok || typeof data !== "object" || data === null || !("success" in data) || data.success !== true || !("saved" in data) || data.saved !== true || !("submissionId" in data) || typeof data.submissionId !== "string" || !data.submissionId || !("notificationStatus" in data) || typeof data.notificationStatus !== "string") {

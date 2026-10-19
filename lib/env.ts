@@ -7,9 +7,12 @@ const serverEnvSchema = z.object({
     try { const url = new URL(value); return ["postgres:", "postgresql:"].includes(url.protocol) && Boolean(url.hostname) && url.pathname.length > 1; }
     catch { return false; }
   }, "Use a PostgreSQL connection URL with a database name"),
-  RESEND_API_KEY: optionalSecret,
-  MMS_FROM_EMAIL: optionalSecret,
-  MMS_NOTIFICATION_EMAIL: optionalSecret,
+  SMTP_HOST: optionalSecret,
+  SMTP_PORT: optionalSecret,
+  SMTP_SECURE: optionalSecret,
+  SMTP_USER: optionalSecret,
+  SMTP_PASSWORD: z.preprocess(value => value === "" ? undefined : value, z.string().min(1).optional()),
+  CONTACT_EMAIL_TO: optionalSecret,
   WHATSAPP_ACCESS_TOKEN: optionalSecret,
   WHATSAPP_PHONE_NUMBER_ID: optionalSecret,
   WHATSAPP_BUSINESS_ACCOUNT_ID: optionalSecret,
@@ -32,12 +35,16 @@ export function getServerEnv(): ServerEnv {
 
 export function requireEmailEnv(env = process.env) {
   const result = z.object({
-    RESEND_API_KEY: z.string().trim().min(1),
-    MMS_FROM_EMAIL: z.string().trim().email(),
-    MMS_NOTIFICATION_EMAIL: z.string().trim().email(),
+    SMTP_HOST: z.string().trim().min(1).regex(/^[a-zA-Z0-9.-]+$/),
+    SMTP_PORT: z.coerce.number().pipe(z.literal(465)),
+    SMTP_SECURE: z.literal("true").default("true"),
+    SMTP_USER: z.string().trim().email(),
+    // Do not trim or otherwise transform passwords.
+    SMTP_PASSWORD: z.string().min(1),
+    CONTACT_EMAIL_TO: z.string().trim().email(),
   }).safeParse(env);
-  if (!result.success) throw new Error("Email provider is not configured");
-  return { apiKey: result.data.RESEND_API_KEY, from: result.data.MMS_FROM_EMAIL, to: result.data.MMS_NOTIFICATION_EMAIL };
+  if (!result.success) throw new Error(`SMTP is not configured: ${result.error.issues.map(issue => issue.path.join(".")).join(", ")}`);
+  return { host: result.data.SMTP_HOST, port: result.data.SMTP_PORT, user: result.data.SMTP_USER, password: result.data.SMTP_PASSWORD, from: result.data.SMTP_USER, to: result.data.CONTACT_EMAIL_TO };
 }
 
 export function requireWhatsAppOutboundEnv(env = getServerEnv()) {

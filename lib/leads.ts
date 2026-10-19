@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { sendLeadEmail } from "@/lib/providers/email";
+import { smtpFailure } from "@/lib/email/errors";
 import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
 import { reconcileWhatsAppStatus } from "@/lib/whatsapp-status";
 import { enforceIdentityLimit } from "@/lib/rate-limit";
@@ -17,15 +18,16 @@ export function createIdempotencyKey(input: LeadInput, supplied?: string | null)
 
 export async function notifyLead(id: string) {
   // Atomic claim prevents concurrent senders; a crashed sender stays in sending for manual reconciliation.
-  const claim = await db.lead.updateMany({ where: { id, emailStatus: { in: ["pending", "retry_required"] }, emailAttempts: { lt: 5 } }, data: { emailStatus: "sending", emailAttempts: { increment: 1 } } });
+  const claim = await db.lead.updateMany({ where: { id, OR: [{ emailStatus: "pending" }, { emailStatus: "retry_required", notificationError: { startsWith: "SMTP notification not accepted (" } }], emailAttempts: { lt: 5 } }, data: { emailStatus: "sending", emailAttempts: { increment: 1 } } });
   if (!claim.count) return false;
   const lead = await db.lead.findUniqueOrThrow({ where: { id } });
   let providerId: string;
   try {
     providerId = await sendLeadEmail({ ...lead, externalId: lead.externalId ?? undefined, source: lead.source as LeadInput["source"], email: lead.email ?? undefined, phone: lead.phone ?? undefined, organisation: lead.organisation ?? undefined, projectType: lead.projectType ?? undefined, metadata: (lead.metadata ?? {}) as LeadInput["metadata"] });
-  } catch {
-    console.error("Lead notification requires retry", { leadId: id, provider: "resend" });
-    await db.lead.update({ where: { id }, data: { emailStatus: "retry_required", notificationError: "Resend notification not accepted; configuration or provider failure" } });
+  } catch (error) {
+    const failure = smtpFailure(error);
+    console.error("Lead SMTP notification failed", { leadId: id, code: failure.code, responseCode: failure.responseCode, retrySafe: failure.retrySafe });
+    await db.lead.update({ where: { id }, data: { emailStatus: failure.retrySafe ? "retry_required" : "reconciliation_required", notificationError: failure.message } });
     return false;
   }
   // Keep sending if this update fails: acceptance is uncertain locally and must be reconciled before retry.
@@ -52,6 +54,19 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
     throw error;
   }
   return { id: lead.id, duplicate: false, notified: false };
+}
+
+/** Persist before sending; duplicate requests never initiate another notification. */
+export async function submitLead(input: LeadInput, suppliedKey?: string | null) {
+  const result = await createLead(input, suppliedKey);
+  if (result.duplicate) return result;
+  try {
+    return { ...result, notified: await notifyLead(result.id) };
+  } catch (error) {
+    // Storage already succeeded. Retain notification state for safe reconciliation.
+    console.error("Saved enquiry notification incomplete", { leadId: result.id, type: error instanceof Error ? error.name : "Unknown error" });
+    return result;
+  }
 }
 
 export async function notifyLeadWhatsApp(id: string) {

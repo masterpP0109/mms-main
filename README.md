@@ -10,11 +10,11 @@ Do not point development, seeding or tests at the production database. No provid
 
 ## Enquiries and notifications
 
-The API validates and saves an enquiry with pending notification states in one database insert. Success acknowledges persistence, not email/WhatsApp delivery. An authenticated worker processes pending rows independently; see DEPLOYMENT_CHECKLIST.md before deploying this change. A missing scheduler leaves saved enquiries pending. There is no unawaited serverless background task and no extra queue infrastructure.
+The API validates and saves an enquiry with pending notification states in one database insert, then awaits independent Titan SMTP attempts for MMS and the submitting customer. Success acknowledges persistence, not inbox delivery. Partial email failure never invalidates the saved enquiry. An authenticated worker recovers eligible pending/retry work independently; see ENQUIRY_RELEASE.md and DEPLOYMENT_CHECKLIST.md before deployment. There is no unawaited serverless background task and no extra queue infrastructure.
 
 `CRON_SECRET` must contain at least 32 random characters. The default Vercel configuration supports Hobby and does not register a cron. Configure an authenticated external scheduler every five minutes, or explicitly opt into the Pro-only example in `docs/vercel-pro.example.json`. Never release the asynchronous notification path without verifying processing and monitoring; a successful preview build does not activate notification delivery.
 
-Email retries are bounded to five attempts and a conservative 23-hour window. Ambiguous WhatsApp sends and stale sending states require operator reconciliation; do not blindly resend. The manual email retry command remains `npm run notifications:retry -- LEAD_ID`.
+Email retries are bounded to five attempts. Ambiguous SMTP/WhatsApp sends and stale sending states require operator reconciliation; do not blindly resend. The manual MMS email retry command remains `npm run notifications:retry -- LEAD_ID`; customer-only retries use `node --conditions=react-server scripts/retry-acknowledgement.cjs LEAD_ID`. See ENQUIRY_RELEASE.md for the additive acknowledgement migration, environment settings, templates and verification.
 
 ## Quality commands
 

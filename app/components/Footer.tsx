@@ -27,6 +27,8 @@ export default function Footer() {
             <h4 className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold font-heading">Services</h4>
             <ul className="space-y-2 text-sm text-[#f4ebd0]/60 font-light">
               <li><Link href="/conference-production" className="hover:text-white transition-colors">Conference Production</Link></li>
+              <li><Link href="/services/drone" className="hover:text-white transition-colors">Drone Services</Link></li>
+              <li><Link href="/services/weddings-elopements" className="hover:text-white transition-colors">Weddings &amp; Elopements</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">Visual Storytelling</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">Event Experiences</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">Cinematic Production</Link></li>
@@ -59,8 +61,8 @@ export default function Footer() {
         <div className="pt-8 border-t border-[#c5a880]/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#f4ebd0]/40 gap-4">
           <p>© {new Date().getFullYear()} Mosi Media Solutions. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-x-6">
-            <a href="#" className="hover:text-[#c5a880] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#c5a880] transition-colors">Terms of Service</a>
+            <Link href="/privacy" className="hover:text-[#c5a880] transition-colors">Privacy Policy</Link>
+            <a href="mailto:info@mosimediasolutions.com?subject=Terms%20of%20Service" className="hover:text-[#c5a880] transition-colors">Request Terms of Service</a>
           </div>
         </div>
       </div>

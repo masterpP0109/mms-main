@@ -1,0 +1,78 @@
+.page { background: #050507; color: #f4ebd0; }
+.page h1 { font-size: clamp(2.7rem, 5.5vw, 5.75rem); line-height: 1.08; letter-spacing: -.045em; font-weight: 500; }
+.page h2, .feature h3 { font-size: clamp(1.8rem, 3.2vw, 3rem); line-height: 1.2; letter-spacing: -.035em; font-weight: 500; }
+.page h3 { font-weight: 500; }
+.page p, .feature p { color: #d4cbb9; line-height: 1.85; }
+.page .eyebrow, .feature .eyebrow { font-size: .7rem; text-transform: uppercase; letter-spacing: .23em; color: #c5a880; font-weight: 600; margin-bottom: 1.1rem; }
+.hero { position: relative; isolation: isolate; min-height: 740px; min-height: max(680px, 85svh); display: flex; align-items: end; padding-block: 10rem 5rem; background: #171914; }
+.heroImage { object-fit: cover; z-index: -2; }
+.hero::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(5 5 7 / .9), rgb(5 5 7 / .35)), linear-gradient(0deg, #050507, transparent 65%); }
+.heroContent { width: min(100% - 2rem, 1280px); margin-inline: auto; }
+.heroContent h1 { max-width: 900px; color: white; margin-block: 1.5rem; }
+.heroContent > p:not(.eyebrow) { max-width: 600px; font-size: 1.05rem; }
+.breadcrumb { display: inline-flex; align-items: center; gap: .5rem; font-size: .8rem; color: #eadcb9; margin-bottom: 2.5rem; }
+.heroContent .eyebrow { color: #eadcb9; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 2rem; margin-top: 2rem; }
+.button { display: inline-flex; justify-content: center; align-items: center; gap: .8rem; min-height: 48px; padding: .9rem 1.5rem; border-radius: 999px; background: linear-gradient(110deg, #b48a3d, #d6bd7d, #c5a880); color: #050507; font-size: .8rem; font-weight: 600; transition: filter .25s, transform .25s; }
+.button:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.textLink { display: inline-flex; align-items: center; gap: .8rem; min-height: 44px; color: #eadcb9; font-size: .85rem; text-decoration: underline; text-underline-offset: .35rem; }
+.section { width: min(100% - 2rem, 1280px); margin-inline: auto; padding-block: 5rem; }
+.section h2 { max-width: 780px; margin-bottom: 1.5rem; color: #fff; }
+.intro { max-width: 740px; font-size: 1.1rem; }
+.grid { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+.card { padding: 2rem; border: 1px solid rgb(197 168 128 / .2); border-radius: 1.25rem; background: #0b0b0f; }
+.card h3 { font-size: 1.15rem; color: #fff; margin-bottom: .85rem; }
+.card p { font-size: .95rem; }
+.split { display: grid; gap: 3rem; align-items: start; }
+.note { padding: 2rem; border-left: 2px solid #c5a880; background: #121218; }
+.note h3 { font-size: 1.25rem; margin-bottom: .8rem; }
+.list { list-style: disc; padding-left: 1.3rem; color: #d4cbb9; line-height: 1.85; }
+.list li + li { margin-top: .8rem; }
+.process { display: grid; gap: 2rem; margin-top: 3rem; list-style: none; }
+.process li { border-top: 1px solid rgb(197 168 128 / .35); padding-top: 1.5rem; }
+.number { display: block; color: #c5a880; font-size: .85rem; margin-bottom: 1.5rem; }
+.process h3 { font-size: 1.05rem; margin-bottom: .75rem; }
+.process p { font-size: .9rem; }
+.faqLayout { display: grid; gap: 2rem; }
+.faqs details { border-bottom: 1px solid rgb(197 168 128 / .25); }
+.faqs summary { padding: 1.35rem .5rem; cursor: pointer; font-weight: 500; color: #f4ebd0; line-height: 1.6; }
+.faqs details p { padding: 0 .5rem 1.5rem; font-size: .95rem; }
+.closing { border-top: 1px solid rgb(197 168 128 / .25); text-align: center; padding-block: 6rem 7rem; }
+.closing h2, .closing p { max-width: 750px; margin-inline: auto; }
+.closing .actions { justify-content: center; }
+.caption { font-size: .7rem; color: #c9bfab; line-height: 1.6; }
+.heroContent .caption { margin-top: 2rem; font-size: .7rem; }
+.wedding { background: radial-gradient(ellipse at 80% 30%, #26151a 0, #050507 50%); }
+.weddingHero { padding-top: 9rem; width: min(100% - 2rem, 1280px); margin-inline: auto; display: grid; gap: 2.5rem; align-items: center; }
+.weddingHero h1 { margin-block: 1.25rem 1.75rem; color: #f5eedc; }
+.weddingHero .breadcrumb { margin-bottom: 2rem; }
+.weddingPortrait { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 48% 48% 1rem 1rem; border: 1px solid rgb(197 168 128 / .3); }
+.weddingPortrait img { object-fit: cover; }
+.weddingHero figcaption { margin-top: 1rem; }
+.wedding .card { background: rgb(36 22 27 / .4); }
+.feature { margin-top: 5rem; padding: 2rem; border: 1px solid rgb(197 168 128 / .25); border-radius: 1.5rem; background: radial-gradient(ellipse at top right, #38212a, #100c0e 70%); display: grid; gap: 2rem; align-items: center; }
+.feature h3 { color: #f5eedc; margin-bottom: 1.5rem; }
+.featureCard { position: relative; display: block; overflow: hidden; min-height: 360px; border-radius: 45% 45% .75rem .75rem; }
+.featureCard img { object-fit: cover; transition: transform .8s; }
+.featureCard:hover img { transform: scale(1.035); }
+.featureCard::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(5 5 7 / .9), transparent 60%); }
+.featureCard span { position: absolute; bottom: 2rem; left: 1.5rem; right: 1.5rem; z-index: 1; color: #fff; font-size: 1.2rem; line-height: 1.5; }
+.feature .caption { margin-top: .75rem; font-size: .7rem; }
+@media (min-width: 640px) {
+  .section, .heroContent, .weddingHero { width: min(100% - 5rem, 1280px); }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature { padding: 3rem; }
+}
+@media (min-width: 1024px) {
+  .section { padding-block: 6rem; }
+  .split { grid-template-columns: 1.1fr 1fr; gap: 5rem; }
+  .process { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .faqLayout { grid-template-columns: .8fr 1.2fr; gap: 5rem; }
+  .weddingHero { grid-template-columns: 1.1fr 1fr; gap: 5rem; padding-block: 10rem 3rem; }
+  .feature { grid-template-columns: 1.1fr .9fr; gap: 5rem; }
+  .featureCard { min-height: 480px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button:hover, .featureCard:hover img { transform: none; }
+}

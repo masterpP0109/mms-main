@@ -1,7 +1,18 @@
 /** @jest-environment node */
 import { submitEnquiry } from "@/lib/submit-enquiry";
+import { enquiryErrorMessage } from "@/lib/submit-enquiry";
 const acknowledgement = { success: true, saved: true, submissionId: "saved_1", notificationStatus: "pending_retry" };
 afterEach(() => jest.restoreAllMocks());
+it.each([422, 429, 413])("provides safe actionable feedback for HTTP %s", async status => {
+  jest.spyOn(global, "fetch").mockResolvedValue(Response.json({ error: "private diagnostics" }, { status }));
+  try {
+    await submitEnquiry("/api/leads", { name: "Fixture", email: "fixture@example.com", message: "Validation fixture" });
+    throw new Error("Expected rejection");
+  } catch (error) {
+    expect(enquiryErrorMessage(error)).not.toContain("private diagnostics");
+    expect(enquiryErrorMessage(error)).not.toContain("couldn't send");
+  }
+});
 it("reuses the key after an uncertain response and changes it after acknowledged success", async () => {
   const fetchMock = jest.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError("Connection lost")).mockResolvedValueOnce(Response.json(acknowledgement)).mockResolvedValueOnce(Response.json(acknowledgement));
   const input = { name: "Transport fixture", email: "fixture@example.com", message: "Lost response" };

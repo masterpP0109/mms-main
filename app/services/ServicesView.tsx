@@ -12,12 +12,13 @@ import Footer from "../components/Footer";
 import { useModalFocus } from "../components/useModalFocus";
 import { serviceFeatureIcons } from "@/lib/service-icons";
 import type { ServiceCardData } from "@/lib/content-types";
+import WeddingsFeature from "../components/services/WeddingsFeature";
 
 const goldBtn =
   "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-all duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
 
 const addOns = [
-  { icon: Camera,       label: "Drone Cinematography",  img: "/services%20images/Drone%20Services.jpg",          desc: "Licensed aerial photography and video for events, venues and brand campaigns." },
+  { icon: Camera,       label: "Drone Cinematography",  img: "/services%20images/Drone%20Services.jpg",          desc: "Discuss aerial photography and video for events, venues and promotional stories, subject to location, weather and permissions." },
   { icon: Sparkles,     label: "Cold Sparks",            img: "/mms/LCG SPITFIRE Cold Spark Machine Package (2x Spitfire w_ Case & Granules).jpg", desc: "Cold spark pyrotechnic effects for grand entrances, finales and photo moments without open flame." },
   { icon: Globe,        label: "360° Booth",             img: "/mms/WhatsApp%20Image%202026-01-12%20at%204.20.30%20PM.jpeg", desc: "Interactive 360-degree photo and video booths for guest engagement and shareable content." },
   { icon: MessageSquare,label: "Podcast Production",     img: "/mms/IMG_9198.jpeg",          desc: "On-location podcast capture with multi-track audio and professional editing." },
@@ -227,6 +228,8 @@ onClick={() => setSelected(null)}
       )}
     </AnimatePresence>
 
+    <div className="max-w-[1400px] mx-auto mms-gutter pb-20"><WeddingsFeature /></div>
+
     {/* Add-Ons — cards with image thumbnails */}
       <section className="py-20 bg-black border-t border-[#c5a880]/10">
         <div className="max-w-[1400px] mx-auto mms-gutter">
@@ -244,6 +247,10 @@ onClick={() => setSelected(null)}
                 transition={{ duration: 0.4, delay: idx * 0.06 }}
                 className="bg-[#050507] rounded-2xl border border-[#c5a880]/10 overflow-hidden hover:border-[#c5a880]/25 transition-all duration-300 group"
               >
+                {addon.label === "Drone Cinematography" ? <Link href="/services/drone" className="block rounded-2xl" aria-label="Explore Drone Services">
+                  <div className="relative h-40 overflow-hidden"><Image src={addon.img} alt="Illustrative image of a drone" fill sizes="(max-width:639px) 100vw, 33vw" className="object-cover" /></div>
+                  <div className="p-5"><h3 className="text-lg font-medium text-white mb-1.5">{addon.label}</h3><p className="text-base text-[#f4ebd0]/75 leading-relaxed">{addon.desc}</p><span className="inline-flex items-center gap-2 mt-4 text-[#c5a880] text-sm">Explore Drone Services <ArrowRight size={16} aria-hidden="true" /></span></div>
+                </Link> : <>
                 <div className="relative h-40 overflow-hidden">
                   <Image src={addon.img} alt={addon.label} fill sizes="(max-width:639px) 100vw, (max-width:1023px) 50vw, 33vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/30 to-transparent" />
@@ -257,6 +264,7 @@ onClick={() => setSelected(null)}
                   <h3 className="text-lg font-medium text-white mb-1.5">{addon.label}</h3>
                   <p className="text-base text-[#f4ebd0]/60 leading-relaxed font-light">{addon.desc}</p>
                 </div>
+                </>}
               </motion.div>
             ))}
           </div>

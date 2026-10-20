@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "Conference Production", href: "/conference-production" },
   { label: "Services", href: "/services" },
+  { label: "Drone Services", href: "/services/drone" },
   { label: "Projects", href: "/projects" },
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
@@ -47,7 +48,7 @@ export default function Navbar() {
   }, []);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : (pathname ?? "").startsWith(href);
+    href === "/" || href === "/services" ? pathname === href : (pathname ?? "").startsWith(href);
 
   return (
     <header className="site-header fixed top-0 left-0 right-0 z-50">
@@ -84,7 +85,7 @@ export default function Navbar() {
                     key={item.href}
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`nav-item relative px-3 py-2.5 text-[11px] xl:text-xs uppercase tracking-widest ${
+                    className={`nav-item relative px-2 py-2.5 text-[11px] uppercase tracking-[.08em] ${
                       isActive(item.href) ? "active text-white" : "text-[#f4ebd0]/70 hover:text-white"
                     }`}
                   >
@@ -148,6 +149,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   className={`min-h-11 flex items-center justify-center text-center text-lg sm:text-2xl font-semibold tracking-widest uppercase transition-colors duration-300 font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a880] rounded-sm ${
                     isActive(item.href) ? "text-white" : "text-[#f4ebd0]/70 hover:text-white"
                   }`}

@@ -8,7 +8,7 @@ const Module = require("node:module");
 const url = new URL(process.env.MMS_TEST_DATABASE_URL || "postgresql://invalid/invalid");
 assert.ok(["localhost", "127.0.0.1"].includes(url.hostname) && url.pathname.endsWith("_test"), "Set MMS_TEST_DATABASE_URL to an isolated local database ending in _test");
 process.env.DATABASE_URL = url.href;
-delete process.env.RESEND_API_KEY;
+process.env.SMTP_PASSWORD = "";
 delete process.env.WHATSAPP_ACCESS_TOKEN;
 process.env.WHATSAPP_APP_SECRET = "integration-test-only";
 const resolve = Module._resolveFilename;
@@ -27,6 +27,8 @@ async function run() {
   assert.equal(lead.emailStatus, "pending");
   assert.equal(lead.whatsappStatus, "pending");
   assert.equal(lead.emailAttempts, 0);
+  assert.equal(lead.acknowledgementStatus, "pending");
+  assert.equal(lead.acknowledgementAttempts, 0);
   await notifyLeadWhatsApp(lead.id);
   const deferred = await db.lead.findUniqueOrThrow({ where: { id: lead.id } });
   assert.equal(deferred.whatsappStatus, "not_configured");

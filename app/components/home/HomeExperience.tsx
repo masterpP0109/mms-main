@@ -1,6 +1,7 @@
 "use client";
 
 import ProjectBriefBuilder from "./ProjectBriefBuilder";
+import WeddingsFeature from "../services/WeddingsFeature";
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -164,9 +165,9 @@ export default function Home() {
       title: "Drone Services",
       icon: Video,
       image: "/services%20images/Drone%20Services.jpg",
-      alt: "Aerial drone filming over a landscape",
-      desc: "Licensed drone cinematography and aerial photography for events, venues, landscapes and brand campaigns with 4K RAW footage delivered.",
-      href: "/services"
+      alt: "Illustrative image of a drone above a city",
+      desc: "Explore aerial photography and videography for events, venues, landscapes and promotional stories. Coverage depends on location, weather and applicable permissions.",
+      href: "/services/drone"
     },
     {
       title: "Event Lighting & Stage Setup",
@@ -417,8 +418,8 @@ export default function Home() {
             {/* Item 2 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
               <Shield className="w-6 h-6 text-[#c5a880] mb-3" />
-              <p className="text-xs tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Licensed, Insured</p>
-              <p className="text-base text-white font-medium">& Drone Certified</p>
+              <p className="text-xs tracking-[0.15em] text-[#c5a880] uppercase font-semibold mb-1">Your Location</p>
+              <p className="text-base text-white font-medium">Our Starting Point</p>
             </div>
             {/* Item 3 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
@@ -505,7 +506,7 @@ export default function Home() {
 
           <div data-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {services.slice(0, 6).map((service) => (
-              <div key={service.title} data-lift className="group min-w-0 flex flex-col">
+              <Link key={service.title} href={service.href} data-lift className="group min-w-0 flex flex-col rounded-2xl" aria-label={`Learn more about ${service.title}`}>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5">
                   <Image
                     src={service.image}
@@ -527,15 +528,14 @@ export default function Home() {
                   {service.desc}
                 </p>
                 <div className="text-center mt-auto">
-                  <Link
-                    href="/services"
+                  <span
                     className="inline-flex items-center text-xs uppercase tracking-widest text-[#c5a880] hover:text-white transition-colors duration-200"
                   >
                     Learn More
                     <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-                  </Link>
+                  </span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -547,6 +547,7 @@ export default function Home() {
               Explore All Services
             </Link>
           </div>
+          <WeddingsFeature />
         </div>
       </section>
 
@@ -825,7 +826,7 @@ export default function Home() {
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
             <p className="text-base text-[#f4ebd0]/70 font-light">
-              Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
+              Let&apos;s bring your vision to life. Start with a free discovery call and tell us what you need for a custom quote.
             </p>
           </div>
 

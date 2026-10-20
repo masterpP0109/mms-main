@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 process.env.PLAYWRIGHT_BROWSERS_PATH ||= ".cache/ms-playwright";
 const { chromium } = await import("@playwright/test");
-const server = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", "3101"], { windowsHide: true, stdio: "ignore", env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", RESEND_API_KEY: "", WHATSAPP_ACCESS_TOKEN: "", CRON_SECRET: "" } });
+const server = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "start", "--hostname", "127.0.0.1", "--port", "3101"], { windowsHide: true, stdio: "ignore", env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", SMTP_PASSWORD: "", WHATSAPP_ACCESS_TOKEN: "", CRON_SECRET: "" } });
 let browser;
 try {
   let ready = false;

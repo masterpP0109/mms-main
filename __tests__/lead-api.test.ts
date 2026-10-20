@@ -1,11 +1,11 @@
 /** @jest-environment node */
 
-jest.mock("@/lib/leads", () => ({ createLead: jest.fn() }));
+jest.mock("@/lib/leads", () => ({ submitLead: jest.fn() }));
 
-import { createLead } from "@/lib/leads";
+import { submitLead } from "@/lib/leads";
 import { POST } from "@/app/api/leads/route";
 
-const mockedCreateLead = jest.mocked(createLead);
+const mockedCreateLead = jest.mocked(submitLead);
 
 describe("lead API", () => {
   beforeEach(() => mockedCreateLead.mockReset());

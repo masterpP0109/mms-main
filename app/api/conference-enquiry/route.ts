@@ -1,13 +1,14 @@
-import { createLead } from "@/lib/leads";
+import { submitLead } from "@/lib/leads";
 import { errorResponse, parseJson } from "@/lib/http";
 import { conferenceLeadSchema } from "@/lib/validation/leads";
 
 export const runtime = "nodejs";
+export const maxDuration = 120;
 
 export async function POST(request: Request) {
   try {
     const body = await parseJson(request, conferenceLeadSchema);
-    const result = await createLead({
+    const result = await submitLead({
       source: "conference", name: body.contact, email: body.email, phone: body.phone,
       organisation: body.organisation, projectType: body.eventType,
       message: body.details || "Conference proposal requested",

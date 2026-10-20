@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MessageSquare, Users, Heart, Briefcase, Award, ChevronLeft, ChevronRight, Megaphone, Palette } from "lucide-react";
-import { submitEnquiry } from "@/lib/submit-enquiry";
+import { submitEnquiry, enquiryErrorMessage } from "@/lib/submit-enquiry";
 import { projectBriefRows, projectBriefWhatsAppUrl } from "@/lib/project-brief";
 
 export default function ProjectBriefBuilder() {
@@ -11,6 +11,7 @@ export default function ProjectBriefBuilder() {
   const [builderWebsite, setBuilderWebsite] = useState("");
   const [builderError, setBuilderError] = useState<string | null>(null);
   const [builderSubmitted, setBuilderSubmitted] = useState(false);
+  const [reference, setReference] = useState("");
   const [builderData, setBuilderData] = useState({
     goal: "",
     audience: "",
@@ -21,7 +22,7 @@ export default function ProjectBriefBuilder() {
     details: ""
   });
   return (
-          <section style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto mms-gutter relative">
+          <section aria-busy={builderLoading} style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto mms-gutter relative">
 
 
         <div data-reveal="scale" className="bg-[#050507] rounded-3xl border border-[#c5a880]/10 p-5 sm:p-8 md:p-10">
@@ -188,7 +189,7 @@ export default function ProjectBriefBuilder() {
             >
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-semibold text-white font-heading">Where should we send your custom quote?</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">We&apos;ll respond within 24 hours</p>
+                <p className="text-base text-[#f4ebd0]/60 mt-2">Our team will review your brief and respond using your contact details.</p>
               </div>
               <div className="space-y-4">
                 <div>
@@ -196,6 +197,8 @@ export default function ProjectBriefBuilder() {
                   <input
                     type="text"
                     id="builder-name"
+                    required
+                    maxLength={120}
                     name="name"
                     autoComplete="name"
                     value={builderData.name}
@@ -209,6 +212,8 @@ export default function ProjectBriefBuilder() {
                   <input
                     type="email"
                     id="builder-email"
+                    required
+                    maxLength={254}
                     name="email"
                     autoComplete="email"
                     value={builderData.email}
@@ -222,6 +227,8 @@ export default function ProjectBriefBuilder() {
                   <input
                     type="tel"
                     id="builder-phone"
+                    maxLength={32}
+                    pattern={String.raw`\+?[0-9 \(\)\-]{7,32}`}
                     name="phone"
                     autoComplete="tel"
                     value={builderData.phone}
@@ -234,6 +241,7 @@ export default function ProjectBriefBuilder() {
                   <label htmlFor="builder-details" className="text-xs uppercase tracking-widest text-[#c5a880] font-semibold block mb-2">Project Details</label>
                   <textarea
                     id="builder-details"
+                    maxLength={5000}
                     name="details"
                     value={builderData.details}
                     onChange={(e) => setBuilderData({ ...builderData, details: e.target.value })}
@@ -283,13 +291,15 @@ export default function ProjectBriefBuilder() {
                 <p className="text-sm text-[#f4ebd0]/60 mb-5">Opens WhatsApp to 0788 111 391 with your full brief. Press Send in WhatsApp to request your quote.</p>
                 <button
                   onClick={async () => {
+                    if (builderLoading || builderSubmitted) return;
                     setBuilderError(null);
                     setBuilderLoading(true);
                     try {
-                      await submitEnquiry("/api/leads", { ...builderData, website: builderWebsite });
+                      const result = await submitEnquiry("/api/leads", { ...builderData, website: builderWebsite });
+                      setReference(result.submissionId);
                       setBuilderSubmitted(true);
-                    } catch {
-                      setBuilderError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
+                    } catch (error) {
+                      setBuilderError(enquiryErrorMessage(error));
                     } finally {
                       setBuilderLoading(false);
                     }
@@ -300,7 +310,7 @@ export default function ProjectBriefBuilder() {
                 >
                   {builderSubmitted ? "Brief Saved — Thank You" : builderLoading ? "Sending…" : "Send My Brief & Get a Free Quote"}
                 </button>
-                {builderSubmitted && <p role="status" className="text-sm text-[#f4ebd0]/60 mt-3">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>}
+                {builderSubmitted && <p role="status" className="text-sm text-[#f4ebd0]/60 mt-3 break-words">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details. Enquiry reference: {reference}</p>}
                 <input aria-hidden="true" tabIndex={-1} autoComplete="off" name="website" className="hidden" value={builderWebsite} onChange={(event) => setBuilderWebsite(event.target.value)} />
                 {builderError && <p role="alert" className="text-sm text-red-400 mt-3">{builderError}</p>}
                 <p className="text-sm text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
@@ -312,7 +322,7 @@ export default function ProjectBriefBuilder() {
           <div className="builder-actions flex flex-wrap gap-3 items-center justify-between mt-8 pt-6 border-t border-[#c5a880]/10">
             <button
               onClick={() => setBuilderStep((prev) => Math.max(0, prev - 1))}
-              disabled={builderStep === 0}
+              disabled={builderStep === 0 || builderLoading || builderSubmitted}
               className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#f4ebd0]/50 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -328,9 +338,14 @@ export default function ProjectBriefBuilder() {
                     if (builderStep === 1 && !builderData.audience) return;
                     if (builderStep === 2 && !builderData.timeline) return;
                     if (builderStep === 3 && (!builderData.name || !builderData.email)) return;
+                    if (builderStep === 3) {
+                      const fields = ["builder-name", "builder-email", "builder-phone"].map(id => document.getElementById(id) as HTMLInputElement | null);
+                      if (fields.some(field => field && !field.reportValidity())) return;
+                    }
                     setBuilderStep((prev) => Math.min(4, prev + 1));
                   }}
                   className="inline-flex items-center gap-2 text-xs uppercase tracking-widest bg-[#c5a880] text-[#050507] px-5 py-3 rounded-full font-semibold hover:brightness-110 transition-all duration-300 cursor-pointer"
+                  disabled={(builderStep === 0 && !builderData.goal) || (builderStep === 1 && !builderData.audience) || (builderStep === 2 && !builderData.timeline) || (builderStep === 3 && (!builderData.name.trim() || !builderData.email.trim()))}
                 >
                   {builderStep === 3 ? "Review Brief" : "Continue"}
                   <ChevronRight className="w-4 h-4" />
@@ -341,10 +356,12 @@ export default function ProjectBriefBuilder() {
                   onClick={() => {
                     setBuilderStep(0);
                     setBuilderSubmitted(false);
+                    setReference("");
                     setBuilderError(null);
                     setBuilderData({ goal: "", audience: "", timeline: "", name: "", email: "", phone: "", details: "" });
                   }}
                   className="text-xs uppercase tracking-widest text-[#f4ebd0]/40 hover:text-[#f4ebd0]/70 transition-colors cursor-pointer"
+                  disabled={builderLoading}
                 >
                   Reset
                 </button>

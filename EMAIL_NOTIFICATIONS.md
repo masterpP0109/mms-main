@@ -1,5 +1,7 @@
 # Titan SMTP and PostgreSQL notifications
 
+For the completed two-email workflow, additive acknowledgement migration, current environment requirements and independent recovery commands, see **ENQUIRY_RELEASE.md**. The diagnostic observations below describe earlier local checks and must not be treated as the current database state; rerun `npm run db:check -- --schema` against the intended environment.
+
 The Node.js server uses Nodemailer; Resend has been removed. Configuration and passwords stay server-side. No deployment or production configuration is performed by these local tools.
 
 ## Local configuration and provenance

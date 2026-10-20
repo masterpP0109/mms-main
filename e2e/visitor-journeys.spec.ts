@@ -51,6 +51,7 @@ test("contact acknowledges persistence with no external send", async ({ page }) 
   await page.locator('textarea[name="message"]').fill("Conference production enquiry");
   await page.locator('button[type="submit"]').click();
   await expect(page.getByText("Message received", { exact: false })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("e2e_fixture");
 });
 for (const width of [320, 375, 390, 768, 1024, 1440]) {
   test(`homepage fits a ${width}px viewport`, async ({ page }) => {

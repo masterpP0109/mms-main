@@ -1,6 +1,6 @@
 "use client";
 
-import { submitEnquiry } from "@/lib/submit-enquiry";
+import { submitEnquiry, enquiryErrorMessage } from "@/lib/submit-enquiry";
 import { contactReferral } from "@/lib/contact-referral";
 
 import React, { useState } from "react";
@@ -26,12 +26,14 @@ const recentWork = [
 
 export default function ContactExperience({ initialService = "" }: { initialService?: string }) {
   const [submitted, setSubmitted] = useState(false);
+  const [reference, setReference] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [projectType, setProjectType] = useState<ProjectType>(initialService === "Weddings & Elopements" ? "wedding" : initialService === "Drone Services" ? "other" : "");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setError(null);
     setLoading(true);
     const form = e.currentTarget;
@@ -40,11 +42,12 @@ export default function ContactExperience({ initialService = "" }: { initialServ
     const field = (name: string) => String(data.get(name) ?? "");
     const body = { name: field("name"), email: field("email"), phone: field("phone"), organisation: field("organisation"), projectType, message: field("message"), website: field("website"), ...contactReferral(params) };
     try {
-      await submitEnquiry("/api/leads", body);
+      const result = await submitEnquiry("/api/leads", body);
+      setReference(result.submissionId);
       setSubmitted(true);
       form.reset();
-    } catch {
-      setError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
+    } catch (error) {
+      setError(enquiryErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -75,7 +78,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
               Ready to Create Something Unforgettable?
             </h1>
             <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed">
-              Tell us about your project and we will respond within 24 hours with a tailored proposal.
+              Tell us about your project and our team will respond with the next steps.
             </p>
           </motion.div>
         </div>
@@ -99,7 +102,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
               {[
                 { icon: MapPin,        label: "Location",      value: "Victoria Falls, Zimbabwe" },
                 { icon: Mail,          label: "Email",         value: "info@mosimediasolutions.com" },
-                { icon: Clock,         label: "Response Time", value: "Within 24 hours" },
+                { icon: Clock,         label: "Enquiries", value: "Our team will respond to your request" },
                 { icon: MessageSquare, label: "WhatsApp",      value: "Available on request" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
@@ -157,32 +160,32 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           {/* Form */}
           <div data-reveal="right" className="lg:col-span-3">
             {!submitted ? (
-              <form id="enquiry" onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-10 space-y-5">
+              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-10 space-y-5">
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
                 {initialService && <p className="rounded-xl border border-[#c5a880]/30 bg-[#c5a880]/10 p-4 text-sm text-[#f4ebd0]">Enquiring about: <strong>{initialService}</strong></p>}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Name</label>
-                    <input type="text" id="contact-name" autoComplete="name" name="name" placeholder="e.g. Sarah Johnson" required
+                    <input type="text" id="contact-name" maxLength={120} autoComplete="name" name="name" placeholder="e.g. Sarah Johnson" required
                       className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
                   </div>
                   <div>
                     <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Email Address</label>
-                    <input type="email" id="contact-email" autoComplete="email" name="email" placeholder="you@organisation.com" required
+                    <input type="email" id="contact-email" maxLength={254} autoComplete="email" name="email" placeholder="you@organisation.com" required
                       className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Phone Number (optional)</label>
-                  <input type="tel" id="contact-phone" autoComplete="tel" name="phone" placeholder="+263 ..."
+                  <input type="tel" id="contact-phone" maxLength={32} pattern={String.raw`\+?[0-9 \(\)\-]{7,32}`} autoComplete="tel" name="phone" placeholder="+263 ..."
                     className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
                 </div>
 
                 <div>
                   <label className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-3">Type of Project</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                  <div role="group" aria-label="Type of Project" className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[
                       { id: "conference" as const, label: "Conference / Event" },
                       { id: "wedding"    as const, label: "Wedding Film" },
@@ -210,7 +213,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
 
                 <div>
                   <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Message</label>
-                  <textarea id="contact-message" name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
+                  <textarea id="contact-message" maxLength={5000} name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
                     className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-y" />
                 </div>
 
@@ -225,10 +228,11 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </form>
             ) : (
-              <div className="glass-panel rounded-3xl border border-[#c5a880]/20 p-12 text-center space-y-4">
+              <div role="status" className="glass-panel rounded-3xl border border-[#c5a880]/20 p-6 sm:p-12 text-center space-y-4">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto" />
                 <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
-                <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
+                <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
+                <p className="text-sm text-[#c5a880] break-all">Enquiry reference: {reference}</p>
                 <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#c5a880] hover:text-white transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
                 </Link>

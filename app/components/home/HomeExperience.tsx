@@ -826,7 +826,7 @@ export default function Home() {
             <span className="text-base tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
             <p className="text-base text-[#f4ebd0]/70 font-light">
-              Let&apos;s bring your vision to life. Start with a free discovery call and get a custom quote within 24 hours.
+              Let&apos;s bring your vision to life. Start with a free discovery call and tell us what you need for a custom quote.
             </p>
           </div>
 

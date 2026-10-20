@@ -27,6 +27,8 @@ async function run() {
   assert.equal(lead.emailStatus, "pending");
   assert.equal(lead.whatsappStatus, "pending");
   assert.equal(lead.emailAttempts, 0);
+  assert.equal(lead.acknowledgementStatus, "pending");
+  assert.equal(lead.acknowledgementAttempts, 0);
   await notifyLeadWhatsApp(lead.id);
   const deferred = await db.lead.findUniqueOrThrow({ where: { id: lead.id } });
   assert.equal(deferred.whatsappStatus, "not_configured");

@@ -3,6 +3,7 @@ jest.mock("server-only", () => ({}), { virtual: true });
 jest.mock("nodemailer", () => ({ __esModule: true, default: { createTransport: jest.fn() } }));
 import nodemailer from "nodemailer";
 import { sendLeadEmail } from "@/lib/providers/email";
+import { sendCustomerAcknowledgement } from "@/lib/providers/acknowledgement";
 import { sendEmail, verifySmtp } from "@/lib/email/smtp";
 import { SmtpNotificationError, smtpFailure } from "@/lib/email/errors";
 
@@ -23,6 +24,16 @@ describe("Titan SMTP notifications", () => {
     jest.spyOn(console, "error").mockImplementation(() => {});
   });
   afterEach(() => { process.env = originalEnv; jest.restoreAllMocks(); });
+  it("sends acknowledgement only to the submitted email from the authenticated mailbox", async () => {
+    sendMail.mockResolvedValue({ ...accepted, accepted: [lead.email] });
+    await expect(sendCustomerAcknowledgement(lead)).resolves.toBe(accepted.messageId);
+    expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: lead.email, from: { name: "Mosi Media Solutions", address: "website@example.com" }, replyTo: "website@example.com", messageId: "<mms-ack-lead_1@example.com>" }));
+    expect(sendMail.mock.calls[0][0].text).toContain("Your enquiry has been saved");
+  });
+  it("rejects an invalid acknowledgement recipient before SMTP send", async () => {
+    await expect(sendCustomerAcknowledgement({ ...lead, email: "bad\r\nBcc: other@example.com" })).rejects.toThrow();
+    expect(sendMail).not.toHaveBeenCalled();
+  });
 
   it("awaits SMTP acceptance and preserves escaped templates and validated Reply-To", async () => {
     await expect(sendLeadEmail(lead)).resolves.toBe(accepted.messageId);

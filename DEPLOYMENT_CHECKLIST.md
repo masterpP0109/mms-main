@@ -7,7 +7,7 @@ Do not deploy the asynchronous enquiry path until the database migrations, worke
 ## Configuration
 
 - DATABASE_URL: environment-specific PostgreSQL URL with TLS. Use a pooled endpoint suitable for serverless runtime; review connection limits. Keep a separate migration credential/connection as appropriate for the database provider.
-- RESEND_API_KEY, MMS_FROM_EMAIL, MMS_NOTIFICATION_EMAIL: server-only; verify the existing sender without changing business DNS/mail hosting unnecessarily.
+- SMTP_HOST=smtp.titan.email, SMTP_PORT=465, SMTP_SECURE=true, SMTP_USER, SMTP_PASSWORD, CONTACT_EMAIL_TO: server-only. Send from the authenticated MMS mailbox; retain Titan MX and website DNS. See ENQUIRY_RELEASE.md.
 - WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_APP_SECRET, WHATSAPP_VERIFY_TOKEN, WHATSAPP_NOTIFICATION_TO, WHATSAPP_NOTIFICATION_TEMPLATE, WHATSAPP_API_VERSION: approved internal template and configured business account. No unsolicited customer messaging.
 - CRON_SECRET: at least 32 random characters, server-only. Scheduler must send Authorization: Bearer <secret>.
 - SITE_URL: official production origin for canonical metadata and sitemap. Do not use a preview URL as the permanent canonical origin.
@@ -20,7 +20,7 @@ Keep secrets out of NEXT_PUBLIC variables, committed files, build output and log
 
 1. Back up the target database and confirm restoration ownership.
 2. Run npm ci and npm run db:generate against the locked dependencies.
-3. Review all four 20261017 additive migration files, then run npm run db:migrate:deploy in staging. Verify row counts and existing lead states; do not reset the database.
+3. Review the 20261017 migrations and 20261020000000_customer_acknowledgements, then run npm run db:migrate:deploy in staging. Existing enquiries remain not_requested for acknowledgements. Verify row counts and existing lead states; do not reset the database.
 4. Run npm run content:import for a dry run. Compare approved current content with existing rows before --apply. Imports do not overwrite existing slugs; resolve conflicts with MMS. Confirm all existing public slugs are present, publication/order is correct and galleries resolve.
 5. Test concurrent enquiries and signed webhook replays against isolated test data. Review historical WhatsApp leads manually; no destructive automatic merge/backfill is included.
 6. Provision named staff content identities/roles as described in docs/CONTENT_MANAGEMENT.md. Test that those identities cannot read enquiries or change schema.
@@ -43,7 +43,7 @@ Verify unauthenticated calls are rejected, missing secret fails closed, and auth
 
 Alert on scheduler failures, oldest pending enquiry above the business response budget, reconciliation_required states and sending states older than ten minutes. Monitor database availability, provider rejections and backlog growth. Assign an MMS operator to review the attention count; console logging alone is not an operational paging integration.
 
-Email has at most five automatic attempts inside a conservative 23-hour period. Investigate Resend acceptance before manual retry outside that window. Never reset ambiguous WhatsApp sending/reconciliation states to pending until Meta records confirm no acceptance; Meta has no equivalent idempotency key. Keep a record of reviewed manual recovery.
+Each email channel has at most five attempts. Investigate Titan acceptance before retrying ambiguous SMTP sends; SMTP Message-ID is not a deduplication guarantee. Never reset uncertain SMTP or WhatsApp sending/reconciliation states until provider records confirm no acceptance. Keep a record of reviewed manual recovery. Customer acknowledgement recovery must not resend the staff notification.
 
 Missing WhatsApp configuration is recorded as not_configured before any attempt is claimed. These rows count toward operator attention but do not consume send attempts or repeatedly fill worker batches. Once the server configuration is valid, the worker can claim this unsent work automatically. This recovery does not replay reconciliation_required or already accepted sends.
 

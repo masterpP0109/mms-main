@@ -61,8 +61,8 @@ export default function Footer() {
         <div className="pt-8 border-t border-[#c5a880]/10 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#f4ebd0]/40 gap-4">
           <p>© {new Date().getFullYear()} Mosi Media Solutions. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-x-6">
-            <a href="#" className="hover:text-[#c5a880] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#c5a880] transition-colors">Terms of Service</a>
+            <Link href="/privacy" className="hover:text-[#c5a880] transition-colors">Privacy Policy</Link>
+            <a href="mailto:info@mosimediasolutions.com?subject=Terms%20of%20Service" className="hover:text-[#c5a880] transition-colors">Request Terms of Service</a>
           </div>
         </div>
       </div>

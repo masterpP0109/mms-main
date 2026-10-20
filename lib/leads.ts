@@ -8,6 +8,7 @@ import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
 import { reconcileWhatsAppStatus } from "@/lib/whatsapp-status";
 import { enforceIdentityLimit } from "@/lib/rate-limit";
 import { isWhatsAppOutboundConfigured } from "@/lib/env";
+import { notifyCustomer } from "@/lib/acknowledgements";
 import type { LeadInput } from "@/lib/validation/leads";
 
 export function createIdempotencyKey(input: LeadInput, supplied?: string | null) {
@@ -45,7 +46,7 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
   try {
     // The lead row is also its durable notification work record: one atomic insert,
     // no external queue or separate transaction needed for two fixed channels.
-    lead = await db.lead.create({ data: { ...input, metadata: input.metadata as Prisma.InputJsonValue | undefined, idempotencyKey, whatsappStatus: "pending" } });
+    lead = await db.lead.create({ data: { ...input, metadata: input.metadata as Prisma.InputJsonValue | undefined, idempotencyKey, whatsappStatus: "pending", acknowledgementStatus: input.source !== "whatsapp" && input.email ? "pending" : "not_requested" } });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       const duplicate = await db.lead.findUnique({ where: { idempotencyKey } });
@@ -61,7 +62,11 @@ export async function submitLead(input: LeadInput, suppliedKey?: string | null) 
   const result = await createLead(input, suppliedKey);
   if (result.duplicate) return result;
   try {
-    return { ...result, notified: await notifyLead(result.id) };
+    const [notification, acknowledgement] = await Promise.allSettled([notifyLead(result.id), notifyCustomer(result.id)]);
+    for (const [channel, outcome] of [["notification", notification], ["acknowledgement", acknowledgement]] as const) {
+      if (outcome.status === "rejected") console.error("Saved enquiry email needs reconciliation", { leadId: result.id, channel });
+    }
+    return { ...result, notified: notification.status === "fulfilled" && notification.value };
   } catch (error) {
     // Storage already succeeded. Retain notification state for safe reconciliation.
     console.error("Saved enquiry notification incomplete", { leadId: result.id, type: error instanceof Error ? error.name : "Unknown error" });

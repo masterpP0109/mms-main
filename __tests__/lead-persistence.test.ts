@@ -1,6 +1,7 @@
 /** @jest-environment node */
 jest.mock("@/lib/db", () => ({ db: { webhookEvent: { findMany: jest.fn() }, $queryRaw: jest.fn(), lead: { create: jest.fn(), findUnique: jest.fn(), findUniqueOrThrow: jest.fn(), count: jest.fn(), update: jest.fn(), updateMany: jest.fn() } } }));
 jest.mock("@/lib/providers/email", () => ({ sendLeadEmail: jest.fn() }));
+jest.mock("@/lib/acknowledgements", () => ({ notifyCustomer: jest.fn() }));
 jest.mock("@/lib/providers/whatsapp", () => ({ sendLeadWhatsApp: jest.fn() }));
 jest.mock("@/lib/env", () => ({ isWhatsAppOutboundConfigured: jest.fn() }));
 import { isWhatsAppOutboundConfigured } from "@/lib/env";
@@ -9,6 +10,7 @@ import { sendLeadEmail } from "@/lib/providers/email";
 import { SmtpNotificationError } from "@/lib/email/errors";
 import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
 import { createLead, submitLead, notifyLead, notifyLeadWhatsApp, createIdempotencyKey } from "@/lib/leads";
+import { notifyCustomer } from "@/lib/acknowledgements";
 const input = { source: "contact" as const, name: "Ada", email: "ada@example.com", message: "Hello" };
 const lead = { ...input, id: "lead_1", createdAt: new Date(), metadata: {}, emailStatus: "pending" };
 describe("lead persistence and notifications", () => {
@@ -27,6 +29,13 @@ describe("lead persistence and notifications", () => {
     jest.mocked(sendLeadWhatsApp).mockResolvedValue("wa_1");
   });
   afterEach(() => jest.restoreAllMocks());
+  it("preserves staff acceptance when the customer acknowledgement fails", async () => {
+    jest.mocked(sendLeadEmail).mockResolvedValue("smtp_1");
+    jest.mocked(notifyCustomer).mockRejectedValue(new Error("customer email unavailable"));
+    await expect(submitLead(input)).resolves.toMatchObject({ id: "lead_1", notified: true });
+    expect(sendLeadEmail).toHaveBeenCalledTimes(1);
+    expect(notifyCustomer).toHaveBeenCalledWith("lead_1");
+  });
   it("atomically saves pending work without making provider calls", async () => {
     await expect(createLead(input)).resolves.toMatchObject({ id: "lead_1", notified: false });
     expect(db.lead.create).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ whatsappStatus: "pending" }) }));

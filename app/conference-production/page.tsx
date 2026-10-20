@@ -1,6 +1,6 @@
 "use client";
 
-import { submitEnquiry } from "@/lib/submit-enquiry";
+import { submitEnquiry, enquiryErrorMessage } from "@/lib/submit-enquiry";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -52,21 +52,24 @@ const services = ["Sound and microphones", "Screens and projection", "Photograph
 
 export default function ConferenceProduction() {
   const [submitted, setSubmitted] = useState(false);
+  const [reference, setReference] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
     setError(null);
     setLoading(true);
     const data = new FormData(e.currentTarget);
     const field = (name: string) => String(data.get(name) ?? "");
     const body = { organisation: field("organisation"), contact: field("contact"), email: field("email"), phone: field("phone"), eventType: field("eventType"), date: field("date"), delegates: field("delegates"), venue: field("venue"), organisationType: field("organisationType"), services: data.getAll("services").map(String), details: field("details"), website: field("website") };
     try {
-      await submitEnquiry("/api/conference-enquiry", body);
+      const result = await submitEnquiry("/api/conference-enquiry", body);
+      setReference(result.submissionId);
       setSubmitted(true);
-    } catch {
-      setError("We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.");
+    } catch (error) {
+      setError(enquiryErrorMessage(error));
     } finally {
       setLoading(false);
     }
@@ -212,12 +215,12 @@ export default function ConferenceProduction() {
           <div data-reveal className="text-center mb-12">
           <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Get In Touch</span>
           <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-4">Conference Enquiry</h2>
-            <p className="text-sm text-[#f4ebd0]/70 font-light max-w-md mx-auto">Fill in the form below and our production team will respond within 24 hours with a tailored proposal.</p>
+            <p className="text-sm text-[#f4ebd0]/70 font-light max-w-md mx-auto">Fill in the form below and our production team will review your requirements and respond.</p>
           </div>
 
           <div data-reveal="scale" className="max-w-3xl mx-auto glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12">
             {!submitted ? (
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form aria-busy={loading} onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   { name: "organisation", placeholder: "Organisation name", required: true },
                   { name: "contact", placeholder: "Contact person", required: true },
@@ -285,7 +288,8 @@ export default function ConferenceProduction() {
               <div className="text-center py-12">
                 <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
-                <p className="text-sm text-[#f4ebd0]/60">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll get back to you shortly.</p>
+                <p className="text-sm text-[#f4ebd0]/60">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
+                <p role="status" className="text-sm text-[#c5a880] break-all">Enquiry reference: {reference}</p>
               </div>
             )}
           </div>

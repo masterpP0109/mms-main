@@ -25,6 +25,10 @@ model Lead {
   whatsappProviderId  String?
   notificationError   String?
   emailAttempts       Int      @default(0)
+  acknowledgementStatus String @default("not_requested")
+  acknowledgementProviderId String?
+  acknowledgementAttempts Int @default(0)
+  acknowledgementError String?
   whatsappAttempts    Int      @default(0)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -34,6 +38,7 @@ model Lead {
   @@index([email])
   @@index([phone])
   @@index([emailStatus, createdAt])
+  @@index([acknowledgementStatus, createdAt])
   @@index([whatsappStatus, createdAt])
 }
 

@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { notifyLead, notifyLeadWhatsApp } from "@/lib/leads";
 import { isWhatsAppOutboundConfigured } from "@/lib/env";
 import { notifyCustomer } from "@/lib/acknowledgements";
+import { eligibleEmail, recoverEmailWork } from "@/lib/email/outbox";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,15 +18,9 @@ export async function GET(request: Request) {
     // Bounded batches and backoff keep execution within the function budget.
     const now = Date.now();
     await db.rateLimit.deleteMany({ where: { expiresAt: { lt: new Date(now - 3600_000) } } });
-    // Legacy provider failures have no SMTP acceptance history. Reconcile them
-    // before switching providers; SMTP does not deduplicate provider retries.
-    await db.lead.updateMany({ where: { OR: [
-      { emailStatus: { in: ["pending", "retry_required"] }, emailAttempts: { gte: 5 } },
-      { emailStatus: "retry_required", OR: [{ notificationError: null }, { NOT: { notificationError: { startsWith: "SMTP notification not accepted (" } } }] },
-    ] }, data: { emailStatus: "reconciliation_required" } });
-    await db.lead.updateMany({ where: { acknowledgementStatus: { in: ["pending", "retry_required"] }, acknowledgementAttempts: { gte: 5 } }, data: { acknowledgementStatus: "reconciliation_required" } });
+    await recoverEmailWork(new Date(now));
     const leads = await db.lead.findMany({
-      where: { source: { not: "whatsapp" }, OR: [{ emailStatus: "pending" }, { emailStatus: "retry_required", updatedAt: { lt: new Date(now - 5 * 60_000) } }, { acknowledgementStatus: "pending" }, { acknowledgementStatus: "retry_required", acknowledgementError: { startsWith: "SMTP notification not accepted (" }, updatedAt: { lt: new Date(now - 5 * 60_000) } }, { whatsappStatus: { in: isWhatsAppOutboundConfigured() ? ["pending", "not_configured"] : ["pending"] } }] },
+      where: { source: { not: "whatsapp" }, OR: [eligibleEmail("notification", new Date(now)), eligibleEmail("acknowledgement", new Date(now)), { whatsappStatus: { in: isWhatsAppOutboundConfigured() ? ["pending", "not_configured"] : ["pending"] } }] },
       orderBy: { createdAt: "asc" }, take: 3, select: { id: true },
     });
     let processed = 0;

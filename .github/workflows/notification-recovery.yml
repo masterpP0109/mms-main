@@ -1,0 +1,24 @@
+name: Recover pending enquiry notifications
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: notification-recovery
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Process a bounded outbox batch
+        env:
+          MMS_NOTIFICATION_WORKER_URL: ${{ secrets.MMS_NOTIFICATION_WORKER_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          test -n "$MMS_NOTIFICATION_WORKER_URL" || { echo 'Configure MMS_NOTIFICATION_WORKER_URL'; exit 1; }
+          test -n "$CRON_SECRET" || { echo 'Configure CRON_SECRET'; exit 1; }
+          curl --fail-with-body --silent --show-error --max-time 125 \
+            --proto '=https' --header "Authorization: Bearer $CRON_SECRET" \
+            "$MMS_NOTIFICATION_WORKER_URL"

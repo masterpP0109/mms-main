@@ -43,7 +43,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
     const body = { name: field("name"), email: field("email"), phone: field("phone"), organisation: field("organisation"), projectType, message: field("message"), website: field("website"), ...contactReferral(params) };
     try {
       const result = await submitEnquiry("/api/leads", body);
-      setReference(result.submissionId);
+      setReference(result.reference ?? `MMS-${result.submissionId}`);
       setSubmitted(true);
       form.reset();
     } catch (error) {

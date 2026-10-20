@@ -66,7 +66,7 @@ export default function ConferenceProduction() {
     const body = { organisation: field("organisation"), contact: field("contact"), email: field("email"), phone: field("phone"), eventType: field("eventType"), date: field("date"), delegates: field("delegates"), venue: field("venue"), organisationType: field("organisationType"), services: data.getAll("services").map(String), details: field("details"), website: field("website") };
     try {
       const result = await submitEnquiry("/api/conference-enquiry", body);
-      setReference(result.submissionId);
+      setReference(result.reference ?? `MMS-${result.submissionId}`);
       setSubmitted(true);
     } catch (error) {
       setError(enquiryErrorMessage(error));

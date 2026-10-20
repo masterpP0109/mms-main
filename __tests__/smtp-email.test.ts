@@ -28,7 +28,7 @@ describe("Titan SMTP notifications", () => {
     sendMail.mockResolvedValue({ ...accepted, accepted: [lead.email] });
     await expect(sendCustomerAcknowledgement(lead)).resolves.toBe(accepted.messageId);
     expect(sendMail).toHaveBeenCalledWith(expect.objectContaining({ to: lead.email, from: { name: "Mosi Media Solutions", address: "website@example.com" }, replyTo: "website@example.com", messageId: "<mms-ack-lead_1@example.com>" }));
-    expect(sendMail.mock.calls[0][0].text).toContain("Your enquiry has been saved");
+    expect(sendMail.mock.calls[0][0].text).toContain("We have received your enquiry");
   });
   it("rejects an invalid acknowledgement recipient before SMTP send", async () => {
     await expect(sendCustomerAcknowledgement({ ...lead, email: "bad\r\nBcc: other@example.com" })).rejects.toThrow();
@@ -42,7 +42,7 @@ describe("Titan SMTP notifications", () => {
     expect(body.from).toEqual({ name: "Mosi Media Solutions", address: "website@example.com" });
     expect(body.replyTo).toBe("ada@example.com");
     expect(body.html).toContain("A &lt;safe&gt; enquiry");
-    for (const value of ["2026-12-01", "200", "Harare", "Sound, Video", "lead_1", lead.createdAt.toISOString()]) expect(body.text).toContain(value);
+    for (const value of ["2026-12-01", "200", "Harare", "Sound, Video", "lead_1", "9 October 2026"]) expect(body.text).toContain(value);
     expect(body.messageId).toBe("<mms-lead-lead_1@example.com>");
     expect(close).toHaveBeenCalledTimes(1);
   });
@@ -85,6 +85,16 @@ describe("Titan SMTP notifications", () => {
   it("requires reconciliation for connection loss after DATA", async () => {
     sendMail.mockRejectedValue({ code: "ETIMEDOUT", command: "DATA", message: "private provider details" });
     await expect(sendLeadEmail(lead)).rejects.toMatchObject({ code: "ETIMEDOUT", retrySafe: false });
+  });
+  it("bounds a stalled SMTP send and closes it without assuming non-acceptance", async () => {
+    jest.useFakeTimers();
+    try {
+      sendMail.mockReturnValue(new Promise(() => {}));
+      const rejected = expect(sendLeadEmail(lead)).rejects.toMatchObject({ code: "ETIMEDOUT", retrySafe: false });
+      await jest.advanceTimersByTimeAsync(45_000);
+      await rejected;
+      expect(close).toHaveBeenCalledTimes(1);
+    } finally { jest.useRealTimers(); }
   });
   it("does not replay a generic connection failure after DATA", () => {
     expect(smtpFailure({ code: "ECONNECTION", command: "DATA" }).retrySafe).toBe(false);

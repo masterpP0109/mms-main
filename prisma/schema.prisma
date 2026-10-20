@@ -25,10 +25,14 @@ model Lead {
   whatsappProviderId  String?
   notificationError   String?
   emailAttempts       Int      @default(0)
+  emailNextAttemptAt  DateTime?
+  emailClaimedAt      DateTime?
   acknowledgementStatus String @default("not_requested")
   acknowledgementProviderId String?
   acknowledgementAttempts Int @default(0)
   acknowledgementError String?
+  acknowledgementNextAttemptAt DateTime?
+  acknowledgementClaimedAt DateTime?
   whatsappAttempts    Int      @default(0)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
@@ -92,7 +96,7 @@ model WebhookEvent {
 }
 
 model Service {
-  id          String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  id          String   @id @default(dbgenerated("(gen_random_uuid())::text"))
   slug        String   @unique
   title       String
   category    String
@@ -112,7 +116,7 @@ model Service {
 }
 
 model Project {
-  id          String   @id @default(dbgenerated("gen_random_uuid()::text"))
+  id          String   @id @default(dbgenerated("(gen_random_uuid())::text"))
   slug        String   @unique
   title       String
   category    String

@@ -77,10 +77,15 @@ async function main() {
     const row = await db.lead.findUniqueOrThrow({ where: { id: result.submissionId }, select: { name: true, email: true, message: true, emailStatus: true } });
     if (row.name !== fixture.name || row.email !== fixture.email || row.message !== fixture.message) throw new Error("Stored fixture does not match");
     // Only the endpoint may send. A test-side fallback would hide a broken form.
-    const accepted = result.notificationStatus === "accepted" && row.emailStatus === "accepted";
-    const updated = await db.lead.findUniqueOrThrow({ where: { id: result.submissionId }, select: { emailStatus: true, emailProviderId: true } });
+    const deadline = Date.now() + 60_000;
+    let updated;
+    do {
+      updated = await db.lead.findUniqueOrThrow({ where: { id: result.submissionId }, select: { emailStatus: true, emailProviderId: true } });
+      if (!["pending", "sending"].includes(updated.emailStatus)) break;
+      await new Promise(resolve => setTimeout(resolve, 250));
+    } while (Date.now() < deadline);
     const expectedMessageId = `<mms-lead-${result.submissionId.replace(/[^a-zA-Z0-9_-]/g, "")}@${config.from.split("@")[1]}>`;
-    const smtpAccepted = accepted && updated.emailStatus === "accepted" && updated.emailProviderId === expectedMessageId;
+    const smtpAccepted = updated.emailStatus === "accepted" && updated.emailProviderId === expectedMessageId;
     state.contactAccepted = smtpAccepted;
     fs.writeFileSync(statePath, JSON.stringify(state, null, 2));
     console.log(JSON.stringify({ stage: "contact-notification", persisted: true, smtpAccepted, emailStatus: updated.emailStatus, inboxDeliveryConfirmed: false }));

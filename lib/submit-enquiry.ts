@@ -7,7 +7,7 @@ import { acknowledgeSubmission, submissionKey } from "@/lib/submission-key";
 export type ContactEnquiry = z.input<typeof contactLeadSchema>;
 export type ConferenceEnquiry = z.input<typeof conferenceLeadSchema>;
 export type BriefEnquiry = z.input<typeof projectBriefSchema>;
-type Acknowledgement = { success: true; saved: true; submissionId: string; notificationStatus: string };
+type Acknowledgement = { success: true; saved: true; submissionId: string; reference?: string; notificationStatus: string };
 class EnquirySubmissionError extends Error {}
 export function enquiryErrorMessage(error: unknown) {
   return error instanceof EnquirySubmissionError ? error.message : "We couldn't send your enquiry right now. Please try again or contact Mosi Media Solutions directly.";

@@ -22,6 +22,10 @@ export function enquiryRows(lead: EmailLead, audience: "mms" | "customer" = "mms
   const meta = lead.metadata ?? {};
   const services = label(meta.service || meta.services) || label(lead.projectType) || "General enquiry";
   const contact: Row[] = [["Full name", lead.name], ["Contact email", lead.email || "Not provided"], ["Phone / WhatsApp", lead.phone || "Not provided"]];
+  // Acknowledgements contain only the requested summary, not a reflection of
+  // arbitrary message text or extra metadata from an unverified public sender.
+  if (audience === "customer") return [...contact, ["Requested service", services], ["Timeline", label(meta.timeline) || label(meta.date)]]
+    .filter((row): row is [string, string] => typeof row[1] === "string" && row[1].length > 0);
   const details: Row[] = [
     ["Requested service", services], ["Timeline", label(meta.timeline) || label(meta.date)],
     ["Event / project type", label(lead.projectType) !== services ? label(lead.projectType) : undefined], ["Event date", meta.date as string | undefined],

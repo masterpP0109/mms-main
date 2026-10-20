@@ -16,3 +16,13 @@ export function securePostgresUrl(value: string): string {
   }
   return url.href;
 }
+
+/** Neon migrations use a direct endpoint even when only the runtime URL exists. */
+export function migrationPostgresUrl(value: string): string {
+  const url = new URL(securePostgresUrl(value));
+  if (url.hostname.endsWith(".neon.tech")) {
+    url.hostname = url.hostname.replace("-pooler.", ".");
+    for (const key of ["connection_limit", "pool_timeout", "pgbouncer"]) url.searchParams.delete(key);
+  }
+  return securePostgresUrl(url.href);
+}

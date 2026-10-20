@@ -1,6 +1,6 @@
 import { loadEnvConfig } from "@next/env";
 import { defineConfig } from "prisma/config";
-import { securePostgresUrl } from "./lib/postgres-url";
+import { migrationPostgresUrl } from "./lib/postgres-url";
 
 // Match Next.js env precedence, including .env.local, in Prisma's CLI.
 loadEnvConfig(process.cwd());
@@ -14,5 +14,5 @@ const paths = {
 export default defineConfig(migrationUrl ? {
   ...paths,
   engine: "classic",
-  datasource: { url: securePostgresUrl(migrationUrl) },
+  datasource: { url: migrationPostgresUrl(migrationUrl) },
 } : paths);

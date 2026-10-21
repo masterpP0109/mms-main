@@ -26,7 +26,7 @@ async function runContactTool(checkOnly: boolean, accepted = true) {
   const notifyLead = jest.fn().mockResolvedValue(true);
   const findUniqueOrThrow = jest.fn()
     .mockResolvedValueOnce({ name: "MMS LOCAL TITAN SMTP TEST", email: "mms-local-smtp-test@example.com", message: "CLEARLY LABELLED LOCAL SMTP CONTACT-ENDPOINT TEST. Not a customer enquiry.", emailStatus: accepted ? "accepted" : "pending" })
-    .mockResolvedValueOnce({ emailStatus: "accepted", emailProviderId: "<mms-lead-fixture_1@mosimediasolutions.com>" });
+    .mockResolvedValueOnce({ emailStatus: accepted ? "accepted" : "reconciliation_required", emailProviderId: accepted ? "<mms-lead-fixture_1@mosimediasolutions.com>" : null });
   const writes = jest.fn();
   const fileSystem = { existsSync: () => false, mkdirSync: jest.fn(), openSync: jest.fn(() => 1), closeSync: jest.fn(), writeFileSync: writes };
   const output: string[] = [];

@@ -1,5 +1,7 @@
 /** @jest-environment node */
 
+jest.mock("@/lib/schedule-lead-emails", () => ({ scheduleLeadEmails: jest.fn() }));
+
 jest.mock("@/lib/leads", () => ({ submitLead: jest.fn() }));
 
 import { submitLead } from "@/lib/leads";
@@ -16,7 +18,7 @@ describe("lead API", () => {
       method: "POST", headers: { "Content-Type": "application/json", "Idempotency-Key": "request-1" },
       body: JSON.stringify({ name: "Ada Lovelace", email: "ada@example.com", message: "Please quote our event." }),
     }));
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     await expect(response.json()).resolves.toMatchObject({ success: true, submissionId: "lead_1", duplicate: false });
     expect(mockedCreateLead).toHaveBeenCalledWith(expect.objectContaining({ source: "contact", email: "ada@example.com" }), "request-1");
   });
@@ -27,7 +29,7 @@ describe("lead API", () => {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: "Ada", email: "ada@example.com", goal: "brand", audience: "digital-first", timeline: "soon", details: "Campaign" }),
     }));
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(mockedCreateLead).toHaveBeenCalledWith(expect.objectContaining({ source: "project_builder", projectType: "brand", message: "Campaign" }), null);
     await expect(response.json()).resolves.toMatchObject({ saved: true, notificationStatus: "accepted" });
   });
@@ -46,7 +48,7 @@ describe("lead API", () => {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: "Grace Hopper", email: "grace@example.com", message: "Production enquiry" }),
     }));
-    expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toMatchObject({ success: true, saved: true, notificationStatus: "pending_retry" });
+    expect(response.status).toBe(201);
+    await expect(response.json()).resolves.toMatchObject({ success: true, saved: true, notificationStatus: "pending" });
   });
 });

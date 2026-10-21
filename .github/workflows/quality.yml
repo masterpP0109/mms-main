@@ -33,9 +33,11 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - run: npx prisma validate
       - run: npm run db:migrate:deploy
       - run: npm run content:import -- --apply
       - run: npm run test:integration
+      - run: node --conditions=react-server scripts/verify-lead-recovery.cjs --confirm-test-records
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test -- --runInBand

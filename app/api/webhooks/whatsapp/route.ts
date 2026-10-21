@@ -70,12 +70,12 @@ export async function POST(request: Request) {
         } });
         await tx.conversation.update({ where: { id: conversation.id }, data: { leadId: lead.id } });
         }
-      });
+      }, { maxWait: 10_000, timeout: 20_000 });
       processed++;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") duplicates++;
       else {
-        console.error("WhatsApp webhook persistence failed", { type: error instanceof Error ? error.name : "Unknown error" });
+        console.error("WhatsApp webhook persistence failed", { type: error instanceof Prisma.PrismaClientKnownRequestError ? "PrismaClientKnownRequestError" : "UnexpectedError", ...(error instanceof Prisma.PrismaClientKnownRequestError ? { code: error.code } : {}) });
         return Response.json({ error: "Webhook processing failed" }, { status: 500 });
       }
     }
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
       await db.$transaction(async tx => {
         await tx.webhookEvent.create({ data: { provider: "meta_whatsapp", externalId: `status:${status.id}:${status.status}:${status.timestamp ?? ""}`, providerMessageId: status.id, eventType: `status.${status.status}`, payload: { status: status.status } } });
         await reconcileWhatsAppStatus(status.id, tx);
-      });
+      }, { maxWait: 10_000, timeout: 20_000 });
     } catch (error) {
       if (!(error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002")) {
         console.error("WhatsApp status persistence failed");

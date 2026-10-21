@@ -1,6 +1,7 @@
 export const BUILDER_WHATSAPP_NUMBER = "263788111391";
 
 const labels: Record<string, string> = {
+  conference: "Conference Production", event: "Corporate Event", other: "General Enquiry",
   wedding: "Wedding Film", corporate: "Corporate Event", brand: "Brand Campaign", content: "Content Package",
   intimate: "Intimate Gathering", "large-event": "Large Event", "corporate-audience": "Corporate Audience", "digital-first": "Digital-First",
   urgent: "Urgent (within 2 weeks)", soon: "Soon (1–3 months)", planned: "Planning Ahead (3–6 months)", flexible: "Just Exploring (no fixed date)",

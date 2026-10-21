@@ -1,6 +1,8 @@
 import { submitLead } from "@/lib/leads";
 import { errorResponse, parseJson } from "@/lib/http";
 import { conferenceLeadSchema } from "@/lib/validation/leads";
+import { scheduleLeadEmails } from "@/lib/schedule-lead-emails";
+import { enquiryReference } from "@/lib/enquiry-reference";
 
 export const runtime = "nodejs";
 export const maxDuration = 120;
@@ -14,6 +16,7 @@ export async function POST(request: Request) {
       message: body.details || "Conference proposal requested",
       metadata: { date: body.date, delegates: body.delegates, venue: body.venue, organisationType: body.organisationType, services: body.services },
     }, request.headers.get("idempotency-key"));
-    return Response.json({ success: true, submissionId: result.id, duplicate: result.duplicate, saved: true, notificationStatus: result.notified ? "accepted" : "pending_retry" });
+    if (!result.duplicate) scheduleLeadEmails(result.id);
+    return Response.json({ success: true, submissionId: result.id, reference: enquiryReference(result.id), duplicate: result.duplicate, saved: true, notificationStatus: result.notified ? "accepted" : "pending" }, { status: result.duplicate ? 200 : 201, headers: { "Cache-Control": "no-store" } });
   } catch (error) { return errorResponse(error); }
 }

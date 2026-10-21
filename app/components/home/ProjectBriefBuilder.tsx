@@ -296,7 +296,7 @@ export default function ProjectBriefBuilder() {
                     setBuilderLoading(true);
                     try {
                       const result = await submitEnquiry("/api/leads", { ...builderData, website: builderWebsite });
-                      setReference(result.submissionId);
+                      setReference(result.reference ?? `MMS-${result.submissionId}`);
                       setBuilderSubmitted(true);
                     } catch (error) {
                       setBuilderError(enquiryErrorMessage(error));

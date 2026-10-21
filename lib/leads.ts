@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { sendLeadEmail } from "@/lib/providers/email";
-import { smtpFailure } from "@/lib/email/errors";
+import { deliverEmail } from "@/lib/email/outbox";
 import { sendLeadWhatsApp } from "@/lib/providers/whatsapp";
 import { reconcileWhatsAppStatus } from "@/lib/whatsapp-status";
 import { enforceIdentityLimit } from "@/lib/rate-limit";
@@ -18,22 +18,7 @@ export function createIdempotencyKey(input: LeadInput, supplied?: string | null)
 }
 
 export async function notifyLead(id: string) {
-  // Atomic claim prevents concurrent senders; a crashed sender stays in sending for manual reconciliation.
-  const claim = await db.lead.updateMany({ where: { id, OR: [{ emailStatus: "pending" }, { emailStatus: "retry_required", notificationError: { startsWith: "SMTP notification not accepted (" } }], emailAttempts: { lt: 5 } }, data: { emailStatus: "sending", emailAttempts: { increment: 1 } } });
-  if (!claim.count) return false;
-  const lead = await db.lead.findUniqueOrThrow({ where: { id } });
-  let providerId: string;
-  try {
-    providerId = await sendLeadEmail({ ...lead, externalId: lead.externalId ?? undefined, source: lead.source as LeadInput["source"], email: lead.email ?? undefined, phone: lead.phone ?? undefined, organisation: lead.organisation ?? undefined, projectType: lead.projectType ?? undefined, metadata: (lead.metadata ?? {}) as LeadInput["metadata"] });
-  } catch (error) {
-    const failure = smtpFailure(error);
-    console.error("Lead SMTP notification failed", { leadId: id, code: failure.code, responseCode: failure.responseCode, retrySafe: failure.retrySafe });
-    await db.lead.update({ where: { id }, data: { emailStatus: failure.retrySafe ? "retry_required" : "reconciliation_required", notificationError: failure.message } });
-    return false;
-  }
-  // Keep sending if this update fails: acceptance is uncertain locally and must be reconciled before retry.
-  await db.lead.update({ where: { id }, data: { emailStatus: "accepted", emailProviderId: providerId, notificationError: null } });
-  return true;
+  return deliverEmail(id, "notification", sendLeadEmail);
 }
 
 export async function createLead(input: LeadInput, suppliedKey?: string | null) {
@@ -57,21 +42,16 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
   return { id: lead.id, duplicate: false, notified: false };
 }
 
-/** Persist before sending; duplicate requests never initiate another notification. */
+/** Persist first; callers schedule processLeadEmails after the response. */
 export async function submitLead(input: LeadInput, suppliedKey?: string | null) {
-  const result = await createLead(input, suppliedKey);
-  if (result.duplicate) return result;
-  try {
-    const [notification, acknowledgement] = await Promise.allSettled([notifyLead(result.id), notifyCustomer(result.id)]);
-    for (const [channel, outcome] of [["notification", notification], ["acknowledgement", acknowledgement]] as const) {
-      if (outcome.status === "rejected") console.error("Saved enquiry email needs reconciliation", { leadId: result.id, channel });
-    }
-    return { ...result, notified: notification.status === "fulfilled" && notification.value };
-  } catch (error) {
-    // Storage already succeeded. Retain notification state for safe reconciliation.
-    console.error("Saved enquiry notification incomplete", { leadId: result.id, type: error instanceof Error ? error.name : "Unknown error" });
-    return result;
-  }
+  return createLead(input, suppliedKey);
+}
+
+export async function processLeadEmails(id: string) {
+  const outcomes = await Promise.allSettled([notifyLead(id), notifyCustomer(id)]);
+  outcomes.forEach((outcome, channel) => {
+    if (outcome.status === "rejected") console.error("Enquiry email processing incomplete", { leadId: id, channel });
+  });
 }
 
 export async function notifyLeadWhatsApp(id: string) {

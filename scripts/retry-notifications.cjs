@@ -11,7 +11,7 @@ const { notifyLead } = require("../lib/leads.ts");
   const needsReview = lead.emailStatus === "reconciliation_required" || (lead.emailStatus === "retry_required" && !lead.notificationError?.startsWith("SMTP notification not accepted ("));
   if (needsReview) {
     if (!process.argv.includes("--confirmed-not-accepted")) throw new Error("Reconcile Titan and previous provider records before retrying an uncertain attempt");
-    const claim = await db.lead.updateMany({ where: { id, emailStatus: lead.emailStatus, updatedAt: lead.updatedAt }, data: { emailStatus: "retry_required", notificationError: "SMTP notification not accepted (EMANUAL)" } });
+    const claim = await db.lead.updateMany({ where: { id, emailStatus: lead.emailStatus, updatedAt: lead.updatedAt }, data: { emailStatus: "retry_required", emailAttempts: 0, emailNextAttemptAt: new Date(), emailClaimedAt: null, notificationError: "SMTP notification not accepted (EMANUAL)" } });
     if (!claim.count) throw new Error("Notification changed during reconciliation; no send attempted");
   }
   console.log({ leadId: id, accepted: await notifyLead(id) });

@@ -5,8 +5,11 @@ test("homepage keeps the MMS identity and links to services", async ({ page }) =
   test.skip(!process.env.MMS_TEST_DATABASE_URL, "Dedicated test PostgreSQL required for the catalogue journey");
   await page.goto("/");
   await expect(page.locator("h1")).toHaveCount(1);
-  await page.locator('a[href="/services"]').first().click();
-  await expect(page).toHaveURL(/\/services$/);
+  // Use the visible desktop navigation at its documented breakpoint.
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Services", exact: true }).click();
+  // The remote catalogue streams database content; allow that navigation to finish.
+  await expect(page).toHaveURL(/\/services$/, { timeout: 20_000 });
   const detail = page.locator('a[href^="/services/"]').first();
   await expect(detail).toBeVisible();
   await detail.click();

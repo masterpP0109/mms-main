@@ -18,3 +18,20 @@ it.each(["localhost", "127.0.0.1", "[::1]"])("preserves explicitly isolated loca
 it.each(["invalid", "https://example.com"])("rejects unsupported configuration without echoing it", input => {
   expect(() => securePostgresUrl(input)).toThrow(/Invalid PostgreSQL/);
 });
+
+it("bounds Neon runtime pools and allows time for a suspended compute to wake", () => {
+  const url = new URL(securePostgresUrl("postgresql://USER:PLACEHOLDER@ep-test-pooler.us-east-2.aws.neon.tech/app"));
+  expect(url.searchParams.get("connection_limit")).toBe("5");
+  expect(url.searchParams.get("connect_timeout")).toBe("15");
+  expect(url.searchParams.get("pool_timeout")).toBe("20");
+});
+it("preserves explicitly tuned Neon pool settings", () => {
+  const url = new URL(securePostgresUrl("postgresql://USER:PLACEHOLDER@ep-test-pooler.us-east-2.aws.neon.tech/app?connection_limit=2&connect_timeout=30&pool_timeout=10"));
+  expect(url.searchParams.get("connection_limit")).toBe("2");
+  expect(url.searchParams.get("connect_timeout")).toBe("30");
+  expect(url.searchParams.get("pool_timeout")).toBe("10");
+});
+it("leaves direct Neon connections free of runtime pool defaults", () => {
+  const url = new URL(securePostgresUrl("postgresql://USER:PLACEHOLDER@ep-test.us-east-2.aws.neon.tech/app"));
+  expect(url.searchParams.has("connection_limit")).toBe(false);
+});

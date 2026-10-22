@@ -1,7 +1,7 @@
 "use client";
 
 import ProjectBriefBuilder from "./ProjectBriefBuilder";
-import WeddingsFeature from "../services/WeddingsFeature";
+import SignatureExperiences from "../packages/SignatureExperiences";
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -551,13 +551,13 @@ export default function Home() {
               Explore All Services
             </Link>
           </div>
-          <WeddingsFeature />
         </div>
       </section>
 
 
 
       {/* 5) STORIES THAT BECAME MEMORIES SECTION - HORIZONTAL WHEEL CAROUSEL */}
+      <SignatureExperiences />
       <section
         style={{ opacity: 1, visibility: "visible" }}
         id="gallery"

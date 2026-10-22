@@ -1,6 +1,7 @@
 import { submitLead } from "@/lib/leads";
 import { errorResponse, parseJson } from "@/lib/http";
-import { contactLeadSchema, projectBriefSchema } from "@/lib/validation/leads";
+import { contactLeadSchema, projectBriefSchema, packageLeadSchema } from "@/lib/validation/leads";
+import { getPackageExperience, packagePath } from "@/lib/packages";
 import { scheduleLeadEmails } from "@/lib/schedule-lead-emails";
 import { enquiryReference } from "@/lib/enquiry-reference";
 
@@ -9,9 +10,15 @@ export const maxDuration = 120;
 
 export async function POST(request: Request) {
   try {
-    const raw = await parseJson(request, contactLeadSchema.or(projectBriefSchema));
+    const raw = await parseJson(request, contactLeadSchema.or(projectBriefSchema).or(packageLeadSchema));
     const isBrief = "goal" in raw;
-    const input = isBrief
+    const experience = "kind" in raw ? getPackageExperience(raw.category)! : undefined;
+    const input = "kind" in raw
+      ? { source: "contact" as const, name: raw.name, email: raw.email, phone: raw.phone, projectType: raw.category, message: raw.details,
+          metadata: { ...raw.attribution, service: experience!.service, packageId: raw.packageId,
+            packageName: experience!.options.find(option => option.id === raw.packageId)?.name ?? "Help me tailor a package",
+            date: raw.date, origin: packagePath(raw.category) } }
+      : isBrief
       ? { source: "project_builder" as const, name: raw.name, email: raw.email, phone: raw.phone, projectType: raw.goal, message: raw.details || "Project brief submitted", metadata: { audience: raw.audience, timeline: raw.timeline } }
       : { source: "contact" as const, name: raw.name, email: raw.email, phone: raw.phone, organisation: raw.organisation, projectType: raw.projectType, message: raw.message, metadata: { service: raw.service, origin: raw.origin } };
     const result = await submitLead(input, request.headers.get("idempotency-key"));

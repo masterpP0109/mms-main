@@ -20,7 +20,7 @@ export default function WeddingsPage() {
         <p className={styles.eyebrow}>Weddings &amp; Elopements</p>
         <h1 id="wedding-title">A day that feels like you.<br />A story to hold close.</h1>
         <p>Quiet promises. Familiar faces. The feeling of being together. Talk to Mosi Media Solutions about photography and film that make space for the moments that matter to you.</p>
-        <div className={styles.actions}><EnquiryLink href={contact}>Tell us about your day</EnquiryLink><a className={styles.textLink} href="#coverage">Explore coverage options</a></div>
+        <div className={styles.actions}><EnquiryLink href={contact}>Tell us about your day</EnquiryLink><Link className={styles.textLink} href="/packages/weddings">Explore wedding packages</Link><a className={styles.textLink} href="#coverage">Explore coverage options</a></div>
       </div>
       <figure><div className={styles.weddingPortrait}><Image src="/mms/wedding%2012.jpg" alt="A couple walking hand in hand towards Victoria Falls" fill sizes="(max-width:1023px) 90vw, 45vw" preload /></div><figcaption className={styles.caption}>Wedding inspiration from our image library; shown for illustration.</figcaption></figure>
     </section>

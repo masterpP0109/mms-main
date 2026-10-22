@@ -28,6 +28,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-[#f4ebd0]/60 font-light">
               <li><Link href="/conference-production" className="hover:text-white transition-colors">Conference Production</Link></li>
               <li><Link href="/services/drone" className="hover:text-white transition-colors">Drone Services</Link></li>
+              <li><Link href="/packages" className="hover:text-white transition-colors">Signature Packages</Link></li>
               <li><Link href="/services/weddings-elopements" className="hover:text-white transition-colors">Weddings &amp; Elopements</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">Visual Storytelling</Link></li>
               <li><Link href="/services" className="hover:text-white transition-colors">Event Experiences</Link></li>

@@ -160,31 +160,31 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           {/* Form */}
           <div data-reveal="right" className="lg:col-span-3">
             {!submitted ? (
-              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-10 space-y-5">
+              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="bg-[#190910] rounded-3xl border border-[#fda4af]/20 p-5 sm:p-8 md:p-10 space-y-5">
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
-                {initialService && <p className="rounded-xl border border-[#c5a880]/30 bg-[#c5a880]/10 p-4 text-sm text-[#f4ebd0]">Enquiring about: <strong>{initialService}</strong></p>}
+                {initialService && <p className="rounded-xl border border-[#fda4af]/30 bg-[#fda4af]/10 p-4 text-sm text-[#f4ebd0]">Enquiring about: <strong>{initialService}</strong></p>}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Name</label>
+                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Your Name</label>
                     <input type="text" id="contact-name" maxLength={120} autoComplete="name" name="name" placeholder="e.g. Sarah Johnson" required
-                      className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
+                      className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors" />
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Email Address</label>
+                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Email Address</label>
                     <input type="email" id="contact-email" maxLength={254} autoComplete="email" name="email" placeholder="you@organisation.com" required
-                      className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
+                      className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Phone Number (optional)</label>
+                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Phone Number (optional)</label>
                   <input type="tel" id="contact-phone" maxLength={32} pattern={String.raw`\+?[0-9 \(\)\-]{7,32}`} autoComplete="tel" name="phone" placeholder="+263 ..."
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors" />
+                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors" />
                 </div>
 
                 <div>
-                  <label className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-3">Type of Project</label>
+                  <label className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-3">Type of Project</label>
                   <div role="group" aria-label="Type of Project" className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[
                       { id: "conference" as const, label: "Conference / Event" },
@@ -200,8 +200,8 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                         onClick={() => setProjectType(opt.id)}
                         className={`py-2.5 px-3 rounded-xl text-xs border transition-all duration-200 cursor-pointer ${
                           projectType === opt.id
-                            ? "bg-[#c5a880]/15 border-[#c5a880] text-white"
-                            : "border-[#c5a880]/15 text-[#f4ebd0]/55 hover:border-[#c5a880]/40 hover:text-white"
+                            ? "bg-[#881337]/40 border-[#fda4af] text-white"
+                            : "border-[#fda4af]/15 text-[#f4ebd0]/55 hover:border-[#fda4af]/40 hover:text-white"
                         }`}
                       >
                         {opt.label}
@@ -212,13 +212,13 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold block mb-2">Your Message</label>
+                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Your Message</label>
                   <textarea id="contact-message" maxLength={5000} name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
-                    className="w-full bg-[#050507]/70 border border-[#c5a880]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#c5a880]/50 transition-colors resize-y" />
+                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors resize-y" />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
-                  <button data-lead-cta type="submit" disabled={loading} className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em] disabled:opacity-50`}>
+                  <button data-lead-cta type="submit" disabled={loading} className={`inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#881337] to-[#9f2345] text-white font-semibold hover:brightness-110 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fda4af] px-8 py-3.5 text-[11px] uppercase tracking-[0.18em] disabled:opacity-50`}>
                     <span className="relative z-10">{loading ? "Sending…" : "Send Message"}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
@@ -228,12 +228,12 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </form>
             ) : (
-              <div role="status" className="glass-panel rounded-3xl border border-[#c5a880]/20 p-6 sm:p-12 text-center space-y-4">
-                <CheckCircle className="w-14 h-14 text-[#c5a880] mx-auto" />
+              <div role="status" className="glass-panel rounded-3xl border border-[#fda4af]/20 p-6 sm:p-12 text-center space-y-4">
+                <CheckCircle className="w-14 h-14 text-[#fda4af] mx-auto" />
                 <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
                 <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
-                <p className="text-sm text-[#c5a880] break-all">Enquiry reference: {reference}</p>
-                <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#c5a880] hover:text-white transition-colors mt-4">
+                <p className="text-sm text-[#fda4af] break-all">Enquiry reference: {reference}</p>
+                <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#fda4af] hover:text-white transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>

@@ -300,14 +300,18 @@ export default function Home() {
                 loading="eager"
                 fetchPriority={currentSlide === 0 ? "high" : "auto"}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/90 via-transparent to-[#050507]/55" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/95 via-[#050507]/48 to-transparent" />
             </motion.div>
           </AnimatePresence>
 
+          {/* Keep contrast consistent across every image and slide transition. */}
+          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/65">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/35 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/60 via-transparent to-transparent" />
+          </div>
+
           {/* Slide Text Content - Left Aligned with Shade */}
           <div className="relative z-30 w-full h-full flex items-center pointer-events-none">
-            <div className="w-full max-w-[1600px] mx-auto pl-10 md:pl-14 lg:pl-20 xl:pl-24 2xl:pl-28 flex justify-start">
+            <div className="w-full max-w-[1600px] mx-auto px-10 md:px-14 lg:px-20 xl:pl-24 2xl:pl-28 flex justify-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -321,7 +325,7 @@ export default function Home() {
                   {slides[currentSlide].title}
                 </h1>
 
-                <p className="text-sm xl:text-base text-[#f4ebd0]/85 tracking-wide font-light leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
+                <p className="text-sm xl:text-base text-white tracking-wide font-normal leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
                   {slides[currentSlide].desc}
                 </p>
 

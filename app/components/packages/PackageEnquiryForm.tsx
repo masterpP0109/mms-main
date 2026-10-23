@@ -37,16 +37,18 @@ function EnquiryFields({ experience }: { experience: FormExperience }) {
     setLoading(true);
     setError(null);
     const data = new FormData(event.currentTarget);
+    const selected = String(data.get("packageId") || "tailored");
+    const submittedPackageId = experience.options.some(option => option.id === selected) ? selected : "tailored";
     try {
       const result = await submitEnquiry("/api/leads", {
-        kind: "package", category: experience.slug, packageId,
+        kind: "package", category: experience.slug, packageId: submittedPackageId,
         name: String(data.get("name") || ""), email: String(data.get("email") || ""),
         phone: String(data.get("phone") || ""), date: String(data.get("date") || "") || undefined,
         details: String(data.get("details") || ""), website: String(data.get("website") || ""),
         attribution: captureCampaign(),
       });
       setReference(result.reference || `MMS-${result.submissionId}`);
-      trackPackageEvent("generate_lead", experience.slug, packageId);
+      trackPackageEvent("generate_lead", experience.slug, submittedPackageId);
     } catch (cause) {
       setError(enquiryErrorMessage(cause));
     } finally { setLoading(false); }

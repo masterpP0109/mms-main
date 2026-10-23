@@ -38,3 +38,14 @@ it("emits GA4-compatible events after consent with no personal form data", () =>
   expect(listener).toHaveBeenCalledTimes(1);
   window.removeEventListener("mms:conversion", listener);
 });
+
+it("does not refresh expiry while campaign parameters remain on the landing URL", () => {
+  sessionStorage.clear();
+  window.history.replaceState({}, "", "/?utm_source=lasting");
+  const now = jest.spyOn(Date, "now").mockReturnValue(1000000);
+  expect(captureCampaign()).toMatchObject({ utm_source: "lasting" });
+  now.mockReturnValue(1000000 + 31 * 60 * 1000);
+  expect(captureCampaign()).toEqual({});
+  expect(captureCampaign()).toEqual({});
+  now.mockRestore();
+});

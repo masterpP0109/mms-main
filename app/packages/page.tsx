@@ -29,7 +29,7 @@ export default function PackagesPage() {
         <h1 id="packages-title">Made for Your Moment. Built Around Your Vision.</h1>
         <p>Some stories deserve to be remembered. Others deserve to be seen from a new perspective. And some deserve to be heard.</p>
         <p className="mt-4">Explore photography, film, aerial coverage and podcast production. Find your starting point, then shape the details with MMS.</p>
-        <div className={s.actions}><EnquiryLink href="#experiences">Explore the experiences</EnquiryLink></div>
+        <div className={s.actions}><EnquiryLink className={styles.glassButton} href="#experiences">Explore the experiences</EnquiryLink></div>
       </div>
       <figure><div className={styles.overviewVisual}>{packageExperiences.map(experience => <div key={experience.slug}><Image src={experience.image} alt={experience.imageAlt} fill sizes="(max-width:1023px) 45vw, 22vw" preload={experience.slug === "weddings"} /></div>)}</div><figcaption className={`${s.caption} ${styles.overviewCaption}`}>Illustrative images from our library. Every brief is individual.</figcaption></figure>
     </section>
@@ -38,13 +38,13 @@ export default function PackagesPage() {
       <div className="mt-10"><ExperienceCards /></div>
     </section>
     <section className={`${s.section} ${s.split}`} aria-labelledby="mms-title">
-      <div data-reveal><p className={s.eyebrow}>One team. Many ways to tell it.</p><h2 id="mms-title">Media craft, with production in mind.</h2><p>Mosi Media Solutions brings photography, video, audio and event technology together in Victoria Falls. Our conference and corporate production work sits alongside these personal and creative experiences.</p><Link href="/conference-production" className={`${s.textLink} mt-4`}>Explore conference production</Link></div>
-      <div className={s.note}><h3>A brief before a promise.</h3><p>We begin with your priorities, location and intended use. Scope, crew, deliverables, quotation and booking terms are agreed together. A package preference helps start that conversation.</p><Link href="/projects" className={`${s.textLink} mt-4`}>Explore published MMS work</Link></div>
+      <div data-reveal><p className={s.eyebrow}>One team. Many ways to tell it.</p><h2 id="mms-title">Media craft, with production in mind.</h2><p>Mosi Media Solutions brings photography, video, audio and event technology together in Victoria Falls. Our conference and corporate production work sits alongside these personal and creative experiences.</p><Link href="/conference-production" className={`${styles.glassButton} mt-4`}>Explore conference production</Link></div>
+      <div className={s.note}><h3>A brief before a promise.</h3><p>We begin with your priorities, location and intended use. Scope, crew, deliverables, quotation and booking terms are agreed together. A package preference helps start that conversation.</p><Link href="/projects" className={`${styles.glassButton} mt-4`}>Explore published MMS work</Link></div>
     </section>
     <section className={`${s.section} ${s.closing}`} aria-labelledby="packages-enquiry-title">
       <p className={s.eyebrow}>Let’s make a plan</p><h2 id="packages-enquiry-title">What could we create together?</h2><p>Select a category to send a package enquiry with the right context, or talk to us if your idea crosses more than one experience.</p>
-      <div className={s.actions}>{packageExperiences.map(experience => <Link className={s.textLink} key={experience.slug} href={`${packagePath(experience.slug)}#package-enquiry`}>Enquire about {experience.title.toLowerCase()}</Link>)}</div>
-      <div className={s.actions}><EnquiryLink href="/contact?service=Signature%20Experiences&origin=%2Fpackages#enquiry">Discuss a combined brief</EnquiryLink></div>
+      <div className={s.actions}>{packageExperiences.map(experience => <Link className={styles.glassButton} key={experience.slug} href={`${packagePath(experience.slug)}#package-enquiry`}>Enquire about {experience.title.toLowerCase()}</Link>)}</div>
+      <div className={s.actions}><EnquiryLink className={styles.glassButton} href="/contact?service=Signature%20Experiences&origin=%2Fpackages#enquiry">Discuss a combined brief</EnquiryLink></div>
     </section>
   </main><Footer /></div>;
 }

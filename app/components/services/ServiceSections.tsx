@@ -5,8 +5,8 @@ import styles from "./services.module.css";
 export const enquiryLink = (service: string, origin: string) =>
   `/contact?${new URLSearchParams({ service, origin }).toString()}#enquiry`;
 
-export function EnquiryLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return <Link href={href} className={styles.button}>{children}<ArrowRight aria-hidden="true" size={18} /></Link>;
+export function EnquiryLink({ href, children, className = "" }: { href: string; children: React.ReactNode; className?: string }) {
+  return <Link href={href} className={`${styles.button} ${className}`}>{children}<ArrowRight aria-hidden="true" size={18} /></Link>;
 }
 
 export function ServiceProcess({ steps }: { steps: { title: string; text: string }[] }) {

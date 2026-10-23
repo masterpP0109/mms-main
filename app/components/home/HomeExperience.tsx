@@ -621,9 +621,6 @@ export default function Home() {
                           >
                             View Project
                           </a>
-                          <span className="pw-card-counter text-xs uppercase tracking-[0.3em] text-brand-foreground/70 font-heading">
-                            {String(idx + 1).padStart(2, "00")} / {String(pastWorkItems.length).padStart(2, "00")}
-                          </span>
                         </div>
                       </div>
                     </div>

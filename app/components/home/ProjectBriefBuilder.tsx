@@ -25,7 +25,7 @@ export default function ProjectBriefBuilder() {
           <section aria-busy={builderLoading} style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto mms-gutter relative">
 
 
-        <div data-reveal="scale" className="bg-[#190910] rounded-3xl border border-[#fda4af]/10 p-5 sm:p-8 md:p-10">
+        <div data-reveal="scale" className="bg-[#190910] rounded-3xl border border-brand-accent/10 p-5 sm:p-8 md:p-10">
           {/* Step Progress Indicator */}
           <div className="builder-progress flex items-center justify-between gap-2 mb-6 max-w-md mx-auto">
             {["Goal", "Audience", "Timeline", "Contact", "Review"].map((label, idx) => {
@@ -37,16 +37,16 @@ export default function ProjectBriefBuilder() {
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
                       isActive
-                        ? "bg-[#9f2345] text-white scale-110"
+                        ? "bg-brand-primary text-white scale-110"
                         : isDone
-                        ? "bg-[#fda4af]/30 text-[#fda4af]"
-                        : "bg-[#fda4af]/10 text-[#f4ebd0]/40"
+                        ? "bg-brand-accent/30 text-brand-accent"
+                        : "bg-brand-accent/10 text-brand-foreground/40"
                     }`}
                   >
                     {isDone ? "✓" : stepNum}
                   </div>
                   <span className={`text-xs uppercase tracking-widest mt-1.5 font-heading ${
-                    isActive ? "text-[#fda4af]" : isDone ? "text-[#fda4af]/60" : "text-[#f4ebd0]/30"
+                    isActive ? "text-brand-accent" : isDone ? "text-brand-accent/60" : "text-brand-foreground/30"
                   }`}>
                     {label}
                   </span>
@@ -55,7 +55,7 @@ export default function ProjectBriefBuilder() {
             })}
           </div>
 
-          <p className="text-center text-sm text-[#fda4af] mb-6 sm:hidden" aria-live="polite">Step {builderStep + 1} of 5: {["Goal", "Audience", "Timeline", "Contact", "Review"][builderStep]}</p>
+          <p className="text-center text-sm text-brand-accent mb-6 sm:hidden" aria-live="polite">Step {builderStep + 1} of 5: {["Goal", "Audience", "Timeline", "Contact", "Review"][builderStep]}</p>
           {/* Step 1: Goal Selection */}
           {builderStep === 0 && (
             <motion.div
@@ -66,7 +66,7 @@ export default function ProjectBriefBuilder() {
             >
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-semibold text-white font-heading">What type of project are you planning?</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">Select the option that best describes your needs</p>
+                <p className="text-base text-brand-foreground/60 mt-2">Select the option that best describes your needs</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -81,13 +81,13 @@ export default function ProjectBriefBuilder() {
                     onClick={() => setBuilderData({ ...builderData, goal: opt.id })}
                     className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       builderData.goal === opt.id
-                        ? "border-[#fda4af] bg-[#881337]/35 shadow-[0_0_20px_rgba(159,35,69,0.1)]"
-                        : "border-[#fda4af]/15 bg-[#050507]/50 hover:border-[#fda4af]/40"
+                        ? "border-brand-accent bg-brand-primary/35 shadow-[0_0_20px_rgba(152,27,40,0.1)]"
+                        : "border-brand-accent/15 bg-[#050507]/50 hover:border-brand-accent/40"
                     }`}
                   >
                     <div className="grow text-left">
                       <h4 className="text-sm font-medium text-white">{opt.label}</h4>
-                      <p className="text-xs text-[#f4ebd0]/70 mt-1">{opt.desc}</p>
+                      <p className="text-xs text-brand-foreground/70 mt-1">{opt.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -105,7 +105,7 @@ export default function ProjectBriefBuilder() {
             >
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-semibold text-white font-heading">Tell us about your event or audience</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">This helps us tailor the creative approach</p>
+                <p className="text-base text-brand-foreground/60 mt-2">This helps us tailor the creative approach</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -120,16 +120,16 @@ export default function ProjectBriefBuilder() {
                     onClick={() => setBuilderData({ ...builderData, audience: opt.id })}
                     className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       builderData.audience === opt.id
-                        ? "border-[#fda4af] bg-[#881337]/35 shadow-[0_0_20px_rgba(159,35,69,0.1)]"
-                        : "border-[#fda4af]/15 bg-[#050507]/50 hover:border-[#fda4af]/40"
+                        ? "border-brand-accent bg-brand-primary/35 shadow-[0_0_20px_rgba(152,27,40,0.1)]"
+                        : "border-brand-accent/15 bg-[#050507]/50 hover:border-brand-accent/40"
                     }`}
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#fda4af]/15 flex items-center justify-center shrink-0">
-                      <Users className="w-4 h-4 text-[#fda4af]" />
+                    <div className="w-8 h-8 rounded-full bg-brand-accent/15 flex items-center justify-center shrink-0">
+                      <Users className="w-4 h-4 text-brand-accent" />
                     </div>
                     <div className="grow text-left">
                       <h4 className="text-sm font-medium text-white">{opt.label}</h4>
-                      <p className="text-xs text-[#f4ebd0]/70 mt-1">{opt.desc}</p>
+                      <p className="text-xs text-brand-foreground/70 mt-1">{opt.desc}</p>
                     </div>
                   </button>
                 ))}
@@ -147,7 +147,7 @@ export default function ProjectBriefBuilder() {
             >
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-semibold text-white font-heading">What&apos;s your timeline?</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">We work with all timelines, from urgent to flexible</p>
+                <p className="text-base text-brand-foreground/60 mt-2">We work with all timelines, from urgent to flexible</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
@@ -162,16 +162,16 @@ export default function ProjectBriefBuilder() {
                     onClick={() => setBuilderData({ ...builderData, timeline: opt.id })}
                     className={`flex items-start gap-4 p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       builderData.timeline === opt.id
-                        ? "border-[#fda4af] bg-[#881337]/35 shadow-[0_0_20px_rgba(159,35,69,0.1)]"
-                        : "border-[#fda4af]/15 bg-[#050507]/50 hover:border-[#fda4af]/40"
+                        ? "border-brand-accent bg-brand-primary/35 shadow-[0_0_20px_rgba(152,27,40,0.1)]"
+                        : "border-brand-accent/15 bg-[#050507]/50 hover:border-brand-accent/40"
                     }`}
                   >
-                    <div className="min-w-16 min-h-10 px-2 rounded-full bg-[#fda4af]/15 flex items-center justify-center shrink-0">
-                      <span className="text-xs font-bold text-[#fda4af]">{opt.days}</span>
+                    <div className="min-w-16 min-h-10 px-2 rounded-full bg-brand-accent/15 flex items-center justify-center shrink-0">
+                      <span className="text-xs font-bold text-brand-accent">{opt.days}</span>
                     </div>
                     <div>
                       <span className="text-base font-medium text-white block">{opt.label}</span>
-                      <span className="text-sm text-[#f4ebd0]/60 mt-1 block">{opt.desc}</span>
+                      <span className="text-sm text-brand-foreground/60 mt-1 block">{opt.desc}</span>
                     </div>
                   </button>
                 ))}
@@ -189,11 +189,11 @@ export default function ProjectBriefBuilder() {
             >
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-semibold text-white font-heading">Where should we send your custom quote?</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">Our team will review your brief and respond using your contact details.</p>
+                <p className="text-base text-brand-foreground/60 mt-2">Our team will review your brief and respond using your contact details.</p>
               </div>
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="builder-name" className="text-xs uppercase tracking-widest text-[#fda4af] font-semibold block mb-2">Your Name</label>
+                  <label htmlFor="builder-name" className="text-xs uppercase tracking-widest text-brand-accent font-semibold block mb-2">Your Name</label>
                   <input
                     type="text"
                     id="builder-name"
@@ -204,11 +204,11 @@ export default function ProjectBriefBuilder() {
                     value={builderData.name}
                     onChange={(e) => setBuilderData({ ...builderData, name: e.target.value })}
                     placeholder="e.g. Sarah Johnson"
-                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors"
+                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label htmlFor="builder-email" className="text-xs uppercase tracking-widest text-[#fda4af] font-semibold block mb-2">Email Address</label>
+                  <label htmlFor="builder-email" className="text-xs uppercase tracking-widest text-brand-accent font-semibold block mb-2">Email Address</label>
                   <input
                     type="email"
                     id="builder-email"
@@ -219,11 +219,11 @@ export default function ProjectBriefBuilder() {
                     value={builderData.email}
                     onChange={(e) => setBuilderData({ ...builderData, email: e.target.value })}
                     placeholder="e.g. sarah@example.com"
-                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors"
+                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label htmlFor="builder-phone" className="text-xs uppercase tracking-widest text-[#fda4af] font-semibold block mb-2">Phone (optional)</label>
+                  <label htmlFor="builder-phone" className="text-xs uppercase tracking-widest text-brand-accent font-semibold block mb-2">Phone (optional)</label>
                   <input
                     type="tel"
                     id="builder-phone"
@@ -234,11 +234,11 @@ export default function ProjectBriefBuilder() {
                     value={builderData.phone}
                     onChange={(e) => setBuilderData({ ...builderData, phone: e.target.value })}
                     placeholder="e.g. +1 234 567 890"
-                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors"
+                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors"
                   />
                 </div>
                 <div>
-                  <label htmlFor="builder-details" className="text-xs uppercase tracking-widest text-[#fda4af] font-semibold block mb-2">Project Details</label>
+                  <label htmlFor="builder-details" className="text-xs uppercase tracking-widest text-brand-accent font-semibold block mb-2">Project Details</label>
                   <textarea
                     id="builder-details"
                     maxLength={5000}
@@ -247,7 +247,7 @@ export default function ProjectBriefBuilder() {
                     onChange={(e) => setBuilderData({ ...builderData, details: e.target.value })}
                     placeholder="Tell us about your vision, location, guest count, or any special requirements..."
                     rows={3}
-                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors resize-y"
+                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-base text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors resize-y"
                   />
                 </div>
               </div>
@@ -263,17 +263,17 @@ export default function ProjectBriefBuilder() {
               className="space-y-8 max-w-lg mx-auto"
             >
               <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-[#fda4af]/15 flex items-center justify-center mx-auto mb-4">
-                  <Award className="w-7 h-7 text-[#fda4af]" />
+                <div className="w-16 h-16 rounded-full bg-brand-accent/15 flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-7 h-7 text-brand-accent" />
                 </div>
                 <h3 className="text-2xl font-semibold text-white font-heading">Your Brief Is Ready</h3>
-                <p className="text-base text-[#f4ebd0]/60 mt-2">Review your selections below. We&apos;ll create a custom quote based on your brief.</p>
+                <p className="text-base text-brand-foreground/60 mt-2">Review your selections below. We&apos;ll create a custom quote based on your brief.</p>
               </div>
 
                 <div className="space-y-3">
                 {projectBriefRows(builderData).map((item) => (
-                  <div key={item.label} className="flex flex-col sm:flex-row gap-2 justify-between sm:items-center py-2 border-b border-[#fda4af]/10">
-                    <span className="text-xs uppercase tracking-widest text-[#fda4af]/70 font-semibold">{item.label}</span>
+                  <div key={item.label} className="flex flex-col sm:flex-row gap-2 justify-between sm:items-center py-2 border-b border-brand-accent/10">
+                    <span className="text-xs uppercase tracking-widest text-brand-accent/70 font-semibold">{item.label}</span>
                     <span className="text-base text-white font-medium text-left sm:text-right sm:max-w-[60%] whitespace-pre-wrap break-words min-w-0">{item.value}</span>
                   </div>
                 ))}
@@ -288,7 +288,7 @@ export default function ProjectBriefBuilder() {
                 >
                   <MessageSquare className="w-5 h-5" /> Send My Brief on WhatsApp
                 </a>
-                <p className="text-sm text-[#f4ebd0]/60 mb-5">Opens WhatsApp to 0788 111 391 with your full brief. Press Send in WhatsApp to request your quote.</p>
+                <p className="text-sm text-brand-foreground/60 mb-5">Opens WhatsApp to 0788 111 391 with your full brief. Press Send in WhatsApp to request your quote.</p>
                 <button
                   onClick={async () => {
                     if (builderLoading || builderSubmitted) return;
@@ -306,24 +306,24 @@ export default function ProjectBriefBuilder() {
                   }}
                   disabled={!builderData.name || !builderData.email || builderLoading || builderSubmitted}
                   data-lead-cta
-                  className="inline-flex items-center justify-center px-8 py-3.5 text-sm uppercase tracking-widest bg-gradient-to-r from-[#881337] to-[#9f2345] text-white font-bold rounded-full hover:brightness-110 hover:shadow-lg hover:shadow-[#9f2345]/30 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  className="mms-button inline-flex items-center justify-center px-8 py-3.5 text-sm uppercase tracking-widest text-white font-bold rounded-full transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   {builderSubmitted ? "Brief Saved — Thank You" : builderLoading ? "Sending…" : "Send My Brief & Get a Free Quote"}
                 </button>
-                {builderSubmitted && <p role="status" className="text-sm text-[#f4ebd0]/60 mt-3 break-words">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details. Enquiry reference: {reference}</p>}
+                {builderSubmitted && <p role="status" className="text-sm text-brand-foreground/60 mt-3 break-words">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details. Enquiry reference: {reference}</p>}
                 <input aria-hidden="true" tabIndex={-1} autoComplete="off" name="website" className="hidden" value={builderWebsite} onChange={(event) => setBuilderWebsite(event.target.value)} />
                 {builderError && <p role="alert" className="text-sm text-red-400 mt-3">{builderError}</p>}
-                <p className="text-sm text-[#f4ebd0]/40 mt-3">We respect your privacy. No spam, ever.</p>
+                <p className="text-sm text-brand-foreground/40 mt-3">We respect your privacy. No spam, ever.</p>
               </div>
             </motion.div>
           )}
 
           {/* Navigation Buttons */}
-          <div className="builder-actions flex flex-wrap gap-3 items-center justify-between mt-8 pt-6 border-t border-[#fda4af]/10">
+          <div className="builder-actions flex flex-wrap gap-3 items-center justify-between mt-8 pt-6 border-t border-brand-accent/10">
             <button
               onClick={() => setBuilderStep((prev) => Math.max(0, prev - 1))}
               disabled={builderStep === 0 || builderLoading || builderSubmitted}
-              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[#f4ebd0]/50 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-brand-foreground/50 hover:text-white transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
               Back
@@ -344,7 +344,7 @@ export default function ProjectBriefBuilder() {
                     }
                     setBuilderStep((prev) => Math.min(4, prev + 1));
                   }}
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-widest bg-[#9f2345] text-white px-5 py-3 rounded-full font-semibold hover:brightness-110 transition-all duration-300 cursor-pointer"
+                  className="mms-button gap-2 text-xs uppercase tracking-widest px-5 py-3 cursor-pointer"
                   disabled={(builderStep === 0 && !builderData.goal) || (builderStep === 1 && !builderData.audience) || (builderStep === 2 && !builderData.timeline) || (builderStep === 3 && (!builderData.name.trim() || !builderData.email.trim()))}
                 >
                   {builderStep === 3 ? "Review Brief" : "Continue"}
@@ -360,7 +360,7 @@ export default function ProjectBriefBuilder() {
                     setBuilderError(null);
                     setBuilderData({ goal: "", audience: "", timeline: "", name: "", email: "", phone: "", details: "" });
                   }}
-                  className="text-xs uppercase tracking-widest text-[#f4ebd0]/40 hover:text-[#f4ebd0]/70 transition-colors cursor-pointer"
+                  className="text-xs uppercase tracking-widest text-brand-foreground/40 hover:text-brand-foreground/70 transition-colors cursor-pointer"
                   disabled={builderLoading}
                 >
                   Reset

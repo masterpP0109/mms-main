@@ -3,13 +3,18 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
+      NEXT_TELEMETRY_DISABLED: '1'
       DATABASE_URL: postgresql://mms:mms@localhost:5432/mms_test
       MMS_TEST_DATABASE_URL: postgresql://mms:mms@localhost:5432/mms_test
       PLAYWRIGHT_BROWSERS_PATH: .cache/ms-playwright

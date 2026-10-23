@@ -24,10 +24,10 @@ export function enquiryRows(lead: EmailLead, audience: "mms" | "customer" = "mms
   const contact: Row[] = [["Full name", lead.name], ["Contact email", lead.email || "Not provided"], ["Phone / WhatsApp", lead.phone || "Not provided"]];
   // Acknowledgements contain only the requested summary, not a reflection of
   // arbitrary message text or extra metadata from an unverified public sender.
-  if (audience === "customer") return [...contact, ["Requested service", services], ["Timeline", label(meta.timeline) || label(meta.date)]]
+  if (audience === "customer") return [...contact, ["Requested service", services], ["Package preference", label(meta.packageName)], ["Timeline", label(meta.timeline) || label(meta.date)]]
     .filter((row): row is [string, string] => typeof row[1] === "string" && row[1].length > 0);
   const details: Row[] = [
-    ["Requested service", services], ["Timeline", label(meta.timeline) || label(meta.date)],
+    ["Requested service", services], ["Package preference", label(meta.packageName)], ["Timeline", label(meta.timeline) || label(meta.date)],
     ["Event / project type", label(lead.projectType) !== services ? label(lead.projectType) : undefined], ["Event date", meta.date as string | undefined],
     ["Venue / location", meta.venue as string | undefined], ["Attendees", meta.delegates as string | undefined],
     ["Audience type", label(meta.audience)], ["Message / additional requirements", lead.message],
@@ -50,6 +50,7 @@ export function renderEnquiryEmail(lead: EmailLead, audience: "mms" | "customer"
     ["Enquiry reference", reference],
     ["Source page", label(lead.metadata?.origin) || ({ contact: "/contact", conference: "/conference-production", project_builder: "/#builder", whatsapp: "WhatsApp" })[lead.source]],
     ["Submitted", submitted],
+    ...["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id", "landingPage", "gclid", "gbraid", "wbraid", "fbclid"].map(key => [key, label(lead.metadata?.[key])] as Row).filter(([, value]) => value),
   ];
   const whatsapp = customer ? undefined : zimbabweWhatsAppLink(lead.phone);
   const footer = `Mosi Media Solutions · Victoria Falls, Zimbabwe\n${MMS_EMAIL}\nhttps://www.mosimediasolutions.com`;

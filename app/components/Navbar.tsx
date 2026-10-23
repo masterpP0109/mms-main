@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "Conference Production", href: "/conference-production" },
   { label: "Services", href: "/services" },
+  { label: "Packages", href: "/packages" },
   { label: "Drone Services", href: "/services/drone" },
   { label: "Projects", href: "/projects" },
   { label: "Gallery", href: "/gallery" },
@@ -51,7 +52,7 @@ export default function Navbar() {
 
   return (
     <header className="site-header fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-8 flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="relative z-50 flex shrink-0 items-center"
@@ -84,7 +85,7 @@ export default function Navbar() {
                     key={item.href}
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`nav-item relative px-2 py-2.5 text-[11px] uppercase tracking-[.08em] ${
+                    className={`nav-item relative px-2 py-2.5 text-[10px] 2xl:text-[11px] uppercase tracking-[.06em] ${
                       isActive(item.href) ? "active text-white" : "text-brand-foreground/70 hover:text-white"
                     }`}
                   >

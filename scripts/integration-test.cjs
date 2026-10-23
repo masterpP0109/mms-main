@@ -18,6 +18,8 @@ const { db } = require("../lib/db.ts");
 const { createLead, notifyLeadWhatsApp } = require("../lib/leads.ts");
 const { getService } = require("../lib/get-service.ts");
 const { POST } = require("../app/api/webhooks/whatsapp/route.ts");
+const { POST: submitPackage } = require("../app/api/leads/route.ts");
+const { packageExperiences } = require("../lib/packages.ts");
 async function run() {
   const token = randomUUID();
   const input = { source: "contact", name: "Integration fixture", email: `${token}@example.com`, message: "Isolated concurrency test" };
@@ -29,6 +31,24 @@ async function run() {
   assert.equal(lead.emailAttempts, 0);
   assert.equal(lead.acknowledgementStatus, "pending");
   assert.equal(lead.acknowledgementAttempts, 0);
+  for (const experience of packageExperiences) {
+    const response = await submitPackage(new Request("http://localhost/api/leads", {
+      method: "POST", headers: { "Content-Type": "application/json", "Idempotency-Key": randomUUID() },
+      body: JSON.stringify({ kind: "package", category: experience.slug, packageId: experience.options[0].id,
+        name: "Package integration fixture", email: `${randomUUID()}@example.com`, date: "2027-05-10",
+        details: "Isolated package persistence check", attribution: { utm_source: "ci", utm_campaign: "signature", landingPage: "/packages" } }),
+    }));
+    assert.equal(response.status, 201);
+    const saved = await response.json();
+    const packageLead = await db.lead.findUniqueOrThrow({ where: { id: saved.submissionId } });
+    assert.equal(packageLead.source, "contact");
+    assert.equal(packageLead.metadata.service, experience.service);
+    assert.equal(packageLead.metadata.packageName, experience.options[0].name);
+    assert.equal(packageLead.metadata.date, "2027-05-10");
+    assert.equal(packageLead.metadata.utm_campaign, "signature");
+    assert.equal(packageLead.emailStatus, "pending");
+    assert.equal(packageLead.acknowledgementStatus, "pending");
+  }
   await notifyLeadWhatsApp(lead.id);
   const deferred = await db.lead.findUniqueOrThrow({ where: { id: lead.id } });
   assert.equal(deferred.whatsappStatus, "not_configured");

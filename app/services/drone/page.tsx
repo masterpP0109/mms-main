@@ -21,7 +21,7 @@ export default function DronePage() {
         <p className={styles.eyebrow}>Drone Services · Mosi Media Solutions</p>
         <h1 id="drone-title">A wider perspective.<br />A fuller story.</h1>
         <p>Aerial photography and videography bring scale, setting and movement to your story. Start with a location and an idea; we&apos;ll discuss what is possible.</p>
-        <div className={styles.actions}><EnquiryLink href={contact}>Discuss your aerial shoot</EnquiryLink><a href="#aerial-options" className={styles.textLink}>Explore the possibilities</a></div>
+        <div className={styles.actions}><EnquiryLink href={contact}>Discuss your aerial shoot</EnquiryLink><Link href="/packages/drone" className={styles.textLink}>Explore drone packages</Link><a href="#aerial-options" className={styles.textLink}>Explore the possibilities</a></div>
         <p className={styles.caption}>Illustrative landscape imagery from our image library. Flight feasibility depends on location, weather and applicable permissions.</p>
       </div>
     </section>

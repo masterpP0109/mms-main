@@ -62,13 +62,13 @@ test("desktop Drone Services link and homepage feature links resolve", async ({ 
   await expect(nav.getByRole("link", { name: "Drone Services", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(nav.getByRole("link", { name: "Services", exact: true })).not.toHaveAttribute("aria-current", "page");
   await page.goto("/#services");
-  await page.locator('section[aria-labelledby="weddings-feature-title"]').screenshot({ path: "test-results/home-weddings-feature.png" });
+  await page.locator('#signature-experiences').screenshot({ path: "test-results/home-signature-experiences.png" });
   await page.getByRole("link", { name: "Learn more about Drone Services", exact: true }).click();
   await expect(page).toHaveURL(/\/services\/drone$/);
-  for (const label of ["Discover Weddings & Elopements coverage", "Explore weddings & elopements"]) {
+  for (const label of ["Explore Wedding Packages", "View wedding packages"]) {
     await page.goto("/#services");
-    await page.locator("#services").getByRole("link", { name: label, exact: true }).click();
-    await expect(page).toHaveURL(/\/services\/weddings-elopements$/);
+    await page.locator("#signature-experiences").getByRole("link", { name: label, exact: true }).click();
+    await expect(page).toHaveURL(/\/packages\/weddings$/);
   }
 });
 
@@ -84,16 +84,16 @@ test("services catalogue links its drone card and wedding feature to the dedicat
   await expect(page).toHaveURL(/\/services\/weddings-elopements$/);
 });
 
-test("mobile wedding feature remains readable and animated content is reachable", async ({ page }) => {
+test("mobile signature experiences remain readable and animated content is reachable", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/#services");
-  const feature = page.locator('section[aria-labelledby="weddings-feature-title"]');
+  const feature = page.locator('#signature-experiences');
   await feature.scrollIntoViewIfNeeded();
-  await expect(feature.getByRole("heading", { name: "Weddings & Elopements" })).toBeVisible();
+  await expect(feature.getByRole("heading", { name: "Wedding Packages" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await feature.screenshot({ path: "test-results/home-weddings-feature-mobile.png" });
-  await feature.getByRole("link", { name: "Explore weddings & elopements", exact: true }).click();
-  await expect(page).toHaveURL(/\/services\/weddings-elopements$/);
+  await feature.getByRole("link", { name: "View wedding packages", exact: true }).click();
+  await expect(page).toHaveURL(/\/packages\/weddings$/);
   await page.locator("summary").first().scrollIntoViewIfNeeded();
   await expect(page.locator("summary").first()).toBeVisible();
 });

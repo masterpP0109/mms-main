@@ -3,6 +3,7 @@ import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import MotionProvider from "./components/MotionProvider";
 import ScrollEffects from "./components/ScrollEffects";
+import CampaignCapture from "./components/packages/CampaignCapture";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -21,7 +22,7 @@ const inter = Inter({
 export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL || "https://mms-main.vercel.app"),
+  metadataBase: new URL(process.env.SITE_URL || "https://www.mosimediasolutions.com"),
   openGraph: { type: "website", siteName: "Mosi Media Solutions", images: [{ url: "/victoria_falls_banner.png", alt: "Victoria Falls" }] },
   title: "MMS | Conference & Seminar Production Victoria Falls",
   description: "Mosi Media Solutions provides professional conference, seminar and event production for ministries, government agencies, international organisations and professional institutions.",
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} ${inter.variable} min-h-full flex flex-col bg-[#050507] text-[#f3f4f6]`}>
         <MotionProvider>
           <ScrollEffects />
+          <CampaignCapture />
           {children}
         </MotionProvider>
       </body>

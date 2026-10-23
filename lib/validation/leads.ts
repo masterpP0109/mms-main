@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CONTACT_ORIGIN_PATTERN } from "@/lib/contact-referral";
+import { getPackageExperience } from "@/lib/packages";
 
 const text = (max: number) => z.string().trim().min(1).max(max).refine((value) => !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value), "Invalid characters");
 const optionalText = (max: number) => z.string().trim().max(max).optional().transform((v) => v || undefined);
@@ -42,6 +43,27 @@ export const projectBriefSchema = z.object({
   details: optionalText(5000),
   website: z.string().max(0).optional(),
 }).strict();
+
+const campaignValue = optionalText(200);
+export const packageLeadSchema = z.object({
+  kind: z.literal("package"),
+  category: z.enum(["weddings", "drone", "podcasts"]),
+  packageId: text(80),
+  name: text(120), email: z.string().trim().email().max(254), phone,
+  date: z.string().date().optional(),
+  details: text(5000),
+  attribution: z.object({
+    utm_source: campaignValue, utm_medium: campaignValue, utm_campaign: campaignValue,
+    utm_term: campaignValue, utm_content: campaignValue, utm_id: campaignValue,
+    gclid: campaignValue, gbraid: campaignValue, wbraid: campaignValue, fbclid: campaignValue,
+    landingPage: z.string().max(300).regex(CONTACT_ORIGIN_PATTERN).optional(),
+  }).strict().optional(),
+  website: z.string().max(0).optional(),
+}).strict().superRefine((input, ctx) => {
+  if (input.packageId !== "tailored" && !getPackageExperience(input.category)?.options.some(option => option.id === input.packageId)) {
+    ctx.addIssue({ code: "custom", path: ["packageId"], message: "Choose an option from this service category" });
+  }
+});
 
 export type LeadInput = {
   source: "contact" | "conference" | "project_builder" | "whatsapp";

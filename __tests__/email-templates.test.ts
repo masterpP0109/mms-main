@@ -4,7 +4,7 @@ const lead = { id: "fixture_1", createdAt: new Date("2026-10-20T10:00:00Z"), sou
 it.each(["mms", "customer"] as const)("renders branded, escaped and responsive %s email", audience => {
   const email = renderEnquiryEmail(lead, audience);
   expect(email.html).toContain('name="viewport"');
-  expect(email.html).toContain("#c5a880");
+  expect(email.html).toContain("#981b28");
   expect(email.html).not.toContain("<script>");
   expect(email.html).toContain("&lt;script&gt;");
   for (const value of ["MMS-fixture_1", lead.email, lead.phone, "Brand Campaign", "Soon (1–3 months)", "info@mosimediasolutions.com"]) expect(email.text).toContain(value);

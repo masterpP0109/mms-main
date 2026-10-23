@@ -21,8 +21,7 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const ctaBase =
-  "relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] text-[10px] uppercase tracking-widest font-semibold hover:brightness-110 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]";
+const ctaBase = "mms-button text-[10px] uppercase tracking-widest";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -87,7 +86,7 @@ export default function Navbar() {
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
                     className={`nav-item relative px-2 py-2.5 text-[10px] 2xl:text-[11px] uppercase tracking-[.06em] ${
-                      isActive(item.href) ? "active text-white" : "text-[#f4ebd0]/70 hover:text-white"
+                      isActive(item.href) ? "active text-white" : "text-brand-foreground/70 hover:text-white"
                     }`}
                   >
                     {isActive(item.href) && (
@@ -151,8 +150,8 @@ export default function Navbar() {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`min-h-11 flex items-center justify-center text-center text-lg sm:text-2xl font-semibold tracking-widest uppercase transition-colors duration-300 font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a880] rounded-sm ${
-                    isActive(item.href) ? "text-white" : "text-[#f4ebd0]/70 hover:text-white"
+                  className={`min-h-11 flex items-center justify-center text-center text-lg sm:text-2xl font-semibold tracking-widest uppercase transition-colors duration-300 font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-sm ${
+                    isActive(item.href) ? "text-white" : "text-brand-foreground/70 hover:text-white"
                   }`}
                 >
                   {item.label}

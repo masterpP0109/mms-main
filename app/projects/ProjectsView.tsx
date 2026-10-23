@@ -9,8 +9,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useModalFocus } from "../components/useModalFocus";
 
-const goldBtn =
-  "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-all duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
+const primaryButton = "mms-button group";
 
 
 import type { ProjectCardData } from "@/lib/content-types";
@@ -30,7 +29,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
   useModalFocus(selected !== null, modalRef, () => setSelected(null));
 
   return (
-    <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
+    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
       <Navbar />
 
       {/* Hero */}
@@ -41,11 +40,11 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
         <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/50 to-[#050507]/10 z-10" />
         <div className="relative z-20 max-w-[1400px] mx-auto mms-gutter w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Our Featured Work</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">Our Featured Work</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading">
               Stories That Became Memories
             </h1>
-            <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed">
+            <p className="text-sm md:text-base text-brand-foreground/75 font-light leading-relaxed">
               A selection of weddings, corporate productions and immersive experiences brought to life through cinematic storytelling.
             </p>
           </motion.div>
@@ -53,7 +52,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
       </section>
 
       {/* Filter */}
-      <div className="sticky top-[72px] z-30 bg-[#050507]/90 backdrop-blur-md border-b border-[#c5a880]/10 py-4">
+      <div className="sticky top-[72px] z-30 bg-[#050507]/90 backdrop-blur-md border-b border-brand-accent/10 py-4">
         <div className="max-w-[1400px] mx-auto mms-gutter flex items-center gap-3 overflow-x-auto scrollbar-none">
           {categories.map((cat) => (
             <button
@@ -62,14 +61,14 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               onClick={() => setActive(cat)}
               className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300 cursor-pointer ${
                 active === cat
-                  ? "bg-[#c5a880] text-[#050507]"
-                  : "border border-[#c5a880]/25 text-[#f4ebd0]/60 hover:border-[#c5a880]/60 hover:text-white"
+                  ? "bg-brand-accent text-[#050507]"
+                  : "border border-brand-accent/25 text-brand-foreground/60 hover:border-brand-accent/60 hover:text-white"
               }`}
             >
               {cat}
             </button>
           ))}
-          <span className="ml-auto text-[10px] text-[#f4ebd0]/30 pl-4 border-l border-[#c5a880]/10 shrink-0">{allFiltered.length} projects</span>
+          <span className="ml-auto text-[10px] text-brand-foreground/30 pl-4 border-l border-brand-accent/10 shrink-0">{allFiltered.length} projects</span>
         </div>
       </div>
 
@@ -84,7 +83,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
-              className="group glass-panel rounded-3xl border border-[#c5a880]/15 overflow-hidden hover:border-[#c5a880]/35 transition-all duration-300 cursor-pointer"
+              className="group glass-panel rounded-3xl border border-brand-accent/15 overflow-hidden hover:border-brand-accent/35 transition-all duration-300 cursor-pointer"
               role="button"
               tabIndex={0}
               aria-label={`Preview ${project.title}`}
@@ -101,7 +100,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/25 to-transparent" />
                 <div className="absolute top-4 left-4">
-                  <span className="text-[9px] uppercase tracking-[0.2em] bg-black/50 backdrop-blur-sm text-[#c5a880] border border-[#c5a880]/25 px-2.5 py-1 rounded-full">
+                  <span className="text-[9px] uppercase tracking-[0.2em] bg-black/50 backdrop-blur-sm text-brand-accent border border-brand-accent/25 px-2.5 py-1 rounded-full">
                     {project.category}
                   </span>
                 </div>
@@ -123,10 +122,10 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               {/* Content */}
               <div className="p-6 space-y-3">
                 <h3 className="text-lg font-semibold text-white font-heading">{project.title}</h3>
-                <p className="text-xs text-[#f4ebd0]/65 leading-relaxed font-light">{project.desc}</p>
+                <p className="text-xs text-brand-foreground/65 leading-relaxed font-light">{project.desc}</p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-[#c5a880]/8 text-[#f4ebd0]/60 border border-[#c5a880]/12 px-2.5 py-1 rounded-full">
+                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-brand-accent/8 text-brand-foreground/60 border border-brand-accent/12 px-2.5 py-1 rounded-full">
                       {tag}
                     </span>
                   ))}
@@ -134,7 +133,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                 <Link
                   href={`/projects/${project.slug}`}
                   onClick={(event) => event.stopPropagation()}
-                  className="inline-flex items-center gap-2 pt-2 text-[10px] uppercase tracking-[0.2em] text-[#c5a880] hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 pt-2 text-[10px] uppercase tracking-[0.2em] text-brand-accent hover:text-white transition-colors"
                 >
                   View case study <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
@@ -145,12 +144,12 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
 
         {allFiltered.length > 6 && (
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-[#f4ebd0]/40 font-light">
+            <span className="text-xs text-brand-foreground/40 font-light">
               Showing {displayed.length} of {allFiltered.length} projects
             </span>
             <Link
               href="/gallery"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300"
             >
               View More Projects
               <ArrowRight className="w-4 h-4" />
@@ -160,7 +159,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
       </section>
 
       {/* Full-bleed image strip */}
-      <section className="overflow-hidden border-y border-[#c5a880]/10">
+      <section className="overflow-hidden border-y border-brand-accent/10">
         <div className="photo-strip flex h-48 md:h-64">
           {["/mms/DSC_7550.jpg", "/mms/DSC_1821.jpg", "/mms/DSC_2475.jpg", "/mms/DSC_7551.jpg", "/mms/AllanLinda-31.jpg"].map((src, i) => (
             <div key={i} className="relative flex-1 overflow-hidden">
@@ -181,8 +180,8 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               { number: "5★", label: "Average Client Rating" },
             ].map((stat) => (
               <div key={stat.label} className="space-y-2">
-                <p className="text-3xl md:text-4xl font-semibold text-[#c5a880] font-heading">{stat.number}</p>
-                <p className="text-xs uppercase tracking-[0.15em] text-[#f4ebd0]/55 font-light">{stat.label}</p>
+                <p className="text-3xl md:text-4xl font-semibold text-brand-accent font-heading">{stat.number}</p>
+                <p className="text-xs uppercase tracking-[0.15em] text-brand-foreground/55 font-light">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -196,15 +195,15 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
         <div data-reveal="scale" className="relative z-10 max-w-[700px] mx-auto px-6 text-center space-y-6">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Start Your Project</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block font-heading">Start Your Project</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Your story deserves to be told beautifully.</h2>
-          <p className="text-sm text-[#f4ebd0]/60 font-light leading-relaxed">Let&apos;s discuss your vision and build something worth remembering.</p>
+          <p className="text-sm text-brand-foreground/60 font-light leading-relaxed">Let&apos;s discuss your vision and build something worth remembering.</p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link data-lead-cta href="/contact" className={`${goldBtn} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
+            <Link data-lead-cta href="/contact" className={`${primaryButton} px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
               <span className="relative z-10">Start a Project</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link href="/gallery" className="inline-flex items-center px-8 py-3.5 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+            <Link href="/gallery" className="inline-flex items-center px-8 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300">
               Browse Gallery
             </Link>
           </div>
@@ -230,7 +229,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
             <button
               type="button"
               onClick={() => setSelected(null)}
-              className="modal-close absolute z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-[#c5a880] hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300"
+              className="modal-close absolute z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-accent hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
@@ -243,13 +242,13 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
               transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl detail-panel overflow-y-auto glass-panel rounded-3xl border border-[#c5a880]/20 shadow-2xl"
+              className="relative w-full max-w-4xl detail-panel overflow-y-auto glass-panel rounded-3xl border border-brand-accent/20 shadow-2xl"
             >
               <div className="relative aspect-[16/9] overflow-hidden rounded-t-3xl">
                 <Image src={selected.image} alt={selected.heroAlt || selected.title} fill sizes="(max-width:960px) 100vw, 896px" className="object-cover object-center" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/80 via-transparent to-transparent" />
                 <div className="absolute top-4 left-4 flex items-center gap-3">
-                  <span className="text-[9px] uppercase tracking-[0.2em] bg-black/55 backdrop-blur-sm text-[#c5a880] border border-[#c5a880]/25 px-3 py-1.5 rounded-full">
+                  <span className="text-[9px] uppercase tracking-[0.2em] bg-black/55 backdrop-blur-sm text-brand-accent border border-brand-accent/25 px-3 py-1.5 rounded-full">
                     {selected.category}
                   </span>
                   <span className="text-[9px] text-white/60 font-mono">{selected.year}</span>
@@ -260,11 +259,11 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                 <div>
                   <h2 className="text-2xl sm:text-3xl font-semibold text-white font-heading">{selected.title}</h2>
                 </div>
-                <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">{selected.desc}</p>
+                <p className="text-sm text-brand-foreground/70 leading-relaxed font-light">{selected.desc}</p>
 
                 <div className="flex flex-wrap gap-2">
                   {selected.tags.map((tag) => (
-                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-[#c5a880]/10 text-[#f4ebd0]/70 border border-[#c5a880]/15 px-2.5 py-1 rounded-full">
+                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-brand-accent/10 text-brand-foreground/70 border border-brand-accent/15 px-2.5 py-1 rounded-full">
                       {tag}
                     </span>
                   ))}
@@ -273,7 +272,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                 {selected.images.length > 0 && (
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     {selected.images.map((img, i) => (
-                      <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-[#c5a880]/10">
+                      <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-brand-accent/10">
                         <Image src={img} alt={`${selected.title} detail ${i + 1}`} fill sizes="(max-width:960px) 50vw, 448px" className="object-cover object-center" />
                         <div className="absolute inset-0 bg-[#050507]/20" />
                       </div>
@@ -282,17 +281,17 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                 )}
 
                 <div className="flex flex-wrap items-center gap-3 pt-3">
-                  <Link href={`/projects/${selected.slug}`} className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+                  <Link href={`/projects/${selected.slug}`} className="px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300">
                     Full case study
                   </Link>
-                  <Link href="/contact" className={`${goldBtn} px-6 py-3 text-[11px] uppercase tracking-[0.18em] inline-flex items-center`}>
+                  <Link href="/contact" className={`${primaryButton} px-6 py-3 text-[11px] uppercase tracking-[0.18em] inline-flex items-center`}>
                     <span className="relative z-10">Start a Project</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                   <button
                     type="button"
                     onClick={() => setSelected(null)}
-                    className="px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+                    className="px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300"
                   >
                     Close
                   </button>

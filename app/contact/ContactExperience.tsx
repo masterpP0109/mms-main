@@ -11,8 +11,7 @@ import { MapPin, Mail, Clock, MessageSquare, ArrowRight, CheckCircle } from "luc
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const goldBtn =
-  "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-all duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
+const primaryButton = "mms-button group";
 
 type ProjectType = "" | "conference" | "wedding" | "brand" | "event" | "other";
 
@@ -54,7 +53,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
   };
 
   return (
-    <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
+    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
       <Navbar />
 
       {/* Hero — scenic Victoria Falls with warm overlay */}
@@ -73,11 +72,11 @@ export default function ContactExperience({ initialService = "" }: { initialServ
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter w-full">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-2xl space-y-5">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Get In Touch</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">Get In Touch</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
               Ready to Create Something Unforgettable?
             </h1>
-            <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed">
+            <p className="text-sm md:text-base text-brand-foreground/75 font-light leading-relaxed">
               Tell us about your project and our team will respond with the next steps.
             </p>
           </motion.div>
@@ -91,9 +90,9 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           {/* Info Panel */}
           <div data-reveal="left" className="lg:col-span-2 space-y-8">
             <div>
-              <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-4 font-heading">Contact Details</span>
+              <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-4 font-heading">Contact Details</span>
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading mb-5">We&apos;d love to hear from you.</h2>
-              <p className="text-sm text-[#f4ebd0]/65 font-light leading-relaxed">
+              <p className="text-sm text-brand-foreground/65 font-light leading-relaxed">
                 Whether you are planning a government conference, a destination wedding, a brand campaign or just exploring — send us a message and let&apos;s talk.
               </p>
             </div>
@@ -106,12 +105,12 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 { icon: MessageSquare, label: "WhatsApp",      value: "Available on request" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-full bg-[#c5a880]/10 flex items-center justify-center shrink-0">
-                    <item.icon className="w-4 h-4 text-[#c5a880]" />
+                  <div className="w-9 h-9 rounded-full bg-brand-accent/10 flex items-center justify-center shrink-0">
+                    <item.icon className="w-4 h-4 text-brand-accent" />
                   </div>
                   <div>
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold mb-0.5">{item.label}</p>
-                    <p className="text-sm text-[#f4ebd0]/80 font-light">{item.value}</p>
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold mb-0.5">{item.label}</p>
+                    <p className="text-sm text-brand-foreground/80 font-light">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -119,10 +118,10 @@ export default function ContactExperience({ initialService = "" }: { initialServ
 
             {/* Recent work thumbnails */}
             <div className="space-y-3">
-              <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold">Recent Work</h3>
+              <h3 className="text-[10px] uppercase tracking-[0.25em] text-brand-accent font-semibold">Recent Work</h3>
               <div data-stagger className="grid grid-cols-2 gap-2">
                 {recentWork.map((item) => (
-                  <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#c5a880]/12">
+                  <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-brand-accent/12">
                     <Image src={item.src} alt={item.label} fill sizes="(max-width:1023px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/20 transition-colors duration-300" />
                     <div className="absolute bottom-2 left-2">
@@ -134,7 +133,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
             </div>
 
             {/* Quick Links */}
-            <div className="glass-panel rounded-2xl border border-[#c5a880]/15 p-6 space-y-4">
+            <div className="glass-panel rounded-2xl border border-brand-accent/15 p-6 space-y-4">
               <h3 className="text-sm font-medium text-white">Common Enquiries</h3>
               <div className="space-y-2">
                 {[
@@ -147,7 +146,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="flex items-center justify-between text-xs text-[#f4ebd0]/65 hover:text-[#c5a880] transition-colors duration-200 py-1.5 border-b border-[#c5a880]/8 last:border-0"
+                    className="flex items-center justify-between text-xs text-brand-foreground/65 hover:text-brand-accent transition-colors duration-200 py-1.5 border-b border-brand-accent/8 last:border-0"
                   >
                     {link.label}
                     <ArrowRight className="w-3 h-3" />
@@ -160,31 +159,31 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           {/* Form */}
           <div data-reveal="right" className="lg:col-span-3">
             {!submitted ? (
-              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="bg-[#190910] rounded-3xl border border-[#fda4af]/20 p-5 sm:p-8 md:p-10 space-y-5">
+              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="bg-[#190910] rounded-3xl border border-brand-accent/20 p-5 sm:p-8 md:p-10 space-y-5">
                 <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
-                {initialService && <p className="rounded-xl border border-[#fda4af]/30 bg-[#fda4af]/10 p-4 text-sm text-[#f4ebd0]">Enquiring about: <strong>{initialService}</strong></p>}
+                {initialService && <p className="rounded-xl border border-brand-accent/30 bg-brand-accent/10 p-4 text-sm text-brand-foreground">Enquiring about: <strong>{initialService}</strong></p>}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Your Name</label>
+                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Your Name</label>
                     <input type="text" id="contact-name" maxLength={120} autoComplete="name" name="name" placeholder="e.g. Sarah Johnson" required
-                      className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors" />
+                      className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors" />
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Email Address</label>
+                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Email Address</label>
                     <input type="email" id="contact-email" maxLength={254} autoComplete="email" name="email" placeholder="you@organisation.com" required
-                      className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors" />
+                      className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Phone Number (optional)</label>
+                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Phone Number (optional)</label>
                   <input type="tel" id="contact-phone" maxLength={32} pattern={String.raw`\+?[0-9 \(\)\-]{7,32}`} autoComplete="tel" name="phone" placeholder="+263 ..."
-                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors" />
+                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors" />
                 </div>
 
                 <div>
-                  <label className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-3">Type of Project</label>
+                  <label className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-3">Type of Project</label>
                   <div role="group" aria-label="Type of Project" className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[
                       { id: "conference" as const, label: "Conference / Event" },
@@ -200,8 +199,8 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                         onClick={() => setProjectType(opt.id)}
                         className={`py-2.5 px-3 rounded-xl text-xs border transition-all duration-200 cursor-pointer ${
                           projectType === opt.id
-                            ? "bg-[#881337]/40 border-[#fda4af] text-white"
-                            : "border-[#fda4af]/15 text-[#f4ebd0]/55 hover:border-[#fda4af]/40 hover:text-white"
+                            ? "bg-brand-primary/40 border-brand-accent text-white"
+                            : "border-brand-accent/15 text-brand-foreground/55 hover:border-brand-accent/40 hover:text-white"
                         }`}
                       >
                         {opt.label}
@@ -212,28 +211,28 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-[#fda4af] font-semibold block mb-2">Your Message</label>
+                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Your Message</label>
                   <textarea id="contact-message" maxLength={5000} name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
-                    className="w-full bg-[#050507]/70 border border-[#fda4af]/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-[#f4ebd0]/30 focus:outline-none focus:border-[#fda4af]/50 transition-colors resize-y" />
+                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors resize-y" />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
-                  <button data-lead-cta type="submit" disabled={loading} className={`inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#881337] to-[#9f2345] text-white font-semibold hover:brightness-110 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fda4af] px-8 py-3.5 text-[11px] uppercase tracking-[0.18em] disabled:opacity-50`}>
+                  <button data-lead-cta type="submit" disabled={loading} className="mms-button px-8 py-3.5 text-[11px] uppercase tracking-[0.18em]">
                     <span className="relative z-10">{loading ? "Sending…" : "Send Message"}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
-                  <p className="text-[10px] text-[#f4ebd0]/35">We respect your privacy. No spam, ever.</p>
+                  <p className="text-[10px] text-brand-foreground/35">We respect your privacy. No spam, ever.</p>
                 </div>
                 {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </form>
             ) : (
-              <div role="status" className="glass-panel rounded-3xl border border-[#fda4af]/20 p-6 sm:p-12 text-center space-y-4">
-                <CheckCircle className="w-14 h-14 text-[#fda4af] mx-auto" />
+              <div role="status" className="glass-panel rounded-3xl border border-brand-accent/20 p-6 sm:p-12 text-center space-y-4">
+                <CheckCircle className="w-14 h-14 text-brand-accent mx-auto" />
                 <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
-                <p className="text-sm text-[#f4ebd0]/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
-                <p className="text-sm text-[#fda4af] break-all">Enquiry reference: {reference}</p>
-                <Link href="/" className="inline-flex items-center gap-2 text-xs text-[#fda4af] hover:text-white transition-colors mt-4">
+                <p className="text-sm text-brand-foreground/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
+                <p className="text-sm text-brand-accent break-all">Enquiry reference: {reference}</p>
+                <Link href="/" className="inline-flex items-center gap-2 text-xs text-brand-accent hover:text-white transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -242,14 +241,14 @@ export default function ContactExperience({ initialService = "" }: { initialServ
             {/* Gallery preview strip below form */}
             <div className="mt-6 grid grid-cols-4 gap-2">
               {["/mms/DSC_7551.jpg", "/mms/DSC_7589.jpg", "/mms/DSC_7640.jpg", "/mms/DSC_7703.jpg"].map((src, i) => (
-                <Link key={i} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#c5a880]/10">
+                <Link key={i} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-brand-accent/10">
                   <Image src={src} alt="gallery preview" fill sizes="(max-width:1023px) 25vw, 15vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/10 transition-colors duration-300" />
                 </Link>
               ))}
             </div>
-            <p className="text-center mt-3 text-[10px] text-[#f4ebd0]/35">
-              <Link href="/gallery" className="hover:text-[#c5a880] transition-colors">View full gallery →</Link>
+            <p className="text-center mt-3 text-[10px] text-brand-foreground/35">
+              <Link href="/gallery" className="hover:text-brand-accent transition-colors">View full gallery →</Link>
             </p>
           </div>
         </div>
@@ -262,13 +261,13 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           <div className="absolute inset-0 bg-[#050507]/80" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter">
-          <div data-reveal="scale" className="glass-panel rounded-3xl border border-[#c5a880]/20 p-5 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div data-reveal="scale" className="glass-panel rounded-3xl border border-brand-accent/20 p-5 sm:p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#c5a880] font-semibold block font-heading">Institutional Production</span>
+              <span className="text-[9px] uppercase tracking-[0.25em] text-brand-accent font-semibold block font-heading">Institutional Production</span>
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Planning a conference or government event?</h2>
-              <p className="text-sm text-[#f4ebd0]/60 font-light">Use the dedicated conference enquiry form to give us all the details we need — organisation type, delegate count, venue and required services.</p>
+              <p className="text-sm text-brand-foreground/60 font-light">Use the dedicated conference enquiry form to give us all the details we need — organisation type, delegate count, venue and required services.</p>
             </div>
-            <Link data-lead-cta href="/conference-production#enquiry" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] shrink-0`}>
+            <Link data-lead-cta href="/conference-production#enquiry" className={`${primaryButton} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] shrink-0`}>
               <span className="relative z-10">Conference Enquiry Form</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>

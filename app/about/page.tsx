@@ -8,8 +8,7 @@ import { Shield, Users, MessageSquare, Award, ArrowRight, CheckCircle } from "lu
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-const goldBtn =
-  "group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold shadow-[0_0_0_1px_rgba(229,207,154,0.28),0_0_18px_rgba(180,138,61,0.2)] transition-all duration-300 before:absolute before:inset-0 before:rounded-full before:bg-[linear-gradient(110deg,transparent_18%,rgba(255,255,255,0.62)_48%,transparent_78%)] before:-translate-x-[140%] before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_0_0_1px_rgba(229,207,154,0.55),0_0_34px_rgba(197,168,128,0.48)] hover:before:translate-x-[140%] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]";
+const primaryButton = "mms-button group";
 
 const values = [
   { icon: Shield,       title: "Professionalism", desc: "We hold ourselves to the highest standards of conduct and delivery on every project." },
@@ -29,7 +28,7 @@ const faqs = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
+    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
       <Navbar />
 
       {/* Hero — Victoria Falls panorama */}
@@ -48,11 +47,11 @@ export default function AboutPage() {
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter w-full pb-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl space-y-5">
-<span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">About Us</span>
+<span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">About Us</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
               We help organisations deliver important events professionally.
             </h1>
-            <p className="text-sm md:text-base text-[#f4ebd0]/75 font-light leading-relaxed max-w-2xl">
+            <p className="text-sm md:text-base text-brand-foreground/75 font-light leading-relaxed max-w-2xl">
               Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
             </p>
           </motion.div>
@@ -63,12 +62,12 @@ export default function AboutPage() {
       <section className="py-12 sm:py-20 md:py-28 max-w-[1400px] mx-auto mms-gutter">
         <div data-stagger className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
           <div className="space-y-6">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Who We Are</span>
-            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Experience <span className="text-[#e53e3e]">Elevated</span></h2>
-            <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block font-heading">Who We Are</span>
+            <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Experience <span className="text-brand-red">Elevated</span></h2>
+            <p className="text-sm text-brand-foreground/70 leading-relaxed font-light">
               Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
             </p>
-            <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
+            <p className="text-sm text-brand-foreground/70 leading-relaxed font-light">
               We combine creativity with cutting edge technology to create immersive experiences that elevate events and brands. Our services are tailored to meet each client&rsquo;s unique needs, ensuring professionalism, reliability, and exceptional delivery.
             </p>
             <div className="space-y-3 pt-2">
@@ -80,8 +79,8 @@ export default function AboutPage() {
                 "Event branding, staging and interpretation systems",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <CheckCircle className="w-4 h-4 text-[#c5a880] shrink-0" />
-                  <span className="text-sm text-[#f4ebd0]/75 font-light">{item}</span>
+                  <CheckCircle className="w-4 h-4 text-brand-accent shrink-0" />
+                  <span className="text-sm text-brand-foreground/75 font-light">{item}</span>
                 </div>
               ))}
             </div>
@@ -95,7 +94,7 @@ export default function AboutPage() {
               "/mms/DSC_7176.jpg",
               "/mms/Victoria-Falls-Video-Conference-Hire.webp",
             ].map((src, i) => (
-              <div key={i} className={`relative rounded-2xl overflow-hidden border border-[#c5a880]/12 ${i === 0 ? "aspect-[4/3]" : i === 3 ? "aspect-[4/3]" : "aspect-square"}`}>
+              <div key={i} className={`relative rounded-2xl overflow-hidden border border-brand-accent/12 ${i === 0 ? "aspect-[4/3]" : i === 3 ? "aspect-[4/3]" : "aspect-square"}`}>
                 <Image src={src} alt="MMS production" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
                 <div className="absolute inset-0 bg-[#050507]/25" />
               </div>
@@ -105,7 +104,7 @@ export default function AboutPage() {
       </section>
 
       {/* Work in pictures — horizontal image strip */}
-      <section className="overflow-hidden border-y border-[#c5a880]/10">
+      <section className="overflow-hidden border-y border-brand-accent/10">
         <div className="photo-strip flex h-52 md:h-72">
           {[
             "/mms/DSC_2349.jpg",
@@ -128,29 +127,29 @@ export default function AboutPage() {
         <div data-stagger className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
           {/* Images */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-[#c5a880]/12">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-brand-accent/12">
               <Image src="/mms/vic falls bridge.jpg" alt="Victoria Falls Bridge" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
             </div>
             <div className="space-y-3">
-              <div className="relative aspect-square rounded-2xl overflow-hidden border border-[#c5a880]/12">
+              <div className="relative aspect-square rounded-2xl overflow-hidden border border-brand-accent/12">
                 <Image src="/mms/bridge.jpg" alt="Falls bridge aerial" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
               </div>
-              <div className="relative aspect-square rounded-2xl overflow-hidden border border-[#c5a880]/12">
+              <div className="relative aspect-square rounded-2xl overflow-hidden border border-brand-accent/12">
                 <Image src="/mms/_MG_2920.jpg" alt="Aerial landscape" fill sizes="(max-width:1023px) 50vw, 25vw" className="object-cover object-center" />
               </div>
             </div>
           </div>
           {/* Text */}
           <div className="space-y-6">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block font-heading">Our Base</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block font-heading">Our Base</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Why Victoria Falls</h2>
-            <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
+            <p className="text-sm text-brand-foreground/70 leading-relaxed font-light">
               Victoria Falls offers strategic proximity to regional events and unique world-class venues that attract international delegations. Our local knowledge of the venue landscape, logistics networks and regulatory environment helps us deliver seamless productions for visiting organisations.
             </p>
-            <p className="text-sm text-[#f4ebd0]/70 leading-relaxed font-light">
+            <p className="text-sm text-brand-foreground/70 leading-relaxed font-light">
               From the iconic Victoria Falls Hotel to conference facilities along the Zambezi, we know how to make the most of every space and deliver productions that match the significance of the setting.
             </p>
-            <Link href="/gallery?cat=Drone" className="inline-flex items-center gap-2 text-xs text-[#c5a880] hover:text-white transition-colors">
+            <Link href="/gallery?cat=Drone" className="inline-flex items-center gap-2 text-xs text-brand-accent hover:text-white transition-colors">
               See our Victoria Falls aerials
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -159,10 +158,10 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-20 bg-black border-t border-[#c5a880]/10">
+      <section className="py-20 bg-black border-t border-brand-accent/10">
         <div className="max-w-[1400px] mx-auto mms-gutter">
           <div data-reveal className="text-center mb-16">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">What Guides Us</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">What Guides Us</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Our Values</h2>
           </div>
           <div data-stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -173,20 +172,20 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="glass-panel rounded-2xl border border-[#c5a880]/15 p-6 space-y-4 hover:border-[#c5a880]/35 transition-all duration-300"
+                className="glass-panel rounded-2xl border border-brand-accent/15 p-6 space-y-4 hover:border-brand-accent/35 transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-full bg-[#c5a880]/10 flex items-center justify-center">
-                  <value.icon className="w-5 h-5 text-[#c5a880]" />
+                <div className="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center">
+                  <value.icon className="w-5 h-5 text-brand-accent" />
                 </div>
                 <h3 className="text-base font-medium text-white">{value.title}</h3>
-                <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">{value.desc}</p>
+                <p className="text-xs text-brand-foreground/60 leading-relaxed font-light">{value.desc}</p>
               </motion.div>
             ))}
           </div>
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4">
             {["Reliability", "Discretion", "Innovation", "Integrity"].map((val) => (
-              <div key={val} className="text-center py-5 rounded-2xl border border-[#c5a880]/10 bg-[#c5a880]/5">
-                <span className="text-sm font-medium text-[#c5a880]">{val}</span>
+              <div key={val} className="text-center py-5 rounded-2xl border border-brand-accent/10 bg-brand-accent/5">
+                <span className="text-sm font-medium text-brand-accent">{val}</span>
               </div>
             ))}
           </div>
@@ -197,7 +196,7 @@ export default function AboutPage() {
       <section className="py-16 max-w-[1400px] mx-auto mms-gutter">
         <div data-reveal className="flex flex-wrap gap-4 items-end justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Selected Work</h2>
-          <Link href="/gallery" className="text-xs text-[#c5a880] hover:text-white transition-colors flex items-center gap-1.5">
+          <Link href="/gallery" className="text-xs text-brand-accent hover:text-white transition-colors flex items-center gap-1.5">
             Full Gallery <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -212,7 +211,7 @@ export default function AboutPage() {
             <Link
               key={i}
               href="/gallery"
-              className={`relative overflow-hidden rounded-2xl border border-[#c5a880]/10 group ${tall ? "row-span-2 aspect-[3/4]" : "aspect-square"}`}
+              className={`relative overflow-hidden rounded-2xl border border-brand-accent/10 group ${tall ? "row-span-2 aspect-[3/4]" : "aspect-square"}`}
             >
               <Image src={src} alt="work" fill sizes="(max-width:767px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
               <div className="absolute inset-0 bg-[#050507]/35 group-hover:bg-[#050507]/10 transition-colors duration-300" />
@@ -222,17 +221,17 @@ export default function AboutPage() {
       </section>
 
       {/* FAQs */}
-      <section className="py-16 bg-black border-t border-[#c5a880]/10">
+      <section className="py-16 bg-black border-t border-brand-accent/10">
         <div className="max-w-[900px] mx-auto px-6 sm:px-10">
           <div data-reveal className="text-center mb-12">
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-semibold block mb-3 font-heading">Quick Answers</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">Quick Answers</span>
             <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading">Frequently Asked Questions</h2>
           </div>
           <div data-stagger className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {faqs.map((faq) => (
-              <div key={faq.q} className="glass-panel rounded-2xl border border-[#c5a880]/15 p-6 space-y-2">
+              <div key={faq.q} className="glass-panel rounded-2xl border border-brand-accent/15 p-6 space-y-2">
                 <h3 className="text-sm font-medium text-white">{faq.q}</h3>
-                <p className="text-xs text-[#f4ebd0]/60 leading-relaxed font-light">{faq.a}</p>
+                <p className="text-xs text-brand-foreground/60 leading-relaxed font-light">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -241,20 +240,20 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="py-20 max-w-[1400px] mx-auto mms-gutter">
-        <div data-reveal="scale" className="relative rounded-3xl overflow-hidden border border-[#c5a880]/20">
+        <div data-reveal="scale" className="relative rounded-3xl overflow-hidden border border-brand-accent/20">
           <Image src="/mms/DSC_7590.jpg" alt="CTA background" fill sizes="100vw" className="object-cover object-center opacity-25" />
           <div className="absolute inset-0 bg-[#050507]/80" />
           <div className="relative z-10 p-5 sm:p-10 md:p-14 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="space-y-3 max-w-xl">
               <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading">Ready to work together?</h2>
-              <p className="text-sm text-[#f4ebd0]/60 font-light">Tell us about your event or project and our team will respond within 24 hours.</p>
+              <p className="text-sm text-brand-foreground/60 font-light">Tell us about your event or project and our team will respond within 24 hours.</p>
             </div>
             <div className="flex flex-wrap gap-4 shrink-0">
-              <Link data-lead-cta href="/contact" className={`${goldBtn} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
+              <Link data-lead-cta href="/contact" className={`${primaryButton} px-7 py-3.5 text-[11px] uppercase tracking-[0.18em]`}>
                 <span className="relative z-10">Get in Touch</span>
                 <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              <Link href="/conference-production#enquiry" className="inline-flex items-center px-7 py-3.5 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300">
+              <Link href="/conference-production#enquiry" className="inline-flex items-center px-7 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300">
                 Conference Enquiry
               </Link>
             </div>

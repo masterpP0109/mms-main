@@ -144,7 +144,7 @@ function GalleryContent() {
   return (
     <>
       {/* Sticky filter bar */}
-      <div className="sticky top-[72px] z-30 bg-[#050507]/92 backdrop-blur-md border-b border-[#c5a880]/12 py-3.5">
+      <div className="sticky top-[72px] z-30 bg-[#050507]/92 backdrop-blur-md border-b border-brand-accent/12 py-3.5">
         <div className="max-w-[1600px] mx-auto mms-gutter flex items-center gap-2.5 overflow-x-auto scrollbar-none">
           {cats.map((cat) => (
             <button
@@ -155,14 +155,14 @@ function GalleryContent() {
               aria-pressed={active === cat}
               className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-medium transition-all duration-250 cursor-pointer ${
                 active === cat
-                  ? "bg-[#c5a880] text-[#050507]"
-                  : "border border-[#c5a880]/25 text-[#f4ebd0]/60 hover:border-[#c5a880]/60 hover:text-white"
+                  ? "bg-brand-accent text-[#050507]"
+                  : "border border-brand-accent/25 text-brand-foreground/60 hover:border-brand-accent/60 hover:text-white"
               }`}
             >
               {cat}
             </button>
           ))}
-          <span className="ml-auto shrink-0 text-[10px] text-[#f4ebd0]/35 font-light pl-4 border-l border-[#c5a880]/12">
+          <span className="ml-auto shrink-0 text-[10px] text-brand-foreground/35 font-light pl-4 border-l border-brand-accent/12">
             {visible.length} of {filtered.length} photos
           </span>
         </div>
@@ -184,7 +184,7 @@ function GalleryContent() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3, delay: Math.min(idx * 0.02, 0.3) }}
-                className={`block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a880] break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-[#c5a880]/10 cursor-pointer bg-[#0d0d10] ${
+                className={`block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-brand-accent/10 cursor-pointer bg-[#0d0d10] ${
                   item.tall ? "row-span-2" : ""
                 }`}
                 aria-label={`View ${item.title}`}
@@ -201,7 +201,7 @@ function GalleryContent() {
                   {/* hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/80 via-[#050507]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-[#c5a880] font-semibold mb-0.5">{item.cat}</span>
+                    <span className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold mb-0.5">{item.cat}</span>
                     <p className="text-xs text-white font-medium leading-tight">{item.title}</p>
                   </div>
                   <div className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -211,7 +211,7 @@ function GalleryContent() {
                   </div>
                   {/* category pill always visible */}
                   <div className="absolute top-2 left-2">
-                    <span className="text-[8px] uppercase tracking-[0.15em] bg-black/50 backdrop-blur-sm text-[#c5a880]/90 px-2 py-0.5 rounded-full">
+                    <span className="text-[8px] uppercase tracking-[0.15em] bg-black/50 backdrop-blur-sm text-brand-accent/90 px-2 py-0.5 rounded-full">
                       {item.cat}
                     </span>
                   </div>
@@ -222,18 +222,18 @@ function GalleryContent() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-24 text-[#f4ebd0]/40 text-sm">No images in this category yet.</div>
+          <div className="text-center py-24 text-brand-foreground/40 text-sm">No images in this category yet.</div>
         )}
 
         {filtered.length > INITIAL_COUNT && !expanded && (
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-[#f4ebd0]/40 font-light">
+            <span className="text-xs text-brand-foreground/40 font-light">
               Showing {visible.length} of {filtered.length} photos
             </span>
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300 cursor-pointer"
             >
               View More
               <ArrowRight className="w-4 h-4" />
@@ -243,13 +243,13 @@ function GalleryContent() {
 
         {expanded && (
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-[#f4ebd0]/40 font-light">
+            <span className="text-xs text-brand-foreground/40 font-light">
               Showing all {filtered.length} photos
             </span>
             <button
               type="button"
               onClick={() => { setExpanded(false); setLightboxIdx(null); }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300 cursor-pointer"
             >
               Show Less
             </button>
@@ -289,7 +289,7 @@ function GalleryContent() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); prev(); }}
-              className="absolute left-4 sm:left-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-[#c5a880] hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
+              className="absolute left-4 sm:left-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-accent hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
               aria-label="Previous"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -299,7 +299,7 @@ function GalleryContent() {
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); next(); }}
-              className="absolute right-4 sm:right-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-[#c5a880] hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
+              className="absolute right-4 sm:right-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-accent hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
               aria-label="Next"
             >
               <ChevronRight className="w-5 h-5" />
@@ -328,7 +328,7 @@ function GalleryContent() {
               </div>
               <div className="mt-3 text-center space-y-0.5">
                 <p className="text-white font-medium text-sm">{filtered[lightboxIdx].title}</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-[#c5a880]">{filtered[lightboxIdx].cat}</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-brand-accent">{filtered[lightboxIdx].cat}</p>
               </div>
               <p className="mt-2 text-[10px] text-white/30">{lightboxIdx + 1} / {filtered.length}</p>
             </motion.div>
@@ -341,7 +341,7 @@ function GalleryContent() {
 
 export default function GalleryPage() {
   return (
-    <div className="min-h-screen bg-[#050507] text-[#f4ebd0] font-sans">
+    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
       <Navbar />
 
       {/* Hero */}
@@ -363,9 +363,9 @@ export default function GalleryPage() {
             transition={{ duration: 0.7 }}
             className="space-y-4"
           >
-            <span className="text-[10px] tracking-[0.4em] text-[#c5a880] uppercase font-bold block font-heading">Our Portfolio</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">Our Portfolio</span>
             <h1 className="text-4xl sm:text-5xl font-semibold text-white font-heading">Gallery</h1>
-            <p className="text-sm text-[#f4ebd0]/70 font-light">
+            <p className="text-sm text-brand-foreground/70 font-light">
               Weddings, conferences, brand campaigns, drone aerials and immersive productions — browse our full body of work.
             </p>
           </motion.div>
@@ -373,29 +373,29 @@ export default function GalleryPage() {
       </section>
 
       {/* Gallery with filter — wrapped in Suspense for useSearchParams */}
-      <Suspense fallback={<div className="py-24 text-center text-[#f4ebd0]/30 text-sm">Loading gallery…</div>}>
+      <Suspense fallback={<div className="py-24 text-center text-brand-foreground/30 text-sm">Loading gallery…</div>}>
         <GalleryContent />
       </Suspense>
 
       {/* CTA */}
-      <section className="py-16 border-t border-[#c5a880]/10 bg-black">
+      <section className="py-16 border-t border-brand-accent/10 bg-black">
         <div data-reveal className="max-w-[1400px] mx-auto mms-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-xl md:text-2xl font-semibold text-white font-heading">Ready to be in our gallery?</h3>
-            <p className="text-sm text-[#f4ebd0]/55 font-light mt-1">Let&apos;s create something beautiful together.</p>
+            <p className="text-sm text-brand-foreground/55 font-light mt-1">Let&apos;s create something beautiful together.</p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
             <Link
               href="/contact"
               data-lead-cta
-              className="group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-[#b48a3d] via-[#d6bd7d] to-[#c5a880] text-[#050507] font-semibold px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e5cf9a]"
+              className="mms-button group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full font-semibold px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2"
             >
               Start a Project
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <Link
               href="/conference-production#enquiry"
-              className="inline-flex items-center px-7 py-3.5 rounded-full border border-[#c5a880]/30 text-[#f4ebd0]/80 text-[11px] uppercase tracking-[0.18em] hover:border-[#c5a880] hover:text-white transition-all duration-300"
+              className="inline-flex items-center px-7 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300"
             >
               Conference Enquiry
             </Link>

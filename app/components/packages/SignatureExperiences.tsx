@@ -7,7 +7,7 @@ export function ExperienceCards() {
   return <div data-stagger className={styles.experiences}>{packageExperiences.map((experience, index) => <article key={experience.slug} className={styles.experienceCard}>
     <Link href={packagePath(experience.slug)} className={styles.experienceImage} aria-label={`Explore ${experience.title}`}>
       <Image src={experience.image} alt={experience.imageAlt} fill sizes="(max-width:639px) 90vw, (max-width:1023px) 45vw, 30vw" style={{ objectPosition: experience.imagePosition }} />
-      <span className={styles.cardNumber} aria-hidden="true">0{index + 1} / {index === 0 ? "Remember" : index === 1 ? "Discover" : "Connect"}</span>
+      <span className={styles.cardNumber} aria-hidden="true">{index === 0 ? "Remember" : index === 1 ? "Discover" : "Connect"}</span>
       <div className={styles.cardOverlay}><h3>{experience.title}</h3><p>{experience.tagline}</p><span className={styles.cardArrow} aria-hidden="true">↗</span></div>
     </Link>
     <p className={styles.cardDescription}>{experience.description}</p>

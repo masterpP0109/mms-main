@@ -39,8 +39,8 @@ export default function PackageExperiencePage({ experience: e }: { experience: P
 
     <section id="package-options" className={s.section} aria-labelledby="options-title">
       <div data-reveal><p className={s.eyebrow}>Choose a starting point</p><h2 id="options-title">Your vision sets the scope.</h2><p className={s.intro}>Compare approaches, then tell us what fits. These are proposed directions for discussion. MMS confirms availability, inclusions, pricing and terms in a tailored quotation.</p></div>
-      <div data-stagger className={`${s.grid} ${styles.threeColumns}`}>{e.options.map((option, index) => <article key={option.id} className={styles.optionCard}>
-        <p className={s.eyebrow}>0{index + 1} / {e.title}</p><h3>{option.name}</h3><p>{option.for}</p>
+      <div data-stagger className={`${s.grid} ${styles.threeColumns}`}>{e.options.map((option) => <article key={option.id} className={styles.optionCard}>
+        <p className={s.eyebrow}>{e.title}</p><h3>{option.name}</h3><p>{option.for}</p>
         <dl className={styles.comparison}>
           <div><dt>Coverage to discuss</dt><dd>{option.coverage}</dd></div>
           <div><dt>Finished work</dt><dd>{option.finish}</dd></div>

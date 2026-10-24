@@ -21,8 +21,6 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const ctaBase = "mms-button text-[10px] uppercase tracking-widest";
-
 export default function Navbar() {
   const pathname = usePathname();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -102,16 +100,9 @@ export default function Navbar() {
                 ))}
               </div>
 
-              <Link
-                href="/contact"
-                className={`${ctaBase} nav-cta relative z-10 shrink-0 px-4 py-2.5`}
-              >
-                <span className="relative z-10">Start a Project</span>
-              </Link>
-
               <button
                 type="button"
-                className="nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 text-white ml-2"
+                className="nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 text-white"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label={mobileOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileOpen}
@@ -157,13 +148,6 @@ export default function Navbar() {
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/contact"
-                onClick={() => setMobileOpen(false)}
-                className={`${ctaBase} mt-4 px-8 py-3`}
-              >
-                <span className="relative z-10">Start a Project</span>
-              </Link>
             </div>
           </motion.div>
         )}

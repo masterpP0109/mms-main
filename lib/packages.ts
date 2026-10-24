@@ -57,7 +57,7 @@ export const packageExperiences: PackageExperience[] = [
     serviceHref: "/services/weddings-elopements", approvedProof: [],
   },
   {
-    slug: "drone", title: "Drone Packages", service: "Drone Photography & Videography",
+    slug: "drone", title: "Drone Services", service: "Drone Photography & Videography",
     tagline: "Discover the extraordinary from above.",
     description: "Bring scale, setting and movement to a destination, property or event story with thoughtfully planned aerial coverage.",
     headline: "A different view.\nA bigger story.",

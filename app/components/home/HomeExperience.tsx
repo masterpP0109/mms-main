@@ -66,9 +66,9 @@ export default function Home() {
     {
       image: "/mms/screens.jpg.jpeg",
       imagePosition: "center center",
-      title: "Display, Signage & Advertisement Solutions",
-      desc: "LED screens, video walls, interactive displays, vertical screens, digital podiums and digital signage solutions designed to increase visibility, engagement and presentation impact across conferences, brand activations and outdoor events.",
-      btnText: "Explore Display Solutions",
+      title: "Display & Digital Billboard Advertising Solutions",
+      desc: "From high-impact indoor LED screens and digital signage to outdoor advertising displays, we provide scalable visual solutions for events, corporate branding, and public-facing promotional campaigns.",
+      btnText: "Explore Display & Advertising Solutions",
       link: "#services"
     },
     {

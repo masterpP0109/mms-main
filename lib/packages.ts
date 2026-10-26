@@ -1,7 +1,9 @@
+import { weddingPackages, legacyWeddingPackageIds } from "./wedding-packages";
+
 /** Editorial configuration. MMS must approve names, inclusions and commercial terms.
  * Options describe a brief to discuss, never an offer or confirmed booking. */
 export type PackageCategory = "weddings" | "drone" | "podcasts";
-export type PackageOption = { id: string; name: string; for: string; coverage: string; finish: string; planning: string };
+export type PackageOption = { id: string; name: string; for: string; coverage?: string; finish?: string; planning?: string; location?: string };
 export type PackageExperience = {
   slug: PackageCategory; title: string; service: string; tagline: string; description: string;
   headline: string; intro: string; image: string; imageAlt: string; imagePosition?: string;
@@ -19,9 +21,9 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "weddings", title: "Wedding Packages", service: "Wedding Photography & Film",
     tagline: "Your love. Your story. Beautifully remembered.",
-    description: "From quiet vows to a room full of your favourite people, shape photography and film around the moments that matter.",
+    description: "Imagine exchanging vows at the historic Victoria Falls Hotel, celebrating beneath the African skies at Victoria Falls Safari Lodge, or capturing romantic portraits along the Zambezi River. Wherever your love story unfolds, we bring your memories to life through beautiful photography, cinematic wedding films and breathtaking aerial perspectives.",
     headline: "The day passes.\nThe feeling stays.",
-    intro: "The glance before the vows. The voices you know by heart. Let’s plan a way to return to the people, places and feelings that make this day yours.",
+    intro: "Imagine exchanging vows at the Victoria Falls Hotel, celebrating beneath the African skies at Victoria Falls Safari Lodge, or capturing unforgettable portraits against the beauty of the Zambezi. Whether you are drawn to an intimate ceremony at the Falls rainforest, a riverside celebration at golden hour, a wilderness setting at the Safari Lodge, or an elegant gathering at the Victoria Falls Hotel, we preserve your story through photography, cinematic film and breathtaking aerial footage.",
     image: "/mms/wedding%2012.jpg", imageAlt: "A couple walking hand in hand beside Victoria Falls", imagePosition: "center 45%",
     valueTitle: "Remember how it felt.",
     value: "Start with the memories you want to keep. We’ll discuss photography, film and a practical coverage plan that fits the rhythm of your celebration.",
@@ -34,11 +36,7 @@ export const packageExperiences: PackageExperience[] = [
       { image: "/mms/wedding%2012.jpg", alt: "Couple portraits in the Victoria Falls landscape", title: "Just the two of you", text: "A portrait-led approach for an intimate ceremony and a setting that means something." },
       { image: "/mms/wedding1.jpg", alt: "Wedding inspiration from the MMS image library", title: "Together with your people", text: "Consider the ceremony, speeches and shared moments as chapters of a wider celebration." },
     ],
-    options: [
-      { id: "intimate", name: "Intimate Story", for: "Elopements and smaller celebrations", coverage: "Ceremony and couple portraits", finish: "Discuss a photograph selection or a focused film", planning: "One setting and your priority moments" },
-      { id: "celebration", name: "Celebration Story", for: "A day shared with family and friends", coverage: "Preparation, ceremony and celebration highlights", finish: "Discuss photography, a highlight film or both", planning: "A coordinated timeline across your day" },
-      { id: "complete", name: "Fuller Story", for: "Celebrations with more chapters to tell", coverage: "Multiple moments or locations across the celebration", finish: "Discuss a broader edit and sharing versions", planning: "Additional coverage and travel reviewed together" },
-    ],
+    options: weddingPackages.map(option => ({ id: option.id, name: option.name, for: option.description, location: option.location })),
     enhancements: ["Additional coverage time", "A second location or celebration", "Speech or ceremony edits", "Social sharing versions", "Aerial sequences, subject to a separate feasibility review"],
     process: [
       { title: "Share your day", text: "Tell us your preferred date, locations and the moments you want to keep." },
@@ -48,7 +46,7 @@ export const packageExperiences: PackageExperience[] = [
       { title: "Return to it", text: "Review the agreed selections and edits, with delivery timing set in your quotation." },
     ],
     faqs: [
-      { question: "Are these fixed wedding packages?", answer: "These options are starting points for a tailored quotation. Coverage hours, crew, photographs, film length, revisions, pricing and booking terms must be confirmed by MMS." },
+      { question: "Are these fixed wedding packages?", answer: "These four options are inspired by Victoria Falls locations and cover photography and film enquiries. They do not include venue hire, access or permissions. Coverage, deliverables, prices and booking terms must be confirmed with MMS." },
       { question: "Can we choose photography and film?", answer: "Yes, you can enquire about either or both. Tell us your priorities so MMS can discuss a suitable combination and check availability." },
       { question: "Can you cover an intimate elopement?", answer: "Share your preferred date, exact location and ceremony plans. Access, travel and the scale of coverage can then be discussed." },
       { question: "Is our date reserved when we send an enquiry?", answer: "No. An enquiry requests a conversation. Availability and the steps to secure a booking are confirmed directly with MMS." },
@@ -57,9 +55,9 @@ export const packageExperiences: PackageExperience[] = [
     serviceHref: "/services/weddings-elopements", approvedProof: [],
   },
   {
-    slug: "drone", title: "Drone Services", service: "Drone Photography & Videography",
+    slug: "drone", title: "Drone Packages", service: "Drone Photography & Videography",
     tagline: "Discover the extraordinary from above.",
-    description: "Bring scale, setting and movement to a destination, property or event story with thoughtfully planned aerial coverage.",
+    description: "From the dramatic cliffs of Batoka Gorge and the winding Zambezi River to the breathtaking landscapes surrounding Victoria Falls, we capture remarkable aerial perspectives through professional drone photography and cinematic filming for tourism, properties and special events.",
     headline: "A different view.\nA bigger story.",
     intro: "A place is more than a point on a map. Reveal its setting, its scale and the way it connects to the world around it.",
     image: "/victoria_falls_banner.png", imageAlt: "A panoramic landscape across Victoria Falls",
@@ -100,7 +98,7 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "podcasts", title: "Podcast Packages", service: "Podcast Production",
     tagline: "Powerful conversations deserve professional production.",
-    description: "Turn an idea, an interview or an ongoing conversation into audio and video content shaped for your audience.",
+    description: "From inspiring interviews and business conversations to branded podcasts and engaging video series, we turn ideas into professional productions through crystal-clear audio, multi-camera filming, studio lighting and polished editing.",
     headline: "Your voice.\nWorth listening to.",
     intro: "A good conversation can change a perspective. Give your ideas the space, sound and visual treatment to reach the people who need to hear them.",
     image: "/mms/audio1.jpg", imageAlt: "Microphone and audio mixing desk in a production setting",
@@ -141,6 +139,26 @@ export const packageExperiences: PackageExperience[] = [
 
 export const getPackageExperience = (slug: string) => packageExperiences.find(item => item.slug === slug);
 export const packagePath = (slug: PackageCategory) => `/packages/${slug}`;
+/** Old coverage-tier links remain usable as custom enquiries, without inventing a destination. */
+export function resolvePackageSelection(slug: PackageCategory, requested?: string | null, location?: string | null) {
+  const experience = getPackageExperience(slug)!;
+  const selected = experience.options.find(option => option.id === requested);
+  if (selected) return selected.id;
+  if (slug === "weddings") {
+    const destination = weddingPackages.find(option => option.location === location || option.id === location);
+    if (destination) return destination.id;
+  }
+  return "tailored";
+}
+
+export function isLegacyWeddingPackage(slug: PackageCategory, id: string) {
+  return slug === "weddings" && legacyWeddingPackageIds.includes(id);
+}
+
 export function packageEnquiryHref(slug: PackageCategory, option = "tailored") {
-  return `${packagePath(slug)}?${new URLSearchParams({ package: option })}#package-enquiry`;
+  const packageId = resolvePackageSelection(slug, option);
+  const location = getPackageExperience(slug)?.options.find(item => item.id === packageId)?.location;
+  const params = new URLSearchParams({ package: packageId });
+  if (location) params.set("location", location);
+  return `${packagePath(slug)}?${params.toString()}#package-enquiry`;
 }

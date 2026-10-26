@@ -66,7 +66,7 @@ export default function Home() {
     {
       image: "/mms/ledScreens/billo.png",
       imagePosition: "center center",
-      title: "Display & Digital Billboard Advertising Solutions",
+      title: "Digital Billboards, Advertising Solutions",
       desc: "From high-impact indoor LED screens and digital signage to outdoor advertising displays, we provide scalable visual solutions for events, corporate branding, and public-facing promotional campaigns.",
       btnText: "Explore Display & Advertising Solutions",
       link: "#services"

@@ -21,7 +21,14 @@ export function captureCampaign(): CampaignAttribution {
   if (Object.keys(current).length) {
     const path = window.location.pathname;
     const campaign = { ...current, ...(path.length <= 300 && CONTACT_ORIGIN_PATTERN.test(path) ? { landingPage: path } : {}) };
-    try { sessionStorage.setItem(storageKey, JSON.stringify({ at: Date.now(), campaign })); } catch { /* Storage may be disabled. */ }
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey) || "null");
+      if (saved && typeof saved.at === "number" && saved.campaign?.landingPage === path && campaignKeys.every(key => saved.campaign[key] === current[key])) {
+        const age = Date.now() - saved.at;
+        return age >= 0 && age < maxAge ? campaign : {};
+      }
+      sessionStorage.setItem(storageKey, JSON.stringify({ at: Date.now(), campaign }));
+    } catch { /* Storage may be disabled. */ }
     return campaign;
   }
   try {

@@ -33,13 +33,14 @@ for (const experience of packageExperiences) {
     await form.getByLabel("Email address", { exact: true }).fill("package-fixture@example.com");
     await form.getByLabel("Preferred date (optional)").fill("2027-05-10");
     await form.getByLabel("Project details").fill("Please discuss our location and production scope.");
+    await form.getByLabel("Package preference").selectOption(experience.options[1].id);
     await form.getByRole("button", { name: "Send my package enquiry" }).click();
     await expect(form.getByRole("alert")).toBeVisible();
     await expect(form.getByLabel("Email address", { exact: true })).toHaveValue("package-fixture@example.com");
     expect(await page.evaluate(() => window.dataLayer?.filter(item => item.event === "generate_lead").length || 0)).toBe(0);
     await form.getByRole("button", { name: "Send my package enquiry" }).click();
     await expect(page.locator("#package-enquiry").getByRole("status")).toContainText("Your enquiry has been saved");
-    expect(payload).toMatchObject({ category: experience.slug, packageId: experience.options[0].id, date: "2027-05-10", attribution: { utm_source: "signature", utm_campaign: "launch", landingPage: "/" } });
+    expect(payload).toMatchObject({ category: experience.slug, packageId: experience.options[1].id, date: "2027-05-10", attribution: { utm_source: "signature", utm_campaign: "launch", landingPage: "/" } });
     const events = await page.evaluate(() => window.dataLayer?.filter(item => item.event === "generate_lead"));
     expect(events).toHaveLength(1);
     expect(JSON.stringify(events)).not.toContain("package-fixture@example.com");

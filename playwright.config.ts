@@ -9,6 +9,6 @@ export default defineConfig({
   workers: 2, timeout: 60000,
   use: { baseURL: externalBase || "http://127.0.0.1:3100", trace: "retain-on-failure" },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
-  webServer: externalBase ? undefined : { command: "npm run dev -- --hostname 127.0.0.1 --port 3100", url: "http://127.0.0.1:3100", reuseExistingServer: false, timeout: 180000,
+  webServer: externalBase ? undefined : { command: process.env.CI ? "npm run start -- --hostname 127.0.0.1 --port 3100" : "npm run dev -- --hostname 127.0.0.1 --port 3100", url: "http://127.0.0.1:3100", reuseExistingServer: false, timeout: 180000,
     env: { DATABASE_URL: process.env.MMS_TEST_DATABASE_URL || "postgresql://mms:mms@127.0.0.1:5432/mms_test", SMTP_PASSWORD: "", WHATSAPP_ACCESS_TOKEN: "" } },
 });

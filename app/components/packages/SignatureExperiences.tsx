@@ -4,15 +4,12 @@ import { ArrowRight } from "lucide-react";
 import { packageExperiences, packagePath } from "@/lib/packages";
 import styles from "./packages.module.css";
 
-const packageCta = (slug: string, label: string) => {
-  const href = packagePath(slug as never);
-  return (
-    <Link
-      href={href}
-      className="mms-button inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs uppercase tracking-widest"
-    >
-      {label}
-      <ArrowRight aria-hidden="true" size={16} />
+export function ExperienceCards() {
+  return <div data-stagger className={styles.experiences}>{packageExperiences.map((experience, index) => <article key={experience.slug} className={styles.experienceCard}>
+    <Link href={packagePath(experience.slug)} className={styles.experienceImage} aria-label={`Explore ${experience.title}`}>
+      <Image src={experience.image} alt={experience.imageAlt} fill sizes="(max-width:639px) 90vw, (max-width:1023px) 45vw, 30vw" style={{ objectPosition: experience.imagePosition }} />
+      <span className={styles.cardNumber} aria-hidden="true">{index === 0 ? "Remember" : index === 1 ? "Discover" : "Connect"}</span>
+      <div className={styles.cardOverlay}><h3>{experience.title}</h3><p>{experience.tagline}</p><span className={styles.cardArrow} aria-hidden="true">↗</span></div>
     </Link>
   );
 };

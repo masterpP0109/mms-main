@@ -53,7 +53,7 @@ export default function Home() {
       title: "Audio Solutions",
       desc: "Professional PA systems, microphones, conference audio and interpretation technology for clear, reliable communication at every event.",
       btnText: "Explore Audio Solutions",
-      link: "#services"
+      link: "/services/professional-sound-systems"
     },
     {
       image: "/mms/media-prodction.jpg.jpeg",
@@ -61,7 +61,7 @@ export default function Home() {
       title: "Media Production",
       desc: "Photography, videography, live streaming, drone filming and podcast production brought together through professional visual storytelling.",
       btnText: "Explore Media Production",
-      link: "#services"
+      link: "/services/videography-photography"
     },
     {
       image: "/mms/ledScreens/billo.png",
@@ -77,7 +77,7 @@ export default function Home() {
       title: "Special Effects",
       desc: "Cold sparks, low-lying cloud effects, digital advertising billboards and immersive 360 booth experiences that elevate events and create memorable visual moments.",
       btnText: "Explore Special Effects",
-      link: "#services"
+      link: "/services/special-effects"
     }
   ];
 
@@ -370,9 +370,6 @@ export default function Home() {
           {/* Dots Indicator */}
           <div className="hero-dots absolute bottom-7 left-0 w-full z-30 px-6">
             <div className="mx-auto flex max-w-xl items-center justify-center gap-2 sm:gap-3">
-              <span className="hidden sm:inline text-xs font-mono tracking-[0.22em] text-brand-foreground/55">
-                {String(currentSlide + 1).padStart(2, "0")}
-              </span>
               <div className="flex items-center justify-center gap-1.5 sm:gap-2">
                 {slides.map((slide, idx) => (
                   <button
@@ -385,9 +382,6 @@ export default function Home() {
                   />
                 ))}
               </div>
-              <span className="hidden sm:inline text-xs font-mono tracking-[0.22em] text-brand-foreground/55">
-                {String(slides.length).padStart(2, "0")}
-              </span>
             </div>
           </div>
         </div>
@@ -627,9 +621,6 @@ export default function Home() {
                           >
                             View Project
                           </a>
-                          <span className="pw-card-counter text-xs uppercase tracking-[0.3em] text-brand-foreground/70 font-heading">
-                            {String(idx + 1).padStart(2, "00")} / {String(pastWorkItems.length).padStart(2, "00")}
-                          </span>
                         </div>
                       </div>
                     </div>

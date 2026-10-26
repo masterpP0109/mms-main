@@ -1,3 +1,10 @@
+.glassButton.glassButton { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: .65rem; box-sizing: border-box; width: min(15rem, 100%); max-width: 100%; min-width: 0; height: 48px; min-height: 48px; flex-shrink: 1; padding: .5rem 1.25rem; border: 1px solid rgb(253 164 175 / .45); border-radius: 999px; background: linear-gradient(135deg, rgb(152 27 40 / .55), rgb(255 255 255 / .09)), rgb(33 16 25 / .65); color: #fff; backdrop-filter: blur(16px) saturate(140%); box-shadow: inset 0 1px 0 rgb(255 255 255 / .18), 0 8px 24px rgb(0 0 0 / .18); font-size: .8rem; font-weight: 600; line-height: 1.2; text-align: center; text-decoration: none; overflow: hidden; transition: background .25s, border-color .25s, box-shadow .25s, transform .25s; }
+.glassButton::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(110deg, transparent 20%, rgb(255 255 255 / .22), transparent 80%); transform: translateX(-140%); transition: transform .6s; }
+.glassButton.glassButton:is(:hover, :focus-visible):not(:disabled) { color: #fff; background: linear-gradient(135deg, rgb(152 27 40 / .8), rgb(255 255 255 / .18)), rgb(33 16 25 / .65); border-color: var(--color-brand-accent); box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), 0 12px 30px rgb(152 27 40 / .35); transform: translateY(-3px); }
+.glassButton:is(:hover, :focus-visible)::before { transform: translateX(140%); }
+.glassButton:focus-visible { outline: 2px solid var(--color-brand-accent); outline-offset: 4px; }
+.glassButton:disabled { opacity: .5; cursor: wait; }
+@media (prefers-reduced-motion: reduce) { .glassButton.glassButton:is(:hover, :focus-visible):not(:disabled) { transform: none; } .glassButton::before { display: none; } }
 /* Extends the shared MMS service layouts, typography, maroon accents and reveals. */
 .eyebrow { color: var(--color-brand-accent); font-size: .7rem; letter-spacing: .23em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
 .signature { width: min(100% - 2rem, 1280px); margin: 0 auto; padding-block: 2rem 5rem; }
@@ -5,7 +12,9 @@
 .signatureHeading h2 { color: white; font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 500; line-height: 1.2; letter-spacing: -.035em; margin-bottom: 1.5rem; }
 .signatureHeading > p:last-child { color: #d1d5db; line-height: 1.85; max-width: 650px; }
 .experiences { display: grid; gap: 2.25rem 1.5rem; }
-.experienceCard { min-width: 0; }
+.experienceCard { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+.experienceCard .experienceImage { width: 100%; }
+.experienceCard .cardDescription { flex: 1; margin-bottom: 1.25rem; }
 .experienceImage { position: relative; display: block; aspect-ratio: 4 / 5; min-height: 340px; overflow: hidden; border: 1px solid var(--color-dark-border); border-radius: 1.25rem; background: var(--color-dark-card); }
 .experienceImage img { object-fit: cover; transition: transform .6s ease; }
 .experienceImage::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(5 5 7 / .96), rgb(5 5 7 / .12) 80%), linear-gradient(180deg, rgb(5 5 7 / .5), transparent 35%); }
@@ -16,7 +25,7 @@
 .cardOverlay p { color: #fff; line-height: 1.65; max-width: 85%; font-size: .95rem; }
 .cardArrow { position: absolute; right: 0; bottom: 0; font-size: 1.5rem; color: var(--color-brand-accent); }
 .cardDescription { margin-top: 1.25rem; color: #d1d5db; font-size: .95rem; line-height: 1.85; }
-.lightLink { display: inline-flex; align-items: center; gap: 1rem; min-height: 44px; color: var(--color-brand-accent); font-size: .85rem; text-decoration: underline; text-underline-offset: .35rem; }
+.lightLink { composes: glassButton; }
 .allPackages { display: flex; justify-content: center; padding-top: 2rem; }
 .packageHero::after { background: linear-gradient(90deg, rgb(5 5 7 / .85), rgb(5 5 7 / .7)), linear-gradient(0deg, #050507, transparent 65%); }
 .heroTitle { white-space: pre-line; }
@@ -61,7 +70,7 @@
 .form :is(input, select, textarea):focus-visible { outline-color: var(--color-brand-accent); }
 .form .formHelp { font-size: .8rem; line-height: 1.7; color: #d1d5db; }
 .formHelp a { text-decoration: underline; text-underline-offset: .2rem; }
-.submit { composes: mms-button from global; gap: .8rem; min-height: 48px; padding: .9rem 1.5rem; font-size: .85rem; }
+.submit { composes: glassButton; }
 .submit:disabled { cursor: wait; }
 .form .error { color: var(--color-brand-accent); font-size: .9rem; margin-top: 1.25rem; }
 @media (min-width: 640px) {
@@ -76,5 +85,3 @@
   .overviewVisual > div:first-child { min-height: 500px; }
 }
 @media (prefers-reduced-motion: reduce) { .experienceImage:hover img { transform: none; } }
-
-.lightLink:is(:hover, :focus-visible) { color: #fff; text-decoration-color: var(--color-brand-red); }

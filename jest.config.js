@@ -17,7 +17,13 @@ const customJestConfig = {
     '**/__tests__/**/*.[jt]s?(x)',
     '**/?(*.)+(spec|test).[jt]s?(x)',
   ],
-  testPathIgnorePatterns: ['<rootDir>/.kilo/', '<rootDir>/.next/', '<rootDir>/node_modules/', '<rootDir>/e2e/'],
+  testPathIgnorePatterns: [
+    '[/\\\\]\\.kilo[/\\\\]',
+    '[/\\\\]\\.cache[/\\\\]',
+    '[/\\\\]\\.next[/\\\\]',
+    '[/\\\\]node_modules[/\\\\]',
+    '[/\\\\]e2e[/\\\\]',
+  ],
   coverageThreshold: {
     './lib/leads.ts': { statements: 80, branches: 45, functions: 100, lines: 85 },
     './lib/http.ts': { statements: 80, branches: 55, functions: 100, lines: 85 },

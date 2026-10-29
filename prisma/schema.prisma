@@ -134,3 +134,31 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 }
+
+model Review {
+  id           String    @id @default(cuid())
+  name         String
+  email        String
+  role         String?
+  organisation String?
+  service      String?
+  eventDate    String?
+  rating       Int
+  headline     String?
+  content      String
+  status       String    @default("pending")
+  featured     Boolean   @default(false)
+  verified     Boolean   @default(false)
+  consent      Boolean   @default(true)
+  avatar       String?
+  notes        String?
+  moderatedAt  DateTime?
+  moderatedBy  String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([status, createdAt])
+  @@index([rating])
+  @@index([featured])
+  @@index([service])
+}

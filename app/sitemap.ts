@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/gallery",
     "/contact",
     "/conference-production",
+    "/reviews",
     "/privacy",
   ].map(route => ({ url: new URL(route, base).href })).concat([
     ...services.filter(item => !dedicatedServices.has(item.slug)).map(item => ({ url: new URL(`/services/${encodeURIComponent(item.slug)}`, base).href, lastModified: item.updatedAt })),

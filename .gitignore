@@ -50,3 +50,4 @@ next-env.d.ts
 /.agents/
 skills-lock.json
 .neon
+neon.ts

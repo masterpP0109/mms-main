@@ -1,0 +1,475 @@
+/* wedding.module.css — Styles for the dedicated /packages/weddings storytelling page.
+ * Extends the shared MMS service layouts (services.module.css) and package styles (packages.module.css).
+ * All colour tokens match the site's brand palette. */
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: max(700px, 90svh);
+  display: flex;
+  align-items: flex-end;
+  padding-block: 10rem 5rem;
+  background: #171914;
+}
+.heroImage {
+  object-fit: cover;
+  z-index: -2;
+}
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(5 5 7 / .88), rgb(5 5 7 / .35)),
+    linear-gradient(0deg, #050507 0%, transparent 60%),
+    linear-gradient(180deg, rgb(5 5 7 / .45) 0%, transparent 35%);
+}
+.heroContent {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+}
+.heroEyebrow {
+  color: var(--color-brand-accent);
+}
+.heroTitle {
+  font-size: clamp(2.6rem, 6vw, 5.75rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+  font-weight: 500;
+  color: #fff;
+  margin-block: 1.25rem .85rem;
+  max-width: 820px;
+}
+.heroSub {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--color-brand-accent);
+  font-weight: 500;
+  letter-spacing: .02em;
+  margin-bottom: 1.25rem;
+  max-width: 640px;
+}
+.heroDesc {
+  max-width: 600px;
+  font-size: 1.05rem;
+  color: #d1d5db;
+  line-height: 1.85;
+}
+
+/* ── Shared intro block ─────────────────────────────────────────────────────── */
+.sectionIntro {
+  margin-bottom: 3rem;
+  max-width: 800px;
+}
+
+/* ── Section 2: Packages ────────────────────────────────────────────────────── */
+.packagesSection {
+  position: relative;
+  border-top: 1px solid rgb(253 164 175 / .15);
+}
+.packagesIntro {
+  margin-bottom: 3rem;
+  max-width: 800px;
+}
+.packagesGrid {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: .5rem;
+}
+.packagesFooter {
+  margin-top: 2rem;
+  max-width: 780px;
+  font-size: .85rem;
+  color: #d1d5db;
+  line-height: 1.7;
+}
+.anchor { display: block; scroll-margin-top: 7rem; }
+.locationsSection, .enquirySection { scroll-margin-top: 7rem; }
+.locationGrid {
+  display: grid;
+  gap: 2rem;
+  margin-top: .5rem;
+}
+.locationCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-dark-surface);
+  border: 1px solid rgb(253 164 175 / .18);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.locationCard:hover {
+  border-color: rgb(253 164 175 / .4);
+  box-shadow: 0 18px 46px rgb(0 0 0 / .28);
+}
+.locationImageWrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.locationImage {
+  object-fit: cover;
+  transition: transform .65s ease;
+}
+.locationCard:hover .locationImage {
+  transform: scale(1.04);
+}
+.locationImageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgb(5 5 7 / .6), transparent 60%);
+  pointer-events: none;
+}
+.locationMood {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  z-index: 1;
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--color-brand-accent);
+}
+.locationBody {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.locationEyebrow {
+  margin-bottom: .5rem !important;
+}
+.locationName {
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: .85rem;
+  line-height: 1.25;
+}
+.locationVenue {
+  font-size: 1rem;
+  color: var(--color-brand-accent);
+  margin-bottom: 1rem;
+}
+.locationDesc {
+  font-size: .95rem;
+  color: #d1d5db;
+  line-height: 1.85;
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+.locationCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: .625rem 1.5rem;
+  border: 1px solid rgb(253 164 175 / .3);
+  border-radius: 999px;
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-brand-foreground);
+  transition: color .3s, border-color .3s;
+  align-self: flex-start;
+  margin-top: auto;
+}
+.locationCta:is(:hover, :focus-visible) {
+  color: #fff;
+  border-color: var(--color-brand-accent);
+}
+.locationNote {
+  margin-top: 2rem;
+  max-width: 780px;
+}
+
+/* ── Section 3: Services ────────────────────────────────────────────────────── */
+.servicesSection {
+  background: radial-gradient(ellipse at 70% 40%, rgb(38 21 26 / .7) 0%, transparent 65%),
+              linear-gradient(180deg, transparent, rgb(5 5 7 / .4));
+  border-block: 1px solid rgb(253 164 175 / .15);
+}
+.servicesInner {
+  /* inherits .section width/padding */
+}
+.servicesGrid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: .5rem;
+}
+.serviceCard {
+  padding: 2rem;
+  border: 1px solid rgb(253 164 175 / .2);
+  border-radius: 1.25rem;
+  background: var(--color-dark-card);
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.serviceCard:hover {
+  border-color: rgb(253 164 175 / .4);
+  box-shadow: 0 14px 36px rgb(0 0 0 / .22);
+  transform: translateY(-4px);
+}
+.serviceIcon {
+  display: block;
+  font-size: 1.75rem;
+  margin-bottom: 1.1rem;
+}
+.serviceTitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: .75rem;
+}
+.serviceText {
+  font-size: .95rem;
+  color: #d1d5db;
+  line-height: 1.85;
+}
+
+/* ── Section 4: Packages ────────────────────────────────────────────────────── */
+.packagesGrid {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: .5rem;
+}
+.packageCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border: 1px solid rgb(253 164 175 / .22);
+  border-radius: 1.5rem;
+  background: var(--color-dark-surface);
+}
+.packageCardFeatured {
+  border-color: rgb(253 164 175 / .6);
+  background: linear-gradient(150deg, #290d14, var(--color-dark-surface) 70%);
+  box-shadow: 0 0 0 1px rgb(253 164 175 / .25), 0 14px 46px rgb(152 27 40 / .2);
+}
+.featuredBadge {
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background: var(--color-brand-primary);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: .35rem 1rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.packageName {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: .35rem;
+}
+.packageDestName {
+  font-size: .85rem;
+  color: var(--color-brand-accent);
+  font-weight: 600;
+  letter-spacing: .04em;
+  margin-bottom: .85rem;
+}
+.packageTagline {
+  font-size: .95rem;
+  color: #d1d5db;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+.packageDetails {
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+.packageDetails > div {
+  padding-block: 1rem;
+  border-top: 1px solid var(--color-dark-border);
+}
+.packageDetails dt {
+  color: var(--color-brand-accent);
+  text-transform: uppercase;
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  margin-bottom: .55rem;
+}
+.packageDetails dd {
+  color: #d1d5db;
+  line-height: 1.7;
+  font-size: .9rem;
+}
+.packageQuoteLabel {
+  color: var(--color-brand-accent);
+  font-weight: 600;
+  font-size: .85rem;
+  margin-bottom: 1rem;
+}
+.packagesFooter {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.packagesFooter > p {
+  font-size: .85rem;
+  color: #d1d5db;
+  line-height: 1.7;
+}
+.enhancements {
+  border: 1px solid rgb(253 164 175 / .2);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.enhancementsSummary {
+  padding: 1.1rem 1.5rem;
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--color-brand-accent);
+  cursor: pointer;
+  list-style: none;
+  transition: background .2s;
+}
+.enhancementsSummary:hover {
+  background: rgb(253 164 175 / .06);
+}
+.enhancementsList {
+  padding: 1rem 1.5rem 1.25rem 2.75rem;
+}
+
+/* ── Section 5: Gallery ─────────────────────────────────────────────────────── */
+.gallerySection {
+  background: var(--color-dark-surface);
+  border-block: 1px solid rgb(253 164 175 / .15);
+}
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .75rem;
+  margin-top: .5rem;
+}
+.galleryItem {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.galleryItemTall {
+  grid-row: span 2;
+}
+.galleryImageWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+.galleryItemTall .galleryImageWrap {
+  aspect-ratio: 2 / 3;
+  height: 100%;
+}
+.galleryImage {
+  object-fit: cover;
+  transition: transform .7s ease;
+}
+.galleryItem:hover .galleryImage {
+  transform: scale(1.04);
+}
+.galleryCta {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* ── Section 6: Process ─────────────────────────────────────────────────────── */
+.processSection {
+  border-top: 1px solid rgb(253 164 175 / .15);
+}
+.processSteps {
+  display: grid;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin-top: .5rem;
+  counter-reset: process-counter;
+}
+.processStep {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgb(253 164 175 / .3);
+}
+.processNumber {
+  display: block;
+  color: var(--color-brand-accent);
+  font-size: .85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.processTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: .65rem;
+}
+.processText {
+  font-size: .95rem;
+  color: #d1d5db;
+  line-height: 1.8;
+}
+
+/* ── Section 7: Enquiry ─────────────────────────────────────────────────────── */
+.enquirySection {
+  border-top: 1px solid rgb(253 164 175 / .2);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .heroContent {
+    width: min(100% - 5rem, 1280px);
+  }
+  .locationGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .servicesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .packagesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .galleryGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .processSteps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    min-height: max(760px, 92svh);
+  }
+  .locationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .packagesGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .galleryGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .processSteps {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .locationCard:hover .locationImage,
+  .galleryItem:hover .galleryImage,
+  .serviceCard:hover {
+    transform: none;
+  }
+}

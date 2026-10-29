@@ -18,6 +18,13 @@ export const contactLeadSchema = z.object({
   website: z.string().max(0).optional(),
 }).strict();
 
+const delegateCount = optionalText(40).refine((val) => {
+  if (!val) return true;
+  if (!/^[1-9]\d*$/.test(val)) return false;
+  const num = Number(val);
+  return Number.isSafeInteger(num) && num >= 1 && num <= 100000;
+}, "Invalid delegate count");
+
 export const conferenceLeadSchema = z.object({
   organisation: text(160),
   contact: text(120),
@@ -25,7 +32,7 @@ export const conferenceLeadSchema = z.object({
   phone,
   eventType: optionalText(120),
   date: optionalText(80),
-  delegates: optionalText(40),
+  delegates: delegateCount,
   venue: optionalText(200),
   organisationType: z.preprocess((value) => value === "" || value === "Type of organisation" ? undefined : value, z.enum(["Government", "International", "NGO", "Corporate"]).optional()),
   services: z.array(text(120)).max(20).default([]),

@@ -36,14 +36,16 @@ function EnquiryFields({ experience }: { experience: FormExperience }) {
   const initialLocation = rawLocation || experience.options.find(opt => opt.id === packageId)?.location || "";
   const [location, setLocation] = useState(initialLocation);
 
-  useEffect(() => {
+  const [prevParams, setPrevParams] = useState(params);
+  if (params !== prevParams) {
+    setPrevParams(params);
     const curRequested = params.get("package");
     const curLoc = params.get("location");
     const resolved = resolvePackageSelection(experience.slug, curRequested, curLoc);
     setSelectedPackage(resolved);
     const targetLoc = curLoc ?? experience.options.find(opt => opt.id === resolved)?.location ?? "";
     setLocation(targetLoc);
-  }, [params, experience.slug, experience.options]);
+  }
 
   useEffect(() => {
     if (requested && isLegacyWeddingPackage(experience.slug, requested)) {
@@ -68,8 +70,6 @@ function EnquiryFields({ experience }: { experience: FormExperience }) {
         const nextLoc = next.get("location");
         const resolved = resolvePackageSelection(experience.slug, next.get("package"), nextLoc);
         next.set("package", resolved);
-        setSelectedPackage(resolved);
-        if (nextLoc) setLocation(nextLoc);
         router.replace(`${window.location.pathname}?${next.toString()}${hash}`, { scroll: false });
       }
     }

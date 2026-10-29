@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, XCircle, Star, Eye, MessageSquareOff } from "lucide-react";
 import StarRating from "@/app/components/reviews/StarRating";
 import type { ReviewItem } from "./ReviewDetailModal";
 
@@ -34,7 +33,6 @@ export default function ReviewTable({
   if (reviews.length === 0) {
     return (
       <div className="bg-[#0b0b0f] border border-brand-accent/15 rounded-2xl p-12 text-center space-y-3 backdrop-blur-md">
-        <MessageSquareOff className="w-10 h-10 text-zinc-600 mx-auto" />
         <h3 className="text-base font-semibold text-white font-heading">No review submissions found</h3>
         <p className="text-xs text-zinc-400 font-light max-w-sm mx-auto">
           No reviews match your selected filters. Try searching with different terms or resetting the filter options.
@@ -44,7 +42,7 @@ export default function ReviewTable({
   }
 
   return (
-    <div className="bg-[#0b0b0f] border border-brand-accent/15 rounded-2xl overflow-hidden backdrop-blur-md">
+    <div className="bg-[#0b0b0f] border border-brand-accent/15 rounded-2xl overflow-hidden backdrop-blur-md shadow-xl">
       {/* Desktop / Tablet Table View */}
       <div className="hidden lg:block overflow-x-auto">
         <table className="w-full text-left text-xs">
@@ -68,12 +66,14 @@ export default function ReviewTable({
                 <td className="py-4 px-4 align-top">
                   <div className="space-y-1">
                     <p className="text-sm font-semibold text-white flex items-center gap-1.5">
-                      {rev.name}
+                      <span>{rev.name}</span>
                       {rev.verified && (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <span className="text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                          Verified
+                        </span>
                       )}
                     </p>
-                    <p className="text-[11px] text-zinc-400 truncate max-w-[180px] select-all">
+                    <p className="text-[11px] text-zinc-400 truncate max-w-[180px] select-all font-mono">
                       {rev.email}
                     </p>
                     {(rev.role || rev.organisation) && (
@@ -92,12 +92,13 @@ export default function ReviewTable({
                       <button
                         type="button"
                         onClick={() => onToggleFeatured(rev.id, !rev.featured)}
-                        title={rev.featured ? "Remove from featured" : "Pin to featured"}
-                        className={`p-1 rounded transition-colors cursor-pointer ${
-                          rev.featured ? "text-amber-400" : "text-zinc-600 hover:text-amber-400/70"
+                        className={`text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border transition-colors cursor-pointer ${
+                          rev.featured
+                            ? "bg-amber-400/20 text-amber-300 border-amber-400/50"
+                            : "text-zinc-500 border-zinc-800 hover:border-zinc-600 hover:text-zinc-300"
                         }`}
                       >
-                        <Star className={`w-3.5 h-3.5 ${rev.featured ? "fill-amber-400" : ""}`} />
+                        {rev.featured ? "Featured" : "Standard"}
                       </button>
                     </div>
 
@@ -120,10 +121,10 @@ export default function ReviewTable({
                   </span>
                 </td>
 
-                {/* Status Pill */}
+                {/* Status Pill with Realistic Indicator Dot */}
                 <td className="py-4 px-4 align-top">
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
                       rev.status === "approved"
                         ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
                         : rev.status === "rejected"
@@ -134,10 +135,10 @@ export default function ReviewTable({
                     <span
                       className={`w-1.5 h-1.5 rounded-full ${
                         rev.status === "approved"
-                          ? "bg-emerald-400"
+                          ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]"
                           : rev.status === "rejected"
-                          ? "bg-rose-400"
-                          : "bg-amber-400 animate-pulse"
+                          ? "bg-rose-400 shadow-[0_0_6px_rgba(251,113,133,0.8)]"
+                          : "bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.8)] animate-pulse"
                       }`}
                     />
                     {rev.status}
@@ -145,7 +146,7 @@ export default function ReviewTable({
                 </td>
 
                 {/* Date */}
-                <td className="py-4 px-4 align-top text-zinc-400 text-[11px] whitespace-nowrap">
+                <td className="py-4 px-4 align-top text-zinc-400 text-[11px] whitespace-nowrap font-mono">
                   {new Date(rev.createdAt).toLocaleDateString("en-US", {
                     month: "short",
                     day: "numeric",
@@ -153,17 +154,16 @@ export default function ReviewTable({
                   })}
                 </td>
 
-                {/* Action Buttons */}
+                {/* Clean Typographic Action Buttons (No Icon Clutter) */}
                 <td className="py-4 px-4 align-top text-right">
                   <div className="flex items-center justify-end gap-1.5">
                     {rev.status !== "approved" && (
                       <button
                         type="button"
                         onClick={() => onQuickApprove(rev.id)}
-                        title="Approve for website"
-                        className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/30 transition-colors cursor-pointer"
+                        className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/30 text-[11px] font-medium transition-colors cursor-pointer"
                       >
-                        <CheckCircle2 className="w-4 h-4" />
+                        Approve
                       </button>
                     )}
 
@@ -171,20 +171,18 @@ export default function ReviewTable({
                       <button
                         type="button"
                         onClick={() => onQuickReject(rev.id)}
-                        title="Reject submission"
-                        className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 transition-colors cursor-pointer"
+                        className="px-2.5 py-1 rounded-lg bg-rose-500/10 text-rose-300 hover:bg-rose-500/25 border border-rose-500/30 text-[11px] font-medium transition-colors cursor-pointer"
                       >
-                        <XCircle className="w-4 h-4" />
+                        Reject
                       </button>
                     )}
 
                     <button
                       type="button"
                       onClick={() => onSelectReview(rev)}
-                      title="Inspect full details"
-                      className="p-1.5 rounded-lg bg-white/5 text-zinc-300 hover:text-white hover:bg-white/10 border border-zinc-700 transition-colors cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-white/5 text-zinc-300 hover:text-white hover:bg-white/10 border border-zinc-700 text-[11px] font-medium transition-colors cursor-pointer"
                     >
-                      <Eye className="w-4 h-4" />
+                      Inspect
                     </button>
                   </div>
                 </td>
@@ -201,10 +199,14 @@ export default function ReviewTable({
             <div className="flex items-start justify-between gap-2">
               <div>
                 <h4 className="text-sm font-semibold text-white flex items-center gap-1.5">
-                  {rev.name}
-                  {rev.verified && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 inline" />}
+                  <span>{rev.name}</span>
+                  {rev.verified && (
+                    <span className="text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.2 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                      Verified
+                    </span>
+                  )}
                 </h4>
-                <p className="text-xs text-zinc-400 select-all">{rev.email}</p>
+                <p className="text-xs text-zinc-400 select-all font-mono">{rev.email}</p>
                 {(rev.role || rev.organisation) && (
                   <p className="text-[10px] text-zinc-500">
                     {[rev.role, rev.organisation].filter(Boolean).join(" • ")}
@@ -213,7 +215,7 @@ export default function ReviewTable({
               </div>
 
               <span
-                className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
                   rev.status === "approved"
                     ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
                     : rev.status === "rejected"
@@ -221,44 +223,63 @@ export default function ReviewTable({
                     : "bg-amber-500/15 text-amber-300 border border-amber-500/30"
                 }`}
               >
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    rev.status === "approved"
+                      ? "bg-emerald-400"
+                      : rev.status === "rejected"
+                      ? "bg-rose-400"
+                      : "bg-amber-400 animate-pulse"
+                  }`}
+                />
                 {rev.status}
               </span>
             </div>
 
             <div className="flex items-center justify-between">
               <StarRating value={rev.rating} size="sm" />
-              {rev.service && (
-                <span className="text-[10px] text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded-full border border-brand-accent/20">
-                  {rev.service}
-                </span>
-              )}
+              <span className="text-[10px] text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded-full border border-brand-accent/20">
+                {rev.service || "General"}
+              </span>
             </div>
 
             {rev.headline && (
-              <h5 className="text-xs font-semibold text-white font-heading">{rev.headline}</h5>
+              <p className="text-xs font-semibold text-white font-heading">{rev.headline}</p>
             )}
 
-            <p className="text-xs text-zinc-300 line-clamp-3 leading-relaxed">{rev.content}</p>
+            <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">{rev.content}</p>
 
+            {/* Mobile Action Buttons (Clean Text) */}
             <div className="flex items-center justify-between pt-2 border-t border-brand-accent/10">
               <span className="text-[10px] text-zinc-500 font-mono">
                 {new Date(rev.createdAt).toLocaleDateString()}
               </span>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 {rev.status !== "approved" && (
                   <button
                     type="button"
                     onClick={() => onQuickApprove(rev.id)}
-                    className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 text-xs font-semibold border border-emerald-500/30"
+                    className="px-2.5 py-1 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-medium cursor-pointer"
                   >
                     Approve
                   </button>
                 )}
+
+                {rev.status !== "rejected" && (
+                  <button
+                    type="button"
+                    onClick={() => onQuickReject(rev.id)}
+                    className="px-2.5 py-1 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30 text-xs font-medium cursor-pointer"
+                  >
+                    Reject
+                  </button>
+                )}
+
                 <button
                   type="button"
                   onClick={() => onSelectReview(rev)}
-                  className="px-2.5 py-1 rounded bg-white/10 text-white text-xs font-medium border border-zinc-700"
+                  className="px-2.5 py-1 rounded bg-white/10 text-white text-xs font-medium cursor-pointer"
                 >
                   Inspect
                 </button>

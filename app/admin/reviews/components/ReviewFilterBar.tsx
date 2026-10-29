@@ -1,20 +1,22 @@
 "use client";
 
 import React from "react";
-import { Search, RotateCcw, Filter } from "lucide-react";
+import { Search } from "lucide-react";
 
 const SERVICES_LIST = [
   "All Services",
-  "Weddings & Elopements",
-  "Conference Production",
-  "Live Streaming Production",
-  "Videography & Photography",
-  "Drone Packages",
-  "Event Lighting & Stage Setup",
-  "Interactive Screens",
-  "DJ Services",
+  "Videography",
+  "Live Streaming",
+  "Photography",
+  "Drone Services",
+  "Podcast Production",
+  "DJ & Lighting",
+  "360 Photo Booth",
   "Special Effects",
-  "Other / Custom Project",
+  "LED Screens & Display",
+  "Conference & Interpretation Systems",
+  "Audio Solutions",
+  "Other",
 ];
 
 interface ReviewFilterBarProps {
@@ -45,10 +47,10 @@ export default function ReviewFilterBar({
   const hasActiveFilters = search || status !== "all" || service !== "all" || rating > 0;
 
   return (
-    <div className="bg-[#0b0b0f] border border-brand-accent/15 rounded-2xl p-4 md:p-5 space-y-4 backdrop-blur-md">
+    <div className="bg-[#0b0b0f] border border-brand-accent/15 rounded-2xl p-4 md:p-5 space-y-4 backdrop-blur-md shadow-xl">
       {/* Top Row: Search and Status Tabs */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-        {/* Search Input */}
+        {/* Search Input with standard search affordance */}
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
@@ -74,7 +76,7 @@ export default function ReviewFilterBar({
                 key={tab.id}
                 type="button"
                 onClick={() => onStatusChange(tab.id)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-3.5 py-1.5 text-xs font-medium rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
                   isActive
                     ? "bg-brand-primary text-white shadow-md shadow-brand-primary/30"
                     : "text-zinc-400 hover:text-white hover:bg-white/5"
@@ -96,13 +98,12 @@ export default function ReviewFilterBar({
         </div>
       </div>
 
-      {/* Bottom Row: Dropdown Filters & Clear */}
+      {/* Bottom Row: Dropdown Filters & Reset */}
       <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-brand-accent/10">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 text-zinc-400 text-xs font-heading">
-            <Filter className="w-3.5 h-3.5 text-brand-accent" />
-            <span>Filter by:</span>
-          </div>
+          <span className="text-zinc-400 text-xs font-heading">
+            Filter:
+          </span>
 
           {/* Service Dropdown */}
           <select
@@ -136,10 +137,9 @@ export default function ReviewFilterBar({
           <button
             type="button"
             onClick={onReset}
-            className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-brand-accent transition-colors cursor-pointer"
+            className="text-xs text-zinc-400 hover:text-brand-accent transition-colors cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Filters</span>
+            Reset Filters
           </button>
         )}
       </div>

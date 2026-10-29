@@ -10,7 +10,6 @@ import {
   Star,
   Clock,
   CheckCircle2,
-  AlertCircle,
   Home,
   ShieldCheck,
   Mail,

@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowLeft, Check, CheckCircle2, Star, Sparkles, ShieldCheck } from "lucide-react";
 import StarRating from "./StarRating";
 
 const MMS_SERVICES = [
@@ -110,7 +109,7 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
         return;
       }
       setPage(2);
-      window.scrollTo({ top: 300, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (page === 2) {
       const err = validatePage2();
       if (err) {
@@ -118,14 +117,14 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
         return;
       }
       setPage(3);
-      window.scrollTo({ top: 300, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handleBack = () => {
     setError(null);
     setPage((prev) => Math.max(1, prev - 1));
-    window.scrollTo({ top: 300, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -172,7 +171,7 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
       setReference(resData.reference || `REV-${resData.submissionId?.slice(-6).toUpperCase()}`);
       setSubmitted(true);
       onSuccess?.();
-      window.scrollTo({ top: 300, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please check your submission.");
     } finally {
@@ -185,17 +184,13 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
     return (
       <div
         role="status"
-        className="bg-[#0b0b0f] border border-brand-accent/25 rounded-3xl p-8 sm:p-14 text-center space-y-7 shadow-2xl relative overflow-hidden backdrop-blur-xl animate-in fade-in duration-300"
+        className="w-full bg-[#0b0b0f] border border-brand-accent/25 rounded-3xl p-8 sm:p-14 text-center space-y-7 shadow-2xl relative overflow-hidden backdrop-blur-xl animate-in fade-in duration-300"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/15 via-transparent to-brand-accent/10 pointer-events-none" />
 
-        <div className="w-20 h-20 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400 shadow-xl shadow-emerald-950/40">
-          <CheckCircle2 className="w-10 h-10" />
-        </div>
-
         <div className="space-y-3 relative z-10 max-w-xl mx-auto">
           <span className="text-xs uppercase tracking-[0.3em] text-brand-accent font-semibold font-heading block">
-            Submission Received
+            Submission Confirmed
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-white font-heading leading-tight">
             Thank You for Sharing Your Experience!
@@ -237,9 +232,7 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
             href="/"
             className="mms-button px-7 py-3 text-xs uppercase tracking-[0.2em] font-semibold"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              Back to Home <ArrowRight className="w-3.5 h-3.5" />
-            </span>
+            <span className="relative z-10">Back to Home</span>
           </Link>
         </div>
       </div>
@@ -247,14 +240,13 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
   }
 
   return (
-    <div className="bg-[#0b0b0f]/95 border border-brand-accent/20 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-2xl relative transition-all">
+    <div className="w-full bg-[#0b0b0f]/95 border border-brand-accent/20 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-2xl relative transition-all">
       {/* Form Title & Tally Header */}
       <div className="space-y-4 pb-6 border-b border-brand-accent/15">
         <div className="flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent text-[11px] font-semibold uppercase tracking-[0.2em] font-heading">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>MMS Feedback</span>
-          </div>
+          <span className="text-[11px] uppercase tracking-[0.2em] text-brand-accent font-semibold font-heading">
+            Client Feedback
+          </span>
 
           {/* Progress Indicator */}
           <div className="text-right">
@@ -273,15 +265,15 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
         </div>
 
         <div className="space-y-2 pt-1">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white font-heading leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-heading leading-tight">
             Your Experience Matters | Mosi Media Solutions
           </h1>
           <p className="text-xs sm:text-sm text-brand-foreground/75 font-light leading-relaxed">
             Every successful event tells a story, and we&apos;re grateful to have been part of yours.
             At Mosi Media Solutions, we believe that exceptional service is built through collaboration, attention to detail and continuous improvement.
           </p>
-          <p className="text-[11px] text-zinc-400 font-light flex items-center gap-1.5 pt-1">
-            <span>⏱ Takes approximately 2 minutes to complete.</span>
+          <p className="text-[11px] text-zinc-400 font-light pt-1">
+            Takes approximately 2 minutes to complete.
           </p>
         </div>
       </div>
@@ -361,14 +353,13 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
                       key={srv}
                       type="button"
                       onClick={() => toggleService(srv)}
-                      className={`px-3.5 py-2.5 rounded-xl text-xs font-medium text-left border transition-all flex items-center justify-between cursor-pointer ${
+                      className={`px-4 py-3 rounded-xl text-xs font-medium text-left border transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-brand-primary/40 border-brand-accent text-white shadow-md shadow-brand-primary/20"
+                          ? "bg-brand-primary/50 border-brand-accent text-white shadow-md shadow-brand-primary/20"
                           : "bg-[#050507]/60 border-brand-accent/15 text-zinc-400 hover:border-brand-accent/40 hover:text-white"
                       }`}
                     >
-                      <span>{srv}</span>
-                      {isSelected && <Check className="w-3.5 h-3.5 text-brand-accent shrink-0" />}
+                      {srv}
                     </button>
                   );
                 })}
@@ -456,7 +447,7 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
                       onClick={() => setWouldRecommend(opt)}
                       className={`p-3.5 rounded-xl border text-sm font-medium flex items-center gap-3 transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-brand-primary/40 border-brand-accent text-white shadow-md shadow-brand-primary/20"
+                          ? "bg-brand-primary/50 border-brand-accent text-white shadow-md shadow-brand-primary/20"
                           : "bg-[#050507] border-brand-accent/15 text-zinc-400 hover:border-brand-accent/40 hover:text-white"
                       }`}
                     >
@@ -516,7 +507,7 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
                       onClick={() => setPermissionToFeature(opt.value)}
                       className={`p-3.5 rounded-xl border text-sm font-medium flex items-center gap-3 transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-brand-primary/40 border-brand-accent text-white shadow-md shadow-brand-primary/20"
+                          ? "bg-brand-primary/50 border-brand-accent text-white shadow-md shadow-brand-primary/20"
                           : "bg-[#050507] border-brand-accent/15 text-zinc-400 hover:border-brand-accent/40 hover:text-white"
                       }`}
                     >
@@ -570,21 +561,20 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
 
         {/* Error Alert */}
         {error && (
-          <div role="alert" className="p-4 rounded-xl bg-red-950/50 border border-red-500/40 text-red-200 text-xs flex items-center gap-2">
-            <span>{error}</span>
+          <div role="alert" className="p-4 rounded-xl bg-red-950/50 border border-red-500/40 text-red-200 text-xs">
+            {error}
           </div>
         )}
 
-        {/* Navigation & Submit Buttons */}
+        {/* Navigation & Submit Buttons (Clean Text - No Icon Clutter) */}
         <div className="flex items-center justify-between pt-4 border-t border-brand-accent/15">
           {page > 1 ? (
             <button
               type="button"
               onClick={handleBack}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-zinc-700 text-zinc-300 hover:text-white text-xs font-medium hover:bg-white/5 transition-colors cursor-pointer"
+              className="px-6 py-2.5 rounded-full border border-zinc-700 text-zinc-300 hover:text-white text-xs font-medium hover:bg-white/5 transition-colors cursor-pointer"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back</span>
+              Back
             </button>
           ) : (
             <div />
@@ -594,29 +584,25 @@ export default function ReviewForm({ defaultService = "", onSuccess }: ReviewFor
             <button
               type="button"
               onClick={handleNext}
-              className="mms-button px-7 py-3 text-xs uppercase tracking-[0.2em] font-semibold cursor-pointer"
+              className="mms-button px-8 py-3 text-xs uppercase tracking-[0.2em] font-semibold cursor-pointer"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                Next <ArrowRight className="w-4 h-4" />
-              </span>
+              <span className="relative z-10">Next</span>
             </button>
           ) : (
             <button
               type="submit"
               disabled={loading}
-              className="mms-button px-8 py-3.5 text-xs uppercase tracking-[0.2em] font-semibold cursor-pointer disabled:opacity-50"
+              className="mms-button px-9 py-3.5 text-xs uppercase tracking-[0.2em] font-semibold cursor-pointer disabled:opacity-50"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10">
                 {loading ? "Submitting..." : "Submit Review"}
-                <ArrowRight className="w-4 h-4" />
               </span>
             </button>
           )}
         </div>
 
-        <div className="flex items-center justify-center gap-2 text-zinc-500 text-[11px] pt-2">
-          <ShieldCheck className="w-3.5 h-3.5 text-brand-accent/60" />
-          <span>Responses are securely recorded and reviewed by the MMS executive team</span>
+        <div className="text-center text-zinc-500 text-[11px] pt-1 font-light">
+          Responses are securely recorded and reviewed by the MMS executive team
         </div>
       </form>
     </div>

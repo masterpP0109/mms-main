@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { RefreshCw, ExternalLink, ShieldAlert, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import ReviewMetrics, { type ReviewMetricsData } from "./components/ReviewMetrics";
 import ReviewFilterBar from "./components/ReviewFilterBar";
 import ReviewTable from "./components/ReviewTable";
@@ -63,6 +63,7 @@ export default function ReviewsDashboard() {
   }, [status, service, rating, search]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchReviews();
   }, [fetchReviews]);
 
@@ -247,19 +248,17 @@ export default function ReviewsDashboard() {
             type="button"
             onClick={handleRefresh}
             disabled={refreshing}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white border border-zinc-700 text-xs font-medium transition-colors cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white border border-zinc-700 text-xs font-medium transition-colors cursor-pointer disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin text-brand-accent" : ""}`} />
-            <span>{refreshing ? "Refreshing..." : "Refresh"}</span>
+            {refreshing ? "Refreshing..." : "Refresh"}
           </button>
 
           <Link
             href="/reviews"
             target="_blank"
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-primary/20 hover:bg-brand-primary/30 text-brand-accent border border-brand-accent/30 text-xs font-semibold transition-colors"
+            className="px-4 py-2 rounded-xl bg-brand-primary/20 hover:bg-brand-primary/30 text-brand-accent border border-brand-accent/30 text-xs font-semibold transition-colors"
           >
-            <span>Live Reviews Page</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            Live Questionnaire Page ↗
           </Link>
         </div>
       </div>

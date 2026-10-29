@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, CheckCircle2, XCircle, Star, Trash2, Calendar, Mail, Building, Briefcase, Save } from "lucide-react";
+import { X, CheckCircle2, XCircle, Star, Trash2, Calendar, Mail, Building, Briefcase, Save, ThumbsUp, UserCheck } from "lucide-react";
 import StarRating from "@/app/components/reviews/StarRating";
 
 export interface ReviewItem {
@@ -11,6 +11,7 @@ export interface ReviewItem {
   role: string | null;
   organisation: string | null;
   service: string | null;
+  services?: string[];
   eventDate: string | null;
   rating: number;
   headline: string | null;
@@ -19,7 +20,15 @@ export interface ReviewItem {
   featured: boolean;
   verified: boolean;
   consent: boolean;
+  wouldRecommend?: string | null;
+  attribution?: string | null;
   notes: string | null;
+  metadata?: {
+    stoodOut?: string;
+    contribution?: string;
+    improvements?: string;
+    servicesList?: string[];
+  } | null;
   moderatedAt: string | null;
   moderatedBy: string | null;
   createdAt: string;
@@ -67,6 +76,8 @@ export default function ReviewDetailModal({
       setActionLoading(false);
     }
   };
+
+  const meta = review.metadata || {};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
@@ -163,6 +174,52 @@ export default function ReviewDetailModal({
             </div>
           </div>
 
+          {/* Questionnaire Breakdown (Tally Responses) */}
+          {(meta.stoodOut || meta.contribution || meta.improvements || review.wouldRecommend || review.attribution) && (
+            <div className="space-y-3 p-4 bg-[#121218] border border-brand-accent/15 rounded-2xl">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-brand-accent font-semibold block font-heading">
+                Detailed Questionnaire Responses
+              </span>
+
+              {review.wouldRecommend && (
+                <div className="flex items-center gap-2 text-xs">
+                  <ThumbsUp className="w-3.5 h-3.5 text-brand-accent" />
+                  <span className="text-zinc-400">Would recommend MMS:</span>
+                  <span className="font-semibold text-white">{review.wouldRecommend}</span>
+                </div>
+              )}
+
+              {review.attribution && (
+                <div className="flex items-center gap-2 text-xs">
+                  <UserCheck className="w-3.5 h-3.5 text-brand-accent" />
+                  <span className="text-zinc-400">Attribution Preference:</span>
+                  <span className="font-semibold text-brand-accent">{review.attribution}</span>
+                </div>
+              )}
+
+              {meta.stoodOut && (
+                <div className="pt-2 border-t border-brand-accent/10 space-y-1">
+                  <p className="text-[11px] text-zinc-400 font-medium">What stood out most:</p>
+                  <p className="text-xs text-zinc-200 leading-relaxed">{meta.stoodOut}</p>
+                </div>
+              )}
+
+              {meta.contribution && (
+                <div className="pt-2 border-t border-brand-accent/10 space-y-1">
+                  <p className="text-[11px] text-zinc-400 font-medium">Impact on event/project:</p>
+                  <p className="text-xs text-zinc-200 leading-relaxed">{meta.contribution}</p>
+                </div>
+              )}
+
+              {meta.improvements && (
+                <div className="pt-2 border-t border-brand-accent/10 space-y-1">
+                  <p className="text-[11px] text-zinc-400 font-medium">Suggestions for improvement:</p>
+                  <p className="text-xs text-zinc-200 leading-relaxed">{meta.improvements}</p>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Reviewer Metadata Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div className="p-3 bg-[#121218] border border-brand-accent/10 rounded-xl flex items-center gap-2.5">
@@ -176,17 +233,21 @@ export default function ReviewDetailModal({
             <div className="p-3 bg-[#121218] border border-brand-accent/10 rounded-xl flex items-center gap-2.5">
               <Briefcase className="w-4 h-4 text-brand-accent shrink-0" />
               <div className="truncate">
-                <span className="text-[10px] uppercase text-zinc-500 block font-heading">Service</span>
-                <span className="text-white font-medium">{review.service || "General / Unspecified"}</span>
+                <span className="text-[10px] uppercase text-zinc-500 block font-heading">Service(s)</span>
+                <span className="text-white font-medium">
+                  {review.services && review.services.length > 0
+                    ? review.services.join(", ")
+                    : review.service || "General / Unspecified"}
+                </span>
               </div>
             </div>
 
             <div className="p-3 bg-[#121218] border border-brand-accent/10 rounded-xl flex items-center gap-2.5">
               <Building className="w-4 h-4 text-brand-accent shrink-0" />
               <div className="truncate">
-                <span className="text-[10px] uppercase text-zinc-500 block font-heading">Role & Organisation</span>
+                <span className="text-[10px] uppercase text-zinc-500 block font-heading">Organisation</span>
                 <span className="text-white font-medium">
-                  {[review.role, review.organisation].filter(Boolean).join(" • ") || "Private Client"}
+                  {review.organisation || "Private Client"}
                 </span>
               </div>
             </div>

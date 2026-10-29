@@ -8,18 +8,34 @@ export async function submitReview(input: ReviewSubmissionInput) {
   // Guard abuse via shared database rate limit bucket
   await enforceIdentityLimit(input.email);
 
+  const primaryService = input.service || (input.services.length > 0 ? input.services.join(", ") : "General");
+  const compositeContent = input.content || [
+    input.headline,
+    input.stoodOut ? `What stood out: ${input.stoodOut}` : null,
+    input.contribution ? `Impact on our event: ${input.contribution}` : null,
+  ].filter(Boolean).join("\n\n");
+
   const review = await db.review.create({
     data: {
       name: input.name,
       email: input.email,
       role: input.role,
       organisation: input.organisation,
-      service: input.service,
+      service: primaryService,
+      services: input.services,
       eventDate: input.eventDate,
       rating: input.rating,
       headline: input.headline,
-      content: input.content,
+      content: compositeContent,
       consent: input.consent,
+      wouldRecommend: input.wouldRecommend,
+      attribution: input.attribution,
+      metadata: {
+        stoodOut: input.stoodOut,
+        contribution: input.contribution,
+        improvements: input.improvements,
+        servicesList: input.services,
+      },
       status: "pending",
       featured: false,
       verified: false,
@@ -54,12 +70,15 @@ export async function getApprovedReviews(options?: {
       role: true,
       organisation: true,
       service: true,
+      services: true,
       eventDate: true,
       rating: true,
       headline: true,
       content: true,
       featured: true,
       verified: true,
+      attribution: true,
+      wouldRecommend: true,
       avatar: true,
       createdAt: true,
     },
@@ -87,7 +106,7 @@ export async function getAdminReviews(options?: {
   }
 
   if (options?.service && options.service !== "all") {
-    where.service = options.service;
+    where.service = { contains: options.service, mode: "insensitive" };
   }
 
   if (options?.search && options.search.trim()) {
@@ -136,7 +155,7 @@ export async function deleteReview(id: string) {
 export async function getReviewMetrics() {
   const [total, pending, approved, rejected, featured, ratingStats] = await Promise.all([
     db.review.count(),
-    db.review.count({ where: { status: "pending" } }),
+    db.lead ? db.review.count({ where: { status: "pending" } }) : 0,
     db.review.count({ where: { status: "approved" } }),
     db.review.count({ where: { status: "rejected" } }),
     db.review.count({ where: { featured: true } }),

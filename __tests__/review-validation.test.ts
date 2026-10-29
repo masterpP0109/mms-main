@@ -1,20 +1,24 @@
 import { reviewSubmissionSchema, reviewModerationSchema } from "@/lib/validation/reviews";
 
-describe("Review Validation Schema", () => {
+describe("Review Validation Schema (Tally Structure)", () => {
   const validReview = {
     name: "Sarah Jenkins",
     email: "sarah.j@example.com",
     role: "Bride",
-    organisation: "Private",
-    service: "Weddings & Elopements",
+    organisation: "Jenkins Family Celebration",
+    services: ["Videography", "Live Streaming", "Photography"],
     eventDate: "October 2026",
     rating: 5,
-    headline: "Unforgettable Wedding in Victoria Falls",
-    content: "The cinematic production team captured our entire wedding celebration with absolute brilliance and elegance.",
+    stoodOut: "The incredible professionalism and how invisible yet attentive the crew was throughout our wedding ceremony.",
+    contribution: "Gave us an emotional, cinematic archive that our entire family will treasure forever.",
+    improvements: "None, it was flawless.",
+    wouldRecommend: "Yes" as const,
+    headline: "Unrivalled cinematography and warm, professional crew at Victoria Falls.",
     consent: true,
+    attribution: "My name and organisation" as const,
   };
 
-  it("accepts a completely valid review submission", () => {
+  it("accepts a completely valid review submission matching Tally structure", () => {
     const result = reviewSubmissionSchema.safeParse(validReview);
     expect(result.success).toBe(true);
   });
@@ -22,10 +26,12 @@ describe("Review Validation Schema", () => {
   it("accepts a review with only required fields", () => {
     const minimalReview = {
       name: "Tafadzwa Moyo",
+      organisation: "Ministry of Tourism",
       email: "tafadzwa@example.org",
+      services: ["Conference & Interpretation Systems"],
       rating: 4,
-      content: "Excellent sound system and responsive stage setup for our forum.",
-      consent: true,
+      stoodOut: "Sound clarity and responsive stage setup during presidential keynote.",
+      headline: "Excellent AV production and dependable team.",
     };
     const result = reviewSubmissionSchema.safeParse(minimalReview);
     expect(result.success).toBe(true);
@@ -36,13 +42,18 @@ describe("Review Validation Schema", () => {
     expect(result.success).toBe(false);
   });
 
-  it("rejects review if content is too short (< 10 chars)", () => {
-    const result = reviewSubmissionSchema.safeParse({ ...validReview, content: "Great!" });
+  it("rejects review if services list is empty", () => {
+    const result = reviewSubmissionSchema.safeParse({ ...validReview, services: [] });
     expect(result.success).toBe(false);
   });
 
-  it("rejects review if consent is false or missing", () => {
-    const result = reviewSubmissionSchema.safeParse({ ...validReview, consent: false });
+  it("rejects review if stoodOut is missing or empty", () => {
+    const result = reviewSubmissionSchema.safeParse({ ...validReview, stoodOut: "" });
+    expect(result.success).toBe(false);
+  });
+
+  it("rejects review if headline is missing or empty", () => {
+    const result = reviewSubmissionSchema.safeParse({ ...validReview, headline: "" });
     expect(result.success).toBe(false);
   });
 

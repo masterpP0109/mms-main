@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "Review"
+  ADD COLUMN IF NOT EXISTS "services" TEXT[] DEFAULT ARRAY[]::TEXT[],
+  ADD COLUMN IF NOT EXISTS "wouldRecommend" TEXT,
+  ADD COLUMN IF NOT EXISTS "attribution" TEXT,
+  ADD COLUMN IF NOT EXISTS "metadata" JSONB;

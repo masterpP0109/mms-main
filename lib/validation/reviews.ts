@@ -15,22 +15,34 @@ const optionalText = (max: number) =>
     .transform((v) => v || undefined);
 
 export const reviewSubmissionSchema = z.object({
+  // Section 1: About You
   name: text(120),
+  organisation: text(160),
   email: z.string().trim().email().max(254),
   role: optionalText(120),
-  organisation: optionalText(160),
+  services: z.array(z.string().trim().max(120)).min(1, "Please select at least one service provided"),
   service: optionalText(120),
   eventDate: optionalText(80),
+
+  // Section 2: Your Experience
   rating: z.coerce.number().int().min(1).max(5),
-  headline: optionalText(160),
-  content: z.string()
-    .trim()
-    .min(10, "Review must be at least 10 characters long")
-    .max(2000, "Review must be at most 2000 characters long")
-    .refine((value) => !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value), "Invalid characters"),
-  consent: z.boolean().refine((val) => val === true, {
-    message: "You must confirm permission to display this review.",
-  }),
+  stoodOut: text(2000),
+  contribution: optionalText(2000),
+  improvements: optionalText(2000),
+  wouldRecommend: z.enum(["Yes", "Maybe", "No"]).default("Yes"),
+
+  // Section 3: Share Your Experience
+  headline: text(300), // "In a few words, how would you describe your experience..."
+  content: optionalText(3000), // Full recommendation or composite text
+  consent: z.boolean().default(true),
+  attribution: z.enum([
+    "My name and organisation",
+    "My name only",
+    "Organisation only (subject to authorisation)",
+    "Anonymous client",
+  ]).default("My name and organisation"),
+
+  // Anti-spam honeypot
   website: z.string().max(0).optional(),
 }).strict();
 

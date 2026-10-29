@@ -142,6 +142,7 @@ model Review {
   role         String?
   organisation String?
   service      String?
+  services     String[]  @default([])
   eventDate    String?
   rating       Int
   headline     String?
@@ -150,8 +151,11 @@ model Review {
   featured     Boolean   @default(false)
   verified     Boolean   @default(false)
   consent      Boolean   @default(true)
+  wouldRecommend String?
+  attribution  String?
   avatar       String?
   notes        String?
+  metadata     Json?
   moderatedAt  DateTime?
   moderatedBy  String?
   createdAt    DateTime  @default(now())

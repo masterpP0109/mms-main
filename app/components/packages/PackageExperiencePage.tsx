@@ -10,7 +10,7 @@ import s from "../services/services.module.css";
 import styles from "./packages.module.css";
 
 export default function PackageExperiencePage({ experience: e }: { experience: PackageExperience }) {
-  return <div className={s.page}><Navbar /><main>
+  return <div className={s.page}><Navbar /><main id="main-content" tabIndex={-1}>
     <section className={`${s.hero} ${styles.packageHero}`} aria-labelledby="package-title">
       <Image src={e.image} alt={e.imageAlt} fill sizes="100vw" preload className={s.heroImage} style={{ objectPosition: e.imagePosition }} />
       <div className={s.heroContent}>
@@ -38,15 +38,22 @@ export default function PackageExperiencePage({ experience: e }: { experience: P
     </section>
 
     <section id="package-options" className={s.section} aria-labelledby="options-title">
+      <span id="wedding-packages" className="block -mt-28 pt-28" aria-hidden="true" />
       <div data-reveal><p className={s.eyebrow}>Choose a starting point</p><h2 id="options-title">Your vision sets the scope.</h2><p className={s.intro}>Compare approaches, then tell us what fits. These are proposed directions for discussion. MMS confirms availability, inclusions, pricing and terms in a tailored quotation.</p></div>
-      <div data-stagger className={`${s.grid} ${styles.threeColumns}`}>{e.options.map((option) => <article key={option.id} className={styles.optionCard}>
-        <p className={s.eyebrow}>{e.title}</p><h3>{option.name}</h3><p>{option.for}</p>
-        <dl className={styles.comparison}>
-          <div><dt>Coverage to discuss</dt><dd>{option.coverage}</dd></div>
-          <div><dt>Finished work</dt><dd>{option.finish}</dd></div>
-          <div><dt>Planning focus</dt><dd>{option.planning}</dd></div>
-        </dl>
-        <p className={styles.quoteLabel}>Tailored quotation</p><PackageChoice category={e.slug} id={option.id} name={option.name} />
+      <div data-stagger className={`${s.grid} ${styles.threeColumns}`}>{e.options.map((option, index) => <article key={option.id} className={styles.optionCard}>
+        <p className={s.eyebrow}>0{index + 1} / {e.title}</p>
+        <h3>{option.name}</h3>
+        {option.location && <p className={styles.packageDestName}>{option.location}</p>}
+        <p>{option.for}</p>
+        {(option.coverage || option.finish || option.planning) && (
+          <dl className={styles.comparison}>
+            {option.coverage && <div><dt>Coverage to discuss</dt><dd>{option.coverage}</dd></div>}
+            {option.finish && <div><dt>Finished work</dt><dd>{option.finish}</dd></div>}
+            {option.planning && <div><dt>Planning focus</dt><dd>{option.planning}</dd></div>}
+          </dl>
+        )}
+        <p className={styles.quoteLabel}>Tailored quotation</p>
+        <PackageChoice category={e.slug} id={option.id} name={option.name} />
       </article>)}</div>
       <p className={styles.optionFootnote}>Unsure which fits? <Link href={packageEnquiryHref(e.slug)}>Ask us to tailor your package.</Link> No booking or specific deliverable is confirmed by selecting an option.</p>
     </section>
@@ -66,11 +73,12 @@ export default function PackageExperiencePage({ experience: e }: { experience: P
     <ServiceFAQs items={e.faqs} />
 
     <section id="package-enquiry" className={`${s.section} ${s.split}`} aria-labelledby="enquiry-title">
+      <span id="wedding-enquiry" className="block -mt-28 pt-28" aria-hidden="true" />
       <div data-reveal><p className={s.eyebrow}>Your next chapter starts here</p><h2 id="enquiry-title">Tell us what you have in mind.</h2><p>Share your preferred date, location and priorities for {e.service.toLowerCase()}. We’ll use your enquiry to discuss a suitable scope and quotation.</p>
         <p className="mt-4">An enquiry is the start of a conversation. Availability, scope, pricing and booking terms need confirmation.</p>
         <div className={s.actions}>{e.serviceHref && <Link href={e.serviceHref} className={styles.glassButton}>Read the service guide</Link>}<Link href="/packages" className={styles.glassButton}>Compare all experiences</Link></div>
       </div>
-      <PackageEnquiryForm experience={{ slug: e.slug, service: e.service, note: e.note, options: e.options.map(({ id, name }) => ({ id, name })) }} />
+      <PackageEnquiryForm experience={{ slug: e.slug, service: e.service, note: e.note, options: e.options.map(({ id, name, location }) => ({ id, name, location })) }} />
     </section>
   </main><Footer /></div>;
 }

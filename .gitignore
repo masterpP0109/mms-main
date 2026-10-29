@@ -47,3 +47,6 @@ next-env.d.ts
 /playwright-report/
 
 /.cache/
+/.agents/
+skills-lock.json
+.neon

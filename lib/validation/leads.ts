@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { CONTACT_ORIGIN_PATTERN } from "@/lib/contact-referral";
-import { getPackageExperience } from "@/lib/packages";
+import { getPackageExperience, isLegacyWeddingPackage } from "@/lib/packages";
 
 const text = (max: number) => z.string().trim().min(1).max(max).refine((value) => !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value), "Invalid characters");
 const optionalText = (max: number) => z.string().trim().max(max).optional().transform((v) => v || undefined);
@@ -18,6 +18,13 @@ export const contactLeadSchema = z.object({
   website: z.string().max(0).optional(),
 }).strict();
 
+const delegateCount = optionalText(40).refine((val) => {
+  if (!val) return true;
+  if (!/^[1-9]\d*$/.test(val)) return false;
+  const num = Number(val);
+  return Number.isSafeInteger(num) && num >= 1 && num <= 100000;
+}, "Invalid delegate count");
+
 export const conferenceLeadSchema = z.object({
   organisation: text(160),
   contact: text(120),
@@ -25,7 +32,7 @@ export const conferenceLeadSchema = z.object({
   phone,
   eventType: optionalText(120),
   date: optionalText(80),
-  delegates: optionalText(40),
+  delegates: delegateCount,
   venue: optionalText(200),
   organisationType: z.preprocess((value) => value === "" || value === "Type of organisation" ? undefined : value, z.enum(["Government", "International", "NGO", "Corporate"]).optional()),
   services: z.array(text(120)).max(20).default([]),
@@ -51,6 +58,7 @@ export const packageLeadSchema = z.object({
   packageId: text(80),
   name: text(120), email: z.string().trim().email().max(254), phone,
   date: z.string().date().optional(),
+  location: optionalText(200),
   details: text(5000),
   attribution: z.object({
     utm_source: campaignValue, utm_medium: campaignValue, utm_campaign: campaignValue,
@@ -60,7 +68,8 @@ export const packageLeadSchema = z.object({
   }).strict().optional(),
   website: z.string().max(0).optional(),
 }).strict().superRefine((input, ctx) => {
-  if (input.packageId !== "tailored" && !getPackageExperience(input.category)?.options.some(option => option.id === input.packageId)) {
+  const isLegacy = isLegacyWeddingPackage(input.category, input.packageId);
+  if (input.packageId !== "tailored" && !isLegacy && !getPackageExperience(input.category)?.options.some(option => option.id === input.packageId)) {
     ctx.addIssue({ code: "custom", path: ["packageId"], message: "Choose an option from this service category" });
   }
 });

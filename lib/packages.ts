@@ -36,7 +36,15 @@ export const packageExperiences: PackageExperience[] = [
       { image: "/mms/wedding%2012.jpg", alt: "Couple portraits in the Victoria Falls landscape", title: "Just the two of you", text: "A portrait-led approach for an intimate ceremony and a setting that means something." },
       { image: "/mms/wedding1.jpg", alt: "Wedding inspiration from the MMS image library", title: "Together with your people", text: "Consider the ceremony, speeches and shared moments as chapters of a wider celebration." },
     ],
-    options: weddingPackages.map(option => ({ id: option.id, name: option.name, for: option.description, location: option.location })),
+    options: weddingPackages.map(option => ({
+      id: option.id,
+      name: option.name,
+      for: option.description,
+      location: option.location,
+      coverage: option.coverage,
+      finish: option.finish,
+      planning: option.planning,
+    })),
     enhancements: ["Additional coverage time", "A second location or celebration", "Speech or ceremony edits", "Social sharing versions", "Aerial sequences, subject to a separate feasibility review"],
     process: [
       { title: "Share your day", text: "Tell us your preferred date, locations and the moments you want to keep." },

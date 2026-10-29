@@ -7,7 +7,7 @@ for (const option of weddingPackages) {
     let payload: Record<string, unknown> = {};
     await page.route("**/api/leads", route => {
       payload = route.request().postDataJSON();
-      return route.fulfill({ status: 201, json: { success: true, saved: true, submissionId: "destination_fixture" } });
+      return route.fulfill({ status: 201, json: { success: true, saved: true, submissionId: "destination_fixture", notificationStatus: "accepted" } });
     });
     await page.goto("/packages/weddings");
     await page.getByRole("link", { name: `Enquire about ${option.name}`, exact: true }).click();
@@ -57,39 +57,29 @@ test("repairs old location-after-fragment URLs and preserves the intended destin
 });
 
 for (const width of [390, 768, 1440]) {
-  test(`package-first structure and destination card layout at ${width}px`, async ({ page }) => {
+  test(`consistent package structure and card layout at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.emulateMedia({ reducedMotion: "reduce" });
     const errors: string[] = [];
     page.on("pageerror", error => errors.push(error.message));
     for (const category of ["weddings", "drone", "podcasts"]) {
       await page.goto(`/packages/${category}`);
-      const sections = page.locator("main > section");
-      await expect(sections.nth(1)).toHaveAttribute("id", category === "weddings" ? "wedding-packages" : "package-options");
-      const packages = sections.nth(1);
-      await expect(packages.locator("article")).toHaveCount(category === "weddings" ? 3 : 3);
-      await page.getByRole("link", { name: category === "weddings" ? "Explore Wedding Packages" : "Find your starting point", exact: true }).click();
+      const packages = page.locator("#package-options");
+      await expect(packages.locator("article")).toHaveCount(3);
+      await page.getByRole("link", { name: "Find your starting point", exact: true }).click();
       await expect.poll(() => packages.evaluate(el => el.getBoundingClientRect().top < innerHeight)).toBe(true);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-      if (category === "weddings") {
-        await expect(sections).toHaveCount(7);
-        await expect(page.locator("main")).not.toContainText(/Wedding Coverage Packages|Coverage to discuss|Finished work|Planning focus|Tailored quotation/);
-        const cards = packages.locator("article");
-        const boxes = await cards.evaluateAll(elements => elements.map(el => { const box = el.getBoundingClientRect(); const cta = el.querySelector("a")!.getBoundingClientRect(); return { top: box.top, left: box.left, height: box.height, cta: cta.bottom }; }));
-        if (width >= 640) {
-          expect(Math.abs(boxes[0].top - boxes[1].top)).toBeLessThan(1);
-          expect(Math.abs(boxes[0].height - boxes[1].height)).toBeLessThan(1);
-          expect(Math.abs(boxes[0].cta - boxes[1].cta)).toBeLessThan(1);
-          expect(boxes[2].top).toBeGreaterThan(boxes[0].top);
-        } else expect(boxes[1].top).toBeGreaterThan(boxes[0].top);
-      } else {
-        for (const image of await packages.locator("img").all()) {
-          await image.scrollIntoViewIfNeeded();
-          await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
-        }
+      const cards = packages.locator("article");
+      await expect(cards).toHaveCount(3);
+      await expect(packages).toContainText("Tailored quotation");
+      await expect(packages).toContainText("Coverage to discuss");
+      for (const image of await packages.locator("img").all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
       }
-      await packages.screenshot({ path: `test-results/package-first-${category}-${width}.png` });
+      await packages.screenshot({ path: `test-results/package-consistent-${category}-${width}.png` });
     }
     expect(errors).toEqual([]);
   });
 }
+

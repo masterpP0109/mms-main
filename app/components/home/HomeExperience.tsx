@@ -69,7 +69,7 @@ export default function Home() {
       title: "Digital Billboards, Advertising Solutions",
       desc: "From high-impact indoor LED screens and digital signage to outdoor advertising displays, we provide scalable visual solutions for events, corporate branding, and public-facing promotional campaigns.",
       btnText: "Explore Display & Advertising Solutions",
-      link: "#services"
+      link: "/services/led-screen-rental"
     },
     {
       image: "/mms/special-effects.jpg.jpeg",

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/app/components/Navbar";
@@ -7,10 +7,10 @@ import { EnquiryLink, enquiryLink } from "@/app/components/services/ServiceSecti
 import styles from "@/app/components/services/services.module.css";
 
 const description = "Explore cold sparks, low-lying cloud effects and immersive event experiences with Mosi Media Solutions.";
-export const metadata: Metadata = { title: "Special Effects | MMS", description, alternates: { canonical: "/services/special-effects" } };
+export const metadata = pageMetadata("/services/special-effects", "Special Effects | MMS", description, "/mms/special-effects.jpg.jpeg", "Special effects at an event");
 
 export default function SpecialEffectsPage() {
-  return <div className={styles.page}><Navbar /><main>
+  return <div className={styles.page}><Navbar /><main id="main-content" tabIndex={-1}>
     <section className={styles.hero}>
       <Image src="/mms/special-effects.jpg.jpeg" alt="Special effects at an event" fill sizes="100vw" preload className={styles.heroImage} />
       <div className={styles.heroContent}>

@@ -64,11 +64,11 @@ export default function Home() {
       link: "/services/videography-photography"
     },
     {
-      image: "/mms/screens.jpg.jpeg",
+      image: "/mms/ledScreens/billo.png",
       imagePosition: "center center",
-      title: "Display & Advertisement Solutions",
-      desc: "LED screens, interactive displays, vertical screens and digital podiums designed to increase visibility, engagement and presentation impact.",
-      btnText: "Explore Display Solutions",
+      title: "Digital Billboards, Advertising Solutions",
+      desc: "From high-impact indoor LED screens and digital signage to outdoor advertising displays, we provide scalable visual solutions for events, corporate branding, and public-facing promotional campaigns.",
+      btnText: "Explore Display & Advertising Solutions",
       link: "/services/led-screen-rental"
     },
     {
@@ -162,7 +162,7 @@ export default function Home() {
       href: "/services"
     },
     {
-      title: "Drone Services",
+      title: "Drone Packages",
       icon: Video,
       image: "/services%20images/Drone%20Services.jpg",
       alt: "Illustrative image of a drone above a city",
@@ -539,7 +539,7 @@ export default function Home() {
           <div className="mt-12 text-center">
             <Link
               href="/services"
-              className="inline-flex items-center justify-center px-6 py-2.5 text-xs uppercase tracking-widest border border-brand-accent/30 text-brand-foreground rounded-full hover:border-brand-accent hover:text-white transition-all duration-300"
+              className="mms-button inline-flex items-center justify-center gap-2 px-6 py-2.5 text-xs uppercase tracking-widest"
             >
               Explore All Services
             </Link>

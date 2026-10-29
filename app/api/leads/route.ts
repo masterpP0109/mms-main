@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       ? { source: "contact" as const, name: raw.name, email: raw.email, phone: raw.phone, projectType: raw.category, message: raw.details,
           metadata: { ...raw.attribution, service: experience!.service, packageId: raw.packageId,
             packageName: experience!.options.find(option => option.id === raw.packageId)?.name ?? "Help me tailor a package",
-            date: raw.date, origin: packagePath(raw.category) } }
+            date: raw.date, location: raw.location, origin: packagePath(raw.category) } }
       : isBrief
       ? { source: "project_builder" as const, name: raw.name, email: raw.email, phone: raw.phone, projectType: raw.goal, message: raw.details || "Project brief submitted", metadata: { audience: raw.audience, timeline: raw.timeline } }
       : { source: "contact" as const, name: raw.name, email: raw.email, phone: raw.phone, organisation: raw.organisation, projectType: raw.projectType, message: raw.message, metadata: { service: raw.service, origin: raw.origin } };

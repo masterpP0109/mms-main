@@ -102,3 +102,48 @@ test("without JavaScript the form cannot submit contact details into a URL", asy
     await expect(enquiry.getByRole("link", { name: "info@mosimediasolutions.com" })).toBeVisible();
   } finally { await context.close(); }
 });
+
+for (const width of [1024, 1280, 1440]) {
+  test(`signature experience cards and inner content stay equal-sized at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/#signature-experiences");
+    const cards = page.locator("#signature-experiences article");
+    await expect(cards).toHaveCount(3);
+    const metrics = await cards.evaluateAll(articles =>
+      articles.map(article => {
+        const imageLink = article.querySelector("a");
+        const heading = article.querySelector("h3");
+        const tagline = imageLink?.querySelector("p");
+        const description = article.querySelector(":scope > p");
+        const cta = article.querySelector(":scope > div > a");
+        return {
+          card: article.getBoundingClientRect(),
+          image: imageLink?.getBoundingClientRect(),
+          heading: heading?.getBoundingClientRect(),
+          tagline: tagline?.getBoundingClientRect(),
+          description: description?.getBoundingClientRect(),
+          cta: cta?.getBoundingClientRect(),
+        };
+      })
+    );
+    const assertEqual = (values: (number | undefined)[], label: string) => {
+      const defined = values.filter((v): v is number => typeof v === "number");
+      expect(defined, label).toHaveLength(3);
+      expect(Math.max(...defined) - Math.min(...defined), label).toBeLessThanOrEqual(2);
+    };
+    assertEqual(metrics.map(m => m.card.width), "card width");
+    assertEqual(metrics.map(m => m.card.height), "card height");
+    assertEqual(metrics.map(m => m.image?.width), "image width");
+    assertEqual(metrics.map(m => m.image?.height), "image height");
+    assertEqual(metrics.map(m => m.heading?.top), "heading top");
+    assertEqual(metrics.map(m => m.heading?.height), "heading height");
+    assertEqual(metrics.map(m => m.tagline?.top), "tagline top");
+    assertEqual(metrics.map(m => m.tagline?.height), "tagline height");
+    assertEqual(metrics.map(m => m.description?.top), "description top");
+    assertEqual(metrics.map(m => m.description?.height), "description height");
+    assertEqual(metrics.map(m => m.cta?.top), "cta top");
+    assertEqual(metrics.map(m => m.cta?.width), "cta width");
+    assertEqual(metrics.map(m => m.cta?.height), "cta height");
+  });
+}

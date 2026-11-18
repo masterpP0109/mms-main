@@ -21,7 +21,7 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "weddings", title: "Wedding Packages", service: "Wedding Photography & Film",
     tagline: "Your love. Your story. Beautifully remembered.",
-    description: "Imagine exchanging vows at the historic Victoria Falls Hotel, celebrating beneath the African skies at Victoria Falls Safari Lodge, or capturing romantic portraits along the Zambezi River. Wherever your love story unfolds, we bring your memories to life through beautiful photography, cinematic wedding films and breathtaking aerial perspectives.",
+    description: "Exchange vows at the Victoria Falls Hotel, celebrate at Victoria Falls Safari Lodge, or capture romantic portraits along the Zambezi River. Wherever your story unfolds, we preserve it through photography, cinematic films and aerial perspectives.",
     headline: "The day passes.\nThe feeling stays.",
     intro: "Imagine exchanging vows at the Victoria Falls Hotel, celebrating beneath the African skies at Victoria Falls Safari Lodge, or capturing unforgettable portraits against the beauty of the Zambezi. Whether you are drawn to an intimate ceremony at the Falls rainforest, a riverside celebration at golden hour, a wilderness setting at the Safari Lodge, or an elegant gathering at the Victoria Falls Hotel, we preserve your story through photography, cinematic film and breathtaking aerial footage.",
     image: "/mms/wedding%2012.jpg", imageAlt: "A couple walking hand in hand beside Victoria Falls", imagePosition: "center 45%",
@@ -65,7 +65,7 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "drone", title: "Drone Packages", service: "Drone Photography & Videography",
     tagline: "Discover the extraordinary from above.",
-    description: "From the dramatic cliffs of Batoka Gorge and the winding Zambezi River to the breathtaking landscapes surrounding Victoria Falls, we capture remarkable aerial perspectives through professional drone photography and cinematic filming for tourism, properties and special events.",
+    description: "From the cliffs of Batoka Gorge and the winding Zambezi River to Victoria Falls landscapes, we capture remarkable aerial perspectives through professional drone photography and cinematic filming for tourism, properties and special events.",
     headline: "A different view.\nA bigger story.",
     intro: "A place is more than a point on a map. Reveal its setting, its scale and the way it connects to the world around it.",
     image: "/victoria_falls_banner.png", imageAlt: "A panoramic landscape across Victoria Falls",

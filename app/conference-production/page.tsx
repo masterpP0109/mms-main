@@ -75,11 +75,11 @@ export default function ConferenceProduction() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
+    <div className="min-h-screen bg-[#e4e4e4] text-[#050507] font-sans">
       <Navbar />
 
       {/* Hero */}
-      <section className="conference-hero relative min-h-[70svh] w-full overflow-hidden flex items-center justify-center">
+      <section className="conference-hero relative min-h-[70svh] w-full overflow-hidden flex items-center justify-center bg-black">
         <Image
           src="/mms/conference%20hero%20img.png"
           alt="Conference production"
@@ -112,8 +112,8 @@ export default function ConferenceProduction() {
 
       {/* Trust strip */}
       <section className="relative z-10 max-w-[1600px] mx-auto mms-gutter -mt-4">
-        <div className="glass-panel rounded-3xl border border-brand-accent/20 p-6 md:p-8">
-          <div data-stagger className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-brand-accent/15">
+        <div className="bg-[#efefef] rounded-3xl border border-[#050507]/12 shadow-lg p-6 md:p-8">
+          <div data-stagger className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-[#050507]/12">
             {[
               { label: "Response Time", value: "24hr" },
               { label: "Licensed & Insured", value: "Drone Certified" },
@@ -121,8 +121,8 @@ export default function ConferenceProduction() {
               { label: "Venue Knowledge", value: "Victoria Falls" },
             ].map((item) => (
               <div key={item.label} className="flex flex-col items-center justify-center p-3 pt-5 md:p-0">
-                <p className="text-[9px] tracking-[0.15em] text-brand-accent uppercase font-semibold mb-1">{item.value}</p>
-                <p className="text-xs text-white font-medium">{item.label}</p>
+                <p className="text-[9px] tracking-[0.15em] text-[#7f141f] uppercase font-bold mb-1">{item.value}</p>
+                <p className="text-xs text-[#050507] font-semibold">{item.label}</p>
               </div>
             ))}
           </div>
@@ -132,20 +132,20 @@ export default function ConferenceProduction() {
       {/* Capabilities */}
       <section id="capabilities" className="py-12 sm:py-20 md:py-28 max-w-[1600px] mx-auto mms-gutter">
         <div data-reveal className="text-center mb-14">
-          <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">What We Provide</span>
-          <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Production Capabilities</h2>
-          <p className="text-sm text-brand-foreground/70 font-light max-w-xl mx-auto">
+          <span className="text-[10px] tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">What We Provide</span>
+          <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] font-heading mb-4">Production Capabilities</h2>
+          <p className="text-sm text-[#050507]/85 font-normal max-w-xl mx-auto">
             Everything your event needs, coordinated by one team.
           </p>
         </div>
         <div data-stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {capabilities.map((cap) => (
-            <div key={cap.title} data-lift className="glass-panel rounded-2xl border border-brand-accent/15 p-6 hover:border-brand-accent/40 transition-all duration-300 group">
-              <div className="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors duration-300">
-                <cap.icon className="w-5 h-5 text-brand-accent" />
+            <div key={cap.title} data-lift className="bg-[#efefef] rounded-2xl border border-[#050507]/12 p-6 hover:border-[#7f141f]/40 shadow-sm transition-all duration-300 group">
+              <div className="w-10 h-10 rounded-full bg-[#7f141f]/10 flex items-center justify-center mb-4 group-hover:bg-[#7f141f]/20 transition-colors duration-300">
+                <cap.icon className="w-5 h-5 text-[#7f141f]" />
               </div>
-              <h3 className="text-sm font-medium text-white mb-2">{cap.title}</h3>
-              <p className="text-xs text-brand-foreground/60 leading-relaxed font-light">{cap.desc}</p>
+              <h3 className="text-sm font-semibold text-[#050507] mb-2">{cap.title}</h3>
+              <p className="text-xs text-[#050507]/85 leading-relaxed font-normal">{cap.desc}</p>
             </div>
           ))}
         </div>
@@ -190,34 +190,33 @@ export default function ConferenceProduction() {
       {/* Process */}
       <section className="py-12 sm:py-20 md:py-28 max-w-[1600px] mx-auto mms-gutter">
         <div data-reveal className="text-center mb-14">
-          <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">How We Work</span>
-          <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Our Production Process</h2>
+          <span className="text-[10px] tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">How We Work</span>
+          <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] font-heading mb-4">Our Production Process</h2>
         </div>
         <div data-stagger className="process-timeline relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-8 xl:gap-4">
-          <div className="absolute top-10 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-brand-accent/30 to-transparent hidden xl:block" />
+          <div className="absolute top-10 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-[#7f141f]/35 to-transparent hidden xl:block" />
           {process.map((item) => (
             <div key={item.step} className="relative z-10 flex flex-col items-center text-center px-4">
-              <div className="w-14 h-14 rounded-full bg-[#050507] border border-brand-accent/30 flex items-center justify-center mb-5 shadow-xl">
-                <span className="text-sm font-semibold text-brand-accent font-heading">{item.step}</span>
+              <div className="w-14 h-14 rounded-full bg-[#efefef] border border-[#7f141f]/30 flex items-center justify-center mb-5 shadow-md">
+                <span className="text-sm font-bold text-[#7f141f] font-heading">{item.step}</span>
               </div>
-              <h3 className="text-base font-medium text-white mb-2">{item.title}</h3>
-              <p className="text-xs text-brand-foreground/65 leading-relaxed font-light">{item.desc}</p>
+              <h3 className="text-base font-semibold text-[#050507] mb-2">{item.title}</h3>
+              <p className="text-xs text-[#050507]/85 leading-relaxed font-normal">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Enquiry Form */}
-      <section id="enquiry" className="relative py-12 sm:py-20 md:py-28 overflow-hidden bg-black border-t border-brand-accent/15">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1510]/60 via-[#050507] to-[#050507] z-0" />
+      <section id="enquiry" className="relative py-12 sm:py-20 md:py-28 overflow-hidden bg-[#e4e4e4] border-t border-[#050507]/12">
         <div className="relative z-10 max-w-[1600px] mx-auto mms-gutter">
           <div data-reveal className="text-center mb-12">
-          <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">Get In Touch</span>
-          <h2 className="text-3xl md:text-4xl font-semibold text-white font-heading mb-4">Conference Enquiry</h2>
-            <p className="text-sm text-brand-foreground/70 font-light max-w-md mx-auto">Fill in the form below and our production team will review your requirements and respond.</p>
+          <span className="text-[10px] tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">Get In Touch</span>
+          <h2 className="text-3xl md:text-4xl font-semibold text-[#050507] font-heading mb-4">Conference Enquiry</h2>
+            <p className="text-sm text-[#050507]/85 font-normal max-w-md mx-auto">Fill in the form below and our production team will review your requirements and respond.</p>
           </div>
 
-          <div data-reveal="scale" className="max-w-3xl mx-auto glass-panel rounded-3xl border border-brand-accent/20 p-5 sm:p-8 md:p-12">
+          <div data-reveal="scale" className="max-w-3xl mx-auto bg-[#efefef] rounded-3xl border border-[#050507]/12 shadow-lg p-5 sm:p-8 md:p-12">
             {!submitted ? (
               <form aria-busy={loading} onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
@@ -230,7 +229,7 @@ export default function ConferenceProduction() {
                   { name: "delegates", placeholder: "Expected number of delegates", type: "number" },
                   { name: "venue", placeholder: "Venue or location" },
                 ].map((field) => (
-                  <label key={field.name} className="block min-w-0 text-sm text-brand-accent">
+                  <label key={field.name} className="block min-w-0 text-sm font-semibold text-[#7f141f]">
                     <span className="block mb-2">{field.placeholder}</span>
                   <input
                     name={field.name}
@@ -238,14 +237,14 @@ export default function ConferenceProduction() {
                     min={field.type === "number" ? 1 : undefined}
                     placeholder={field.placeholder}
                     required={field.required}
-                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors"
+                    className="w-full bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm font-normal text-[#050507] placeholder:text-[#050507]/45 focus:outline-none focus:border-[#7f141f] transition-colors"
                   />
                   </label>
                 ))}
 
                 <div className="md:col-span-2">
-                  <label htmlFor="organisation-type" className="block text-sm text-brand-accent mb-2">Type of organisation</label>
-                  <select id="organisation-type" name="organisationType" className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-brand-foreground/60 focus:outline-none focus:border-brand-accent/50 transition-colors">
+                  <label htmlFor="organisation-type" className="block text-sm font-semibold text-[#7f141f] mb-2">Type of organisation</label>
+                  <select id="organisation-type" name="organisationType" className="w-full bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm text-[#050507] focus:outline-none focus:border-[#7f141f] transition-colors">
                     <option value="">Type of organisation</option>
                     <option>Government</option>
                     <option>International</option>
@@ -255,40 +254,40 @@ export default function ConferenceProduction() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <p className="text-[10px] uppercase tracking-widest text-brand-accent font-semibold mb-3">Required Services</p>
+                  <p className="text-[10px] uppercase tracking-widest text-[#7f141f] font-bold mb-3">Required Services</p>
                   <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-2">
                     {services.map((s) => (
-                      <label key={s} className="inline-flex items-center gap-2 p-3 bg-[#050507]/50 border border-brand-accent/10 rounded-xl cursor-pointer hover:border-brand-accent/30 transition-colors">
-                        <input type="checkbox" name="services" value={s} className="accent-brand-accent" />
-                        <span className="text-xs text-brand-foreground/80">{s}</span>
+                      <label key={s} className="inline-flex items-center gap-2 p-3 bg-white border border-[#050507]/15 rounded-xl cursor-pointer hover:border-[#7f141f]/45 transition-colors">
+                        <input type="checkbox" name="services" value={s} className="accent-[#981b28]" />
+                        <span className="text-xs text-[#050507] font-medium">{s}</span>
                       </label>
                     ))}
                   </div>
                 </div>
 
-                <label htmlFor="conference-details" className="md:col-span-2 text-sm text-brand-accent">Additional information or specific requirements</label>
+                <label htmlFor="conference-details" className="md:col-span-2 text-sm font-semibold text-[#7f141f]">Additional information or specific requirements</label>
                 <textarea
                   id="conference-details"
                   name="details"
                   placeholder="Additional information or specific requirements"
                   rows={4}
-                  className="w-full md:col-span-2 bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors resize-y"
+                  className="w-full md:col-span-2 bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm text-[#050507] placeholder:text-[#050507]/45 focus:outline-none focus:border-[#7f141f] transition-colors resize-y"
                 />
 
                 <div className="md:col-span-2 flex flex-wrap items-center gap-4">
                   <button data-lead-cta type="submit" disabled={loading} className={`${primaryButton} px-8 py-3.5 text-xs uppercase tracking-widest disabled:opacity-50`}>
                     <span className="relative z-10">{loading ? "Sending…" : "Request a Conference Proposal"}</span>
                   </button>
-                  {error && <span role="alert" className="text-sm text-red-400">{error}</span>}
+                  {error && <span role="alert" className="text-sm font-semibold text-[#981b28]">{error}</span>}
                 </div>
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </form>
             ) : (
               <div className="text-center py-12">
-                <CheckCircle className="w-14 h-14 text-brand-accent mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white font-heading mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
-                <p className="text-sm text-brand-foreground/60">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
-                <p role="status" className="text-sm text-brand-accent break-all">Enquiry reference: {reference}</p>
+                <CheckCircle className="w-14 h-14 text-[#7f141f] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-[#050507] font-heading mb-2">Thank you — we&apos;ll be in touch shortly.</h3>
+                <p className="text-sm text-[#050507]/85">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
+                <p role="status" className="text-sm font-semibold text-[#7f141f] break-all mt-2">Enquiry reference: {reference}</p>
               </div>
             )}
           </div>

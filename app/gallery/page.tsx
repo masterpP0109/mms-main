@@ -144,7 +144,7 @@ function GalleryContent() {
   return (
     <>
       {/* Sticky filter bar */}
-      <div className="sticky top-[72px] z-30 bg-[#050507]/92 backdrop-blur-md border-b border-brand-accent/12 py-3.5">
+      <div className="sticky top-[72px] z-30 bg-[#e4e4e4]/95 backdrop-blur-md border-b border-[#050507]/12 py-3.5">
         <div className="max-w-[1600px] mx-auto mms-gutter flex items-center gap-2.5 overflow-x-auto scrollbar-none">
           {cats.map((cat) => (
             <button
@@ -153,16 +153,16 @@ function GalleryContent() {
               disabled={!hydrated}
               onClick={() => setActiveCat(cat)}
               aria-pressed={active === cat}
-              className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-medium transition-all duration-250 cursor-pointer ${
+              className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold transition-all duration-250 cursor-pointer ${
                 active === cat
-                  ? "bg-brand-accent text-[#050507]"
-                  : "border border-brand-accent/25 text-brand-foreground/60 hover:border-brand-accent/60 hover:text-white"
+                  ? "bg-[#981b28] text-white shadow-sm"
+                  : "border border-[#050507]/20 text-[#050507]/75 hover:border-[#7f141f] hover:text-[#7f141f]"
               }`}
             >
               {cat}
             </button>
           ))}
-          <span className="ml-auto shrink-0 text-[10px] text-brand-foreground/35 font-light pl-4 border-l border-brand-accent/12">
+          <span className="ml-auto shrink-0 text-[10px] text-[#050507]/65 font-medium pl-4 border-l border-[#050507]/15">
             {visible.length} of {filtered.length} photos
           </span>
         </div>
@@ -184,7 +184,7 @@ function GalleryContent() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3, delay: Math.min(idx * 0.02, 0.3) }}
-                className={`block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-brand-accent/10 cursor-pointer bg-[#0d0d10] ${
+                className={`block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f141f] break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-[#050507]/12 cursor-pointer bg-[#d6d5d0] ${
                   item.tall ? "row-span-2" : ""
                 }`}
                 aria-label={`View ${item.title}`}
@@ -222,18 +222,18 @@ function GalleryContent() {
         </motion.div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-24 text-brand-foreground/40 text-sm">No images in this category yet.</div>
+          <div className="text-center py-24 text-[#050507]/70 text-sm">No images in this category yet.</div>
         )}
 
         {filtered.length > INITIAL_COUNT && !expanded && (
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-brand-foreground/40 font-light">
+            <span className="text-xs text-[#050507]/75 font-medium">
               Showing {visible.length} of {filtered.length} photos
             </span>
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#7f141f]/35 text-[#050507] text-[11px] uppercase tracking-[0.18em] font-semibold hover:border-[#7f141f] hover:bg-[#7f141f] hover:text-white transition-all duration-300 cursor-pointer"
             >
               View More
               <ArrowRight className="w-4 h-4" />
@@ -243,13 +243,13 @@ function GalleryContent() {
 
         {expanded && (
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-brand-foreground/40 font-light">
+            <span className="text-xs text-[#050507]/75 font-medium">
               Showing all {filtered.length} photos
             </span>
             <button
               type="button"
               onClick={() => { setExpanded(false); setLightboxIdx(null); }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#7f141f]/35 text-[#050507] text-[11px] uppercase tracking-[0.18em] font-semibold hover:border-[#7f141f] hover:bg-[#7f141f] hover:text-white transition-all duration-300 cursor-pointer"
             >
               Show Less
             </button>
@@ -341,7 +341,7 @@ function GalleryContent() {
 
 export default function GalleryPage() {
   return (
-    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
+    <div className="min-h-screen bg-[#e4e4e4] text-[#050507] font-sans">
       <Navbar />
 
       {/* Hero */}
@@ -373,16 +373,16 @@ export default function GalleryPage() {
       </section>
 
       {/* Gallery with filter — wrapped in Suspense for useSearchParams */}
-      <Suspense fallback={<div className="py-24 text-center text-brand-foreground/30 text-sm">Loading gallery…</div>}>
+      <Suspense fallback={<div className="py-24 text-center text-[#050507]/65 text-sm">Loading gallery…</div>}>
         <GalleryContent />
       </Suspense>
 
       {/* CTA */}
-      <section className="py-16 border-t border-brand-accent/10 bg-black">
+      <section className="py-16 border-t border-[#050507]/12 bg-[#e4e4e4]">
         <div data-reveal className="max-w-[1400px] mx-auto mms-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
           <div>
-            <h3 className="text-xl md:text-2xl font-semibold text-white font-heading">Ready to be in our gallery?</h3>
-            <p className="text-sm text-brand-foreground/55 font-light mt-1">Let&apos;s create something beautiful together.</p>
+            <h3 className="text-xl md:text-2xl font-semibold text-[#050507] font-heading">Ready to be in our gallery?</h3>
+            <p className="text-sm text-[#050507]/85 font-normal mt-1">Let&apos;s create something beautiful together.</p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">
             <Link
@@ -395,7 +395,7 @@ export default function GalleryPage() {
             </Link>
             <Link
               href="/conference-production#enquiry"
-              className="inline-flex items-center px-7 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300"
+              className="inline-flex items-center px-7 py-3.5 rounded-full border border-[#7f141f]/35 text-[#050507] text-[11px] uppercase tracking-[0.18em] font-semibold hover:border-[#7f141f] hover:bg-[#7f141f] hover:text-white transition-all duration-300"
             >
               Conference Enquiry
             </Link>

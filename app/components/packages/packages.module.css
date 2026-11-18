@@ -6,13 +6,13 @@
 .glassButton:disabled { opacity: .5; cursor: wait; }
 @media (prefers-reduced-motion: reduce) { .glassButton.glassButton:is(:hover, :focus-visible):not(:disabled) { transform: none; } .glassButton::before { display: none; } }
 /* Extends the shared MMS service layouts, typography, maroon accents and reveals. */
-.eyebrow { color: var(--color-brand-accent); font-size: .7rem; letter-spacing: .23em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
+.eyebrow { color: #7f141f; font-size: .7rem; letter-spacing: .23em; text-transform: uppercase; font-weight: 600; margin-bottom: 1rem; }
 .signature { width: min(100% - 2rem, 1280px); margin: 0 auto; padding-block: 2rem 5rem; }
 .signatureHeading { max-width: 800px; margin-bottom: 2.5rem; }
-.signatureHeading h2 { color: white; font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 500; line-height: 1.2; letter-spacing: -.035em; margin-bottom: 1.5rem; }
-.signatureHeading > p:last-child { color: #d1d5db; line-height: 1.85; max-width: 650px; }
-.experiences { display: grid; gap: 2.25rem 1.5rem; }
-.experienceCard { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+.signatureHeading h2 { color: #050507; font-size: clamp(1.8rem, 3.2vw, 3rem); font-weight: 500; line-height: 1.2; letter-spacing: -.035em; margin-bottom: 1.5rem; }
+.signatureHeading > p:last-child { color: rgb(5 5 7 / .9); line-height: 1.85; max-width: 650px; }
+.experiences { display: grid; gap: 2.25rem 1.5rem; align-items: stretch; }
+.experienceCard { min-width: 0; display: flex; flex-direction: column; align-items: stretch; height: 100%; }
 .experienceCard .experienceImage { width: 100%; }
 .experienceCard .cardDescription { flex: 1; margin-bottom: 1.25rem; }
 .experienceImage { position: relative; display: block; aspect-ratio: 4 / 5; min-height: 340px; overflow: hidden; border: 1px solid var(--color-dark-border); border-radius: 1.25rem; background: var(--color-dark-card); }
@@ -20,13 +20,21 @@
 .experienceImage::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgb(5 5 7 / .96), rgb(5 5 7 / .12) 80%), linear-gradient(180deg, rgb(5 5 7 / .5), transparent 35%); }
 .experienceImage:hover img { transform: scale(1.035); }
 .cardNumber { position: absolute; inset: 1.5rem 1.5rem auto; z-index: 1; color: #fff; font-size: .65rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
-.cardOverlay { position: absolute; inset: auto 1.5rem 1.75rem; z-index: 1; color: white; }
-.cardOverlay h3 { font-size: 1.6rem; font-weight: 500; line-height: 1.25; margin-bottom: .7rem; }
-.cardOverlay p { color: #fff; line-height: 1.65; max-width: 85%; font-size: .95rem; }
+.cardOverlay { position: absolute; inset: auto 1.5rem 1.75rem; z-index: 1; color: white; display: flex; flex-direction: column; }
+.cardOverlay h3 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); font-weight: 500; line-height: 1.25; margin-bottom: .7rem; padding-right: 2rem; min-height: 1.25em; }
+.cardOverlay p { color: #fff; line-height: 1.65; max-width: calc(100% - 2.25rem); font-size: clamp(.875rem, 1.15vw, .95rem); min-height: calc(2 * 1.65em); }
 .cardArrow { position: absolute; right: 0; bottom: 0; font-size: 1.5rem; color: var(--color-brand-accent); }
-.cardDescription { margin-top: 1.25rem; color: #d1d5db; font-size: .95rem; line-height: 1.85; }
+.cardDescription { margin-top: 1.25rem; color: rgb(5 5 7 / .9); font-size: .95rem; line-height: 1.85; }
 .lightLink { composes: glassButton; }
 .allPackages { display: flex; justify-content: center; padding-top: 2rem; }
+/* Homepage-only light band treatment; /packages keeps the dark ExperienceCards surface. */
+.signatureLightBand { position: relative; width: 100%; background: #e4e4e4; padding-block: 2.5rem 4.5rem; }
+.signatureLightBand .signature { position: relative; z-index: 1; padding-block: 0; }
+.signatureLightBand .eyebrow { color: #7f141f; }
+.signatureLightBand .signatureHeading h2 { color: #050507; }
+.signatureLightBand .signatureHeading > p:last-child { color: rgb(5 5 7 / .92); }
+.cardDescriptionLight { color: rgb(5 5 7 / .92); }
+.signatureLightBand :is(a, button):focus-visible { outline-color: #7f141f; }
 .packageHero::after { background: linear-gradient(90deg, rgb(5 5 7 / .85), rgb(5 5 7 / .7)), linear-gradient(0deg, #050507, transparent 65%); }
 .heroTitle { white-space: pre-line; }
 .overviewHero { display: grid; gap: 3rem; align-items: center; padding-top: 9rem; }
@@ -34,45 +42,45 @@
 .overviewVisual > div { position: relative; min-height: 180px; border-radius: 1rem; overflow: hidden; }
 .overviewVisual > div:first-child { grid-row: span 2; min-height: 400px; }
 .overviewVisual img, .exampleImage img { object-fit: cover; }
-.overviewHero h1 { color: #fff; margin-block: 1.5rem; }
+.overviewHero h1 { color: #050507; margin-block: 1.5rem; }
 .overviewHero p { max-width: 650px; }
 .overviewCaption { margin-top: 1rem; }
 .threeColumns { align-items: stretch; }
 .feasibility { margin-top: 2rem; }
-.examplesSection { border-block: 1px solid var(--color-dark-border); }
+.examplesSection { border-block: 1px solid rgb(5 5 7 / .14); }
 .exampleImage { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 1rem; }
 .example figcaption { margin-top: 1.25rem; }
-.example h3 { color: white; font-size: 1.3rem; margin-bottom: .65rem; }
-.optionCard { display: flex; flex-direction: column; padding: 1.75rem; border: 1px solid rgb(253 164 175 / .25); border-radius: 1.25rem; background: var(--color-dark-surface); }
-.optionCard:nth-child(2) { border-color: rgb(253 164 175 / .65); background: linear-gradient(150deg, #290d14, var(--color-dark-surface) 70%); }
-.optionCard h3 { color: #fff; font-size: 1.5rem; margin-bottom: .75rem; }
+.example h3 { color: #050507; font-size: 1.3rem; margin-bottom: .65rem; }
+.optionCard { display: flex; flex-direction: column; padding: 1.75rem; border: 1px solid rgb(5 5 7 / .14); border-radius: 1.25rem; background: #efefef; }
+.optionCard:nth-child(2) { border-color: rgb(127 20 31 / .45); background: linear-gradient(150deg, rgb(152 27 40 / .08), #efefef 70%); }
+.optionCard h3 { color: #050507; font-size: 1.5rem; margin-bottom: .75rem; }
 .optionCard > p { font-size: .9rem; }
 .comparison { margin-block: 1.5rem; flex: 1; }
-.comparison > div { padding-block: 1rem; border-top: 1px solid var(--color-dark-border); }
-.comparison dt { color: var(--color-brand-accent); text-transform: uppercase; font-size: .65rem; font-weight: 600; letter-spacing: .12em; margin-bottom: .55rem; }
-.comparison dd { color: #d1d5db; line-height: 1.7; font-size: .9rem; }
-.optionCard .quoteLabel { color: var(--color-brand-accent); margin-bottom: 1rem; font-weight: 600; }
-.packageDestName { color: var(--color-brand-accent); font-size: .85rem; font-weight: 600; letter-spacing: .04em; margin-bottom: .85rem; }
-.packageTagline { font-size: .95rem; color: #d1d5db; line-height: 1.75; margin-bottom: 1.5rem; }
-.optionCta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .85rem 1rem; min-height: 48px; color: #fff; border: 1px solid rgb(253 164 175 / .5); border-radius: 999px; font-size: .8rem; transition: background .25s, border-color .25s, color .25s, transform .25s; }
-.optionCta:hover { background: var(--color-brand-primary); border-color: var(--color-brand-accent); color: #fff; transform: translateY(-2px); }
+.comparison > div { padding-block: 1rem; border-top: 1px solid rgb(5 5 7 / .12); }
+.comparison dt { color: #7f141f; text-transform: uppercase; font-size: .65rem; font-weight: 700; letter-spacing: .12em; margin-bottom: .55rem; }
+.comparison dd { color: rgb(5 5 7 / .88); line-height: 1.7; font-size: .9rem; }
+.optionCard .quoteLabel { color: #7f141f; margin-bottom: 1rem; font-weight: 600; }
+.packageDestName { color: #7f141f; font-size: .85rem; font-weight: 600; letter-spacing: .04em; margin-bottom: .85rem; }
+.packageTagline { font-size: .95rem; color: rgb(5 5 7 / .88); line-height: 1.75; margin-bottom: 1.5rem; }
+.optionCta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .85rem 1rem; min-height: 48px; color: #050507; border: 1px solid rgb(127 20 31 / .4); border-radius: 999px; font-size: .8rem; font-weight: 600; transition: background .25s, border-color .25s, color .25s, transform .25s; }
+.optionCta:hover { background: var(--color-brand-primary); border-color: var(--color-brand-primary); color: #fff; transform: translateY(-2px); }
 .optionFootnote { font-size: .85rem; margin-top: 1.5rem; max-width: 850px; }
-.optionFootnote a { text-decoration: underline; text-underline-offset: .25rem; }
-.form { padding: clamp(1.25rem, 3vw, 2.5rem); background: #190910; border: 1px solid rgb(253 164 175 / .2); border-radius: 1.5rem; min-width: 0; }
-.form h3 { font-size: 1.5rem; color: white; margin-bottom: 1rem; }
+.optionFootnote a { text-decoration: underline; text-underline-offset: .25rem; color: #7f141f; font-weight: 600; }
+.form { padding: clamp(1.25rem, 3vw, 2.5rem); background: #efefef; border: 1px solid rgb(5 5 7 / .14); border-radius: 1.5rem; min-width: 0; color: #050507; }
+.form h3 { font-size: 1.5rem; color: #050507; margin-bottom: 1rem; }
 .form > p + p { margin-top: 1rem; }
-.form .formService { color: var(--color-brand-accent); font-size: .85rem; margin-bottom: 1.5rem; }
+.form .formService { color: #7f141f; font-size: .85rem; margin-bottom: 1.5rem; }
 .fields { border: 0; display: grid; gap: 1.3rem; min-width: 0; }
 .fields:disabled { opacity: .65; }
 .formGrid { display: grid; gap: 1.3rem; }
-.form label { display: grid; gap: .65rem; color: var(--color-brand-accent); font-size: .8rem; line-height: 1.5; }
-.form input:not([aria-hidden]), .form select, .form textarea { box-sizing: border-box; width: 100%; color: white; background: #09070b; border: 1px solid rgb(253 164 175 / .3); border-radius: .75rem; padding: .85rem; font-size: 1rem; color-scheme: dark; }
-.form :is(input, select, textarea):focus-visible { outline-color: var(--color-brand-accent); }
-.form .formHelp { font-size: .8rem; line-height: 1.7; color: #d1d5db; }
-.formHelp a { text-decoration: underline; text-underline-offset: .2rem; }
+.form label { display: grid; gap: .65rem; color: #7f141f; font-weight: 600; font-size: .8rem; line-height: 1.5; }
+.form input:not([aria-hidden]), .form select, .form textarea { box-sizing: border-box; width: 100%; color: #050507; background: #ffffff; border: 1px solid rgb(5 5 7 / .22); border-radius: .75rem; padding: .85rem; font-size: 1rem; color-scheme: light; }
+.form :is(input, select, textarea):focus-visible { outline-color: #7f141f; }
+.form .formHelp { font-size: .8rem; line-height: 1.7; color: rgb(5 5 7 / .8); }
+.formHelp a { text-decoration: underline; text-underline-offset: .2rem; color: #7f141f; font-weight: 600; }
 .submit { composes: glassButton; }
 .submit:disabled { cursor: wait; }
-.form .error { color: var(--color-brand-accent); font-size: .9rem; margin-top: 1.25rem; }
+.form .error { color: #981b28; font-size: .9rem; margin-top: 1.25rem; font-weight: 600; }
 @media (min-width: 640px) {
   .signature { width: min(100% - 5rem, 1280px); }
   .experiences { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -80,6 +88,8 @@
 }
 @media (min-width: 1024px) {
   .signature { padding-block: 2rem 6rem; }
+  .signatureLightBand { padding-block: 3rem 5rem; }
+  .signatureLightBand .signature { padding-block: 0; }
   .experiences, .threeColumns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .overviewHero { grid-template-columns: 1.1fr 1fr; gap: 4rem; padding-top: 10rem; }
   .overviewVisual > div:first-child { min-height: 500px; }

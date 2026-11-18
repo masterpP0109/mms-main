@@ -295,7 +295,7 @@ export default function Home() {
                 fill
                 sizes="100vw"
                 className="bright-image object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.74, objectPosition: slides[currentSlide].imagePosition }}
+                style={{ opacity: 0.85, objectPosition: slides[currentSlide].imagePosition }}
                 loading="eager"
                 fetchPriority={currentSlide === 0 ? "high" : "auto"}
               />
@@ -303,9 +303,9 @@ export default function Home() {
           </AnimatePresence>
 
           {/* Keep contrast consistent across every image and slide transition. */}
-          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/65">
-            <div className="absolute inset-0 bg-gradient-to-r from-black/35 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/60 via-transparent to-transparent" />
+          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/30">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
           </div>
 
           {/* Slide Text Content - Left Aligned with Shade */}
@@ -438,17 +438,17 @@ export default function Home() {
       </section>
 
       {/* 2a) ABOUT US SECTION */}
-      <section className="relative pt-6 md:pt-8 pb-8 md:pb-12 bg-[#050507]">
+      <section className="home-light-section relative pt-12 md:pt-16 pb-10 md:pb-14 bg-[#e4e4e4]">
         <div className="max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-stagger className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
             {/* Left — Text + CTA */}
             <div className="w-full lg:w-[45%] space-y-6">
-            <span className="text-xs tracking-[0.4em] text-brand-accent uppercase font-semibold block">About Mosi Media Solutions</span>
-            <h2 className="text-3xl md:text-5xl font-semibold text-white leading-tight font-heading">Experience <span className="text-brand-red">Elevated</span></h2>
-              <p className="text-sm md:text-base text-brand-foreground/70 leading-relaxed font-light">
+            <span className="text-xs tracking-[0.4em] text-[#7f141f] uppercase font-semibold block">About Mosi Media Solutions</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] leading-tight font-heading">Experience <span className="text-[#b8161d]">Elevated</span></h2>
+              <p className="text-sm md:text-base text-[#050507]/92 leading-relaxed font-light">
                 Mosi Media Solutions is a dynamic multimedia production and event technology company that delivers high quality visual, audio, and digital solutions for corporate events, conferences, social functions, and advertising platforms.
               </p>
-              <p className="text-sm md:text-base text-brand-foreground/70 leading-relaxed font-light">
+              <p className="text-sm md:text-base text-[#050507]/92 leading-relaxed font-light">
                 We combine creativity with cutting edge technology to create immersive experiences that elevate events and brands. Our services are tailored to meet each client’s unique needs, ensuring professionalism, reliability, and exceptional delivery.
               </p>
               <div className="pt-2">
@@ -474,14 +474,14 @@ export default function Home() {
                     key={card.title}
                     className="flex items-center gap-4 group transition-all duration-200"
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-brand-accent/20 bg-[#050507] flex items-center justify-center">
-                      <card.icon className="w-4 h-4 text-brand-accent" />
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full border border-[#7f141f]/25 bg-[#050507]/5 flex items-center justify-center">
+                      <card.icon className="w-4 h-4 text-[#7f141f]" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-lg font-medium text-white mb-0.5">{card.title}</h4>
-                      <p className="text-base text-brand-foreground/55 leading-normal font-light">{card.desc}</p>
+                      <h4 className="text-lg font-medium text-[#050507] mb-0.5">{card.title}</h4>
+                      <p className="text-base text-[#050507]/90 leading-normal font-light">{card.desc}</p>
                     </div>
-                    <ArrowRight className="flex-shrink-0 w-3.5 h-3.5 text-brand-accent opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200" />
+                    <ArrowRight className="flex-shrink-0 w-3.5 h-3.5 text-[#7f141f]/75 group-hover:text-[#7f141f] group-hover:translate-x-1 transition-all duration-200" />
                   </div>
                 ))}
               </div>
@@ -491,12 +491,12 @@ export default function Home() {
       </section>
 
       {/* 2b) OUR SERVICES SECTION */}
-      <section id="services" className="relative pt-8 md:pt-12 pb-16 md:pb-24 bg-[#050507]">
+      <section id="services" className="home-light-section relative pt-8 md:pt-12 pb-12 md:pb-16 bg-[#e4e4e4]">
         <div className="max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center mb-12 md:mb-16">
-            <span className="text-base tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">What We Offer</span>
-            <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">Our Services</h2>
-            <p className="text-lg md:text-xl text-brand-foreground/70 font-light max-w-xl mx-auto">
+            <span className="text-base tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">What We Offer</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] font-heading mb-4">Our Services</h2>
+            <p className="text-lg md:text-xl text-[#050507]/90 font-light max-w-xl mx-auto">
               From media production and live broadcasting to professional audio, screen technology and event enhancements, MMS delivers the creative and technical solutions needed to bring every experience to life.
             </p>
           </div>
@@ -520,13 +520,13 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                <h3 className="text-center text-2xl font-semibold text-white font-heading mb-2">{service.title}</h3>
-                <p className="text-center text-lg text-brand-foreground/60 leading-relaxed font-light mb-4">
+                <h3 className="text-center text-2xl font-semibold text-[#050507] font-heading mb-2">{service.title}</h3>
+                <p className="text-center text-lg text-[#050507]/85 leading-relaxed font-light mb-4">
                   {service.desc}
                 </p>
                 <div className="text-center mt-auto">
                   <span
-                    className="inline-flex items-center text-xs uppercase tracking-widest text-brand-accent hover:text-white transition-colors duration-200"
+                    className="inline-flex items-center text-xs uppercase tracking-widest text-[#7f141f] group-hover:text-[#050507] transition-colors duration-200 font-semibold"
                   >
                     Learn More
                     <ArrowRight className="ml-2 w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -550,24 +550,24 @@ export default function Home() {
 
 
       {/* 5) STORIES THAT BECAME MEMORIES SECTION - HORIZONTAL WHEEL CAROUSEL */}
-      <SignatureExperiences />
+      <SignatureExperiences variant="light" />
       <section
         style={{ opacity: 1, visibility: "visible" }}
         id="gallery"
         ref={pastWorkRef}
-        className="past-work-section relative w-full bg-[#050507] isolation-isolate z-10"
+        className="past-work-section relative w-full bg-[#e4e4e4] isolation-isolate z-10"
       >
-        <div className="past-work-pin relative w-full bg-[#050507]">
+        <div className="past-work-pin relative w-full bg-[#e4e4e4]">
           <div className="past-work-heading z-20 text-center">
-            <span className="pw-eyebrow text-[12px] uppercase tracking-[0.28em] text-brand-accent font-semibold block mb-4 font-heading">
+            <span className="pw-eyebrow text-[12px] uppercase tracking-[0.28em] text-[#7f141f] font-semibold block mb-4 font-heading">
               OUR FEATURED WORK
             </span>
             <div className="overflow-hidden">
-              <h2 className="pw-heading-line text-3xl md:text-5xl leading-[0.98] md:leading-[1.02] font-semibold text-white tracking-tight font-heading">
+              <h2 className="pw-heading-line text-3xl md:text-5xl leading-[0.98] md:leading-[1.02] font-semibold text-[#050507] tracking-tight font-heading">
                 Stories That Became Memories
               </h2>
             </div>
-            <p className="pw-supporting mt-6 mx-auto max-w-[520px] text-sm md:text-base text-brand-foreground/70 leading-7">
+            <p className="pw-supporting mt-6 mx-auto max-w-[520px] text-sm md:text-base text-[#050507]/90 leading-7">
               A selection of weddings, corporate productions and immersive experiences brought to life through cinematic storytelling.
             </p>
           </div>
@@ -577,7 +577,7 @@ export default function Home() {
               {pastWorkItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="pw-card relative flex-shrink-0 rounded-[30px] border border-brand-accent/10 bg-[#050507] shadow-[0_35px_100px_rgba(0,0,0,0.65),0_10px_35px_rgba(0,0,0,0.45)] overflow-hidden will-change-transform"
+                  className="pw-card relative flex-shrink-0 rounded-[30px] border border-[#050507]/12 bg-[#efefef] shadow-[0_20px_50px_rgba(5,5,7,0.12),0_6px_18px_rgba(5,5,7,0.08)] overflow-hidden will-change-transform"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <div className="pw-card-inner relative rounded-[30px]">
@@ -591,15 +591,15 @@ export default function Home() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
                     </div>
-                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#050507]">
+                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#efefef]">
                       <div className="space-y-3">
-                        <span className="text-xs uppercase tracking-[0.28em] text-brand-accent font-semibold block font-heading">
+                        <span className="text-xs uppercase tracking-[0.28em] text-[#7f141f] font-semibold block font-heading">
                           {item.category}
                         </span>
-                        <h3 className="text-2xl md:text-3xl font-semibold text-white font-heading leading-tight">
+                        <h3 className="text-2xl md:text-3xl font-semibold text-[#050507] font-heading leading-tight">
                           {item.title}
                         </h3>
-                        <p className="text-xs md:text-sm text-brand-foreground/70 leading-relaxed font-light max-w-xl">
+                        <p className="text-xs md:text-sm text-[#050507]/85 leading-relaxed font-light max-w-xl">
                           {item.desc}
                         </p>
                       </div>
@@ -608,7 +608,7 @@ export default function Home() {
                           {item.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="text-xs uppercase tracking-[0.18em] bg-brand-accent/10 text-brand-foreground px-2.5 py-1 rounded-full border border-brand-accent/15"
+                              className="text-xs uppercase tracking-[0.18em] bg-[#050507]/5 text-[#050507]/85 px-2.5 py-1 rounded-full border border-[#050507]/15"
                             >
                               {tag}
                             </span>
@@ -617,7 +617,7 @@ export default function Home() {
                         <div className="flex items-center gap-3 sm:ml-auto">
                           <a
                             href={item.link}
-                            className="inline-flex items-center justify-center px-5 py-2.5 text-xs uppercase tracking-[0.32em] bg-brand-accent text-[#050507] font-semibold rounded-full hover:brightness-110 transition-all duration-300"
+                            className="inline-flex items-center justify-center px-5 py-2.5 text-xs uppercase tracking-[0.32em] bg-[#981b28] text-white font-semibold rounded-full hover:bg-[#7f141f] transition-all duration-300"
                           >
                             View Project
                           </a>
@@ -631,13 +631,13 @@ export default function Home() {
           </div>
 
           <div className="work-controls flex items-center justify-center gap-5 mt-6">
-            <button type="button" aria-label="Previous featured project" disabled={workIndex === 0} onClick={() => { const viewport = workViewportRef.current; if (viewport) viewport.scrollBy({ left: -viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }} className="rounded-full border border-brand-accent/30 p-3 disabled:opacity-30"><ChevronLeft /></button>
-            <span className="text-sm text-brand-accent" aria-live="polite">{workIndex + 1} / {pastWorkItems.length}</span>
-            <button type="button" aria-label="Next featured project" disabled={workIndex === pastWorkItems.length - 1} onClick={() => { const viewport = workViewportRef.current; if (viewport) viewport.scrollBy({ left: viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }} className="rounded-full border border-brand-accent/30 p-3 disabled:opacity-30"><ChevronRight /></button>
+            <button type="button" aria-label="Previous featured project" disabled={workIndex === 0} onClick={() => { const viewport = workViewportRef.current; if (viewport) viewport.scrollBy({ left: -viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }} className="rounded-full border border-[#7f141f]/35 text-[#050507] p-3 hover:bg-[#7f141f] hover:text-white transition-colors disabled:opacity-30"><ChevronLeft /></button>
+            <span className="text-sm text-[#7f141f] font-semibold" aria-live="polite">{workIndex + 1} / {pastWorkItems.length}</span>
+            <button type="button" aria-label="Next featured project" disabled={workIndex === pastWorkItems.length - 1} onClick={() => { const viewport = workViewportRef.current; if (viewport) viewport.scrollBy({ left: viewport.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" }); }} className="rounded-full border border-[#7f141f]/35 text-[#050507] p-3 hover:bg-[#7f141f] hover:text-white transition-colors disabled:opacity-30"><ChevronRight /></button>
           </div>
           <div className="past-work-progress">
-            <div className="relative h-1 rounded-full bg-white/10 overflow-hidden">
-              <div className="progress-fill absolute inset-0 origin-left scale-x-0 bg-brand-accent" />
+            <div className="relative h-1 rounded-full bg-[#050507]/15 overflow-hidden">
+              <div className="progress-fill absolute inset-0 origin-left scale-x-0 bg-[#7f141f]" />
             </div>
           </div>
         </div>
@@ -706,16 +706,14 @@ export default function Home() {
       </section>
 
       {/* 7) TESTIMONIALS / CLIENT REACTIONS */}
-      <section style={{ opacity: 1, visibility: "visible" }} id="clients" className="relative py-16 md:py-24 border-b border-brand-accent/15 overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1510]/60 via-[#050507] to-[#050507] z-0" />
-
+      <section style={{ opacity: 1, visibility: "visible" }} id="clients" className="home-light-section clients-light relative py-16 md:py-24 overflow-hidden bg-[#e4e4e4]">
         <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center mb-16">
-            <span className="text-xs tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">Client Feedback</span>
-            <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading mb-4">What Our Clients Say</h2>
+            <span className="text-xs tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">Client Feedback</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] font-heading mb-4">What Our Clients Say</h2>
           </div>
 
-          <div className="flex justify-center mb-4"><button type="button" aria-pressed={carouselPaused} onClick={() => setCarouselPaused(!carouselPaused)} className="text-xs text-brand-accent px-4 py-2 rounded-full border border-brand-accent/30">{carouselPaused ? "Resume slides" : "Pause slides"}</button></div>
+          <div className="flex justify-center mb-4"><button type="button" aria-pressed={carouselPaused} onClick={() => setCarouselPaused(!carouselPaused)} className="text-xs text-[#7f141f] font-semibold px-4 py-2 rounded-full border border-[#7f141f]/35 hover:bg-[#7f141f] hover:text-white transition-colors">{carouselPaused ? "Resume slides" : "Pause slides"}</button></div>
           {/* Testimonial Carousel */}
           <div className="relative max-w-3xl mx-auto">
             <AnimatePresence mode="wait">
@@ -725,23 +723,23 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -50, scale: 0.96 }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="bg-[#050507] p-5 sm:p-8 md:p-12 rounded-3xl border border-brand-accent/10 relative overflow-hidden"
+                  className="bg-[#efefef] p-5 sm:p-8 md:p-12 rounded-3xl border border-[#050507]/12 shadow-[0_18px_45px_rgba(5,5,7,0.10)] relative overflow-hidden"
                 >
-                <Quote className="absolute top-6 left-6 w-10 h-10 text-brand-accent/15" />
+                <Quote className="absolute top-6 left-6 w-10 h-10 text-[#7f141f]/15" />
 
                 <div className="flex flex-col items-center text-center space-y-6 relative z-10">
-                  <div className="flex items-center text-brand-accent space-x-1">
+                  <div className="flex items-center text-[#7f141f] space-x-1">
                     {[...Array(testimonials[testimonialSlide].rating)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
                   </div>
 
-                  <p className="text-xl md:text-2xl text-brand-foreground/90 leading-relaxed font-light italic">
+                  <p className="text-xl md:text-2xl text-[#050507]/92 leading-relaxed font-light italic">
                     {`"${testimonials[testimonialSlide].content}"`}
                   </p>
 
                   <div className="flex flex-col items-center space-y-2 pt-2">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border border-brand-accent/30 shadow-md">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border border-[#7f141f]/30 shadow-md">
                       {testimonials[testimonialSlide].avatar ? (
                         <Image
                           src={testimonials[testimonialSlide].avatar}
@@ -751,14 +749,14 @@ export default function Home() {
                           className="object-cover object-center"
                         />
                       ) : (
-                        <div className="w-full h-full bg-[#121218] flex items-center justify-center">
-                          <span className="text-2xl font-bold text-brand-accent font-heading">JP</span>
+                        <div className="w-full h-full bg-[#e4e4e4] flex items-center justify-center">
+                          <span className="text-2xl font-bold text-[#7f141f] font-heading">JP</span>
                         </div>
                       )}
                     </div>
                     <div className="space-y-1">
-                      <h4 className="text-xl font-medium text-white">{testimonials[testimonialSlide].name}</h4>
-                      <p className="text-sm tracking-widest text-brand-accent uppercase font-medium">{testimonials[testimonialSlide].role}</p>
+                      <h4 className="text-xl font-medium text-[#050507]">{testimonials[testimonialSlide].name}</h4>
+                      <p className="text-sm tracking-widest text-[#7f141f] uppercase font-medium">{testimonials[testimonialSlide].role}</p>
                     </div>
                   </div>
                 </div>
@@ -771,7 +769,7 @@ export default function Home() {
                 type="button"
                 aria-label="Previous testimonial"
                 onClick={() => setTestimonialSlide((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))}
-                className="p-2.5 rounded-full border border-brand-accent/30 text-brand-accent hover:bg-brand-accent hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
+                className="p-2.5 rounded-full border border-[#7f141f]/35 text-[#7f141f] hover:bg-[#7f141f] hover:text-white hover:border-transparent transition-all duration-300 cursor-pointer"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -792,7 +790,7 @@ export default function Home() {
                 type="button"
                 aria-label="Next testimonial"
                 onClick={() => setTestimonialSlide((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))}
-                className="p-2.5 rounded-full border border-brand-accent/30 text-brand-accent hover:bg-brand-accent hover:text-[#050507] hover:border-transparent transition-all duration-300 cursor-pointer"
+                className="p-2.5 rounded-full border border-[#7f141f]/35 text-[#7f141f] hover:bg-[#7f141f] hover:text-white hover:border-transparent transition-all duration-300 cursor-pointer"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

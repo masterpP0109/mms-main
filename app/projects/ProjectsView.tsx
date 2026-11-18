@@ -29,7 +29,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
   useModalFocus(selected !== null, modalRef, () => setSelected(null));
 
   return (
-    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
+    <div className="min-h-screen bg-[#e4e4e4] text-[#050507] font-sans">
       <Navbar />
 
       {/* Hero */}
@@ -52,23 +52,23 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
       </section>
 
       {/* Filter */}
-      <div className="sticky top-[72px] z-30 bg-[#050507]/90 backdrop-blur-md border-b border-brand-accent/10 py-4">
+      <div className="sticky top-[72px] z-30 bg-[#e4e4e4]/95 backdrop-blur-md border-b border-[#050507]/12 py-4">
         <div className="max-w-[1400px] mx-auto mms-gutter flex items-center gap-3 overflow-x-auto scrollbar-none">
           {categories.map((cat) => (
             <button
               key={cat}
               type="button"
               onClick={() => setActive(cat)}
-              className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300 cursor-pointer ${
+              className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold transition-all duration-300 cursor-pointer ${
                 active === cat
-                  ? "bg-brand-accent text-[#050507]"
-                  : "border border-brand-accent/25 text-brand-foreground/60 hover:border-brand-accent/60 hover:text-white"
+                  ? "bg-[#981b28] text-white shadow-sm"
+                  : "border border-[#050507]/20 text-[#050507]/75 hover:border-[#7f141f] hover:text-[#7f141f]"
               }`}
             >
               {cat}
             </button>
           ))}
-          <span className="ml-auto text-[10px] text-brand-foreground/30 pl-4 border-l border-brand-accent/10 shrink-0">{allFiltered.length} projects</span>
+          <span className="ml-auto text-[10px] text-[#050507]/65 font-medium pl-4 border-l border-[#050507]/15 shrink-0">{allFiltered.length} projects</span>
         </div>
       </div>
 
@@ -83,7 +83,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 0.5, delay: (idx % 3) * 0.08 }}
-              className="group glass-panel rounded-3xl border border-brand-accent/15 overflow-hidden hover:border-brand-accent/35 transition-all duration-300 cursor-pointer"
+              className="group bg-[#efefef] rounded-3xl border border-[#050507]/12 shadow-sm overflow-hidden hover:border-[#7f141f]/40 transition-all duration-300 cursor-pointer"
               role="button"
               tabIndex={0}
               aria-label={`Preview ${project.title}`}
@@ -121,11 +121,11 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
 
               {/* Content */}
               <div className="p-6 space-y-3">
-                <h3 className="text-lg font-semibold text-white font-heading">{project.title}</h3>
-                <p className="text-xs text-brand-foreground/65 leading-relaxed font-light">{project.desc}</p>
+                <h3 className="text-lg font-semibold text-[#050507] font-heading">{project.title}</h3>
+                <p className="text-xs text-[#050507]/85 leading-relaxed font-normal">{project.desc}</p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-brand-accent/8 text-brand-foreground/60 border border-brand-accent/12 px-2.5 py-1 rounded-full">
+                    <span key={tag} className="text-[9px] uppercase tracking-[0.15em] bg-[#7f141f]/10 text-[#7f141f] font-medium border border-[#7f141f]/20 px-2.5 py-1 rounded-full">
                       {tag}
                     </span>
                   ))}
@@ -133,7 +133,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
                 <Link
                   href={`/projects/${project.slug}`}
                   onClick={(event) => event.stopPropagation()}
-                  className="inline-flex items-center gap-2 pt-2 text-[10px] uppercase tracking-[0.2em] text-brand-accent hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 pt-2 text-[10px] uppercase tracking-[0.2em] text-[#7f141f] font-semibold hover:text-[#b8161d] transition-colors"
                 >
                   View case study <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
@@ -144,12 +144,12 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
 
         {allFiltered.length > 6 && (
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-brand-foreground/40 font-light">
+            <span className="text-xs text-[#050507]/75 font-medium">
               Showing {displayed.length} of {allFiltered.length} projects
             </span>
             <Link
               href="/gallery"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#7f141f]/35 text-[#050507] text-[11px] uppercase tracking-[0.18em] font-semibold hover:border-[#7f141f] hover:bg-[#7f141f] hover:text-white transition-all duration-300"
             >
               View More Projects
               <ArrowRight className="w-4 h-4" />
@@ -159,7 +159,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
       </section>
 
       {/* Full-bleed image strip */}
-      <section className="overflow-hidden border-y border-brand-accent/10">
+      <section className="overflow-hidden border-y border-[#050507]/12">
         <div className="photo-strip flex h-48 md:h-64">
           {["/mms/DSC_7550.jpg", "/mms/DSC_1821.jpg", "/mms/DSC_2475.jpg", "/mms/DSC_7551.jpg", "/mms/AllanLinda-31.jpg"].map((src, i) => (
             <div key={i} className="relative flex-1 overflow-hidden">
@@ -170,7 +170,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-black">
+      <section className="py-16 bg-[#e4e4e4]">
         <div className="max-w-[1400px] mx-auto mms-gutter">
           <div data-stagger className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
@@ -180,8 +180,8 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               { number: "5★", label: "Average Client Rating" },
             ].map((stat) => (
               <div key={stat.label} className="space-y-2">
-                <p className="text-3xl md:text-4xl font-semibold text-brand-accent font-heading">{stat.number}</p>
-                <p className="text-xs uppercase tracking-[0.15em] text-brand-foreground/55 font-light">{stat.label}</p>
+                <p className="text-3xl md:text-4xl font-semibold text-[#7f141f] font-heading">{stat.number}</p>
+                <p className="text-xs uppercase tracking-[0.15em] text-[#050507]/80 font-medium">{stat.label}</p>
               </div>
             ))}
           </div>

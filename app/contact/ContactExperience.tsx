@@ -53,7 +53,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
   };
 
   return (
-    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
+    <div className="min-h-screen bg-[#e4e4e4] text-[#050507] font-sans">
       <Navbar />
 
       {/* Hero — scenic Victoria Falls with warm overlay */}
@@ -76,7 +76,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
               Ready to Create Something Unforgettable?
             </h1>
-            <p className="text-sm md:text-base text-brand-foreground/75 font-light leading-relaxed">
+            <p className="text-sm md:text-base text-brand-foreground/80 font-light leading-relaxed">
               Tell us about your project and our team will respond with the next steps.
             </p>
           </motion.div>
@@ -90,9 +90,9 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           {/* Info Panel */}
           <div data-reveal="left" className="lg:col-span-2 space-y-8">
             <div>
-              <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-4 font-heading">Contact Details</span>
-              <h2 className="text-2xl md:text-3xl font-semibold text-white font-heading mb-5">We&apos;d love to hear from you.</h2>
-              <p className="text-sm text-brand-foreground/65 font-light leading-relaxed">
+              <span className="text-[10px] tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-4 font-heading">Contact Details</span>
+              <h2 className="text-2xl md:text-3xl font-semibold text-[#050507] font-heading mb-5">We&apos;d love to hear from you.</h2>
+              <p className="text-sm text-[#050507]/85 font-normal leading-relaxed">
                 Whether you are planning a government conference, a destination wedding, a brand campaign or just exploring — send us a message and let&apos;s talk.
               </p>
             </div>
@@ -105,12 +105,12 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 { icon: MessageSquare, label: "WhatsApp",      value: "Available on request" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-9 h-9 rounded-full bg-brand-accent/10 flex items-center justify-center shrink-0">
-                    <item.icon className="w-4 h-4 text-brand-accent" />
+                  <div className="w-9 h-9 rounded-full bg-[#7f141f]/10 flex items-center justify-center shrink-0">
+                    <item.icon className="w-4 h-4 text-[#7f141f]" />
                   </div>
                   <div>
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold mb-0.5">{item.label}</p>
-                    <p className="text-sm text-brand-foreground/80 font-light">{item.value}</p>
+                    <p className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold mb-0.5">{item.label}</p>
+                    <p className="text-sm text-[#050507] font-medium">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -118,14 +118,14 @@ export default function ContactExperience({ initialService = "" }: { initialServ
 
             {/* Recent work thumbnails */}
             <div className="space-y-3">
-              <h3 className="text-[10px] uppercase tracking-[0.25em] text-brand-accent font-semibold">Recent Work</h3>
+              <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#7f141f] font-bold">Recent Work</h3>
               <div data-stagger className="grid grid-cols-2 gap-2">
                 {recentWork.map((item) => (
-                  <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-brand-accent/12">
+                  <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#050507]/12">
                     <Image src={item.src} alt={item.label} fill sizes="(max-width:1023px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/20 transition-colors duration-300" />
                     <div className="absolute bottom-2 left-2">
-                      <span className="text-[8px] text-white/80 font-light">{item.label}</span>
+                      <span className="text-[8px] text-white/90 font-medium">{item.label}</span>
                     </div>
                   </Link>
                 ))}
@@ -133,8 +133,8 @@ export default function ContactExperience({ initialService = "" }: { initialServ
             </div>
 
             {/* Quick Links */}
-            <div className="glass-panel rounded-2xl border border-brand-accent/15 p-6 space-y-4">
-              <h3 className="text-sm font-medium text-white">Common Enquiries</h3>
+            <div className="bg-[#efefef] rounded-2xl border border-[#050507]/12 p-6 space-y-4 shadow-sm">
+              <h3 className="text-sm font-semibold text-[#050507]">Common Enquiries</h3>
               <div className="space-y-2">
                 {[
                   { label: "Conference Production", href: "/conference-production#enquiry" },
@@ -146,7 +146,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                   <Link
                     key={link.label}
                     href={link.href}
-                    className="flex items-center justify-between text-xs text-brand-foreground/65 hover:text-brand-accent transition-colors duration-200 py-1.5 border-b border-brand-accent/8 last:border-0"
+                    className="flex items-center justify-between text-xs font-medium text-[#050507]/85 hover:text-[#7f141f] transition-colors duration-200 py-1.5 border-b border-[#050507]/10 last:border-0"
                   >
                     {link.label}
                     <ArrowRight className="w-3 h-3" />
@@ -159,31 +159,31 @@ export default function ContactExperience({ initialService = "" }: { initialServ
           {/* Form */}
           <div data-reveal="right" className="lg:col-span-3">
             {!submitted ? (
-              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="bg-[#190910] rounded-3xl border border-brand-accent/20 p-5 sm:p-8 md:p-10 space-y-5">
-                <h3 className="text-xl font-semibold text-white font-heading mb-2">Send us a message</h3>
-                {initialService && <p className="rounded-xl border border-brand-accent/30 bg-brand-accent/10 p-4 text-sm text-brand-foreground">Enquiring about: <strong>{initialService}</strong></p>}
+              <form id="enquiry" aria-busy={loading} onSubmit={handleSubmit} className="bg-[#efefef] rounded-3xl border border-[#050507]/12 shadow-lg p-5 sm:p-8 md:p-10 space-y-5">
+                <h3 className="text-xl font-semibold text-[#050507] font-heading mb-2">Send us a message</h3>
+                {initialService && <p className="rounded-xl border border-[#7f141f]/25 bg-[#7f141f]/10 p-4 text-sm text-[#050507]">Enquiring about: <strong>{initialService}</strong></p>}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Your Name</label>
+                    <label htmlFor="contact-name" className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold block mb-2">Your Name</label>
                     <input type="text" id="contact-name" maxLength={120} autoComplete="name" name="name" placeholder="e.g. Sarah Johnson" required
-                      className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors" />
+                      className="w-full bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm text-[#050507] placeholder:text-[#050507]/45 focus:outline-none focus:border-[#7f141f] transition-colors" />
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Email Address</label>
+                    <label htmlFor="contact-email" className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold block mb-2">Email Address</label>
                     <input type="email" id="contact-email" maxLength={254} autoComplete="email" name="email" placeholder="you@organisation.com" required
-                      className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors" />
+                      className="w-full bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm text-[#050507] placeholder:text-[#050507]/45 focus:outline-none focus:border-[#7f141f] transition-colors" />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Phone Number (optional)</label>
+                  <label htmlFor="contact-phone" className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold block mb-2">Phone Number (optional)</label>
                   <input type="tel" id="contact-phone" maxLength={32} pattern={String.raw`\+?[0-9 \(\)\-]{7,32}`} autoComplete="tel" name="phone" placeholder="+263 ..."
-                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors" />
+                    className="w-full bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm text-[#050507] placeholder:text-[#050507]/45 focus:outline-none focus:border-[#7f141f] transition-colors" />
                 </div>
 
                 <div>
-                  <label className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-3">Type of Project</label>
+                  <label className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold block mb-3">Type of Project</label>
                   <div role="group" aria-label="Type of Project" className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[
                       { id: "conference" as const, label: "Conference / Event" },
@@ -197,10 +197,10 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                         key={opt.id}
                         aria-pressed={projectType === opt.id}
                         onClick={() => setProjectType(opt.id)}
-                        className={`py-2.5 px-3 rounded-xl text-xs border transition-all duration-200 cursor-pointer ${
+                        className={`py-2.5 px-3 rounded-xl text-xs font-medium border transition-all duration-200 cursor-pointer ${
                           projectType === opt.id
-                            ? "bg-brand-primary/40 border-brand-accent text-white"
-                            : "border-brand-accent/15 text-brand-foreground/55 hover:border-brand-accent/40 hover:text-white"
+                            ? "bg-[#981b28] border-[#981b28] text-white"
+                            : "bg-white border-[#050507]/20 text-[#050507]/85 hover:border-[#7f141f] hover:text-[#050507]"
                         }`}
                       >
                         {opt.label}
@@ -211,9 +211,9 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold block mb-2">Your Message</label>
+                  <label htmlFor="contact-message" className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold block mb-2">Your Message</label>
                   <textarea id="contact-message" maxLength={5000} name="message" placeholder="Tell us about your project — dates, location, size, what you need..." rows={5} required
-                    className="w-full bg-[#050507]/70 border border-brand-accent/20 rounded-xl px-4 py-3 text-sm text-white placeholder:text-brand-foreground/30 focus:outline-none focus:border-brand-accent/50 transition-colors resize-y" />
+                    className="w-full bg-white border border-[#050507]/20 rounded-xl px-4 py-3 text-sm text-[#050507] placeholder:text-[#050507]/45 focus:outline-none focus:border-[#7f141f] transition-colors resize-y" />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
@@ -221,18 +221,18 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                     <span className="relative z-10">{loading ? "Sending…" : "Send Message"}</span>
                     <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
-                  <p className="text-[10px] text-brand-foreground/35">We respect your privacy. No spam, ever.</p>
+                  <p className="text-[10px] text-[#050507]/70">We respect your privacy. No spam, ever.</p>
                 </div>
-                {error && <p role="alert" className="text-sm text-red-400">{error}</p>}
+                {error && <p role="alert" className="text-sm font-semibold text-[#981b28]">{error}</p>}
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
               </form>
             ) : (
-              <div role="status" className="glass-panel rounded-3xl border border-brand-accent/20 p-6 sm:p-12 text-center space-y-4">
-                <CheckCircle className="w-14 h-14 text-brand-accent mx-auto" />
-                <h3 className="text-xl font-semibold text-white font-heading">Message received — thank you!</h3>
-                <p className="text-sm text-brand-foreground/60 font-light">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
-                <p className="text-sm text-brand-accent break-all">Enquiry reference: {reference}</p>
-                <Link href="/" className="inline-flex items-center gap-2 text-xs text-brand-accent hover:text-white transition-colors mt-4">
+              <div role="status" className="bg-[#efefef] rounded-3xl border border-[#050507]/12 p-6 sm:p-12 text-center space-y-4">
+                <CheckCircle className="w-14 h-14 text-[#7f141f] mx-auto" />
+                <h3 className="text-xl font-semibold text-[#050507] font-heading">Message received — thank you!</h3>
+                <p className="text-sm text-[#050507]/85 font-normal">Thank you. Your enquiry has been saved for the Mosi Media Solutions team. We&apos;ll respond using your contact details.</p>
+                <p className="text-sm font-semibold text-[#7f141f] break-all">Enquiry reference: {reference}</p>
+                <Link href="/" className="inline-flex items-center gap-2 text-xs font-semibold text-[#7f141f] hover:text-[#050507] transition-colors mt-4">
                   Back to Home <ArrowRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -241,14 +241,14 @@ export default function ContactExperience({ initialService = "" }: { initialServ
             {/* Gallery preview strip below form */}
             <div className="mt-6 grid grid-cols-4 gap-2">
               {["/mms/DSC_7551.jpg", "/mms/DSC_7589.jpg", "/mms/DSC_7640.jpg", "/mms/DSC_7703.jpg"].map((src, i) => (
-                <Link key={i} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-brand-accent/10">
+                <Link key={i} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#050507]/12">
                   <Image src={src} alt="gallery preview" fill sizes="(max-width:1023px) 25vw, 15vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/10 transition-colors duration-300" />
                 </Link>
               ))}
             </div>
-            <p className="text-center mt-3 text-[10px] text-brand-foreground/35">
-              <Link href="/gallery" className="hover:text-brand-accent transition-colors">View full gallery →</Link>
+            <p className="text-center mt-3 text-[10px] text-[#050507]/75">
+              <Link href="/gallery" className="hover:text-[#7f141f] font-medium transition-colors">View full gallery →</Link>
             </p>
           </div>
         </div>

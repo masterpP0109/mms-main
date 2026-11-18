@@ -118,8 +118,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Native, contained touch carousel. Pinning is an enhancement for tall desktops. */
-.past-work-section { position: relative; isolation: isolate; background: #050507; padding-block: 3rem; }
-.past-work-pin { position: relative; width: 100%; }
+.past-work-section { position: relative; isolation: isolate; background: #e4e4e4; padding-block: 3rem; }
+.past-work-pin { position: relative; width: 100%; background: #e4e4e4; }
 .past-work-heading { width: min(100% - 2rem, 820px); margin: 0 auto 2rem; text-align: center; }
 .past-work-viewport { width: 100%; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; }
 .past-work-track { display: flex; align-items: stretch; gap: 1rem; width: max-content; padding: 0 1rem 1rem; }
@@ -376,6 +376,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Shared responsive foundations. No page-level overflow masking. */
 @layer base {
   html { scroll-padding-top: 7rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
   body { min-width: 0; }
   :where(h1, h2, h3, h4, p, a, button, label, span) { overflow-wrap: anywhere; }
   :where(h1, h2, h3) { text-wrap: balance; }
@@ -419,6 +422,20 @@ footer p { max-width: 65ch; }
   .home-hero { min-height: 560px; height: 70vh; padding-block: 5rem 0; }
   .hero-arrow { top: 50%; bottom: auto; transform: translateY(-50%); }
   .hero-copy-gutter { padding-left: 6rem; }
+}
+.home-light-section {
+  position: relative;
+  background-color: #e4e4e4;
+}
+.home-light-section :where(:focus-visible),
+.past-work-section :where(:focus-visible) {
+  outline-color: #7f141f;
+}
+.clients-light .carousel-dot::after {
+  background: rgb(5 5 7 / .28);
+}
+.clients-light .carousel-dot.is-current::after {
+  background: #7f141f;
 }
 @media (max-width: 639px) {
   h1 { font-size: clamp(1.875rem, 7.5vw, 3rem); }

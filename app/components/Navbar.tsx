@@ -47,14 +47,18 @@ export default function Navbar() {
 
   const isActive = (href: string) =>
     href === "/" || href === "/services" ? pathname === href : (pathname ?? "").startsWith(href);
+  const solidNav = scrolled || pathname === "/packages" || pathname === "/services/weddings-elopements" || pathname === "/privacy";
 
   return (
     <header className="site-header fixed top-0 left-0 right-0 z-50">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         <Link
           href="/"
-          className="relative z-50 flex shrink-0 items-center"
-
+          className={`relative z-50 flex shrink-0 items-center rounded-full px-3 py-1.5 transition-all duration-500 ease-out ${
+            solidNav
+              ? "bg-[#050507]/85 border border-brand-accent/25 backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.3)]"
+              : "border border-transparent"
+          }`}
           aria-label="MMS Home"
         >
           <Image
@@ -76,7 +80,7 @@ export default function Navbar() {
           aria-label="Main navigation"
         >
           <div className="glass-navbar-wrapper">
-            <div className={`glass-navbar flex items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5 ${scrolled ? "glass-navbar-scrolled" : ""}`}>
+            <div className={`glass-navbar flex items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5 ${solidNav ? "glass-navbar-scrolled" : ""}`}>
               <div className="hidden xl:flex items-center gap-1">
                 {navLinks.map((item) => (
                   <Link

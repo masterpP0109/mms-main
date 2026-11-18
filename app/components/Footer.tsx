@@ -9,8 +9,11 @@ export default function Footer() {
         <div data-stagger className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           {/* Brand */}
           <div className="min-[400px]:col-span-2 lg:col-span-1 space-y-4">
-            <div className="inline-flex items-center rounded-full bg-[#050507] px-3.5 py-2 border border-[#050507]/15 shadow-sm">
-              <Image src="/mms/MMS%20LOGO.png" alt="MMS Logo" width={130} height={38} className="object-contain" />
+            <div className="inline-flex flex-col items-start gap-1">
+              <Image src="/mmslogo.webp" alt="MMS Logo" width={110} height={32} className="object-contain" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#050507]/75 font-heading">
+                Mosi Media Solutions
+              </span>
             </div>
             <p className="text-sm text-[#050507]/85 leading-relaxed font-normal">
               Mosi Media Solutions is a Victoria Falls-based conference and media production company serving ministries, government agencies, international organisations and businesses.

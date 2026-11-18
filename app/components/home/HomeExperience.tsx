@@ -295,7 +295,7 @@ export default function Home() {
                 fill
                 sizes="100vw"
                 className="bright-image object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.85, objectPosition: slides[currentSlide].imagePosition }}
+                style={{ opacity: 0.8, objectPosition: slides[currentSlide].imagePosition }}
                 loading="eager"
                 fetchPriority={currentSlide === 0 ? "high" : "auto"}
               />
@@ -303,9 +303,9 @@ export default function Home() {
           </AnimatePresence>
 
           {/* Keep contrast consistent across every image and slide transition. */}
-          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/15 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
+          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/45">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/60 via-transparent to-[#050507]/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/65 via-[#050507]/20 to-transparent" />
           </div>
 
           {/* Slide Text Content - Left Aligned with Shade */}

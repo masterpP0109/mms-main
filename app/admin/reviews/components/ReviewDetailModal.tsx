@@ -22,6 +22,9 @@ export interface ReviewItem {
   consent: boolean;
   wouldRecommend?: string | null;
   attribution?: string | null;
+  stoodOut?: string | null;
+  contribution?: string | null;
+  improvements?: string | null;
   notes: string | null;
   metadata?: {
     stoodOut?: string;
@@ -193,7 +196,7 @@ export default function ReviewDetailModal({
                   Would Recommend to Others
                 </span>
                 <p className="text-sm font-semibold text-white">
-                  {review.wouldRecommend || "Yes"}
+                  {review.wouldRecommend || "Not specified"}
                 </p>
               </div>
 
@@ -208,37 +211,37 @@ export default function ReviewDetailModal({
               </div>
 
               {/* What Stood Out */}
-              {meta.stoodOut && (
+              {(review.stoodOut || meta.stoodOut) && (
                 <div className="md:col-span-2 bg-[#121218] border border-brand-accent/10 rounded-xl p-3.5 space-y-1">
                   <span className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium block">
                     What Stood Out Most
                   </span>
                   <p className="text-xs text-white/90 leading-relaxed font-light">
-                    {meta.stoodOut}
+                    {review.stoodOut || meta.stoodOut}
                   </p>
                 </div>
               )}
 
               {/* Contribution to Success */}
-              {meta.contribution && (
+              {(review.contribution || meta.contribution) && (
                 <div className="md:col-span-2 bg-[#121218] border border-brand-accent/10 rounded-xl p-3.5 space-y-1">
                   <span className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium block">
                     Contribution to Project Success
                   </span>
                   <p className="text-xs text-white/90 leading-relaxed font-light">
-                    {meta.contribution}
+                    {review.contribution || meta.contribution}
                   </p>
                 </div>
               )}
 
               {/* Improvements */}
-              {meta.improvements && (
+              {(review.improvements || meta.improvements) && (
                 <div className="md:col-span-2 bg-[#121218] border border-brand-accent/10 rounded-xl p-3.5 space-y-1">
                   <span className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium block">
                     Constructive Feedback / Improvements
                   </span>
                   <p className="text-xs text-white/90 leading-relaxed font-light">
-                    {meta.improvements}
+                    {review.improvements || meta.improvements}
                   </p>
                 </div>
               )}
@@ -259,8 +262,12 @@ export default function ReviewDetailModal({
               <span className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium block mb-1">
                 Organisation / Role
               </span>
-              <p className="font-semibold text-white">{review.organisation || "Individual Client"}</p>
-              <p className="text-zinc-400 text-[11px] mt-0.5">{review.role || "Executive / Organiser"}</p>
+              <p className="font-semibold text-white">
+                {review.organisation || "Not specified"}
+              </p>
+              <p className="text-zinc-400 text-[11px] mt-0.5">
+                {review.role || "Not specified"}
+              </p>
             </div>
           </div>
 

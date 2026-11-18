@@ -30,6 +30,9 @@ export async function submitReview(input: ReviewSubmissionInput) {
       consent: input.consent,
       wouldRecommend: input.wouldRecommend,
       attribution: input.attribution,
+      stoodOut: input.stoodOut,
+      contribution: input.contribution,
+      improvements: input.improvements,
       metadata: {
         stoodOut: input.stoodOut,
         contribution: input.contribution,
@@ -153,15 +156,37 @@ export async function deleteReview(id: string) {
 }
 
 export async function getReviewMetrics() {
-  const [total, pending, approved, rejected, featured, ratingStats] = await Promise.all([
+  const [
+    total,
+    pending,
+    approved,
+    rejected,
+    featured,
+    verified,
+    consented,
+    ratingStats,
+    dbServices,
+    reviewServices,
+  ] = await Promise.all([
     db.review.count(),
-    db.lead ? db.review.count({ where: { status: "pending" } }) : 0,
+    db.review.count({ where: { status: "pending" } }),
     db.review.count({ where: { status: "approved" } }),
     db.review.count({ where: { status: "rejected" } }),
     db.review.count({ where: { featured: true } }),
+    db.review.count({ where: { verified: true } }),
+    db.review.count({ where: { consent: true } }),
     db.review.groupBy({
       by: ["rating"],
       _count: { rating: true },
+    }),
+    db.service.findMany({
+      orderBy: [{ sortOrder: "asc" }, { title: "asc" }],
+      select: { title: true },
+    }),
+    db.review.findMany({
+      where: { service: { not: null } },
+      distinct: ["service"],
+      select: { service: true },
     }),
   ]);
 
@@ -175,7 +200,16 @@ export async function getReviewMetrics() {
     ratedCount += stat._count.rating;
   }
 
-  const averageRating = ratedCount > 0 ? Number((ratingSum / ratedCount).toFixed(1)) : 5.0;
+  const averageRating =
+    ratedCount > 0 ? Number((ratingSum / ratedCount).toFixed(1)) : 0;
+
+  const serviceSet = new Set<string>();
+  for (const s of dbServices) {
+    if (s.title?.trim()) serviceSet.add(s.title.trim());
+  }
+  for (const r of reviewServices) {
+    if (r.service?.trim()) serviceSet.add(r.service.trim());
+  }
 
   return {
     total,
@@ -183,7 +217,10 @@ export async function getReviewMetrics() {
     approved,
     rejected,
     featured,
+    verified,
+    consented,
     averageRating,
     distribution,
+    availableServices: Array.from(serviceSet),
   };
 }

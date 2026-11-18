@@ -10,11 +10,28 @@ datasource db {
 model Lead {
   id                  String   @id @default(cuid())
   source              String
+  funnel              String   @default("contact")
+  status              String   @default("new")
+  priority            String   @default("normal")
   name                String
   email               String?
   phone               String?
   organisation        String?
+  organisationType    String?
   projectType         String?
+  eventDate           String?
+  venue               String?
+  delegates           Int?
+  packageId           String?
+  packageName         String?
+  services            String[] @default([])
+  originPath          String?
+  utmSource           String?
+  utmMedium           String?
+  utmCampaign         String?
+  notes               String?
+  assignedTo          String?
+  followedUpAt        DateTime?
   message             String
   metadata            Json?
   idempotencyKey      String   @unique
@@ -41,6 +58,9 @@ model Lead {
   @@index([createdAt])
   @@index([email])
   @@index([phone])
+  @@index([status, createdAt])
+  @@index([funnel, createdAt])
+  @@index([priority])
   @@index([emailStatus, createdAt])
   @@index([acknowledgementStatus, createdAt])
   @@index([whatsappStatus, createdAt])
@@ -147,6 +167,9 @@ model Review {
   rating       Int
   headline     String?
   content      String
+  stoodOut     String?
+  contribution String?
+  improvements String?
   status       String    @default("pending")
   featured     Boolean   @default(false)
   verified     Boolean   @default(false)

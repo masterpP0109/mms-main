@@ -29,9 +29,60 @@ export async function createLead(input: LeadInput, suppliedKey?: string | null) 
   await enforceIdentityLimit(input.email ?? input.phone ?? "unknown");
   let lead;
   try {
+    const meta = (input.metadata ?? {}) as Record<string, unknown>;
+
+    let funnel = "contact";
+    if (input.source === "conference") funnel = "conference";
+    else if (input.source === "project_builder") funnel = "project_builder";
+    else if (input.source === "whatsapp") funnel = "whatsapp";
+    else if (meta.packageId || (typeof meta.origin === "string" && meta.origin.startsWith("/packages"))) funnel = "package";
+
+    const eventDate = typeof meta.date === "string" ? meta.date : typeof meta.timeline === "string" ? meta.timeline : undefined;
+    const venue = typeof meta.venue === "string" ? meta.venue : typeof meta.location === "string" ? meta.location : undefined;
+    const delegatesRaw = typeof meta.delegates === "string" || typeof meta.delegates === "number" ? Number(meta.delegates) : undefined;
+    const delegates = delegatesRaw && Number.isFinite(delegatesRaw) && delegatesRaw > 0 ? delegatesRaw : undefined;
+    const organisationType = typeof meta.organisationType === "string" ? meta.organisationType : undefined;
+    const packageId = typeof meta.packageId === "string" ? meta.packageId : undefined;
+    const packageName = typeof meta.packageName === "string" ? meta.packageName : undefined;
+    const originPath = typeof meta.origin === "string" ? meta.origin : typeof meta.landingPage === "string" ? meta.landingPage : undefined;
+    const utmSource = typeof meta.utm_source === "string" ? meta.utm_source : undefined;
+    const utmMedium = typeof meta.utm_medium === "string" ? meta.utm_medium : undefined;
+    const utmCampaign = typeof meta.utm_campaign === "string" ? meta.utm_campaign : undefined;
+
+    const servicesList: string[] = [];
+    if (Array.isArray(meta.services)) {
+      for (const s of meta.services) {
+        if (typeof s === "string" && s.trim()) servicesList.push(s.trim());
+      }
+    } else if (typeof meta.service === "string" && meta.service.trim()) {
+      servicesList.push(meta.service.trim());
+    }
+
     // The lead row is also its durable notification work record: one atomic insert,
     // no external queue or separate transaction needed for two fixed channels.
-    lead = await db.lead.create({ data: { ...input, metadata: input.metadata as Prisma.InputJsonValue | undefined, idempotencyKey, whatsappStatus: "pending", acknowledgementStatus: input.source !== "whatsapp" && input.email ? "pending" : "not_requested" } });
+    lead = await db.lead.create({
+      data: {
+        ...input,
+        funnel,
+        status: "new",
+        priority: "normal",
+        organisationType,
+        eventDate,
+        venue,
+        delegates,
+        packageId,
+        packageName,
+        services: servicesList,
+        originPath,
+        utmSource,
+        utmMedium,
+        utmCampaign,
+        metadata: input.metadata as Prisma.InputJsonValue | undefined,
+        idempotencyKey,
+        whatsappStatus: "pending",
+        acknowledgementStatus: input.source !== "whatsapp" && input.email ? "pending" : "not_requested",
+      },
+    });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       const duplicate = await db.lead.findUnique({ where: { idempotencyKey } });

@@ -1,30 +1,40 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, RefreshCw, ArrowUpRight, ArrowLeft } from "lucide-react";
 import ReviewMetrics, { type ReviewMetricsData } from "./components/ReviewMetrics";
 import ReviewFilterBar from "./components/ReviewFilterBar";
 import ReviewTable from "./components/ReviewTable";
 import ReviewDetailModal, { type ReviewItem } from "./components/ReviewDetailModal";
 
-const DEFAULT_METRICS: ReviewMetricsData = {
+const EMPTY_METRICS: ReviewMetricsData = {
   total: 0,
   pending: 0,
   approved: 0,
   rejected: 0,
   featured: 0,
-  averageRating: 5.0,
+  averageRating: 0,
   distribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  availableServices: [],
 };
 
-export default function ReviewsDashboard() {
-  const [reviews, setReviews] = useState<ReviewItem[]>([]);
-  const [metrics, setMetrics] = useState<ReviewMetricsData>(DEFAULT_METRICS);
-  const [loading, setLoading] = useState<boolean>(true);
+interface ReviewsDashboardProps {
+  initialReviews?: ReviewItem[];
+  initialMetrics?: ReviewMetricsData;
+}
+
+export default function ReviewsDashboard({
+  initialReviews = [],
+  initialMetrics = EMPTY_METRICS,
+}: ReviewsDashboardProps) {
+  const [reviews, setReviews] = useState<ReviewItem[]>(initialReviews);
+  const [metrics, setMetrics] = useState<ReviewMetricsData>(initialMetrics);
+  const [loading, setLoading] = useState<boolean>(false);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const isFirstRender = useRef(true);
 
   // Filters
   const [search, setSearch] = useState<string>("");
@@ -45,7 +55,9 @@ export default function ReviewsDashboard() {
       if (rating > 0) params.set("rating", String(rating));
       if (search.trim()) params.set("search", search.trim());
 
-      const res = await fetch(`/api/admin/reviews?${params.toString()}`);
+      const res = await fetch(`/api/admin/reviews?${params.toString()}`, {
+        cache: "no-store",
+      });
       if (!res.ok) throw new Error("Failed to fetch reviews");
       const data = await res.json();
 
@@ -55,7 +67,7 @@ export default function ReviewsDashboard() {
       }
     } catch (err) {
       console.error("Dashboard fetch error:", err);
-      showToast("Unable to refresh reviews");
+      showToast("Unable to refresh reviews from backend");
     } finally {
       setLoading(false);
       setRefreshing(false);
@@ -63,7 +75,11 @@ export default function ReviewsDashboard() {
   }, [status, service, rating, search]);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    setLoading(true);
     fetchReviews();
   }, [fetchReviews]);
 
@@ -217,49 +233,55 @@ export default function ReviewsDashboard() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#121218] border border-brand-accent/40 text-white text-xs px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
+        <div className="fixed bottom-5 right-5 z-50 bg-[#121217] border border-zinc-700 text-white text-xs px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2">
           <Check className="w-4 h-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Dashboard Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-brand-accent/15">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-brand-accent font-semibold font-heading">
-              MMS Operations Console
+      {/* Top Executive Control Bar */}
+      <div className="bg-[#0e0e13] border border-zinc-800/80 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin"
+              className="text-[11px] font-mono text-zinc-400 hover:text-white inline-flex items-center gap-1"
+            >
+              <ArrowLeft className="w-3 h-3" />
+              Operations Console
+            </Link>
+            <span className="text-zinc-700">•</span>
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-brand-accent font-semibold">
+              Live PostgreSQL Review Store
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white font-heading">
-            Review & Testimonial Submissions
+          <h1 className="text-xl sm:text-2xl font-bold text-white font-heading">
+            Client Review Moderation & Feedback Desk
           </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 font-light mt-1">
-            Monitor, moderate, verify and publish client feedback across all production channels.
-          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Link
+            href="/reviews"
+            target="_blank"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#07070a] hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-medium transition-colors"
+          >
+            <span>Questionnaire Page</span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
+          </Link>
+
           <button
             type="button"
             onClick={handleRefresh}
             disabled={refreshing}
-            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white border border-zinc-700 text-xs font-medium transition-colors cursor-pointer disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-primary hover:bg-brand-red text-white text-xs font-medium transition-colors cursor-pointer disabled:opacity-50"
           >
-            {refreshing ? "Refreshing..." : "Refresh"}
+            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
+            <span>{refreshing ? "Syncing..." : "Refresh"}</span>
           </button>
-
-          <Link
-            href="/reviews"
-            target="_blank"
-            className="px-4 py-2 rounded-xl bg-brand-primary/20 hover:bg-brand-primary/30 text-brand-accent border border-brand-accent/30 text-xs font-semibold transition-colors"
-          >
-            Live Questionnaire Page ↗
-          </Link>
         </div>
       </div>
 
@@ -282,9 +304,10 @@ export default function ReviewsDashboard() {
         onRatingChange={setRating}
         onReset={handleResetFilters}
         pendingCount={metrics.pending}
+        availableServices={metrics.availableServices ?? []}
       />
 
-      {/* Submissions Table / Grid */}
+      {/* Submissions Table */}
       <ReviewTable
         reviews={reviews}
         loading={loading}

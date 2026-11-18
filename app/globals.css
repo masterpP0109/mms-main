@@ -215,21 +215,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .glass-navbar {
   position: relative;
-  background: rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(239, 239, 239, 0.84) 0%, rgba(228, 228, 228, 0.78) 100%);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgba(253, 164, 175, 0.22);
+  border: 1px solid rgba(5, 5, 7, 0.12);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.15),
-    0 0 20px rgba(237, 28, 36, 0.10),
-    0 0 20px rgba(253, 164, 175, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 12px 32px rgba(5, 5, 7, 0.1),
+    0 0 18px rgba(127, 20, 31, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
   overflow: clip;
   transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
 }
 
 .glass-navbar-scrolled {
-  background: linear-gradient(135deg, rgba(239, 239, 239, 0.94) 0%, rgba(228, 228, 228, 0.9) 100%);
+  background: linear-gradient(135deg, rgba(239, 239, 239, 0.95) 0%, rgba(228, 228, 228, 0.92) 100%);
   border-color: rgba(5, 5, 7, 0.14);
   box-shadow:
     0 12px 36px rgba(5, 5, 7, 0.12),
@@ -322,18 +321,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass-navbar {
-  animation: glow-pulse 4s ease-in-out infinite;
+  animation: glow-pulse-light 4s ease-in-out infinite;
 }
 
+.glass-navbar .nav-item::before,
 .glass-navbar-scrolled .nav-item::before {
   background: linear-gradient(135deg, rgba(127, 20, 31, 0.14), rgba(184, 22, 29, 0.07));
 }
 
+.glass-navbar .nav-item.active,
 .glass-navbar-scrolled .nav-item.active {
   color: #ffffff;
   text-shadow: none;
 }
 
+.glass-navbar::after,
 .glass-navbar-scrolled::after {
   background: linear-gradient(
     115deg,

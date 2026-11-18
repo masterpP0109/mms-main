@@ -47,7 +47,7 @@ export default function AboutPage() {
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto mms-gutter w-full pb-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl space-y-5">
-<span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">About Us</span>
+            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">About Us</span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading leading-tight">
               We help organisations deliver important events professionally.
             </h1>

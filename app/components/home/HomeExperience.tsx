@@ -295,7 +295,7 @@ export default function Home() {
                 fill
                 sizes="100vw"
                 className="bright-image object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.8, objectPosition: slides[currentSlide].imagePosition }}
+                style={{ opacity: 0.85, objectPosition: slides[currentSlide].imagePosition }}
                 loading="eager"
                 fetchPriority={currentSlide === 0 ? "high" : "auto"}
               />
@@ -303,9 +303,9 @@ export default function Home() {
           </AnimatePresence>
 
           {/* Keep contrast consistent across every image and slide transition. */}
-          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/45">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/60 via-transparent to-[#050507]/50" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/65 via-[#050507]/20 to-transparent" />
+          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/30">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
           </div>
 
           {/* Slide Text Content - Left Aligned with Shade */}
@@ -389,8 +389,8 @@ export default function Home() {
 
       {/* Inserted homepage copy removed — conference section will follow Services below */}
 
-      {/* 2) TRUST / VALUE ICON STRIP (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
-      <section style={{ opacity: 1, visibility: "visible" }} className="trust-strip relative -mt-4 z-30 max-w-[1600px] mx-auto mms-wide-gutter overflow-hidden rounded-3xl border border-brand-accent/20 shadow-2xl bg-black">
+      {/* 2) TRUST / VALUE ICON STRIP */}
+      <section style={{ opacity: 1, visibility: "visible" }} className="trust-strip relative -mt-4 z-30 max-w-[1600px] mx-auto mms-wide-gutter overflow-hidden rounded-3xl border border-brand-accent/20 shadow-2xl bg-[#141418]">
         {/* Parallax Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
@@ -398,9 +398,9 @@ export default function Home() {
             alt="MMS Partners Background"
             fill sizes="100vw"
             className="object-cover object-center pointer-events-none"
-            style={{ opacity: 0.35 }}
+            style={{ opacity: 0.5 }}
           />
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 bg-black/25 z-10" />
         </div>
 
         <div className="relative z-20 p-5 sm:p-8 md:p-10">
@@ -645,8 +645,8 @@ export default function Home() {
 
       {/* 3) INTERACTIVE BUILDER: PLAN YOUR PROJECT */}
 
-    {/* 6) OUR PROCESS SECTION (NO-IMAGE SECTION: Uses background image with parallax and GSAP reveal overlay) */}
-      <section style={{ opacity: 1, visibility: "visible" }} id="about" className="relative py-16 md:py-24 border-t border-b border-brand-accent/15 overflow-hidden bg-black">
+    {/* 6) OUR PROCESS SECTION */}
+      <section style={{ opacity: 1, visibility: "visible" }} id="about" className="relative py-16 md:py-24 border-t border-b border-brand-accent/15 overflow-hidden bg-[#141418]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
@@ -654,9 +654,9 @@ export default function Home() {
             alt="Scenic Falls Parallax"
             fill sizes="100vw"
             className="object-cover object-center pointer-events-none"
-            style={{ opacity: 0.3 }}
+            style={{ opacity: 0.5 }}
           />
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 bg-black/25 z-10" />
         </div>
 
         <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
@@ -694,11 +694,11 @@ export default function Home() {
             ].map((item, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center text-center px-4">
                 {/* Step Number Circle */}
-                <div className="w-16 h-16 rounded-full bg-[#050507] border border-brand-accent/30 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-brand-accent transition-colors duration-300">
+                <div className="w-16 h-16 rounded-full bg-[#141418]/80 backdrop-blur-sm border border-brand-accent/35 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-brand-accent transition-colors duration-300">
                   <span className="text-xl font-semibold text-brand-accent font-heading">{item.step}</span>
                 </div>
                 <h3 className="text-xl font-medium text-white mb-2">{item.title}</h3>
-                <p className="text-base text-brand-foreground/70 leading-relaxed font-light">{item.desc}</p>
+                <p className="text-base text-brand-foreground/85 leading-relaxed font-light">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -800,7 +800,7 @@ export default function Home() {
       </section>
 
 
-      <section style={{ opacity: 1, visibility: "visible" }} id="contact" className="relative py-12 md:py-16 overflow-hidden bg-black">
+      <section style={{ opacity: 1, visibility: "visible" }} id="contact" className="relative py-12 md:py-16 overflow-hidden bg-[#141418]">
         {/* Background Image */}
         <div className="absolute inset-0 z-0 w-full h-full">
           <Image
@@ -808,16 +808,16 @@ export default function Home() {
             alt="Scenic Falls Parallax"
             fill sizes="100vw"
             className="object-cover object-center pointer-events-none"
-            style={{ opacity: 0.3 }}
+            style={{ opacity: 0.55 }}
           />
-          <div className="absolute inset-0 bg-black/50 z-10" />
+          <div className="absolute inset-0 bg-black/30 z-10" />
         </div>
 
         <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center max-w-2xl mx-auto mb-10 space-y-3">
             <span className="text-base tracking-[0.4em] text-brand-accent uppercase font-semibold block font-heading">Get In Touch</span>
             <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
-            <p className="text-base text-brand-foreground/70 font-light">
+            <p className="text-base text-white/85 font-light">
               Let&apos;s bring your vision to life. Start with a free discovery call and tell us what you need for a custom quote.
             </p>
           </div>

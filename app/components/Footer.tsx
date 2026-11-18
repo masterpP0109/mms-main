@@ -6,16 +6,16 @@ export default function Footer() {
   return (
     <footer className="bg-[#e4e4e4] text-[#050507] border-t border-[#050507]/12 pt-14 pb-24">
       <div className="max-w-[1600px] mx-auto mms-gutter">
-        <div data-stagger className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div data-stagger className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-8 mb-10 text-center md:text-left">
           {/* Brand */}
-          <div className="min-[400px]:col-span-2 lg:col-span-1 space-y-4">
-            <div className="inline-flex flex-col items-start gap-1">
-              <Image src="/mmslogo.webp" alt="MMS Logo" width={110} height={32} className="object-contain" />
+          <div className="min-[400px]:col-span-2 lg:col-span-1 space-y-4 flex flex-col items-center md:items-start">
+            <div className="inline-flex flex-col items-center md:items-start gap-1.5">
+              <Image src="/mmslogo.webp" alt="MMS Logo" width={220} height={64} className="w-[155px] sm:w-[180px] h-auto object-contain" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#050507]/75 font-heading">
                 Mosi Media Solutions
               </span>
             </div>
-            <p className="text-sm text-[#050507]/85 leading-relaxed font-normal">
+            <p className="text-sm text-[#050507]/85 leading-relaxed font-normal max-w-sm md:max-w-none">
               Mosi Media Solutions is a Victoria Falls-based conference and media production company serving ministries, government agencies, international organisations and businesses.
             </p>
             <Link
@@ -28,9 +28,9 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center md:items-start">
             <h4 className="text-xs uppercase tracking-widest text-[#7f141f] font-bold font-heading">Services</h4>
-            <ul className="space-y-2 text-sm text-[#050507]/85 font-normal">
+            <ul className="space-y-2 text-sm text-[#050507]/85 font-normal flex flex-col items-center md:items-start">
               <li><Link href="/conference-production" className="hover:text-[#7f141f] transition-colors">Conference Production</Link></li>
               <li><Link href="/services/drone" className="hover:text-[#7f141f] transition-colors">Drone Services</Link></li>
               <li><Link href="/packages" className="hover:text-[#7f141f] transition-colors">Signature Packages</Link></li>
@@ -42,9 +42,9 @@ export default function Footer() {
           </div>
 
           {/* Gallery */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center md:items-start">
             <h4 className="text-xs uppercase tracking-widest text-[#7f141f] font-bold font-heading">Gallery</h4>
-            <ul className="space-y-2 text-sm text-[#050507]/85 font-normal">
+            <ul className="space-y-2 text-sm text-[#050507]/85 font-normal flex flex-col items-center md:items-start">
               <li><Link href="/gallery?cat=Wedding" className="hover:text-[#7f141f] transition-colors">Wedding Highlights</Link></li>
               <li><Link href="/gallery?cat=Conference" className="hover:text-[#7f141f] transition-colors">Corporate Keynotes</Link></li>
               <li><Link href="/gallery?cat=Drone" className="hover:text-[#7f141f] transition-colors">Scenic Drones</Link></li>
@@ -53,9 +53,9 @@ export default function Footer() {
           </div>
 
           {/* Company */}
-          <div className="space-y-4">
+          <div className="min-[400px]:col-span-2 lg:col-span-1 space-y-4 flex flex-col items-center md:items-start">
             <h4 className="text-xs uppercase tracking-widest text-[#7f141f] font-bold font-heading">Company</h4>
-            <ul className="space-y-2 text-sm text-[#050507]/85 font-normal">
+            <ul className="space-y-2 text-sm text-[#050507]/85 font-normal flex flex-col items-center md:items-start">
               <li><Link href="/about" className="hover:text-[#7f141f] transition-colors">About Us</Link></li>
               <li><Link href="/reviews" className="hover:text-[#7f141f] transition-colors">Client Reviews</Link></li>
               <li><Link href="/contact" className="hover:text-[#7f141f] transition-colors">Contact</Link></li>
@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-[#050507]/12 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#050507]/75 gap-4">
+        <div className="pt-8 border-t border-[#050507]/12 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left text-[11px] text-[#050507]/75 gap-4">
           <p>© {new Date().getFullYear()} Mosi Media Solutions. All rights reserved.</p>
           <div className="flex flex-wrap justify-center gap-x-6">
             <Link href="/privacy" className="hover:text-[#7f141f] transition-colors">Privacy Policy</Link>

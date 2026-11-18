@@ -47,31 +47,21 @@ export default function Navbar() {
 
   const isActive = (href: string) =>
     href === "/" || href === "/services" ? pathname === href : (pathname ?? "").startsWith(href);
-  const solidNav =
-    scrolled ||
-    (pathname ?? "").startsWith("/packages") ||
-    pathname === "/services/weddings-elopements" ||
-    pathname === "/privacy";
 
   return (
     <header className="site-header fixed top-0 left-0 right-0 z-50">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         <Link
           href="/"
-          className={`relative z-50 flex shrink-0 items-center rounded-full px-3.5 py-2 transition-all duration-500 ease-out ${
-            solidNav
-              ? "bg-[#e4e4e4]/92 border border-[#050507]/14 backdrop-blur-md shadow-[0_8px_24px_rgba(5,5,7,0.12)]"
-              : "border border-transparent"
-          }`}
+          className="relative z-50 flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.03]"
           aria-label="MMS Home"
         >
           <Image
-            src={solidNav ? "/mmslogo.webp" : "/mms/MMS%20LOGO.png"}
+            src="/mmslogo.webp"
             alt="MMS Logo"
-            width={140}
-            height={38}
-            style={{ width: "auto", height: "auto", maxWidth: solidNav ? "88px" : "112px" }}
-            className="sm:[max-width:140px] object-contain transition-opacity duration-300"
+            width={220}
+            height={64}
+            className="w-[140px] sm:w-[175px] lg:w-[200px] h-auto object-contain drop-shadow-[0_1px_10px_rgba(255,255,255,0.55)]"
             preload
           />
         </Link>
@@ -84,7 +74,7 @@ export default function Navbar() {
           aria-label="Main navigation"
         >
           <div className="glass-navbar-wrapper">
-            <div className={`glass-navbar flex items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5 ${solidNav ? "glass-navbar-scrolled" : ""}`}>
+            <div className={`glass-navbar flex items-center justify-between gap-3 rounded-full px-4 sm:px-6 py-3.5 ${scrolled ? "glass-navbar-scrolled" : ""}`}>
               <div className="hidden xl:flex items-center gap-1">
                 {navLinks.map((item) => (
                   <Link
@@ -94,20 +84,14 @@ export default function Navbar() {
                     className={`nav-item relative px-2.5 py-2.5 text-[10px] 2xl:text-[11px] uppercase tracking-[.06em] ${
                       isActive(item.href)
                         ? "active text-white font-semibold"
-                        : solidNav
-                          ? "text-[#050507]/85 hover:text-[#7f141f] font-medium"
-                          : "text-brand-foreground/85 hover:text-white"
+                        : "text-[#050507]/85 hover:text-[#7f141f] font-medium"
                     }`}
                   >
                     {isActive(item.href) && (
                       <motion.div
                         layoutId="nav-pill"
                         className="absolute inset-0 rounded-full"
-                        style={{
-                          background: solidNav
-                            ? "#981b28"
-                            : "rgba(255,255,255,0.12)",
-                        }}
+                        style={{ background: "#981b28" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -118,9 +102,7 @@ export default function Navbar() {
 
               <button
                 type="button"
-                className={`nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 ${
-                  solidNav ? "text-[#050507]" : "text-white"
-                }`}
+                className="nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 text-[#050507]"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label={mobileOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileOpen}

@@ -464,11 +464,18 @@ footer p { max-width: 65ch; }
 }
 .home-light-section {
   position: relative;
-  background-color: #e4e4e4;
+  background-color: #ffffff;
 }
 .home-light-section :where(:focus-visible),
 .past-work-section :where(:focus-visible) {
   outline-color: #7f141f;
+}
+.hero-light .carousel-dot::after {
+  background: rgb(255 255 255 / .75);
+  box-shadow: 0 1px 4px rgb(5 5 7 / .35);
+}
+.hero-light .carousel-dot.is-current::after {
+  background: #981b28;
 }
 .clients-light .carousel-dot::after {
   background: rgb(5 5 7 / .28);

@@ -25,7 +25,7 @@ export default function ProjectBriefBuilder() {
           <section aria-busy={builderLoading} style={{ opacity: 1, visibility: "visible" }} id="builder" className="py-16 md:py-24 max-w-6xl mx-auto mms-gutter relative">
 
 
-        <div data-reveal="scale" className="bg-[#efefef] text-[#050507] rounded-3xl border border-[#050507]/12 shadow-lg p-5 sm:p-8 md:p-10">
+        <div data-reveal="scale" className="bg-[#fafafa] text-[#050507] rounded-3xl border border-[#050507]/10 shadow-lg p-5 sm:p-8 md:p-10">
           {/* Step Progress Indicator */}
           <div className="builder-progress flex items-center justify-between gap-2 mb-6 max-w-md mx-auto">
             {["Goal", "Audience", "Timeline", "Contact", "Review"].map((label, idx) => {

@@ -249,7 +249,7 @@ export default function Home() {
   const primaryButton = "mms-button group";
 
   return (
-    <div ref={pageRef} className="mms-page min-h-screen bg-[#050507] text-brand-foreground font-sans selection:bg-brand-primary selection:text-white">
+    <div ref={pageRef} className="mms-page min-h-screen bg-white text-[#050507] font-sans selection:bg-brand-primary selection:text-white">
 
       {/* 1) TOP NAVIGATION BAR & HERO SECTION */}
       <header id="home" className="relative w-full z-40">
@@ -257,7 +257,7 @@ export default function Home() {
 
         {/* Hero Carousel Section - offset for fixed navbar */}
         <div
-          className="home-hero relative w-full overflow-hidden bg-black flex items-center justify-center z-10"
+          className="home-hero hero-light relative w-full overflow-hidden bg-white flex items-center justify-center z-10"
           onTouchStart={(event) => {
             heroTouchStartX.current = event.touches[0]?.clientX ?? null;
           }}
@@ -279,46 +279,37 @@ export default function Home() {
 
           }}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
-              className="absolute inset-0 w-full h-full bg-[#050507] pointer-events-none"
-            >
-              {/* Background Image of current slide */}
-              <Image
-                src={slides[currentSlide].image}
-                alt={`${slides[currentSlide].title} — Mosi Media Solutions`}
-                fill
-                sizes="100vw"
-                className="bright-image object-cover scale-105 animate-[zoom_20s_infinite_alternate]"
-                style={{ opacity: 0.85, objectPosition: slides[currentSlide].imagePosition }}
-                loading="eager"
-                fetchPriority={currentSlide === 0 ? "high" : "auto"}
-              />
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Keep contrast consistent across every image and slide transition. */}
-          <div aria-hidden="true" className="absolute inset-0 z-10 pointer-events-none bg-black/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/15 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
+          <div className="absolute inset-0 w-full h-full bg-white pointer-events-none">
+            {/* Background Image of current slide (full opacity, no fade transition) */}
+            <Image
+              key={slides[currentSlide].image}
+              src={slides[currentSlide].image}
+              alt={`${slides[currentSlide].title} — Mosi Media Solutions`}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: slides[currentSlide].imagePosition }}
+              loading="eager"
+              fetchPriority={currentSlide === 0 ? "high" : "auto"}
+            />
           </div>
 
-          {/* Slide Text Content - Left Aligned with Shade */}
-          <div className="relative z-30 w-full h-full flex items-center pointer-events-none">
+          {/* Directional left-side gradient starting behind the text and fading to transparent */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 z-10 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(5, 5, 7, 0.72) 0%, rgba(5, 5, 7, 0.45) 30%, rgba(5, 5, 7, 0.14) 48%, rgba(5, 5, 7, 0) 64%)",
+            }}
+          />
+
+          {/* Slide Text Content - Left Aligned */}
+          <div className="relative z-30 w-full h-full flex items-center pt-20 sm:pt-24 lg:pt-20 pb-14 pointer-events-none">
             <div className="w-full max-w-[1600px] mx-auto px-10 md:px-14 lg:px-20 xl:pl-24 2xl:pl-28 flex justify-start">
-            <AnimatePresence mode="wait">
-              <motion.div
+              <div
                 key={currentSlide}
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 40 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="space-y-5 max-w-2xl xl:max-w-3xl relative z-20"
+                className="relative z-20 max-w-2xl xl:max-w-3xl space-y-5"
               >
                 <h1 className="text-[clamp(1.875rem,5vw,3.75rem)] font-semibold text-white font-heading leading-[1.05] gsap-heading drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
                   {slides[currentSlide].title}
@@ -344,8 +335,7 @@ export default function Home() {
                     Request a Quote
                   </a>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
             </div>
           </div>
 
@@ -354,7 +344,7 @@ export default function Home() {
             type="button"
             aria-label="Previous hero slide"
             onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-            className="hero-arrow hero-arrow-prev absolute left-3 sm:left-6 lg:left-8 z-40 p-2.5 sm:p-3 rounded-full border border-brand-accent/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(253,164,175,0.16)] hover:bg-brand-accent hover:text-[#050507] hover:border-brand-accent hover:shadow-[0_0_28px_rgba(253,164,175,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent transition-all duration-300 cursor-pointer"
+            className="hero-arrow hero-arrow-prev absolute left-3 sm:left-6 lg:left-8 z-40 p-2.5 sm:p-3 rounded-full border border-[#050507]/15 bg-white/90 text-[#050507] backdrop-blur-md shadow-md hover:bg-[#981b28] hover:text-white hover:border-[#981b28] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f141f] transition-all duration-300 cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
@@ -362,7 +352,7 @@ export default function Home() {
             type="button"
             aria-label="Next hero slide"
             onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-            className="hero-arrow hero-arrow-next absolute right-3 sm:right-6 lg:right-8 z-40 p-2.5 sm:p-3 rounded-full border border-brand-accent/45 bg-black/35 text-white backdrop-blur-md shadow-[0_0_18px_rgba(253,164,175,0.16)] hover:bg-brand-accent hover:text-[#050507] hover:border-brand-accent hover:shadow-[0_0_28px_rgba(253,164,175,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent transition-all duration-300 cursor-pointer"
+            className="hero-arrow hero-arrow-next absolute right-3 sm:right-6 lg:right-8 z-40 p-2.5 sm:p-3 rounded-full border border-[#050507]/15 bg-white/90 text-[#050507] backdrop-blur-md shadow-md hover:bg-[#981b28] hover:text-white hover:border-[#981b28] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f141f] transition-all duration-300 cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -390,45 +380,33 @@ export default function Home() {
       {/* Inserted homepage copy removed — conference section will follow Services below */}
 
       {/* 2) TRUST / VALUE ICON STRIP */}
-      <section style={{ opacity: 1, visibility: "visible" }} className="trust-strip relative -mt-4 z-30 max-w-[1600px] mx-auto mms-wide-gutter overflow-hidden rounded-3xl border border-brand-accent/20 shadow-2xl bg-[#141418]">
-        {/* Parallax Background Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg"
-            alt="MMS Partners Background"
-            fill sizes="100vw"
-            className="object-cover object-center pointer-events-none"
-            style={{ opacity: 0.5 }}
-          />
-          <div className="absolute inset-0 bg-black/25 z-10" />
-        </div>
-
+      <section style={{ opacity: 1, visibility: "visible" }} className="trust-strip relative -mt-4 z-30 max-w-[1600px] mx-auto mms-wide-gutter overflow-hidden rounded-3xl border border-[#050507]/10 shadow-[0_18px_45px_rgba(5,5,7,0.08)] bg-white">
         <div className="relative z-20 p-5 sm:p-8 md:p-10">
           {/* Icon Row */}
           <div data-stagger className="grid grid-cols-1 min-[360px]:grid-cols-2 md:grid-cols-4 gap-4 md:gap-4 text-center items-stretch">
             {/* Item 1 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <MessageSquare className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-xs tracking-[0.15em] text-brand-accent uppercase font-semibold mb-1">24hr</p>
-              <p className="text-base text-white font-medium">Avg. Response Time</p>
+              <MessageSquare className="w-6 h-6 text-[#7f141f] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#7f141f] uppercase font-semibold mb-1">24hr</p>
+              <p className="text-base text-[#050507] font-medium">Avg. Response Time</p>
             </div>
             {/* Item 2 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <Shield className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-xs tracking-[0.15em] text-brand-accent uppercase font-semibold mb-1">Your Location</p>
-              <p className="text-base text-white font-medium">Our Starting Point</p>
+              <Shield className="w-6 h-6 text-[#7f141f] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#7f141f] uppercase font-semibold mb-1">Your Location</p>
+              <p className="text-base text-[#050507] font-medium">Our Starting Point</p>
             </div>
             {/* Item 3 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <Users className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-xs tracking-[0.15em] text-brand-accent uppercase font-semibold mb-1">Trusted by Tourism</p>
-              <p className="text-base text-white font-medium">& Corporate Brands</p>
+              <Users className="w-6 h-6 text-[#7f141f] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#7f141f] uppercase font-semibold mb-1">Trusted by Tourism</p>
+              <p className="text-base text-[#050507] font-medium">& Corporate Brands</p>
             </div>
             {/* Item 4 */}
             <div className="flex flex-col items-center justify-center p-3 pt-6 md:p-0">
-              <Lock className="w-6 h-6 text-brand-accent mb-3" />
-              <p className="text-xs tracking-[0.15em] text-brand-accent uppercase font-semibold mb-1">Secure Payments</p>
-              <p className="text-base text-white font-medium">100% Protected</p>
+              <Lock className="w-6 h-6 text-[#7f141f] mb-3" />
+              <p className="text-xs tracking-[0.15em] text-[#7f141f] uppercase font-semibold mb-1">Secure Payments</p>
+              <p className="text-base text-[#050507] font-medium">100% Protected</p>
             </div>
           </div>
 
@@ -438,7 +416,7 @@ export default function Home() {
       </section>
 
       {/* 2a) ABOUT US SECTION */}
-      <section className="home-light-section relative pt-12 md:pt-16 pb-10 md:pb-14 bg-[#e4e4e4]">
+      <section className="home-light-section relative pt-12 md:pt-16 pb-10 md:pb-14 bg-white">
         <div className="max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-stagger className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
             {/* Left — Text + CTA */}
@@ -491,7 +469,7 @@ export default function Home() {
       </section>
 
       {/* 2b) OUR SERVICES SECTION */}
-      <section id="services" className="home-light-section relative pt-8 md:pt-12 pb-12 md:pb-16 bg-[#e4e4e4]">
+      <section id="services" className="home-light-section relative pt-8 md:pt-12 pb-12 md:pb-16 bg-white">
         <div className="max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center mb-12 md:mb-16">
             <span className="text-base tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">What We Offer</span>
@@ -504,19 +482,17 @@ export default function Home() {
           <div data-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
             {services.slice(0, 6).map((service) => (
               <Link key={service.title} href={service.href} data-lift className="group min-w-0 flex flex-col rounded-2xl" aria-label={`Learn more about ${service.title}`}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5 border border-[#050507]/8">
                   <Image
                     src={service.image}
                     alt={service.alt}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover object-center bright-image transition-transform duration-500 group-hover:scale-105"
-                    style={{ opacity: 0.85 }}
+                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-transparent to-transparent opacity-60 transition-opacity duration-300" />
                   <div className="absolute bottom-3 left-3">
-                    <div className="w-10 h-10 rounded-full border border-brand-accent/20 bg-[#050507] flex items-center justify-center">
-                      <service.icon className="w-5 h-5 text-brand-accent" />
+                    <div className="w-10 h-10 rounded-full border border-[#050507]/10 bg-white/95 shadow-sm flex items-center justify-center">
+                      <service.icon className="w-5 h-5 text-[#7f141f]" />
                     </div>
                   </div>
                 </div>
@@ -555,9 +531,9 @@ export default function Home() {
         style={{ opacity: 1, visibility: "visible" }}
         id="gallery"
         ref={pastWorkRef}
-        className="past-work-section relative w-full bg-[#e4e4e4] isolation-isolate z-10"
+        className="past-work-section relative w-full bg-white isolation-isolate z-10"
       >
-        <div className="past-work-pin relative w-full bg-[#e4e4e4]">
+        <div className="past-work-pin relative w-full bg-white">
           <div className="past-work-heading z-20 text-center">
             <span className="pw-eyebrow text-[12px] uppercase tracking-[0.28em] text-[#7f141f] font-semibold block mb-4 font-heading">
               OUR FEATURED WORK
@@ -577,7 +553,7 @@ export default function Home() {
               {pastWorkItems.map((item, idx) => (
                 <div
                   key={idx}
-                  className="pw-card relative flex-shrink-0 rounded-[30px] border border-[#050507]/12 bg-[#efefef] shadow-[0_20px_50px_rgba(5,5,7,0.12),0_6px_18px_rgba(5,5,7,0.08)] overflow-hidden will-change-transform"
+                  className="pw-card relative flex-shrink-0 rounded-[30px] border border-[#050507]/10 bg-white shadow-[0_20px_50px_rgba(5,5,7,0.10),0_6px_18px_rgba(5,5,7,0.06)] overflow-hidden will-change-transform"
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <div className="pw-card-inner relative rounded-[30px]">
@@ -589,9 +565,8 @@ export default function Home() {
                         className="object-cover object-center"
                         style={{ transform: "scale(1.05)" }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/45 via-transparent to-transparent" />
                     </div>
-                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-[#efefef]">
+                    <div className="pw-card-content relative z-10 flex flex-1 flex-col justify-between p-6 lg:p-8 bg-white">
                       <div className="space-y-3">
                         <span className="text-xs uppercase tracking-[0.28em] text-[#7f141f] font-semibold block font-heading">
                           {item.category}
@@ -646,29 +621,17 @@ export default function Home() {
       {/* 3) INTERACTIVE BUILDER: PLAN YOUR PROJECT */}
 
     {/* 6) OUR PROCESS SECTION */}
-      <section style={{ opacity: 1, visibility: "visible" }} id="about" className="relative py-16 md:py-24 border-t border-b border-brand-accent/15 overflow-hidden bg-[#141418]">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/victoria_falls_banner.png"
-            alt="Scenic Falls Parallax"
-            fill sizes="100vw"
-            className="object-cover object-center pointer-events-none"
-            style={{ opacity: 0.5 }}
-          />
-          <div className="absolute inset-0 bg-black/25 z-10" />
-        </div>
-
+      <section style={{ opacity: 1, visibility: "visible" }} id="about" className="home-light-section relative py-16 md:py-24 border-t border-b border-[#050507]/10 overflow-hidden bg-[#fafafa]">
         <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center mb-16">
-            <span className="text-base tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-3 font-heading">Our Workflow</span>
-            <h2 className="text-4xl md:text-6xl font-semibold text-white font-heading mb-4">Our Process: A Smooth Journey To Your Story</h2>
+            <span className="text-base tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">Our Workflow</span>
+            <h2 className="text-4xl md:text-6xl font-semibold text-[#050507] font-heading mb-4">Our Process: A Smooth Journey To Your Story</h2>
           </div>
 
           {/* 4-column timeline */}
           <div data-stagger className="process-timeline relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-4">
             {/* Connector Line (Desktop Only) */}
-            <div className="absolute top-12 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-brand-accent/10 via-brand-accent/30 to-brand-accent/10 z-0 hidden lg:block" />
+            <div className="absolute top-12 left-[12%] right-[12%] h-[1px] bg-gradient-to-r from-[#7f141f]/10 via-[#7f141f]/35 to-[#7f141f]/10 z-0 hidden lg:block" />
 
             {[
               {
@@ -694,11 +657,11 @@ export default function Home() {
             ].map((item, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center text-center px-4">
                 {/* Step Number Circle */}
-                <div className="w-16 h-16 rounded-full bg-[#141418]/80 backdrop-blur-sm border border-brand-accent/35 flex items-center justify-center mb-6 shadow-xl relative group-hover:border-brand-accent transition-colors duration-300">
-                  <span className="text-xl font-semibold text-brand-accent font-heading">{item.step}</span>
+                <div className="w-16 h-16 rounded-full bg-white border border-[#7f141f]/30 flex items-center justify-center mb-6 shadow-sm relative transition-colors duration-300">
+                  <span className="text-xl font-semibold text-[#7f141f] font-heading">{item.step}</span>
                 </div>
-                <h3 className="text-xl font-medium text-white mb-2">{item.title}</h3>
-                <p className="text-base text-brand-foreground/85 leading-relaxed font-light">{item.desc}</p>
+                <h3 className="text-xl font-medium text-[#050507] mb-2">{item.title}</h3>
+                <p className="text-base text-[#050507]/80 leading-relaxed font-light">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -706,7 +669,7 @@ export default function Home() {
       </section>
 
       {/* 7) TESTIMONIALS / CLIENT REACTIONS */}
-      <section style={{ opacity: 1, visibility: "visible" }} id="clients" className="home-light-section clients-light relative py-16 md:py-24 overflow-hidden bg-[#e4e4e4]">
+      <section style={{ opacity: 1, visibility: "visible" }} id="clients" className="home-light-section clients-light relative py-16 md:py-24 overflow-hidden bg-white">
         <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center mb-16">
             <span className="text-xs tracking-[0.4em] text-[#7f141f] uppercase font-semibold block mb-3 font-heading">Client Feedback</span>
@@ -723,7 +686,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -50, scale: 0.96 }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="bg-[#efefef] p-5 sm:p-8 md:p-12 rounded-3xl border border-[#050507]/12 shadow-[0_18px_45px_rgba(5,5,7,0.10)] relative overflow-hidden"
+                  className="bg-[#fafafa] p-5 sm:p-8 md:p-12 rounded-3xl border border-[#050507]/10 shadow-[0_18px_45px_rgba(5,5,7,0.08)] relative overflow-hidden"
                 >
                 <Quote className="absolute top-6 left-6 w-10 h-10 text-[#7f141f]/15" />
 
@@ -749,7 +712,7 @@ export default function Home() {
                           className="object-cover object-center"
                         />
                       ) : (
-                        <div className="w-full h-full bg-[#e4e4e4] flex items-center justify-center">
+                        <div className="w-full h-full bg-[#fafafa] flex items-center justify-center">
                           <span className="text-2xl font-bold text-[#7f141f] font-heading">JP</span>
                         </div>
                       )}
@@ -800,24 +763,12 @@ export default function Home() {
       </section>
 
 
-      <section style={{ opacity: 1, visibility: "visible" }} id="contact" className="relative py-12 md:py-16 overflow-hidden bg-[#141418]">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0 w-full h-full">
-          <Image
-            src="/victoria_falls_banner.png"
-            alt="Scenic Falls Parallax"
-            fill sizes="100vw"
-            className="object-cover object-center pointer-events-none"
-            style={{ opacity: 0.55 }}
-          />
-          <div className="absolute inset-0 bg-black/30 z-10" />
-        </div>
-
+      <section style={{ opacity: 1, visibility: "visible" }} id="contact" className="home-light-section relative py-12 md:py-16 overflow-hidden bg-white border-t border-[#050507]/10">
         <div className="relative z-20 max-w-[1600px] mx-auto mms-wide-gutter">
           <div data-reveal className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-            <span className="text-base tracking-[0.4em] text-brand-accent uppercase font-semibold block font-heading">Get In Touch</span>
-            <h2 className="text-3xl md:text-5xl font-semibold text-white font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
-            <p className="text-base text-white/85 font-light">
+            <span className="text-base tracking-[0.4em] text-[#7f141f] uppercase font-semibold block font-heading">Get In Touch</span>
+            <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] font-heading leading-tight">Ready to Create Something Unforgettable?</h2>
+            <p className="text-base text-[#050507]/80 font-light">
               Let&apos;s bring your vision to life. Start with a free discovery call and tell us what you need for a custom quote.
             </p>
           </div>

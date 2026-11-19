@@ -28,7 +28,7 @@
 .lightLink { composes: glassButton; }
 .allPackages { display: flex; justify-content: center; padding-top: 2rem; }
 /* Homepage-only light band treatment; /packages keeps the dark ExperienceCards surface. */
-.signatureLightBand { position: relative; width: 100%; background: #e4e4e4; padding-block: 2.5rem 4.5rem; }
+.signatureLightBand { position: relative; width: 100%; background: #ffffff; padding-block: 2.5rem 4.5rem; }
 .signatureLightBand .signature { position: relative; z-index: 1; padding-block: 0; }
 .signatureLightBand .eyebrow { color: #7f141f; }
 .signatureLightBand .signatureHeading h2 { color: #050507; }

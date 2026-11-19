@@ -84,17 +84,15 @@ export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }
               {/* Main grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
                  {/* Primary image */}
-                <div className={`relative rounded-3xl overflow-hidden border border-brand-accent/10 aspect-[4/3] group ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
+                <div className={`relative rounded-3xl overflow-hidden border border-[#050507]/10 aspect-[4/3] group ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
                   <Image
                     src={service.image}
                     alt={service.heroAlt || service.title}
                     fill sizes="(max-width:1023px) 100vw, 50vw"
                     className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ opacity: 0.88 }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-[#050507]/20 to-transparent z-10" />
                   <div className="absolute bottom-4 left-4 z-20">
-                    <span className="text-xs uppercase tracking-[0.25em] bg-brand-accent/20 text-brand-accent border border-brand-accent/30 px-3 py-1.5 rounded-full">
+                    <span className="text-xs uppercase tracking-[0.25em] bg-white/95 text-[#7f141f] border border-[#050507]/10 font-semibold shadow-sm px-3 py-1.5 rounded-full">
                       {service.tag}
                     </span>
                   </div>

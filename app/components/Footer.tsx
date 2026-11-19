@@ -4,13 +4,13 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#e4e4e4] text-[#050507] border-t border-[#050507]/12 pt-14 pb-24">
+    <footer className="bg-white text-[#050507] border-t border-[#050507]/10 pt-14 pb-24">
       <div className="max-w-[1600px] mx-auto mms-gutter">
         <div data-stagger className="grid grid-cols-1 min-[400px]:grid-cols-2 lg:grid-cols-4 gap-8 mb-10 text-center md:text-left">
           {/* Brand */}
           <div className="min-[400px]:col-span-2 lg:col-span-1 space-y-4 flex flex-col items-center md:items-start">
             <div className="inline-flex flex-col items-center md:items-start gap-1.5">
-              <Image src="/mmslogo.webp" alt="MMS Logo" width={220} height={64} className="w-[155px] sm:w-[180px] h-auto object-contain" />
+              <Image src="/mmslogo.webp" alt="MMS Logo" width={220} height={64} className="w-[104px] sm:w-[120px] h-auto object-contain" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#050507]/75 font-heading">
                 Mosi Media Solutions
               </span>

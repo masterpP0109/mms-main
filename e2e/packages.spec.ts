@@ -79,7 +79,7 @@ test("overview, mobile navigation, service links and invalid package URLs", asyn
   await page.getByRole("button", { name: "Open menu", exact: true }).click();
   await page.getByRole("dialog").getByRole("link", { name: "Packages", exact: true }).click();
   await expect(page).toHaveURL(/\/packages$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Explore Our Services & Packages");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Creating Experiences. Capturing Moments. Delivering Excellence.");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.screenshot({ path: "test-results/packages-overview-mobile.png", fullPage: true });
   for (const [service, category] of [["drone", "drone"], ["weddings-elopements", "weddings"]]) {
@@ -91,7 +91,7 @@ test("overview, mobile navigation, service links and invalid package URLs", asyn
   expect(response?.status()).toBe(404);
 });
 
-test("packages hub shows all 5 package categories, 9 individual services, bottom contact CTA and responsive fit", async ({ page }) => {
+test("packages catalogue progressive disclosure, compare table, modal focus and responsive fit", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   for (const width of [320, 390, 768, 1280, 1440]) {
     await page.setViewportSize({ width, height: 900 });
@@ -102,58 +102,29 @@ test("packages hub shows all 5 package categories, 9 individual services, bottom
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/packages");
 
-  // Compact hero with single Explore Services CTA
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Explore Our Services & Packages");
-  await expect(page.getByRole("link", { name: "Explore Services", exact: true })).toHaveAttribute("href", "#package-categories");
-  await expect(page.locator("main section").first().getByRole("link", { name: "Discuss Your Project" })).toHaveCount(0);
+  // Sticky category nav
+  const nav = page.getByRole("navigation", { name: "Package categories" });
+  await expect(nav.getByRole("link", { name: "Corporate", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Celebrations", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Video Production", exact: true })).toBeVisible();
 
-  // All 5 package categories visible immediately without filters
-  const categories = page.locator("#package-categories");
-  await expect(categories.locator("a")).toHaveCount(5);
-  for (const title of [
-    "Conference & Corporate Events",
-    "Weddings & Social Events",
-    "Video Production",
-    "Drone Photography & Videography",
-    "Podcast Production",
-  ]) {
-    await expect(categories.getByRole("heading", { name: title })).toBeVisible();
-  }
+  // Compare packages toggle
+  const compareBtn = page.getByRole("button", { name: "Compare packages" }).first();
+  await compareBtn.click();
+  await expect(page.getByRole("region", { name: /Conference & Corporate Event Packages comparison/ })).toBeVisible();
+  await page.getByRole("button", { name: "Hide comparison" }).first().click();
 
-  // All 9 individual services visible immediately
-  const individual = page.locator("#individual-services");
-  await expect(individual.locator("a")).toHaveCount(9);
-  for (const title of [
-    "Conference Microphone & Interpretation Equipment",
-    "LED Screen Rental",
-    "Professional Sound Systems",
-    "Live Streaming Production",
-    "Videography & Photography",
-    "Event Lighting & Stage Setup",
-    "Interactive Screens",
-    "DJ Services",
-    "Special Effects",
-  ]) {
-    await expect(individual.getByRole("heading", { name: title })).toBeVisible();
-  }
-
-  // Contact section appears after both service grids
-  const contactSection = page.locator("#packages-contact");
-  await expect(contactSection.getByRole("heading", { name: "Let's Bring Your Project to Life" })).toBeVisible();
-  await expect(contactSection.getByRole("link", { name: "Request a Quote", exact: true })).toHaveAttribute("href", /\/contact/);
-  await expect(contactSection.getByRole("link", { name: "Chat on WhatsApp", exact: true })).toHaveAttribute("href", /wa\.me\/263788111391/);
-
-  const orderOk = await page.evaluate(() => {
-    const cat = document.getElementById("package-categories")?.getBoundingClientRect().top ?? 0;
-    const ind = document.getElementById("individual-services")?.getBoundingClientRect().top ?? 0;
-    const contact = document.getElementById("packages-contact")?.getBoundingClientRect().top ?? 0;
-    return cat < ind && ind < contact;
-  });
-  expect(orderOk).toBe(true);
-
-  // Click a package category card and verify navigation to dedicated page
-  await categories.getByRole("link", { name: /Conference & Corporate Events/ }).click();
-  await expect(page).toHaveURL(/\/packages\/conferences$/);
+  // Level 2 inclusions modal + Escape focus return
+  const viewAllBtn = page.getByRole("button", { name: "View all inclusions" }).first();
+  await viewAllBtn.focus();
+  await viewAllBtn.click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("Corporate Essentials");
+  await expect(dialog).toContainText("Professional PA sound system.");
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(viewAllBtn).toBeFocused();
 });
 
 test("campaign date and details prefill safely and unknown options fall back", async ({ page }) => {

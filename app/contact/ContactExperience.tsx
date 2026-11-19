@@ -102,7 +102,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                 { icon: MapPin,        label: "Location",      value: "Victoria Falls, Zimbabwe" },
                 { icon: Mail,          label: "Email",         value: "info@mosimediasolutions.com" },
                 { icon: Clock,         label: "Enquiries", value: "Our team will respond to your request" },
-                { icon: MessageSquare, label: "WhatsApp",      value: "Direct chat: +263 788 111 391", href: "https://wa.me/263788111391" },
+                { icon: MessageSquare, label: "WhatsApp",      value: "Available on request" },
               ].map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
                   <div className="w-9 h-9 rounded-full bg-[#7f141f]/10 flex items-center justify-center shrink-0">
@@ -110,13 +110,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                   </div>
                   <div>
                     <p className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold mb-0.5">{item.label}</p>
-                    {"href" in item && item.href ? (
-                      <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-sm text-[#7f141f] font-semibold underline underline-offset-4 hover:text-[#050507] transition-colors">
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="text-sm text-[#050507] font-medium">{item.value}</p>
-                    )}
+                    <p className="text-sm text-[#050507] font-medium">{item.value}</p>
                   </div>
                 </div>
               ))}

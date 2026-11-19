@@ -39,7 +39,7 @@
 
 /* Full-bleed BG Hero matching About / Services / Projects */
 .packageHero { min-height: clamp(460px, 60svh, 580px); padding-block: 8rem 3.25rem; }
-.packageHero::after { background: linear-gradient(90deg, rgb(5 5 7 / .92) 0%, rgb(5 5 7 / .76) 54%, rgb(5 5 7 / .42) 100%), linear-gradient(0deg, rgb(5 5 7 / .94) 0%, rgb(5 5 7 / .28) 60%, rgb(5 5 7 / .55) 100%); }
+.packageHero::after { background: linear-gradient(90deg, rgb(5 5 7 / .74) 0%, rgb(5 5 7 / .48) 54%, rgb(5 5 7 / .18) 100%), linear-gradient(0deg, rgb(5 5 7 / .72) 0%, rgb(5 5 7 / .12) 60%, rgb(5 5 7 / .32) 100%); }
 .heroTitle { white-space: pre-line; }
 .heroTitleCompact { font-size: clamp(2rem, 4.2vw, 3.5rem) !important; line-height: 1.12 !important; max-width: 780px !important; }
 .heroLead { max-width: 620px !important; color: rgb(243 244 246 / .92) !important; font-size: 1.05rem !important; line-height: 1.65 !important; }

@@ -207,10 +207,10 @@ export default function PackagesCatalogue() {
                   className={styles.compareToggle}
                 >
                   <Columns3 size={16} aria-hidden="true" />
-                  <span>{isCompareOpen ? "Hide comparison" : "Compare packages"}</span>
+                  <span>{isCompareOpen ? "Hide tier comparison" : "Compare tiers side-by-side"}</span>
                 </button>
                 <Link href={packagePath(category.slug)} className={styles.navPill}>
-                  Category details →
+                  Explore full package guide →
                 </Link>
               </div>
             </div>

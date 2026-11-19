@@ -109,10 +109,10 @@ test("packages catalogue progressive disclosure, compare table, modal focus and 
   await expect(nav.getByRole("link", { name: "Video Production", exact: true })).toBeVisible();
 
   // Compare packages toggle
-  const compareBtn = page.getByRole("button", { name: "Compare packages" }).first();
+  const compareBtn = page.getByRole("button", { name: "Compare tiers side-by-side" }).first();
   await compareBtn.click();
   await expect(page.getByRole("region", { name: /Conference & Corporate Event Packages comparison/ })).toBeVisible();
-  await page.getByRole("button", { name: "Hide comparison" }).first().click();
+  await page.getByRole("button", { name: "Hide tier comparison" }).first().click();
 
   // Level 2 inclusions modal + Escape focus return
   const viewAllBtn = page.getByRole("button", { name: "View all inclusions" }).first();

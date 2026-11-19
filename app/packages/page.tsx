@@ -25,8 +25,8 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/mms/conference%20hero%20img.png",
-        alt: "Conference stage and media production setup by Mosi Media Solutions",
+        url: "/mms/packages/Behind%20the%20Scenes_%20Conference%20Production%20(1).png",
+        alt: "Behind the scenes conference production setup by Mosi Media Solutions",
       },
     ],
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/mms/conference%20hero%20img.png"],
+    images: ["/mms/packages/Behind%20the%20Scenes_%20Conference%20Production%20(1).png"],
   },
 };
 
@@ -68,8 +68,8 @@ export default function PackagesPage() {
         {/* Background Hero matching About / Services / Projects */}
         <section className={`${s.hero} ${styles.packageHero}`} aria-labelledby="packages-title">
           <Image
-            src="/mms/conference%20hero%20img.png"
-            alt="Event staging, LED displays and multimedia production by Mosi Media Solutions"
+            src="/mms/packages/Behind%20the%20Scenes_%20Conference%20Production%20(1).png"
+            alt="Behind the scenes conference production setup by Mosi Media Solutions"
             fill
             sizes="100vw"
             preload

@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronDown, Columns3, X } from "lucide-react";
 import { useModalFocus } from "@/app/components/useModalFocus";
+import { captureCampaign } from "@/lib/campaign-attribution";
+import { trackPackageEvent } from "@/lib/package-analytics";
+import { enquiryErrorMessage, submitEnquiry } from "@/lib/submit-enquiry";
 import {
   additionalSpecialisedServices,
   homePackageExperiences,
   importantPackageInformation,
-  packageEnquiryHref,
   packageExperiences,
   packagePath,
   type PackageExperience,
@@ -33,13 +35,85 @@ const sectionAnchorBySlug: Record<string, string> = {
 export default function PackagesCatalogue() {
   const [activeSection, setActiveSection] = useState<string>("conference-packages");
   const [expandedCompare, setExpandedCompare] = useState<Record<string, boolean>>({});
+  const [selectedAddOns, setSelectedAddOns] = useState<Record<string, string[]>>({});
   const [detailTarget, setDetailTarget] = useState<{
     category: PackageExperience;
     option: PackageOption;
   } | null>(null);
+  const [enquiryTarget, setEnquiryTarget] = useState<{
+    category: PackageExperience;
+    option?: PackageOption;
+  } | null>(null);
+  const [enquiryPackageId, setEnquiryPackageId] = useState<string>("tailored");
+  const [enquiryLoading, setEnquiryLoading] = useState(false);
+  const [enquiryError, setEnquiryError] = useState<string | null>(null);
+  const [enquiryReference, setEnquiryReference] = useState<string | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+  const enquiryModalRef = useRef<HTMLDivElement>(null);
 
   useModalFocus(detailTarget !== null, modalRef, () => setDetailTarget(null));
+  useModalFocus(enquiryTarget !== null, enquiryModalRef, () => setEnquiryTarget(null));
+
+  const toggleAddOn = (slug: string, addon: string) => {
+    setSelectedAddOns(prev => {
+      const current = prev[slug] ?? [];
+      const next = current.includes(addon)
+        ? current.filter(item => item !== addon)
+        : [...current, addon];
+      return { ...prev, [slug]: next };
+    });
+  };
+
+  const clearCategoryAddOns = (slug: string) => {
+    setSelectedAddOns(prev => ({ ...prev, [slug]: [] }));
+  };
+
+  const openEnquiry = (category: PackageExperience, option?: PackageOption) => {
+    setEnquiryTarget({ category, option });
+    setEnquiryPackageId(option?.id ?? "tailored");
+    setEnquiryError(null);
+    setEnquiryReference(null);
+    setEnquiryLoading(false);
+  };
+
+  async function handleDirectEnquirySubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!enquiryTarget || enquiryLoading || enquiryReference) return;
+    setEnquiryLoading(true);
+    setEnquiryError(null);
+    const data = new FormData(event.currentTarget);
+    const chosenId = String(data.get("packageId") || enquiryPackageId || "tailored");
+    const validPackageId = enquiryTarget.category.options.some(opt => opt.id === chosenId)
+      ? chosenId
+      : "tailored";
+    const categoryAddOns = selectedAddOns[enquiryTarget.category.slug] ?? [];
+    const baseDetails = String(data.get("details") || "").trim();
+    const detailsWithAddOns = categoryAddOns.length
+      ? `${baseDetails}\n\nSelected optional add-ons:\n- ${categoryAddOns.join("\n- ")}`.slice(0, 5000)
+      : baseDetails;
+
+    try {
+      const result = await submitEnquiry("/api/leads", {
+        kind: "package",
+        category: enquiryTarget.category.slug,
+        packageId: validPackageId,
+        name: String(data.get("name") || ""),
+        email: String(data.get("email") || ""),
+        phone: String(data.get("phone") || ""),
+        date: String(data.get("date") || "") || undefined,
+        location: String(data.get("location") || "") || undefined,
+        details: detailsWithAddOns,
+        website: String(data.get("website") || ""),
+        attribution: captureCampaign(),
+      });
+      setEnquiryReference(result.reference || `MMS-${result.submissionId}`);
+      trackPackageEvent("generate_lead", enquiryTarget.category.slug, validPackageId);
+    } catch (cause) {
+      setEnquiryError(enquiryErrorMessage(cause));
+    } finally {
+      setEnquiryLoading(false);
+    }
+  }
 
   useEffect(() => {
     const ids = navSections.map(item => item.id);
@@ -182,13 +256,15 @@ export default function PackagesCatalogue() {
 
                     <div className={styles.cardFooter}>
                       <p className={styles.priceApproach}>Custom quote · Price on request</p>
-                      <Link
-                        href={packageEnquiryHref(category.slug, option.id)}
+                      <button
+                        type="button"
+                        onClick={() => openEnquiry(category, option)}
                         className={styles.primaryCta}
+                        aria-haspopup="dialog"
                       >
-                        <span>Request package</span>
+                        <span>Request this package</span>
                         <ArrowRight size={15} aria-hidden="true" />
-                      </Link>
+                      </button>
                       <button
                         type="button"
                         onClick={() => setDetailTarget({ category, option })}
@@ -253,12 +329,17 @@ export default function PackagesCatalogue() {
               </div>
             )}
 
-            {/* Expandable Optional Add-ons (prominent maroon emphasis; expands when clicked) */}
+            {/* Expandable Optional Add-ons (prominent maroon emphasis; multi-select quote builder) */}
             {category.optionalAddOns?.length ? (
               <details className={styles.addOnsBar}>
                 <summary>
                   <span className={styles.addOnsSummaryLeft}>
-                    <span className={styles.addOnsBadge}>+ {category.optionalAddOns.length} Add-ons</span>
+                    <span className={styles.addOnsBadge}>
+                      + {category.optionalAddOns.length} Add-ons
+                      {(selectedAddOns[category.slug]?.length ?? 0) > 0
+                        ? ` · ${selectedAddOns[category.slug].length} selected`
+                        : ""}
+                    </span>
                     <span>Optional add-ons available — customise your package</span>
                   </span>
                   <span className={styles.addOnsTogglePill}>
@@ -268,18 +349,58 @@ export default function PackagesCatalogue() {
                 </summary>
                 <div className={styles.addOnsBody}>
                   <ul className={styles.addOnsGrid}>
-                    {category.optionalAddOns.map(addon => (
-                      <li key={addon}>
-                        <span>+ {addon}</span>
-                        <Link
-                          href={`/contact?service=${encodeURIComponent(`${category.service} — Add-on: ${addon}`)}&origin=%2Fpackages#enquiry`}
-                          className={styles.addOnsItemBtn}
+                    {category.optionalAddOns.map(addon => {
+                      const isSelected = (selectedAddOns[category.slug] ?? []).includes(addon);
+                      return (
+                        <li
+                          key={addon}
+                          className={isSelected ? styles.addOnsItemSelected : undefined}
                         >
-                          Add to quote →
-                        </Link>
-                      </li>
-                    ))}
+                          <span>+ {addon}</span>
+                          <button
+                            type="button"
+                            aria-pressed={isSelected}
+                            onClick={() => toggleAddOn(category.slug, addon)}
+                            className={`${styles.addOnsItemBtn} ${
+                              isSelected ? styles.addOnsItemBtnSelected : ""
+                            }`}
+                          >
+                            {isSelected ? "✓ Added" : "+ Add to quote"}
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
+                  {(selectedAddOns[category.slug]?.length ?? 0) > 0 && (
+                    <div className={styles.addOnsActionFooter}>
+                      <p className={styles.addOnsActionMeta}>
+                        {selectedAddOns[category.slug].length} add-on
+                        {selectedAddOns[category.slug].length === 1 ? "" : "s"} selected for{" "}
+                        {category.title}
+                      </p>
+                      <div className={styles.addOnsActionButtons}>
+                        <button
+                          type="button"
+                          onClick={() => clearCategoryAddOns(category.slug)}
+                          className={styles.navPill}
+                        >
+                          Clear
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => openEnquiry(category)}
+                          className={styles.primaryCta}
+                          style={{ width: "auto", padding: "0.55rem 1.15rem", minHeight: "40px" }}
+                        >
+                          <span>
+                            Request quote with {selectedAddOns[category.slug].length} add-on
+                            {selectedAddOns[category.slug].length === 1 ? "" : "s"}
+                          </span>
+                          <ArrowRight size={15} aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </details>
             ) : null}
@@ -510,16 +631,226 @@ export default function PackagesCatalogue() {
 
             <div className={styles.modalFooter}>
               <p className={styles.priceApproach}>
-                All prices available on request · Customisable to your event
+                All prices available on request ·{" "}
+                <Link
+                  href={packagePath(detailTarget.category.slug)}
+                  style={{ color: "#981b28", fontWeight: 600, textDecoration: "underline" }}
+                >
+                  Full category details →
+                </Link>
               </p>
-              <Link
-                href={packageEnquiryHref(detailTarget.category.slug, detailTarget.option.id)}
+              <button
+                type="button"
+                onClick={() => {
+                  const current = detailTarget;
+                  setDetailTarget(null);
+                  openEnquiry(current.category, current.option);
+                }}
                 className={styles.primaryCta}
               >
                 <span>Request {detailTarget.option.name}</span>
                 <ArrowRight size={15} aria-hidden="true" />
-              </Link>
+              </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Direct Package & Add-ons Enquiry Modal */}
+      {enquiryTarget && (
+        <div
+          className={styles.modalBackdrop}
+          role="presentation"
+          onClick={() => setEnquiryTarget(null)}
+        >
+          <div
+            ref={enquiryModalRef}
+            className={styles.modalPanel}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="direct-enquiry-title"
+            onClick={event => event.stopPropagation()}
+          >
+            <div className={styles.modalHeader}>
+              <div>
+                <p className={styles.eyebrow} style={{ marginBottom: ".25rem" }}>
+                  {enquiryTarget.category.title}
+                </p>
+                <h3 id="direct-enquiry-title" className={styles.packageCardTitle} style={{ margin: 0 }}>
+                  {enquiryReference
+                    ? "Your enquiry has been saved"
+                    : `Request ${enquiryTarget.option?.name ?? "a Package Quote"}`}
+                </h3>
+              </div>
+              <button
+                type="button"
+                className={styles.modalClose}
+                onClick={() => setEnquiryTarget(null)}
+                aria-label="Close package enquiry"
+              >
+                <X size={18} aria-hidden="true" />
+              </button>
+            </div>
+
+            {enquiryReference ? (
+              <div className={styles.form} role="status" tabIndex={-1} style={{ border: 0, padding: 0 }}>
+                <p>
+                  Thank you for sharing your plans. MMS will review your requirements and respond using your contact details.
+                </p>
+                <p>
+                  Enquiry reference: <strong>{enquiryReference}</strong>
+                </p>
+                <p className={styles.formHelp}>
+                  This is an enquiry, not a confirmed booking. Availability and scope still need to be agreed.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: ".75rem", marginTop: "1rem" }}>
+                  <button
+                    type="button"
+                    onClick={() => setEnquiryTarget(null)}
+                    className={styles.primaryCta}
+                    style={{ width: "auto", padding: "0.6rem 1.25rem" }}
+                  >
+                    Back to packages
+                  </button>
+                  <Link href={packagePath(enquiryTarget.category.slug)} className={styles.navPill}>
+                    View category details →
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <form
+                method="post"
+                className={styles.form}
+                style={{ border: 0, padding: 0 }}
+                onSubmit={handleDirectEnquirySubmit}
+                aria-busy={enquiryLoading}
+              >
+                <fieldset disabled={enquiryLoading} className={styles.fields}>
+                  <legend className="sr-only">Direct package enquiry</legend>
+                  <label>
+                    Selected package
+                    <select
+                      name="packageId"
+                      value={enquiryPackageId}
+                      onChange={event => setEnquiryPackageId(event.target.value)}
+                    >
+                      <option value="tailored">Help me tailor a package</option>
+                      {enquiryTarget.category.options.map(option => (
+                        <option key={option.id} value={option.id}>
+                          {option.name} ({option.badge ?? "PACKAGE"})
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {(selectedAddOns[enquiryTarget.category.slug]?.length ?? 0) > 0 && (
+                    <div>
+                      <p className={styles.highlightsLabel} style={{ marginBottom: ".45rem" }}>
+                        Selected optional add-ons ({selectedAddOns[enquiryTarget.category.slug].length})
+                      </p>
+                      <div className={styles.suitableTags}>
+                        {selectedAddOns[enquiryTarget.category.slug].map(addon => (
+                          <button
+                            key={addon}
+                            type="button"
+                            onClick={() => toggleAddOn(enquiryTarget.category.slug, addon)}
+                            className={styles.suitableTag}
+                            style={{
+                              borderColor: "#981b28",
+                              background: "#fff1f2",
+                              color: "#7f141f",
+                              cursor: "pointer",
+                            }}
+                            title="Remove add-on"
+                          >
+                            {addon} ×
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className={styles.formGrid}>
+                    <label>
+                      Your name
+                      <input name="name" autoComplete="name" required maxLength={120} />
+                    </label>
+                    <label>
+                      Email address
+                      <input name="email" type="email" autoComplete="email" required maxLength={254} />
+                    </label>
+                  </div>
+
+                  <div className={styles.formGrid}>
+                    <label>
+                      Phone (optional)
+                      <input
+                        name="phone"
+                        type="tel"
+                        autoComplete="tel"
+                        maxLength={32}
+                        pattern={String.raw`\+?[0-9 \(\)\-]{7,32}`}
+                      />
+                    </label>
+                    <label>
+                      Preferred date (optional)
+                      <input name="date" type="date" />
+                    </label>
+                  </div>
+
+                  {(enquiryTarget.category.slug === "weddings" ||
+                    enquiryTarget.category.slug === "conferences") && (
+                    <label>
+                      Venue / location (optional)
+                      <input
+                        name="location"
+                        maxLength={200}
+                        placeholder="e.g. Victoria Falls Hotel or Zambezi River"
+                      />
+                    </label>
+                  )}
+
+                  <label>
+                    Project details
+                    <textarea
+                      name="details"
+                      rows={4}
+                      required
+                      maxLength={5000}
+                      defaultValue={`I'd like to request a quote for ${enquiryTarget.category.title}${
+                        enquiryTarget.option ? ` (${enquiryTarget.option.name})` : ""
+                      }.\nEstimated guest / delegate count: \nKey requirements: `}
+                    />
+                  </label>
+
+                  <input
+                    name="website"
+                    type="text"
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
+
+                  <button type="submit" className={styles.submit}>
+                    {enquiryLoading ? "Saving your enquiry…" : "Send package enquiry"}
+                  </button>
+                </fieldset>
+
+                {enquiryError && (
+                  <p role="alert" className={styles.error}>
+                    {enquiryError} Your details are still here so you can retry.
+                  </p>
+                )}
+
+                <p className={styles.formHelp}>
+                  Prefer to read full specs first?{" "}
+                  <Link href={packagePath(enquiryTarget.category.slug)}>
+                    Open {enquiryTarget.category.title} page →
+                  </Link>
+                </p>
+              </form>
+            )}
           </div>
         </div>
       )}

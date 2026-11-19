@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 
 const primaryButton = "mms-button group";
 
-type ProjectType = "" | "conference" | "wedding" | "brand" | "event" | "other";
+type ProjectType = "" | "conference" | "wedding" | "brand" | "event" | "drone" | "podcast" | "other";
 
 // Recent work thumbnails shown in the sidebar
 const recentWork = [
@@ -28,7 +28,15 @@ export default function ContactExperience({ initialService = "" }: { initialServ
   const [reference, setReference] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [projectType, setProjectType] = useState<ProjectType>(initialService === "Weddings & Elopements" ? "wedding" : initialService === "Drone Services" ? "other" : "");
+  const [projectType, setProjectType] = useState<ProjectType>(
+    initialService === "Weddings & Elopements"
+      ? "wedding"
+      : initialService === "Drone Services"
+        ? "drone"
+        : initialService === "Podcast Production"
+          ? "podcast"
+          : "",
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -186,10 +194,11 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                   <label className="text-[9px] uppercase tracking-[0.2em] text-[#7f141f] font-bold block mb-3">Type of Project</label>
                   <div role="group" aria-label="Type of Project" className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[
-                      { id: "conference" as const, label: "Conference / Event" },
-                      { id: "wedding"    as const, label: "Wedding Film" },
-                      { id: "brand"      as const, label: "Brand Campaign" },
-                      { id: "event"      as const, label: "Corporate Event" },
+                      { id: "conference" as const, label: "Conference / Corporate" },
+                      { id: "wedding"    as const, label: "Weddings & Social" },
+                      { id: "brand"      as const, label: "Video / Brand" },
+                      { id: "drone"      as const, label: "Drone Aerials" },
+                      { id: "podcast"    as const, label: "Podcast Production" },
                       { id: "other"      as const, label: "Other / Not Sure" },
                     ].map((opt) => (
                       <button

@@ -125,6 +125,39 @@ test("packages catalogue progressive disclosure, compare table, modal focus and 
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveCount(0);
   await expect(viewAllBtn).toBeFocused();
+
+  // Direct package enquiry + add-ons multi-select quote builder on /packages
+  let capturedPayload: Record<string, unknown> = {};
+  await page.route("**/api/leads", route => {
+    capturedPayload = route.request().postDataJSON();
+    return route.fulfill({
+      status: 201,
+      json: { success: true, saved: true, submissionId: "pkg_direct_1", reference: "MMS-DIRECT-1" },
+    });
+  });
+
+  const addOnsSummary = page.locator("details summary").first();
+  await addOnsSummary.click();
+  const addButtons = page.locator("details").first().getByRole("button", { name: "+ Add to quote" });
+  await addButtons.nth(0).click();
+  await addButtons.nth(0).click();
+  await expect(page.locator("details").first()).toContainText("2 add-ons selected");
+
+  await page.getByRole("button", { name: "Request this package" }).first().click();
+  const enquiryDialog = page.getByRole("dialog");
+  await expect(enquiryDialog).toBeVisible();
+  await expect(enquiryDialog.getByLabel("Selected package")).toHaveValue("corporate-essentials");
+  await expect(enquiryDialog).toContainText("Selected optional add-ons (2)");
+  await enquiryDialog.getByLabel("Your name").fill("Direct Quote Client");
+  await enquiryDialog.getByLabel("Email address").fill("direct@example.com");
+  await enquiryDialog.getByRole("button", { name: "Send package enquiry" }).click();
+  await expect(enquiryDialog).toContainText("MMS-DIRECT-1");
+  expect(capturedPayload).toMatchObject({
+    kind: "package",
+    category: "conferences",
+    packageId: "corporate-essentials",
+  });
+  expect(String(capturedPayload.details)).toContain("Selected optional add-ons:");
 });
 
 test("campaign date and details prefill safely and unknown options fall back", async ({ page }) => {

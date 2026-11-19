@@ -120,9 +120,15 @@
 .addOnsTogglePill svg { transition: transform .25s ease; }
 .addOnsBody { position: relative; z-index: 1; padding: 0 1.25rem 1.25rem; border-top: 1px solid rgb(152 27 40 / .15); background: #ffffff; }
 .addOnsGrid { list-style: none; padding: 1rem 0 0; margin: 0; display: grid; gap: .6rem 1.25rem; }
-.addOnsGrid li { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .55rem .8rem; border-radius: .75rem; border: 1px solid rgb(152 27 40 / .14); background: #fff9fa; color: #111827; font-size: .88rem; line-height: 1.45; }
-.addOnsItemBtn { flex-shrink: 0; border: 0; background: transparent; color: #981b28; font-size: .76rem; font-weight: 700; text-decoration: none; cursor: pointer; padding: .2rem .4rem; border-radius: .4rem; }
+.addOnsGrid li { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .55rem .8rem; border-radius: .75rem; border: 1px solid rgb(152 27 40 / .14); background: #fff9fa; color: #111827; font-size: .88rem; line-height: 1.45; transition: border-color .2s, background-color .2s; }
+.addOnsGrid li.addOnsItemSelected { border-color: #981b28; background: #fff1f2; box-shadow: 0 2px 8px rgb(152 27 40 / .12); }
+.addOnsItemBtn { flex-shrink: 0; border: 1px solid rgb(152 27 40 / .24); background: #ffffff; color: #981b28; font-size: .76rem; font-weight: 700; text-decoration: none; cursor: pointer; padding: .28rem .58rem; border-radius: 999px; transition: background-color .18s, color .18s, border-color .18s; }
 .addOnsItemBtn:hover { background: rgb(152 27 40 / .1); }
+.addOnsItemBtnSelected { border-color: #981b28; background: #981b28; color: #ffffff; }
+.addOnsItemBtnSelected:hover { background: #7f141f; }
+.addOnsActionFooter { margin-top: 1rem; padding-top: .9rem; border-top: 1px solid rgb(152 27 40 / .14); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1rem; }
+.addOnsActionMeta { font-size: .84rem; font-weight: 600; color: #050507; margin: 0; }
+.addOnsActionButtons { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
 @media (prefers-reduced-motion: no-preference) {
   .addOnsBar:not([open]) { animation: maroonPulse 2.4s ease-in-out infinite; }
   .addOnsBar:not([open])::before { animation: maroonSheen 3.6s ease-in-out infinite; }

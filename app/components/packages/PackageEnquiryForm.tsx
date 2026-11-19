@@ -6,7 +6,12 @@ import Link from "next/link";
 import { captureCampaign } from "@/lib/campaign-attribution";
 import { trackPackageEvent } from "@/lib/package-analytics";
 import { submitEnquiry, enquiryErrorMessage } from "@/lib/submit-enquiry";
-import { resolvePackageSelection, isLegacyWeddingPackage, type PackageExperience } from "@/lib/packages";
+import {
+  resolvePackageSelection,
+  resolveLegacyWeddingLocation,
+  isLegacyWeddingPackage,
+  type PackageExperience,
+} from "@/lib/packages";
 import styles from "./packages.module.css";
 
 type FormExperience = Pick<PackageExperience, "slug" | "service" | "note"> & {
@@ -33,7 +38,11 @@ function EnquiryFields({ experience }: { experience: FormExperience }) {
   const date = params.get("preferred_date") || "";
   const initialDate = /^\d{4}-\d{2}-\d{2}$/.test(date) && !Number.isNaN(Date.parse(date)) ? date : "";
 
-  const initialLocation = rawLocation || experience.options.find(opt => opt.id === packageId)?.location || "";
+  const initialLocation =
+    rawLocation ||
+    experience.options.find(opt => opt.id === packageId)?.location ||
+    resolveLegacyWeddingLocation(requested) ||
+    "";
   const [location, setLocation] = useState(initialLocation);
 
   const [prevParams, setPrevParams] = useState(params);
@@ -124,7 +133,7 @@ function EnquiryFields({ experience }: { experience: FormExperience }) {
         const nextId = event.target.value;
         setSelectedPackage(nextId);
         const optLocation = experience.options.find(option => option.id === nextId)?.location;
-        const newLocation = optLocation ?? (nextId === "tailored" ? "" : location);
+        const newLocation = optLocation || location;
         setLocation(newLocation);
         const next = new URLSearchParams(params.toString());
         next.set("package", nextId);

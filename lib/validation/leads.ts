@@ -54,7 +54,7 @@ export const projectBriefSchema = z.object({
 const campaignValue = optionalText(200);
 export const packageLeadSchema = z.object({
   kind: z.literal("package"),
-  category: z.enum(["weddings", "drone", "podcasts"]),
+  category: z.enum(["conferences", "weddings", "video-production", "drone", "podcasts"]),
   packageId: text(80),
   name: text(120), email: z.string().trim().email().max(254), phone,
   date: z.string().date().optional(),

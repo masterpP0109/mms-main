@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const routes = ["/", "/about", "/conference-production", "/services/drone", "/services/weddings-elopements", "/services/special-effects", "/packages", "/packages/weddings", "/packages/drone", "/packages/podcasts", "/contact", "/privacy"];
+const routes = ["/", "/about", "/conference-production", "/services/drone", "/services/weddings-elopements", "/services/special-effects", "/packages", "/packages/conferences", "/packages/weddings", "/packages/video-production", "/packages/drone", "/packages/podcasts", "/contact", "/privacy"];
 
 for (const width of [390, 768, 1440]) {
   test(`public pages retain landmarks, metadata, media and layout at ${width}px`, async ({ page }) => {

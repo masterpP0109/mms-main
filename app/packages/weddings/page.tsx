@@ -6,9 +6,9 @@ import WeddingPackagePage from "@/app/components/packages/WeddingPackagePage";
 
 const experience = getPackageExperience("weddings");
 
-const title = "Victoria Falls Wedding Photography & Cinematography | MMS";
+const title = "Wedding & Social Event Packages | Victoria Falls | MMS";
 const description =
-  "Capture your Victoria Falls destination wedding through beautiful photography, cinematic wedding films and aerial coverage. Explore wedding packages from Mosi Media Solutions.";
+  "Explore Wedding, Birthday & Social Event Packages from Mosi Media Solutions — sound, DJ, lighting, photography, film, LED displays and special effects in Victoria Falls.";
 
 export const metadata: Metadata = {
   title,

@@ -119,14 +119,14 @@ export default function Home() {
     }
   ];
 
-  // Our Services configuration
+  // Our Services configuration (kept concise on the homepage; full details live on /services)
   const services = [
     {
       title: "Conference Microphone & Interpretation Equipment",
       icon: Mic,
       image: "/services%20images/5e3c3df339009497f72d40842dd6c19b.jpg",
       alt: "Conference microphones and interpretation booth setup",
-      desc: "Professional conference audio, microphone systems and simultaneous interpretation booths for multilingual institutional events, government meetings and international conferences.",
+      desc: "Conference microphones and simultaneous interpretation systems for multilingual summits and institutional events.",
       href: "/services"
     },
     {
@@ -134,7 +134,7 @@ export default function Home() {
       icon: Monitor,
       image: "/services%20images/LED%20Screen%20Rental.jpg",
       alt: "Large LED screens and display technology at an event",
-      desc: "High-brightness LED screens, video walls and digital displays for conferences, brand activations and outdoor events available in any size with on-site support.",
+      desc: "High-brightness LED screens, video walls and digital displays with full on-site technical support.",
       href: "/services"
     },
     {
@@ -142,7 +142,7 @@ export default function Home() {
       icon: Volume2,
       image: "/services%20images/Professional%20Sound%20Systems.jpg",
       alt: "Professional sound system and PA setup at an event",
-      desc: "Comprehensive PA systems, line arrays, mixing consoles and wireless microphones engineered for clear, reliable sound at every venue size.",
+      desc: "PA systems, line arrays, mixing consoles and wireless microphones tailored to any venue.",
       href: "/services"
     },
     {
@@ -150,7 +150,7 @@ export default function Home() {
       icon: Play,
       image: "/services%20images/Live%20Streaming%20Production.jpg",
       alt: "Multi-camera live streaming control setup",
-      desc: "Full-service live streaming with multi-camera switching, platform integration, virtual backdrops and real-time graphics for hybrid and virtual events.",
+      desc: "Multi-camera live streaming, remote speaker integration and graphics for hybrid events.",
       href: "/services"
     },
     {
@@ -158,7 +158,7 @@ export default function Home() {
       icon: Camera,
       image: "/services%20images/videography-photography.jpg",
       alt: "Cinematic filming and photography at an event",
-      desc: "Cinematic event videography and professional photography from same-day edits and highlight reels to full event archives and brand campaign imagery.",
+      desc: "Event photography, commercial filming and highlight reels crafted for lasting impact.",
       href: "/services"
     },
     {
@@ -166,7 +166,7 @@ export default function Home() {
       icon: Video,
       image: "/services%20images/Drone%20Services.jpg",
       alt: "Illustrative image of a drone above a city",
-      desc: "Explore aerial photography and videography for events, venues, landscapes and promotional stories. Coverage depends on location, weather and applicable permissions.",
+      desc: "Aerial photography and videography for venues, tourism and events, subject to permissions.",
       href: "/services/drone"
     },
     {

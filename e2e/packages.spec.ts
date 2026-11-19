@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { packageExperiences } from "../lib/packages";
+import { homePackageExperiences, packageExperiences } from "../lib/packages";
 import { packageLeadSchema } from "../lib/validation/leads";
 
-for (const experience of packageExperiences) {
+for (const experience of homePackageExperiences) {
   test(`${experience.title}: selection, attribution, error recovery and saved conversion`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.addInitScript(() => { window.mmsAnalyticsConsent = true; });
@@ -16,8 +16,9 @@ for (const experience of packageExperiences) {
     });
     await page.goto("/?utm_source=signature&utm_campaign=launch");
     const signature = page.locator("#signature-experiences");
-    await signature.getByRole("link", { name: `Explore ${experience.title}`, exact: true }).click();
-    await expect(page).toHaveTitle(new RegExp(experience.title));
+    const ctaName = experience.homeCta ?? `Explore ${experience.title}`;
+    await signature.getByRole("link", { name: ctaName, exact: true }).click();
+    await expect(page).toHaveTitle(new RegExp(experience.homeTitle ?? experience.title));
     await expect(page.locator("main h1")).toHaveCount(1);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", new RegExp(`/packages/${experience.slug}$`));
     // Streaming metadata can briefly render identical inherited image tags.
@@ -61,6 +62,16 @@ for (const experience of packageExperiences) {
   }
 }
 
+for (const experience of packageExperiences.filter(item => item.slug === "drone" || item.slug === "podcasts")) {
+  test(`${experience.title} overview route renders cleanly`, async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(`/packages/${experience.slug}`);
+    await expect(page.locator("main h1")).toHaveCount(1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  });
+}
+
 test("overview, mobile navigation, service links and invalid package URLs", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -68,16 +79,52 @@ test("overview, mobile navigation, service links and invalid package URLs", asyn
   await page.getByRole("button", { name: "Open menu", exact: true }).click();
   await page.getByRole("dialog").getByRole("link", { name: "Packages", exact: true }).click();
   await expect(page).toHaveURL(/\/packages$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Made for Your Moment. Built Around Your Vision.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Creating Experiences. Capturing Moments. Delivering Excellence.");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.screenshot({ path: "test-results/packages-overview-mobile.png", fullPage: true });
   for (const [service, category] of [["drone", "drone"], ["weddings-elopements", "weddings"]]) {
     await page.goto(`/services/${service}`);
-    await page.locator(`main a[href="/packages/${category}"]`).click();
+    await page.locator(`main a[href="/packages/${category}"]`).first().click();
     await expect(page).toHaveURL(new RegExp(`/packages/${category}$`));
   }
   const response = await page.goto("/packages/not-a-category");
   expect(response?.status()).toBe(404);
+});
+
+test("packages catalogue progressive disclosure, compare table, modal focus and responsive fit", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const width of [320, 390, 768, 1280, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto("/packages");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  }
+
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/packages");
+
+  // Sticky category nav
+  const nav = page.getByRole("navigation", { name: "Package categories" });
+  await expect(nav.getByRole("link", { name: "Corporate", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Celebrations", exact: true })).toBeVisible();
+  await expect(nav.getByRole("link", { name: "Video Production", exact: true })).toBeVisible();
+
+  // Compare packages toggle
+  const compareBtn = page.getByRole("button", { name: "Compare packages" }).first();
+  await compareBtn.click();
+  await expect(page.getByRole("region", { name: /Conference & Corporate Event Packages comparison/ })).toBeVisible();
+  await page.getByRole("button", { name: "Hide comparison" }).first().click();
+
+  // Level 2 inclusions modal + Escape focus return
+  const viewAllBtn = page.getByRole("button", { name: "View all inclusions" }).first();
+  await viewAllBtn.focus();
+  await viewAllBtn.click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText("Corporate Essentials");
+  await expect(dialog).toContainText("Professional PA sound system.");
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await expect(viewAllBtn).toBeFocused();
 });
 
 test("campaign date and details prefill safely and unknown options fall back", async ({ page }) => {

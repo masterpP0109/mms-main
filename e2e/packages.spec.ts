@@ -79,7 +79,7 @@ test("overview, mobile navigation, service links and invalid package URLs", asyn
   await page.getByRole("button", { name: "Open menu", exact: true }).click();
   await page.getByRole("dialog").getByRole("link", { name: "Packages", exact: true }).click();
   await expect(page).toHaveURL(/\/packages$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Professional Event & Media Production Packages");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Explore Our Services & Packages");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await page.screenshot({ path: "test-results/packages-overview-mobile.png", fullPage: true });
   for (const [service, category] of [["drone", "drone"], ["weddings-elopements", "weddings"]]) {
@@ -91,71 +91,69 @@ test("overview, mobile navigation, service links and invalid package URLs", asyn
   expect(response?.status()).toBe(404);
 });
 
-test("packages catalogue progressive disclosure, category switch, direct quote modal, compare table and responsive fit", async ({ page }) => {
+test("packages hub shows all 5 package categories, 9 individual services, bottom contact CTA and responsive fit", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.addInitScript(() => { window.mmsAnalyticsConsent = true; });
   for (const width of [320, 390, 768, 1280, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/packages");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   }
 
-  let submittedPayload: Record<string, unknown> = {};
-  await page.route("**/api/leads", route => {
-    submittedPayload = route.request().postDataJSON();
-    expect(packageLeadSchema.safeParse(submittedPayload).success).toBe(true);
-    return route.fulfill({
-      status: 201,
-      json: { success: true, saved: true, submissionId: "direct_quote_fixture", reference: "MMS-DIRECT1", notificationStatus: "pending" },
-    });
-  });
-
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/packages");
 
-  // Category switcher in sticky nav
-  const nav = page.getByRole("navigation", { name: "Package categories" });
-  await expect(nav.getByRole("button", { name: "Corporate", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await nav.getByRole("button", { name: "Celebrations", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Wedding, Birthday & Social Event Packages" })).toBeVisible();
-  await nav.getByRole("button", { name: "Corporate", exact: true }).click();
-  await expect(page.getByRole("heading", { name: "Conference & Corporate Event Packages" })).toBeVisible();
+  // Compact hero with single Explore Services CTA
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Explore Our Services & Packages");
+  await expect(page.getByRole("link", { name: "Explore Services", exact: true })).toHaveAttribute("href", "#package-categories");
+  await expect(page.locator("main section").first().getByRole("link", { name: "Discuss Your Project" })).toHaveCount(0);
 
-  // Compare packages toggle
-  const compareBtn = page.getByRole("button", { name: "Compare packages" }).first();
-  await compareBtn.click();
-  await expect(page.getByRole("region", { name: /Conference & Corporate Event Packages comparison/ })).toBeVisible();
-  await page.getByRole("button", { name: "Hide comparison" }).first().click();
+  // All 5 package categories visible immediately without filters
+  const categories = page.locator("#package-categories");
+  await expect(categories.locator("a")).toHaveCount(5);
+  for (const title of [
+    "Conference & Corporate Events",
+    "Weddings & Social Events",
+    "Video Production",
+    "Drone Photography & Videography",
+    "Podcast Production",
+  ]) {
+    await expect(categories.getByRole("heading", { name: title })).toBeVisible();
+  }
 
-  // Level 2 inclusions modal ("See What's Included") + Escape focus return
-  const viewAllBtn = page.getByRole("button", { name: "See What's Included" }).first();
-  await viewAllBtn.focus();
-  await viewAllBtn.click();
-  const detailDialog = page.getByRole("dialog");
-  await expect(detailDialog).toBeVisible();
-  await expect(detailDialog).toContainText("Corporate Essentials");
-  await expect(detailDialog).toContainText("Professional PA sound system.");
-  await page.keyboard.press("Escape");
-  await expect(detailDialog).toHaveCount(0);
-  await expect(viewAllBtn).toBeFocused();
+  // All 9 individual services visible immediately
+  const individual = page.locator("#individual-services");
+  await expect(individual.locator("a")).toHaveCount(9);
+  for (const title of [
+    "Conference Microphone & Interpretation Equipment",
+    "LED Screen Rental",
+    "Professional Sound Systems",
+    "Live Streaming Production",
+    "Videography & Photography",
+    "Event Lighting & Stage Setup",
+    "Interactive Screens",
+    "DJ Services",
+    "Special Effects",
+  ]) {
+    await expect(individual.getByRole("heading", { name: title })).toBeVisible();
+  }
 
-  // Direct contextual quote modal ("Request a Quote") without navigating away
-  await page.getByRole("button", { name: "Request a Quote" }).first().click();
-  const quoteDialog = page.getByRole("dialog");
-  await expect(quoteDialog).toBeVisible();
-  await expect(quoteDialog.getByLabel("Selected package")).toHaveValue("corporate-essentials");
-  await quoteDialog.getByLabel("Your name").fill("Direct Quote Visitor");
-  await quoteDialog.getByLabel("Email address").fill("direct-quote@example.com");
-  await quoteDialog.getByLabel("Venue or location (optional)").fill("Victoria Falls");
-  await quoteDialog.getByRole("button", { name: "Send Quote Request" }).click();
-  await expect(quoteDialog.getByRole("status")).toContainText("Your quote request has been saved");
-  await expect(quoteDialog.getByRole("status")).toContainText("MMS-DIRECT1");
-  expect(submittedPayload).toMatchObject({
-    kind: "package",
-    category: "conferences",
-    packageId: "corporate-essentials",
-    location: "Victoria Falls",
+  // Contact section appears after both service grids
+  const contactSection = page.locator("#packages-contact");
+  await expect(contactSection.getByRole("heading", { name: "Let's Bring Your Project to Life" })).toBeVisible();
+  await expect(contactSection.getByRole("link", { name: "Request a Quote", exact: true })).toHaveAttribute("href", /\/contact/);
+  await expect(contactSection.getByRole("link", { name: "Chat on WhatsApp", exact: true })).toHaveAttribute("href", /wa\.me\/263788111391/);
+
+  const orderOk = await page.evaluate(() => {
+    const cat = document.getElementById("package-categories")?.getBoundingClientRect().top ?? 0;
+    const ind = document.getElementById("individual-services")?.getBoundingClientRect().top ?? 0;
+    const contact = document.getElementById("packages-contact")?.getBoundingClientRect().top ?? 0;
+    return cat < ind && ind < contact;
   });
+  expect(orderOk).toBe(true);
+
+  // Click a package category card and verify navigation to dedicated page
+  await categories.getByRole("link", { name: /Conference & Corporate Events/ }).click();
+  await expect(page).toHaveURL(/\/packages\/conferences$/);
 });
 
 test("campaign date and details prefill safely and unknown options fall back", async ({ page }) => {

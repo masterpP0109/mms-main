@@ -51,6 +51,8 @@ export type PackageFeaturedWork = {
 export type PackageExperience = {
   slug: PackageCategory;
   title: string;
+  hubTitle?: string;
+  hubSummary?: string;
   homeTitle?: string;
   homeLabel?: string;
   homeDescription?: string;
@@ -125,6 +127,8 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "conferences",
     title: "Conference & Corporate Event Packages",
+    hubTitle: "Conference & Corporate Events",
+    hubSummary: "AV, LED displays, live streaming and stage production for conferences, summits, AGMs and workshops.",
     homeTitle: "Conference & Corporate Event Packages",
     homeLabel: "01 / Conferences",
     homeDescription:
@@ -360,6 +364,8 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "weddings",
     title: "Wedding, Birthday & Social Event Packages",
+    hubTitle: "Weddings & Social Events",
+    hubSummary: "Sound, DJ, lighting, photography, highlight films and special effects for weddings and social celebrations.",
     homeTitle: "Wedding & Social Event Packages",
     homeLabel: "02 / Celebrations",
     homeDescription:
@@ -473,6 +479,8 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "video-production",
     title: "Video Production Packages",
+    hubTitle: "Video Production",
+    hubSummary: "Commercial 4K filming, interviews, brand films, documentaries and social content production.",
     homeTitle: "Video Production Packages",
     homeLabel: "03 / Video Production",
     homeDescription:
@@ -725,6 +733,8 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "drone",
     title: "Drone Packages",
+    hubTitle: "Drone Photography & Videography",
+    hubSummary: "Aerial photography and cinematic drone sequences for tourism, venues, properties and events.",
     service: "Drone Photography & Videography",
     tagline: "Discover the extraordinary from above.",
     description:
@@ -773,6 +783,8 @@ export const packageExperiences: PackageExperience[] = [
   {
     slug: "podcasts",
     title: "Podcast Packages",
+    hubTitle: "Podcast Production",
+    hubSummary: "Crystal-clear audio and multi-camera video production for interviews, podcasts and branded series.",
     service: "Podcast Production",
     tagline: "Powerful conversations deserve professional production.",
     description:

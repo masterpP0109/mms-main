@@ -37,12 +37,39 @@
 .cardDescriptionLight { color: #374151; }
 .signatureLightBand :is(a, button):focus-visible { outline-color: #7f141f; }
 
-/* Full-bleed BG Hero matching About / Services / Projects */
-.packageHero { min-height: clamp(460px, 60svh, 580px); padding-block: 8rem 3.25rem; }
+/* Full-bleed BG Hero shared across /packages and /packages/[category] */
+.packageHero { min-height: clamp(440px, 56svh, 540px); padding-block: 7.5rem 3rem; }
+.hubHero { min-height: clamp(360px, 46svh, 450px); padding-block: 7rem 2.75rem; }
 .packageHero::after { background: linear-gradient(90deg, rgb(5 5 7 / .92) 0%, rgb(5 5 7 / .76) 54%, rgb(5 5 7 / .42) 100%), linear-gradient(0deg, rgb(5 5 7 / .94) 0%, rgb(5 5 7 / .28) 60%, rgb(5 5 7 / .55) 100%); }
 .heroTitle { white-space: pre-line; }
-.heroTitleCompact { font-size: clamp(2rem, 4.2vw, 3.5rem) !important; line-height: 1.12 !important; max-width: 780px !important; }
-.heroLead { max-width: 620px !important; color: rgb(243 244 246 / .92) !important; font-size: 1.05rem !important; line-height: 1.65 !important; }
+.heroTitleCompact { font-size: clamp(2rem, 4vw, 3.25rem) !important; line-height: 1.12 !important; max-width: 780px !important; }
+.heroLead { max-width: 620px !important; color: rgb(243 244 246 / .92) !important; font-size: 1.02rem !important; line-height: 1.65 !important; }
+
+/* /packages Service Discovery Hub */
+.hubSection { width: min(100% - 2rem, 1240px); margin-inline: auto; padding-block: clamp(2.5rem, 4vw, 3.5rem); }
+.hubSection + .hubSection { border-top: 1px solid rgb(5 5 7 / .12); }
+.hubHeader { max-width: 720px; margin-bottom: 1.75rem; }
+.hubHeader h2 { font-size: clamp(1.75rem, 2.8vw, 2.25rem); font-weight: 600; line-height: 1.2; letter-spacing: -.025em; color: #050507; margin-bottom: .5rem; }
+.hubHeader p { font-size: 1rem; line-height: 1.6; color: #374151; margin: 0; }
+.hubGrid { display: grid; gap: 1.5rem; align-items: stretch; }
+.hubCard { display: flex; flex-direction: column; height: 100%; min-width: 0; overflow: hidden; border-radius: 1.25rem; border: 1px solid rgb(5 5 7 / .12); background: #ffffff; box-shadow: 0 4px 16px rgb(5 5 7 / .04); text-decoration: none; color: inherit; transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.hubCard:hover { transform: translateY(-3px); border-color: rgb(152 27 40 / .45); box-shadow: 0 12px 28px rgb(5 5 7 / .09); }
+.hubCard:focus-visible { outline: 2px solid #981b28; outline-offset: 3px; border-color: #981b28; }
+.hubCardImage { position: relative; aspect-ratio: 16 / 10; width: 100%; overflow: hidden; background: #171914; }
+.hubCardImage img { object-fit: cover; transition: transform .5s ease; }
+.hubCard:hover .hubCardImage img { transform: scale(1.04); }
+.hubCardBody { display: flex; flex-direction: column; flex: 1; padding: 1.35rem 1.45rem 1.45rem; }
+.hubCardMeta { font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #7f141f; margin: 0 0 .4rem; }
+.hubCardTitle { font-size: clamp(1.15rem, 1.5vw, 1.3rem); font-weight: 600; line-height: 1.3; color: #050507; margin: 0 0 .5rem; }
+.hubCardText { font-size: .94rem; line-height: 1.55; color: #374151; margin: 0 0 1.15rem; flex: 1; }
+.hubCardAction { display: inline-flex; align-items: center; gap: .45rem; font-size: .86rem; font-weight: 600; color: #981b28; margin-top: auto; min-height: 36px; }
+.hubCardAction svg { transition: transform .2s ease; }
+.hubCard:hover .hubCardAction svg { transform: translateX(3px); }
+.hubContactSection { width: min(100% - 2rem, 1240px); margin-inline: auto; padding-block: clamp(2.5rem, 4vw, 3.5rem) clamp(3.5rem, 5vw, 4.75rem); border-top: 1px solid rgb(5 5 7 / .12); }
+.hubContactCard { padding: clamp(1.75rem, 3.5vw, 2.75rem); border-radius: 1.5rem; border: 1px solid rgb(5 5 7 / .12); background: #ffffff; box-shadow: 0 6px 24px rgb(5 5 7 / .05); text-align: center; }
+.hubContactCard h2 { font-size: clamp(1.75rem, 3vw, 2.35rem); font-weight: 600; color: #050507; margin: 0 0 .65rem; }
+.hubContactCard p { max-width: 580px; margin: 0 auto 1.65rem; font-size: 1rem; line-height: 1.6; color: #374151; }
+.hubContactActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .85rem; }
 
 /* Sticky Category Navigation Bar (clears fixed Navbar cleanly) */
 .stickyNav { position: sticky; top: 72px; z-index: 30; background: rgb(255 255 255 / .96); backdrop-filter: blur(12px); border-bottom: 1px solid rgb(5 5 7 / .12); padding-block: .75rem; }
@@ -244,9 +271,9 @@
 .optionCard .quoteLabel { color: #374151; margin-bottom: 0; font-weight: 600; font-size: .84rem; }
 .optionFootnote { font-size: .88rem; margin-top: 1.25rem; max-width: 850px; color: #374151; }
 .optionFootnote a { text-decoration: underline; text-underline-offset: .25rem; color: #981b28; font-weight: 600; }
-.addOnsPanel { margin-top: 1.5rem; padding: 1.5rem; border-radius: 1.25rem; border: 1px solid rgb(5 5 7 / .12); background: #ffffff; }
+.addOnsPanel { margin-top: 1.5rem; padding: 1.5rem; border-radius: 1.25rem; border: 2px solid rgb(152 27 40 / .42); background: linear-gradient(135deg, #fff5f6 0%, #ffffff 60%); box-shadow: 0 6px 22px rgb(152 27 40 / .1); }
 .addOnsHeader { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1rem; margin-bottom: .9rem; }
-.addOnsHeader h3 { color: #050507; font-size: 1.05rem; margin: 0; }
+.addOnsHeader h3 { color: #7f141f; font-size: 1.05rem; font-weight: 700; margin: 0; }
 .addOnsHeader span { font-size: .8rem; color: #4b5563; font-weight: 600; }
 
 /* Package enquiry form */
@@ -267,8 +294,8 @@
 .form .error { color: #981b28; font-size: .9rem; margin-top: 1rem; font-weight: 600; }
 
 @media (min-width: 640px) {
-  .signature, .stickyNavInner, .catalogueSection, .finalCta { width: min(100% - 4rem, 1240px); }
-  .experiences, .threeColumns, .specialisedGrid, .conditionsGrid, .secondaryGrid, .addOnsGrid, .formGrid, .workGrid, .quoteFormGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .signature, .stickyNavInner, .catalogueSection, .finalCta, .hubSection, .hubContactSection { width: min(100% - 4rem, 1240px); }
+  .experiences, .threeColumns, .specialisedGrid, .conditionsGrid, .secondaryGrid, .addOnsGrid, .formGrid, .workGrid, .quoteFormGrid, .hubGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .workCard { grid-template-columns: 190px 1fr; }
   .workThumb { aspect-ratio: auto; min-height: 100%; }
   .navAction { display: block; }
@@ -278,8 +305,8 @@
   .signature { padding-block: 2rem 5rem; }
   .signatureLightBand { padding-block: 3rem 4.5rem; }
   .signatureLightBand .signature { padding-block: 0; }
-  .experiences, .threeColumns, .addOnsGrid, .conditionsGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .experiences, .threeColumns, .addOnsGrid, .conditionsGrid, .hubGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .specialisedGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .sectionHeaderRow { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 2rem; }
 }
-@media (prefers-reduced-motion: reduce) { .experienceImage:hover img { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .experienceImage:hover img, .hubCard:hover .hubCardImage img { transform: none; } .hubCard { transition: none; } }

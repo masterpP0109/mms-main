@@ -115,10 +115,10 @@ export const packageExperiences: PackageExperience[] = [
     slug: "conferences",
     title: "Conference & Corporate Event Packages",
     homeTitle: "Conference & Corporate Event Packages",
-    homeLabel: "01 / Conferences",
+    homeLabel: "01 / Corporate",
     homeDescription:
-      "Corporate Essentials, Professional and Elite setups for summits, AGMs, workshops and government functions.",
-    homeCta: "Explore Conference Packages",
+      "Corporate Essentials, Corporate Professional and Corporate Elite packages with sound, LED screens, streaming and full technical production.",
+    homeCta: "Explore Conference & Corporate Packages",
     service: "Conference & Corporate Event Production",
     tagline: "AV, staging and hybrid coverage for events.",
     description:
@@ -330,8 +330,8 @@ export const packageExperiences: PackageExperience[] = [
     homeTitle: "Weddings and Social Events Packages",
     homeLabel: "02 / Celebrations",
     homeDescription:
-      "Celebration Starter, Plus and Luxe packages for weddings, birthdays, anniversaries and private events.",
-    homeCta: "Explore Wedding & Social Packages",
+      "Celebration Starter, Celebration Plus and Celebration Luxe packages for weddings, birthdays, anniversaries and private celebrations.",
+    homeCta: "Explore Weddings & Social Packages",
     service: "Wedding, Birthday & Social Event Production",
     tagline: "Your celebration, beautifully remembered.",
     description:
@@ -425,8 +425,8 @@ export const packageExperiences: PackageExperience[] = [
     homeTitle: "Video Production Packages",
     homeLabel: "03 / Video Production",
     homeDescription:
-      "Video Essentials, Professional and Cinematic Elite packages for commercials, documentaries and social content.",
-    homeCta: "Explore Video Packages",
+      "Video Essentials, Video Professional and Cinematic Elite packages for commercials, documentaries and promotional visual content.",
+    homeCta: "Explore Video Production Packages",
     service: "Commercial & Creative Video Production",
     tagline: "Cinematic visual storytelling for brands.",
     description:

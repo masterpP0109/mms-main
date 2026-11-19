@@ -12,7 +12,7 @@ import styles from "@/app/components/packages/packages.module.css";
 
 const title = "Professional Service Packages | Conferences, Weddings & Video | MMS";
 const description =
-  "Explore Conference & Corporate Event Packages, Wedding, Birthday & Social Event Packages, Video Production Packages and specialised AV services from Mosi Media Solutions.";
+  "Explore Conference & Corporate Event Packages, Weddings and Social Events Packages, Video Production Packages and specialised AV services from Mosi Media Solutions.";
 
 export const metadata: Metadata = {
   title,

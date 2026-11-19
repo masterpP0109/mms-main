@@ -6,9 +6,9 @@ import WeddingPackagePage from "@/app/components/packages/WeddingPackagePage";
 
 const experience = getPackageExperience("weddings");
 
-const title = "Wedding & Social Event Packages | Victoria Falls | MMS";
+const title = "Weddings and Social Events Packages | Victoria Falls | MMS";
 const description =
-  "Explore Wedding, Birthday & Social Event Packages from Mosi Media Solutions — sound, DJ, lighting, photography, film, LED displays and special effects in Victoria Falls.";
+  "Explore Weddings and Social Events Packages from Mosi Media Solutions — sound, DJ, lighting, photography, film, LED displays and special effects in Victoria Falls.";
 
 export const metadata: Metadata = {
   title,

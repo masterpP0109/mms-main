@@ -326,8 +326,8 @@ export const packageExperiences: PackageExperience[] = [
   },
   {
     slug: "weddings",
-    title: "Wedding, Birthday & Social Event Packages",
-    homeTitle: "Wedding & Social Event Packages",
+    title: "Weddings and Social Events Packages",
+    homeTitle: "Weddings and Social Events Packages",
     homeLabel: "02 / Celebrations",
     homeDescription:
       "Celebration Starter, Plus and Luxe packages for weddings, birthdays, anniversaries and private events.",

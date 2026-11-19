@@ -87,7 +87,7 @@ test("mobile signature experiences remain readable and animated content is reach
   await page.goto("/#services");
   const feature = page.locator('#signature-experiences');
   await feature.scrollIntoViewIfNeeded();
-  await expect(feature.getByRole("heading", { name: "Wedding & Social Event Packages" })).toBeVisible();
+  await expect(feature.getByRole("heading", { name: "Weddings and Social Events Packages" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await feature.screenshot({ path: "test-results/home-weddings-feature-mobile.png" });
   await feature.getByRole("link", { name: "Explore Wedding & Social Packages", exact: true }).click();

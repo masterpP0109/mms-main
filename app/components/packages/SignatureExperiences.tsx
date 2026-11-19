@@ -72,11 +72,9 @@ export default function SignatureExperiences({ variant = "dark" }: { variant?: "
   const content = (
     <>
       <div className={styles.signatureHeading} data-reveal>
-        <p className={styles.eyebrow}>Professional Service Packages</p>
-        <h2 id="signature-title">Creating Experiences. Capturing Moments. Delivering Excellence.</h2>
-        <p>
-          Choose a starting point for your conference, wedding, social celebration or video production, then explore full inclusions on our packages page.
-        </p>
+        <p className={styles.eyebrow}>Signature Experiences</p>
+        <h2 id="signature-title">Every Moment. Every Perspective. Every Voice.</h2>
+        <p>Some stories deserve to be remembered. Others deserve to be seen from a new perspective. And some deserve to be heard.</p>
       </div>
       <ExperienceCards variant={variant} />
       <div className={styles.allPackages}>

@@ -5,6 +5,8 @@ export const weddingPackages = [
     name: "Celebration Starter",
     badge: "BASIC" as const,
     tierLabel: "Basic Social Event Package",
+    outcome: "Best for intimate dinners, showers & small parties",
+    crewSummary: "1 photographer · PA & DJ · Basic lighting",
     location: "",
     description: "Ideal for intimate celebrations and small private gatherings.",
     highlights: [
@@ -42,6 +44,8 @@ export const weddingPackages = [
     name: "Celebration Plus",
     badge: "STANDARD" as const,
     tierLabel: "Standard Social Event Package",
+    outcome: "Best for full weddings, milestone birthdays & anniversaries",
+    crewSummary: "Photo + Video + Highlight Film · LED & Cold Sparks",
     location: "",
     description: "Ideal for medium-sized weddings, birthday parties, anniversaries and private celebrations.",
     highlights: [
@@ -83,6 +87,8 @@ export const weddingPackages = [
     name: "Celebration Luxe",
     badge: "PREMIUM" as const,
     tierLabel: "Premium Wedding & Social Event Package",
+    outcome: "Best for luxury destination weddings & grand galas",
+    crewSummary: "Multi-cam Cinema · 360 Booth · Full SFX & Dedicated Crew",
     location: "",
     description: "Ideal for luxury weddings, large birthday celebrations, milestone anniversaries and exclusive private events.",
     highlights: [

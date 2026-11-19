@@ -74,8 +74,10 @@
 .tierBadge { display: inline-flex; align-items: center; padding: .25rem .65rem; border-radius: 999px; font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: #f3f4f6; color: #374151; }
 .tierBadgeAccent { background: rgb(152 27 40 / .1); color: #981b28; }
 .tierSubtitle { font-size: .78rem; color: #4b5563; font-weight: 500; }
-.packageCardTitle { font-size: clamp(1.25rem, 1.8vw, 1.5rem); font-weight: 600; line-height: 1.25; color: #050507; margin-bottom: .5rem; }
-.packageIdeal { font-size: .95rem; line-height: 1.55; color: #374151; margin-bottom: 1.25rem; }
+.packageCardTitle { font-size: clamp(1.25rem, 1.8vw, 1.5rem); font-weight: 600; line-height: 1.25; color: #050507; margin-bottom: .45rem; }
+.outcomeLine { font-size: .88rem; font-weight: 600; color: #7f141f; margin-bottom: .35rem; line-height: 1.4; }
+.packageIdeal { font-size: .94rem; line-height: 1.55; color: #374151; margin-bottom: .85rem; }
+.crewBadge { display: inline-flex; align-items: center; padding: .38rem .75rem; border-radius: .65rem; background: #f8f9fa; border: 1px solid rgb(5 5 7 / .1); color: #1f2937; font-size: .78rem; font-weight: 600; line-height: 1.4; margin-bottom: 1rem; }
 .highlightsDivider { border-top: 1px solid rgb(5 5 7 / .1); padding-top: 1.1rem; margin-bottom: 1.35rem; flex: 1; }
 .highlightsLabel { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #4b5563; margin-bottom: .75rem; }
 .highlightsList { list-style: none; padding: 0; margin: 0; display: grid; gap: .55rem; }
@@ -152,6 +154,46 @@
 .modalList li { display: flex; align-items: flex-start; gap: .55rem; font-size: .94rem; line-height: 1.5; color: #111827; }
 .modalFooter { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-top: 1.25rem; }
 
+/* Unsure Customer Guidance Banner & WhatsApp Action */
+.unsureBanner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem 1.35rem; border-radius: 1.15rem; border: 1px solid rgb(5 5 7 / .12); background: #ffffff; margin-bottom: 1.75rem; box-shadow: 0 2px 10px rgb(5 5 7 / .03); }
+.unsureBannerInline { margin-top: 1.5rem; margin-bottom: 0; background: #f9fafb; }
+.unsureText { max-width: 620px; }
+.unsureTitle { font-size: .98rem; font-weight: 600; color: #050507; margin: 0 0 .2rem; }
+.unsureDesc { font-size: .9rem; line-height: 1.5; color: #374151; margin: 0; }
+.unsureActions { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.whatsappBtn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-height: 44px; padding: .55rem 1.1rem; border-radius: 999px; border: 1px solid #15803d; background: #f0fdf4; color: #166534; font-size: .84rem; font-weight: 600; text-decoration: none; transition: background-color .2s, color .2s; }
+.whatsappBtn:hover { background: #166534; color: #ffffff; }
+.whatsappBtn:focus-visible { outline: 2px solid #166534; outline-offset: 2px; }
+
+/* Real MMS Work Evidence Strip inside Category */
+.workStrip { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgb(5 5 7 / .1); }
+.workHeader { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; }
+.workHeader h3 { font-size: 1.1rem; font-weight: 600; color: #050507; margin: 0; }
+.workLink { font-size: .85rem; font-weight: 600; color: #981b28; text-decoration: underline; text-underline-offset: .25rem; }
+.workGrid { display: grid; gap: 1.25rem; }
+.workCard { display: grid; grid-template-columns: 1fr; overflow: hidden; border-radius: 1.15rem; border: 1px solid rgb(5 5 7 / .12); background: #ffffff; }
+.workThumb { position: relative; min-height: 170px; aspect-ratio: 16 / 10; background: #171914; }
+.workThumb img { object-fit: cover; }
+.workBody { padding: 1.15rem 1.25rem; display: flex; flex-direction: column; justify-content: center; gap: .45rem; }
+.workMeta { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #4b5563; margin: 0; }
+.workTitle { font-size: 1.05rem; font-weight: 600; color: #050507; margin: 0; }
+.workDesc { font-size: .88rem; line-height: 1.5; color: #374151; margin: 0; }
+.workTags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .25rem; }
+.workTag { font-size: .72rem; padding: .2rem .55rem; border-radius: 999px; background: #f3f4f6; color: #374151; font-weight: 500; }
+
+/* Direct Contextual Quote Modal */
+.quoteContextChip { display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .8rem; border-radius: 999px; background: rgb(152 27 40 / .08); color: #981b28; font-size: .78rem; font-weight: 700; margin-bottom: .5rem; }
+.quoteForm { display: grid; gap: 1rem; margin-top: 1.1rem; }
+.quoteFormGrid { display: grid; gap: .9rem; }
+.quoteField { display: grid; gap: .4rem; font-size: .82rem; font-weight: 600; color: #111827; }
+.quoteField input, .quoteField select, .quoteField textarea { box-sizing: border-box; width: 100%; border: 1px solid rgb(5 5 7 / .22); border-radius: .75rem; background: #f9fafb; color: #050507; padding: .72rem .85rem; font-size: .95rem; color-scheme: light; }
+.quoteField :is(input, select, textarea):focus-visible { outline: 2px solid #981b28; outline-offset: 2px; }
+.quoteError { color: #981b28; font-size: .88rem; font-weight: 600; margin: 0; }
+.quoteSuccess { padding-block: 1rem; display: grid; gap: .85rem; }
+.quoteSuccess h4 { font-size: 1.25rem; font-weight: 600; color: #050507; margin: 0; }
+.quoteSuccess p { font-size: .94rem; line-height: 1.55; color: #374151; margin: 0; }
+.quoteHelp { font-size: .8rem; line-height: 1.5; color: #4b5563; margin: 0; }
+
 /* Category Detail Page (/packages/[category]) Shared Styles */
 .tightSection { padding-block: 3.25rem !important; }
 .feasibility { margin-top: 1.75rem; }
@@ -206,7 +248,9 @@
 
 @media (min-width: 640px) {
   .signature, .stickyNavInner, .catalogueSection, .finalCta { width: min(100% - 4rem, 1240px); }
-  .experiences, .threeColumns, .specialisedGrid, .conditionsGrid, .secondaryGrid, .addOnsGrid, .formGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .experiences, .threeColumns, .specialisedGrid, .conditionsGrid, .secondaryGrid, .addOnsGrid, .formGrid, .workGrid, .quoteFormGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .workCard { grid-template-columns: 190px 1fr; }
+  .workThumb { aspect-ratio: auto; min-height: 100%; }
   .navAction { display: block; }
 }
 @media (min-width: 1024px) {

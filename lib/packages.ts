@@ -21,6 +21,8 @@ export type PackageOption = {
   name: string;
   badge?: "BASIC" | "STANDARD" | "PREMIUM";
   tierLabel?: string;
+  outcome?: string;
+  crewSummary?: string;
   for: string;
   highlights?: string[];
   comparison?: {
@@ -36,6 +38,14 @@ export type PackageOption = {
   finish?: string;
   planning?: string;
   location?: string;
+};
+
+export type PackageFeaturedWork = {
+  title: string;
+  category: string;
+  desc: string;
+  image: string;
+  tags: string[];
 };
 
 export type PackageExperience = {
@@ -58,6 +68,7 @@ export type PackageExperience = {
   value: string;
   benefits: { title: string; text: string }[];
   examples: { image: string; alt: string; title: string; text: string }[];
+  featuredWork?: PackageFeaturedWork[];
   options: PackageOption[];
   optionalAddOns?: string[];
   enhancements: string[];
@@ -162,12 +173,30 @@ export const packageExperiences: PackageExperience[] = [
         text: "Clean stage presentation, digital branding and crisp photography for corporate milestones.",
       },
     ],
+    featuredWork: [
+      {
+        title: "Global Summit Production",
+        category: "Conference",
+        desc: "A fully produced conference experience with multiple screens, live streaming and branded stages for an international delegation.",
+        image: "/mms/DSC_9244.jpg",
+        tags: ["Event Production", "Live Streaming", "AV Staging"],
+      },
+      {
+        title: "Institutional Conference",
+        category: "Conference",
+        desc: "End-to-end production for a ministerial conference with interpretation systems, photography and live documentation.",
+        image: "/mms/DSC_7218.jpg",
+        tags: ["Corporate Events", "Digital Displays", "Live Capture"],
+      },
+    ],
     options: [
       {
         id: "corporate-essentials",
         name: "Corporate Essentials",
         badge: "BASIC",
         tierLabel: "Basic Conference Package",
+        outcome: "Best for single-room workshops, AGMs & briefings",
+        crewSummary: "1 photographer · PA & projection · On-site support",
         for: "Ideal for small meetings, workshops, seminars and corporate presentations.",
         highlights: [
           "PA sound & wireless microphones",
@@ -202,6 +231,8 @@ export const packageExperiences: PackageExperience[] = [
         name: "Corporate Professional",
         badge: "STANDARD",
         tierLabel: "Standard Conference Package",
+        outcome: "Best for multi-speaker conferences & panel forums",
+        crewSummary: "Photo + 2-cam video (where required) · LED & tech team",
         for: "Ideal for medium-sized conferences, corporate functions, seminars and business meetings.",
         highlights: [
           "PA sound, wireless & conference mics",
@@ -240,6 +271,8 @@ export const packageExperiences: PackageExperience[] = [
         name: "Corporate Elite",
         badge: "PREMIUM",
         tierLabel: "Premium Conference & Hybrid Event Package",
+        outcome: "Best for international summits, hybrid & multilingual events",
+        crewSummary: "Multi-cam + Hybrid stream + Interpretation + Full crew",
         for: "Ideal for international conferences, corporate summits, high-level government functions, AGMs and major business events.",
         highlights: [
           "Line-array sound & full LED stage design",
@@ -375,11 +408,29 @@ export const packageExperiences: PackageExperience[] = [
         text: "Full DJ entertainment, dancefloor lighting, LED displays and cold spark grand entrances.",
       },
     ],
+    featuredWork: [
+      {
+        title: "Victoria Falls Wedding Film",
+        category: "Wedding",
+        desc: "An emotional, intimate cinematic film captured across waterfall light and golden celebration moments.",
+        image: "/mms/DSC_1257.jpg",
+        tags: ["Cinematography", "Editing", "Colour Grading"],
+      },
+      {
+        title: "Destination Wedding in Victoria Falls",
+        category: "Wedding",
+        desc: "Cinematic multi-day wedding coverage with drone aerials over the Zambezi, ceremony films and same-day edits.",
+        image: "/mms/DSC_1821.jpg",
+        tags: ["Wedding Film", "Drone", "Same-Day Edit"],
+      },
+    ],
     options: weddingPackages.map(option => ({
       id: option.id,
       name: option.name,
       badge: option.badge,
       tierLabel: option.tierLabel,
+      outcome: option.outcome,
+      crewSummary: option.crewSummary,
       for: option.description,
       highlights: option.highlights,
       comparison: option.comparison,
@@ -470,12 +521,30 @@ export const packageExperiences: PackageExperience[] = [
         text: "Authentic visual narratives combining ground cinema cameras and licensed aerial sequences.",
       },
     ],
+    featuredWork: [
+      {
+        title: "African Distillers Campaign",
+        category: "Brand",
+        desc: "Premium product photography and brand storytelling for one of the region's leading spirits brands.",
+        image: "/mms/DSC_2643%20(2).jpg",
+        tags: ["Product Photography", "Brand", "Lifestyle"],
+      },
+      {
+        title: "Luxury Brand Campaign",
+        category: "Brand",
+        desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
+        image: "/mms/DSC_2327-Edit.jpg",
+        tags: ["Advertising", "Motion", "Photography"],
+      },
+    ],
     options: [
       {
         id: "video-essentials",
         name: "Video Essentials",
         badge: "BASIC",
         tierLabel: "Basic Video Production",
+        outcome: "Best for agile social reels, interviews & intros",
+        crewSummary: "1 videographer · 1-camera setup · Social-ready delivery",
         for: "Ideal for small businesses, social media content, interviews and promotional clips.",
         highlights: [
           "1-camera production & 1 videographer",
@@ -519,6 +588,8 @@ export const packageExperiences: PackageExperience[] = [
         name: "Video Professional",
         badge: "STANDARD",
         tierLabel: "Standard Commercial Production",
+        outcome: "Best for company profiles, tourism & promo campaigns",
+        crewSummary: "Multi-cam 4K (where required) · Motion graphics · 2 revisions",
         for: "Ideal for businesses, tourism companies, corporate organisations and marketing campaigns.",
         highlights: [
           "4K multi-camera production where required",
@@ -566,6 +637,8 @@ export const packageExperiences: PackageExperience[] = [
         name: "Cinematic Elite",
         badge: "PREMIUM",
         tierLabel: "Premium Film & Commercial Production",
+        outcome: "Best for TV commercials, documentaries & destination films",
+        crewSummary: "Cinema cameras + Drone (subject to permissions) · Full sound/VFX",
         for: "Ideal for major brands, tourism campaigns, corporate advertisements, documentaries and high-end productions.",
         highlights: [
           "Concept, creative direction & scripting",

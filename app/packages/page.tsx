@@ -10,9 +10,9 @@ import { siteOrigin } from "@/lib/package-seo";
 import s from "@/app/components/services/services.module.css";
 import styles from "@/app/components/packages/packages.module.css";
 
-const title = "Professional Service Packages | Conferences, Weddings & Video | MMS";
+const title = "Professional Event & Media Production Packages | MMS";
 const description =
-  "Explore Conference & Corporate Event Packages, Wedding, Birthday & Social Event Packages, Video Production Packages and specialised AV services from Mosi Media Solutions.";
+  "From conferences and celebrations to cinematic video production, explore Mosi Media Solutions packages and request a tailored quote directly.";
 
 export const metadata: Metadata = {
   title,
@@ -79,22 +79,22 @@ export default function PackagesPage() {
             <Link href="/" className={s.breadcrumb}>
               ← Mosi Media Solutions
             </Link>
-            <p className={s.eyebrow}>Professional Service Packages</p>
+            <p className={s.eyebrow}>Creating Experiences · Capturing Moments · Delivering Excellence</p>
             <h1 id="packages-title" className={styles.heroTitleCompact}>
-              Creating Experiences. Capturing Moments. Delivering Excellence.
+              Professional Event &amp; Media Production Packages
             </h1>
             <p className={styles.heroLead}>
-              Discover the right production solution for your event, celebration, brand or project — compare tiers at a glance and explore full inclusions on demand.
+              From conferences and celebrations to cinematic video production, explore our solutions and let us tailor the right package for your project.
             </p>
             <div className={s.actions}>
-              <EnquiryLink className={styles.glassButton} href="#conference-packages">
-                Explore Packages
+              <EnquiryLink className={styles.glassButton} href="#catalogue">
+                Browse Packages
               </EnquiryLink>
               <Link
                 className={styles.glassButton}
                 href="/contact?service=Professional%20Service%20Packages&origin=%2Fpackages#enquiry"
               >
-                Request a Custom Quote
+                Discuss Your Project
               </Link>
             </div>
           </div>

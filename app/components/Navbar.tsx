@@ -60,7 +60,7 @@ export default function Navbar() {
             alt="MMS Logo"
             width={220}
             height={64}
-            className="w-[92px] sm:w-[108px] lg:w-[120px] h-auto object-contain drop-shadow-[0_1px_3px_rgba(5,5,7,0.45)]"
+            className="w-[116px] sm:w-[136px] lg:w-[152px] h-auto object-contain drop-shadow-[0_1px_3px_rgba(5,5,7,0.45)]"
             preload
           />
         </Link>

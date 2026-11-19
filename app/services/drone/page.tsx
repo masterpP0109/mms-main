@@ -229,8 +229,8 @@ export default function DronePage() {
             <DroneServiceCards items={droneServicesList} />
             <div className={styles.actions}>
               <EnquiryLink href={contact}>Request aerial coverage</EnquiryLink>
-              <Link href="/gallery?cat=Drone" className={styles.textLink}>
-                Explore drone gallery
+              <Link href="/packages/drone" className={styles.textLink}>
+                Explore drone packages
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>

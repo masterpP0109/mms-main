@@ -41,14 +41,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Gallery */}
+          {/* Projects & Packages */}
           <div className="space-y-4 flex flex-col items-center md:items-start">
-            <h4 className="text-xs uppercase tracking-widest text-[#7f141f] font-bold font-heading">Gallery</h4>
+            <h4 className="text-xs uppercase tracking-widest text-[#7f141f] font-bold font-heading">Showcase</h4>
             <ul className="space-y-2 text-sm text-[#050507]/85 font-normal flex flex-col items-center md:items-start">
-              <li><Link href="/gallery?cat=Wedding" className="hover:text-[#7f141f] transition-colors">Wedding Highlights</Link></li>
-              <li><Link href="/gallery?cat=Conference" className="hover:text-[#7f141f] transition-colors">Corporate Keynotes</Link></li>
-              <li><Link href="/gallery?cat=Drone" className="hover:text-[#7f141f] transition-colors">Scenic Drones</Link></li>
-              <li><Link href="/gallery" className="hover:text-[#7f141f] transition-colors">All Work</Link></li>
+              <li><Link href="/projects" className="hover:text-[#7f141f] transition-colors">Featured Projects</Link></li>
+              <li><Link href="/packages/weddings" className="hover:text-[#7f141f] transition-colors">Wedding Packages</Link></li>
+              <li><Link href="/packages/drone" className="hover:text-[#7f141f] transition-colors">Drone Packages</Link></li>
+              <li><Link href="/packages/podcasts" className="hover:text-[#7f141f] transition-colors">Podcast Packages</Link></li>
             </ul>
           </div>
 

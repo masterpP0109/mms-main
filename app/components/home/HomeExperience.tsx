@@ -202,7 +202,7 @@ export default function Home() {
       title: "Victoria Falls Wedding Film",
       desc: "An emotional, intimate film captured across waterfall light and golden celebration.",
       tags: ["Cinematography", "Editing", "Color Grading"],
-      link: "/gallery"
+      link: "/projects"
     },
     {
       image: "/mms/DSC_9244.jpg",
@@ -210,7 +210,7 @@ export default function Home() {
       title: "Global Summit Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
       tags: ["Event Production", "Live Streaming", "AV Staging"],
-      link: "/gallery"
+      link: "/projects"
     },
     {
       image: "/mms/DSC_7607.jpg",
@@ -218,7 +218,7 @@ export default function Home() {
       title: "Corporate Event Experience",
       desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
       tags: ["Brand Strategy", "Motion Design", "Content Creation"],
-      link: "/gallery"
+      link: "/projects"
     },
     {
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
@@ -226,7 +226,7 @@ export default function Home() {
       title: "Luxury Brand Campaign",
       desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
       tags: ["Corporate Events", "Digital Displays", "Live Capture"],
-      link: "/gallery"
+      link: "/projects"
     },
     {
       image: "/mms/_MG_0072.jpg",
@@ -234,7 +234,7 @@ export default function Home() {
       title: "Immersive Media Production",
       desc: "360 capture, drone sequences and podcast experiences that transformed events into shareable stories.",
       tags: ["Immersive Tech", "Drone Cinematography", "360 Capture"],
-      link: "/gallery"
+      link: "/projects"
     }
   ];
 
@@ -257,7 +257,11 @@ export default function Home() {
 
         {/* Hero Carousel Section - offset for fixed navbar */}
         <div
-          className="home-hero hero-light relative w-full overflow-hidden bg-white flex items-center justify-center z-10"
+          className="home-hero hero-light relative w-full overflow-hidden flex items-center justify-center z-10"
+          style={{
+            background:
+              "linear-gradient(135deg, #ffffff 0%, #ffffff 62%, rgba(152, 27, 40, 0.14) 86%, rgba(127, 20, 31, 0.22) 100%)",
+          }}
           onTouchStart={(event) => {
             heroTouchStartX.current = event.touches[0]?.clientX ?? null;
           }}
@@ -279,63 +283,90 @@ export default function Home() {
 
           }}
         >
-          <div className="absolute inset-0 w-full h-full bg-white pointer-events-none">
-            {/* Background Image of current slide (full opacity, no fade transition) */}
-            <Image
-              key={slides[currentSlide].image}
-              src={slides[currentSlide].image}
-              alt={`${slides[currentSlide].title} — Mosi Media Solutions`}
-              fill
-              sizes="100vw"
-              className="object-cover"
-              style={{ objectPosition: slides[currentSlide].imagePosition }}
-              loading="eager"
-              fetchPriority={currentSlide === 0 ? "high" : "auto"}
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.85, ease: "easeInOut" }}
+              className="absolute inset-0 w-full h-full pointer-events-none"
+            >
+              {/* Background Image of current slide (full opacity, soft white+maroon crossfade) */}
+              <Image
+                src={slides[currentSlide].image}
+                alt={`${slides[currentSlide].title} — Mosi Media Solutions`}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                style={{ objectPosition: slides[currentSlide].imagePosition }}
+                loading="eager"
+                fetchPriority={currentSlide === 0 ? "high" : "auto"}
+              />
+            </motion.div>
+            <motion.div
+              key={`veil-${currentSlide}`}
+              aria-hidden="true"
+              initial={{ opacity: 0.45 }}
+              animate={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="absolute inset-0 z-[5] pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(125deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.88) 64%, rgba(152, 27, 40, 0.24) 100%)",
+              }}
             />
-          </div>
+          </AnimatePresence>
 
-          {/* Directional left-side gradient starting behind the text and fading to transparent */}
+          {/* Directional left-side gradient starting behind the text and reaching smoothly beyond it */}
           <div
             aria-hidden="true"
             className="absolute inset-0 z-10 pointer-events-none"
             style={{
               background:
-                "linear-gradient(90deg, rgba(5, 5, 7, 0.88) 0%, rgba(5, 5, 7, 0.68) 32%, rgba(5, 5, 7, 0.30) 50%, rgba(5, 5, 7, 0) 66%)",
+                "linear-gradient(90deg, rgba(5, 5, 7, 0.88) 0%, rgba(5, 5, 7, 0.72) 45%, rgba(5, 5, 7, 0.44) 68%, rgba(5, 5, 7, 0.16) 84%, rgba(5, 5, 7, 0) 95%)",
             }}
           />
 
           {/* Slide Text Content - Left Aligned */}
           <div className="relative z-30 w-full h-full flex items-center pt-20 sm:pt-24 lg:pt-20 pb-14 pointer-events-none">
             <div className="w-full max-w-[1600px] mx-auto px-10 md:px-14 lg:px-20 xl:pl-24 2xl:pl-28 flex justify-start">
-              <div
-                key={currentSlide}
-                className="relative z-20 max-w-2xl xl:max-w-3xl space-y-5"
-              >
-                <h1 className="text-[clamp(1.875rem,5vw,3.75rem)] font-semibold text-white font-heading leading-[1.05] gsap-heading drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
-                  {slides[currentSlide].title}
-                </h1>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="relative z-20 max-w-2xl xl:max-w-3xl space-y-5"
+                >
+                  <h1 className="text-[clamp(1.875rem,5vw,3.75rem)] font-semibold text-white font-heading leading-[1.05] gsap-heading drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
+                    {slides[currentSlide].title}
+                  </h1>
 
-                <p className="text-sm xl:text-base text-white tracking-wide font-normal leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
-                  {slides[currentSlide].desc}
-                </p>
+                  <p className="text-sm xl:text-base text-white tracking-wide font-normal leading-relaxed max-w-lg gsap-copy drop-shadow-[0_1px_6px_rgba(0,0,0,0.45)]">
+                    {slides[currentSlide].desc}
+                  </p>
 
-                <div className="pt-6 gsap-action pointer-events-auto flex flex-col sm:flex-row sm:items-center gap-3">
-                  <a
-                    href={slides[currentSlide].link}
-                    data-lead-cta
-                    className={`${primaryButton} px-6 py-3 text-[10px] uppercase tracking-[0.1em] premium-button`}
-                  >
-                    <span className="relative z-10">{slides[currentSlide].btnText}</span>
-                    <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/40 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm transition-all duration-300 hover:border-brand-accent hover:bg-brand-accent/10 hover:text-brand-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
-                  >
-                    Request a Quote
-                  </a>
-                </div>
-              </div>
+                  <div className="pt-6 gsap-action pointer-events-auto flex flex-col sm:flex-row sm:items-center gap-3">
+                    <a
+                      href={slides[currentSlide].link}
+                      data-lead-cta
+                      className={`${primaryButton} px-6 py-3 text-[10px] uppercase tracking-[0.1em] premium-button`}
+                    >
+                      <span className="relative z-10">{slides[currentSlide].btnText}</span>
+                      <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </a>
+                    <a
+                      href="#contact"
+                      className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/40 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm transition-all duration-300 hover:border-brand-accent hover:bg-brand-accent/10 hover:text-brand-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+                    >
+                      Request a Quote
+                    </a>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
 

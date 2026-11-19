@@ -121,7 +121,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
               <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#7f141f] font-bold">Recent Work</h3>
               <div data-stagger className="grid grid-cols-2 gap-2">
                 {recentWork.map((item) => (
-                  <Link key={item.src} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#050507]/12">
+                  <Link key={item.src} href="/projects" className="group relative aspect-square rounded-xl overflow-hidden border border-[#050507]/12">
                     <Image src={item.src} alt={item.label} fill sizes="(max-width:1023px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/20 transition-colors duration-300" />
                     <div className="absolute bottom-2 left-2">
@@ -140,8 +140,8 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                   { label: "Conference Production", href: "/conference-production#enquiry" },
                   { label: "Weddings & Elopements", href: "/services/weddings-elopements" },
                   { label: "Drone Services", href: "/services/drone" },
-                  { label: "Brand Campaign",        href: "/gallery?cat=Brand" },
-                  { label: "View Our Work",         href: "/gallery" },
+                  { label: "Signature Packages",    href: "/packages" },
+                  { label: "View Our Work",         href: "/projects" },
                 ].map((link) => (
                   <Link
                     key={link.label}
@@ -238,17 +238,17 @@ export default function ContactExperience({ initialService = "" }: { initialServ
               </div>
             )}
 
-            {/* Gallery preview strip below form */}
+            {/* Projects preview strip below form */}
             <div className="mt-6 grid grid-cols-4 gap-2">
               {["/mms/DSC_7551.jpg", "/mms/DSC_7589.jpg", "/mms/DSC_7640.jpg", "/mms/DSC_7703.jpg"].map((src, i) => (
-                <Link key={i} href="/gallery" className="group relative aspect-square rounded-xl overflow-hidden border border-[#050507]/12">
-                  <Image src={src} alt="gallery preview" fill sizes="(max-width:1023px) 25vw, 15vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
+                <Link key={i} href="/projects" className="group relative aspect-square rounded-xl overflow-hidden border border-[#050507]/12">
+                  <Image src={src} alt="project preview" fill sizes="(max-width:1023px) 25vw, 15vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-[#050507]/40 group-hover:bg-[#050507]/10 transition-colors duration-300" />
                 </Link>
               ))}
             </div>
             <p className="text-center mt-3 text-[10px] text-[#050507]/75">
-              <Link href="/gallery" className="hover:text-[#7f141f] font-medium transition-colors">View full gallery →</Link>
+              <Link href="/projects" className="hover:text-[#7f141f] font-medium transition-colors">View all projects →</Link>
             </p>
           </div>
         </div>

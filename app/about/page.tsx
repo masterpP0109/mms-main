@@ -149,7 +149,7 @@ export default function AboutPage() {
             <p className="text-sm text-[#050507]/90 leading-relaxed font-light">
               From the iconic Victoria Falls Hotel to conference facilities along the Zambezi, we know how to make the most of every space and deliver productions that match the significance of the setting.
             </p>
-            <Link href="/gallery?cat=Drone" className="inline-flex items-center gap-2 text-xs font-semibold text-[#7f141f] hover:text-[#050507] transition-colors">
+            <Link href="/services/drone" className="inline-flex items-center gap-2 text-xs font-semibold text-[#7f141f] hover:text-[#050507] transition-colors">
               See our Victoria Falls aerials
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -196,8 +196,8 @@ export default function AboutPage() {
       <section className="py-16 max-w-[1400px] mx-auto mms-gutter">
         <div data-reveal className="flex flex-wrap gap-4 items-end justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-semibold text-[#050507] font-heading">Selected Work</h2>
-          <Link href="/gallery" className="text-xs font-semibold text-[#7f141f] hover:text-[#050507] transition-colors flex items-center gap-1.5">
-            Full Gallery <ArrowRight className="w-3.5 h-3.5" />
+          <Link href="/projects" className="text-xs font-semibold text-[#7f141f] hover:text-[#050507] transition-colors flex items-center gap-1.5">
+            All Projects <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
         <div data-stagger className="grid grid-cols-2 md:grid-cols-5 gap-3">
@@ -210,7 +210,7 @@ export default function AboutPage() {
           ].map(({ src, tall }, i) => (
             <Link
               key={i}
-              href="/gallery"
+              href="/projects"
               className={`relative overflow-hidden rounded-2xl border border-[#050507]/12 group ${tall ? "row-span-2 aspect-[3/4]" : "aspect-square"}`}
             >
               <Image src={src} alt="work" fill sizes="(max-width:767px) 50vw, 20vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-105" />

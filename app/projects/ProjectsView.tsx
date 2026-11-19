@@ -21,9 +21,10 @@ const categories: Category[] = ["All", "Conference", "Wedding", "Brand", "Immers
 
 export default function ProjectsView({ projects }: { projects: ProjectCardData[] }) {
   const [active, setActive] = useState<Category>("All");
+  const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState<typeof projects[0] | null>(null);
   const allFiltered = active === "All" ? projects : projects.filter((p) => p.category === active);
-  const displayed = allFiltered.slice(0, 6);
+  const displayed = showAll ? allFiltered : allFiltered.slice(0, 6);
 
   const modalRef = useRef<HTMLDivElement>(null);
   useModalFocus(selected !== null, modalRef, () => setSelected(null));
@@ -58,7 +59,7 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
             <button
               key={cat}
               type="button"
-              onClick={() => setActive(cat)}
+              onClick={() => { setActive(cat); setShowAll(false); }}
               className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] font-semibold transition-all duration-300 cursor-pointer ${
                 active === cat
                   ? "bg-[#981b28] text-white shadow-sm"
@@ -142,18 +143,19 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
           ))}
         </div>
 
-        {allFiltered.length > 6 && (
+        {allFiltered.length > 6 && !showAll && (
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             <span className="text-xs text-[#050507]/75 font-medium">
               Showing {displayed.length} of {allFiltered.length} projects
             </span>
-            <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#7f141f]/35 text-[#050507] text-[11px] uppercase tracking-[0.18em] font-semibold hover:border-[#7f141f] hover:bg-[#7f141f] hover:text-white transition-all duration-300"
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#7f141f]/35 text-[#050507] text-[11px] uppercase tracking-[0.18em] font-semibold hover:border-[#7f141f] hover:bg-[#7f141f] hover:text-white transition-all duration-300 cursor-pointer"
             >
               View More Projects
               <ArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         )}
       </section>
@@ -203,8 +205,8 @@ export default function ProjectsView({ projects }: { projects: ProjectCardData[]
               <span className="relative z-10">Start a Project</span>
               <ArrowRight className="relative z-10 ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <Link href="/gallery" className="inline-flex items-center px-8 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300">
-              Browse Gallery
+            <Link href="/services" className="inline-flex items-center px-8 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300">
+              Explore Services
             </Link>
           </div>
         </div>

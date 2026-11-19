@@ -300,7 +300,7 @@ export default function Home() {
             className="absolute inset-0 z-10 pointer-events-none"
             style={{
               background:
-                "linear-gradient(90deg, rgba(5, 5, 7, 0.72) 0%, rgba(5, 5, 7, 0.45) 30%, rgba(5, 5, 7, 0.14) 48%, rgba(5, 5, 7, 0) 64%)",
+                "linear-gradient(90deg, rgba(5, 5, 7, 0.88) 0%, rgba(5, 5, 7, 0.68) 32%, rgba(5, 5, 7, 0.30) 50%, rgba(5, 5, 7, 0) 66%)",
             }}
           />
 
@@ -330,7 +330,7 @@ export default function Home() {
                   </a>
                   <a
                     href="#contact"
-                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/25 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm transition-all duration-300 hover:border-brand-accent hover:bg-brand-accent/10 hover:text-brand-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+                    className="inline-flex items-center justify-center rounded-full border border-white/30 bg-black/40 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm transition-all duration-300 hover:border-brand-accent hover:bg-brand-accent/10 hover:text-brand-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
                   >
                     Request a Quote
                   </a>

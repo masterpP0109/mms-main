@@ -11,7 +11,6 @@ import {
   additionalSpecialisedServices,
   homePackageExperiences,
   importantPackageInformation,
-  packageExperiences,
   packagePath,
   type PackageExperience,
   type PackageOption,
@@ -447,29 +446,6 @@ export default function PackagesCatalogue() {
               Request custom mix →
             </Link>
           </article>
-        </div>
-
-        <div style={{ marginTop: "2.75rem" }}>
-          <p className={styles.eyebrow}>Standalone Production</p>
-          <h3 className={styles.sectionTitle} style={{ fontSize: "clamp(1.35rem, 2.2vw, 1.75rem)" }}>
-            Drone &amp; Podcast Packages
-          </h3>
-          <div className={styles.secondaryGrid}>
-            {packageExperiences
-              .filter(item => item.slug === "drone" || item.slug === "podcasts")
-              .map(item => (
-                <article key={item.slug} className={styles.secondaryCard}>
-                  <div>
-                    <p className={styles.eyebrow}>{item.service}</p>
-                    <h3>{item.title}</h3>
-                    <p>{item.tagline}</p>
-                  </div>
-                  <Link href={packagePath(item.slug)} className={styles.secondaryBtn} style={{ width: "fit-content" }}>
-                    Explore {item.title} →
-                  </Link>
-                </article>
-              ))}
-          </div>
         </div>
       </section>
 

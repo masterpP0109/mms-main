@@ -436,19 +436,32 @@ function PackagesCatalogueInner() {
                 </div>
               )}
 
-              {/* Collapsed Optional Add-ons (only expanded when relevant) */}
+              {/* Collapsed Optional Add-ons (prominent maroon emphasis; expands when clicked) */}
               {category.optionalAddOns?.length ? (
                 <details className={styles.addOnsBar}>
                   <summary>
-                    <span>
-                      Optional add-ons available ({category.optionalAddOns.length} customisable extras)
+                    <span className={styles.addOnsSummaryLeft}>
+                      <span className={styles.addOnsBadge}>+ {category.optionalAddOns.length} Add-ons</span>
+                      <span>Optional add-ons available — customise your package</span>
                     </span>
-                    <ChevronDown size={18} aria-hidden="true" />
+                    <span className={styles.addOnsTogglePill}>
+                      <span>View add-ons</span>
+                      <ChevronDown size={16} aria-hidden="true" />
+                    </span>
                   </summary>
                   <div className={styles.addOnsBody}>
                     <ul className={styles.addOnsGrid}>
                       {category.optionalAddOns.map(addon => (
-                        <li key={addon}>{addon}</li>
+                        <li key={addon}>
+                          <span>+ {addon}</span>
+                          <button
+                            type="button"
+                            className={styles.addOnsItemBtn}
+                            onClick={() => openQuoteModal(category, "tailored", `Add-on: ${addon}`)}
+                          >
+                            Add to quote →
+                          </button>
+                        </li>
                       ))}
                     </ul>
                   </div>

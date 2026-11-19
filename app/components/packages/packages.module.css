@@ -44,8 +44,8 @@
 .heroTitleCompact { font-size: clamp(2rem, 4.2vw, 3.5rem) !important; line-height: 1.12 !important; max-width: 780px !important; }
 .heroLead { max-width: 620px !important; color: rgb(243 244 246 / .92) !important; font-size: 1.05rem !important; line-height: 1.65 !important; }
 
-/* Sticky Category Navigation Bar */
-.stickyNav { position: sticky; top: 68px; z-index: 30; background: rgb(255 255 255 / .95); backdrop-filter: blur(12px); border-bottom: 1px solid rgb(5 5 7 / .12); padding-block: .75rem; }
+/* Sticky Category Navigation Bar (clears fixed Navbar cleanly) */
+.stickyNav { position: sticky; top: 72px; z-index: 30; background: rgb(255 255 255 / .96); backdrop-filter: blur(12px); border-bottom: 1px solid rgb(5 5 7 / .12); padding-block: .75rem; }
 .stickyNavInner { width: min(100% - 2rem, 1240px); margin-inline: auto; display: flex; align-items: center; gap: .6rem; overflow-x: auto; scrollbar-width: none; }
 .stickyNavInner::-webkit-scrollbar { display: none; }
 .navPill { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .5rem 1.05rem; border-radius: 999px; border: 1px solid rgb(5 5 7 / .16); background: #f8f8f8; color: #111827; font-size: .82rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background-color .2s, border-color .2s, color .2s; }
@@ -100,15 +100,35 @@
 .compareTable thead th { border-top: 0; background: #f8f8f8; font-weight: 700; color: #050507; font-size: .92rem; }
 .compareTable tbody th { font-weight: 600; color: #374151; width: 170px; background: #fafafa; }
 
-/* Optional add-ons disclosure below cards */
-.addOnsBar { margin-top: 1.25rem; border: 1px solid rgb(5 5 7 / .12); border-radius: 1rem; background: #ffffff; }
-.addOnsBar summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 48px; padding: .85rem 1.25rem; cursor: pointer; font-size: .92rem; font-weight: 600; color: #111827; }
+/* Optional add-ons disclosure below cards — prominent maroon pulse & shimmer emphasis */
+@keyframes maroonPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgb(152 27 40 / .28), 0 6px 20px rgb(152 27 40 / .14); border-color: rgb(152 27 40 / .55); }
+  50% { box-shadow: 0 0 0 3px rgb(152 27 40 / .22), 0 10px 30px rgb(152 27 40 / .34); border-color: #981b28; }
+}
+@keyframes maroonSheen {
+  0% { transform: translateX(-120%); }
+  45%, 100% { transform: translateX(180%); }
+}
+.addOnsBar { position: relative; overflow: hidden; margin-top: 1.5rem; border: 2px solid #981b28; border-radius: 1.15rem; background: linear-gradient(135deg, #fff1f2 0%, #ffffff 58%, #ffe4e6 100%); box-shadow: 0 0 0 1px rgb(152 27 40 / .22), 0 8px 24px rgb(152 27 40 / .18); }
+.addOnsBar::before { content: ""; position: absolute; inset: 0; width: 45%; pointer-events: none; background: linear-gradient(105deg, transparent 10%, rgb(152 27 40 / .10) 50%, transparent 90%); transform: translateX(-120%); }
+.addOnsBar summary { position: relative; z-index: 1; list-style: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1rem; min-height: 54px; padding: .85rem 1.25rem; cursor: pointer; font-size: .94rem; font-weight: 600; color: #050507; }
 .addOnsBar summary::-webkit-details-marker { display: none; }
 .addOnsBar summary:focus-visible { outline: 2px solid #981b28; outline-offset: 2px; border-radius: 1rem; }
-.addOnsBody { padding: 0 1.25rem 1.25rem; border-top: 1px solid rgb(5 5 7 / .08); }
-.addOnsGrid { list-style: none; padding: 1rem 0 0; margin: 0; display: grid; gap: .55rem 1.5rem; }
-.addOnsGrid li { position: relative; padding-left: 1.1rem; color: #374151; font-size: .9rem; line-height: 1.5; }
-.addOnsGrid li::before { content: "+"; position: absolute; left: 0; top: 0; color: #7f141f; font-weight: 700; }
+.addOnsSummaryLeft { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .65rem; }
+.addOnsBadge { display: inline-flex; align-items: center; padding: .28rem .7rem; border-radius: 999px; background: #981b28; color: #ffffff; font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; box-shadow: 0 4px 12px rgb(152 27 40 / .32); }
+.addOnsTogglePill { display: inline-flex; align-items: center; gap: .4rem; padding: .42rem .95rem; border-radius: 999px; background: #981b28; color: #ffffff; font-size: .8rem; font-weight: 600; box-shadow: 0 4px 14px rgb(152 27 40 / .3); transition: background-color .2s, transform .2s; }
+.addOnsBar summary:hover .addOnsTogglePill { background: #7f141f; transform: translateY(-1px); }
+.addOnsBar[open] .addOnsTogglePill svg { transform: rotate(180deg); }
+.addOnsTogglePill svg { transition: transform .25s ease; }
+.addOnsBody { position: relative; z-index: 1; padding: 0 1.25rem 1.25rem; border-top: 1px solid rgb(152 27 40 / .15); background: #ffffff; }
+.addOnsGrid { list-style: none; padding: 1rem 0 0; margin: 0; display: grid; gap: .6rem 1.25rem; }
+.addOnsGrid li { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .55rem .8rem; border-radius: .75rem; border: 1px solid rgb(152 27 40 / .14); background: #fff9fa; color: #111827; font-size: .88rem; line-height: 1.45; }
+.addOnsItemBtn { flex-shrink: 0; border: 0; background: transparent; color: #981b28; font-size: .76rem; font-weight: 700; cursor: pointer; padding: .2rem .4rem; border-radius: .4rem; }
+.addOnsItemBtn:hover { background: rgb(152 27 40 / .1); }
+@media (prefers-reduced-motion: no-preference) {
+  .addOnsBar:not([open]) { animation: maroonPulse 2.4s ease-in-out infinite; }
+  .addOnsBar:not([open])::before { animation: maroonSheen 3.6s ease-in-out infinite; }
+}
 
 /* Additional Services (8 balanced cards: 4 cols desktop, 2 tablet, 1 mobile) */
 .specialisedGrid { display: grid; gap: 1.25rem; margin-top: 1.75rem; }
@@ -254,6 +274,7 @@
   .navAction { display: block; }
 }
 @media (min-width: 1024px) {
+  .stickyNav { top: 82px; }
   .signature { padding-block: 2rem 5rem; }
   .signatureLightBand { padding-block: 3rem 4.5rem; }
   .signatureLightBand .signature { padding-block: 0; }

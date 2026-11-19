@@ -46,6 +46,12 @@ export default function Navbar() {
 
   const isActive = (href: string) =>
     href === "/" || href === "/services" ? pathname === href : (pathname ?? "").startsWith(href);
+  const isLightHeaderRoute =
+    (pathname ?? "").startsWith("/packages") ||
+    pathname === "/services/weddings-elopements" ||
+    pathname === "/privacy" ||
+    (pathname ?? "").startsWith("/admin");
+  const useDarkLogo = scrolled || isLightHeaderRoute;
 
   return (
     <header className="site-header fixed top-0 left-0 right-0 z-50">
@@ -56,11 +62,11 @@ export default function Navbar() {
           aria-label="MMS Home"
         >
           <Image
-            src="/mmslogo.webp"
+            src={useDarkLogo ? "/mmslogo.webp" : "/mms/MMS%20LOGO.png"}
             alt="MMS Logo"
             width={220}
             height={64}
-            className="w-[88px] sm:w-[102px] lg:w-[114px] h-auto object-contain drop-shadow-[0_1px_8px_rgba(255,255,255,0.45)]"
+            className="w-[92px] sm:w-[108px] lg:w-[120px] h-auto object-contain"
             preload
           />
         </Link>

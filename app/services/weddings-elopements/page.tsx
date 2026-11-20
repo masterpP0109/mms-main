@@ -13,6 +13,7 @@ import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
 import { EnquiryLink, enquiryLink } from "@/app/components/services/ServiceSections";
 import WeddingPackagePanels from "@/app/components/services/WeddingPackagePanels";
+import WeddingStickyNav from "@/app/components/services/WeddingStickyNav";
 import styles from "@/app/components/services/services.module.css";
 import wStyles from "@/app/components/services/weddings.module.css";
 import {
@@ -52,15 +53,6 @@ const contact = enquiryLink(
   "Weddings & Elopements",
   "/services/weddings-elopements",
 );
-
-const sectionLinks = [
-  { href: "#destinations", label: "Destinations" },
-  { href: "#wedding-packages", label: "Wedding packages" },
-  { href: "#elopement-packages", label: "Elopement packages" },
-  { href: "#proposal-packages", label: "Proposal packages" },
-  { href: "#add-ons", label: "Add-ons" },
-  { href: "#package-information", label: "Important information" },
-];
 
 export default function WeddingsPage() {
   return (
@@ -107,24 +99,8 @@ export default function WeddingsPage() {
           </figure>
         </section>
 
-        {/* Discreet Section Navigation */}
-        <nav
-          aria-label="Page sections"
-          className={wStyles.sectionNavBar}
-        >
-          <div className={wStyles.sectionNavInner}>
-            <span className={wStyles.sectionNavLabel}>Contents</span>
-            {sectionLinks.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className={wStyles.sectionNavLink}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </nav>
+        {/* Sticky Pill Navigation Ribbon */}
+        <WeddingStickyNav enquiryHref={contact} />
 
         {/* 02 — The Full Introduction */}
         <section className={wStyles.bandBase} aria-labelledby="intro-title">

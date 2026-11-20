@@ -300,14 +300,14 @@ export default function WeddingsPage() {
               <figure className={wStyles.sectionSplitMedia}>
                 <div className={wStyles.sectionPhotoFrame}>
                   <Image
-                    src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7271.jpg"
-                    alt="Couple holding hands during an intimate outdoor ceremony under white parasols"
+                    src="/mms/mms/weddings/weddin%20and%20elopments/Golden%20Proposal%20at%20Victoria%20Falls.png"
+                    alt="Marriage proposal overlooking Victoria Falls at golden sunset"
                     fill
                     sizes="(max-width:959px) 92vw, 44vw"
                   />
                 </div>
                 <figcaption className={styles.caption}>
-                  Intimate outdoor celebration captured by Mosi Media Solutions.
+                  Golden-hour proposal overlooking Victoria Falls by Mosi Media Solutions.
                 </figcaption>
               </figure>
             </div>

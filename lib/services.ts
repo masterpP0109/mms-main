@@ -152,6 +152,8 @@ export const services = [
       "/mms/djServices/firstImg.png",
       "/mms/djServices/49b8034ebd2420fbd38a9309c786c635.jpg",
       "/mms/djServices/f0228365620c116f61cb2d909d7f22c6.jpg",
+      "/mms/djServices/dj-pioneer-closeup.jpg",
+      "/mms/djServices/dj-booth-setup.jpg",
     ],
     tag: "Entertainment",
     desc: "Professional DJ services with state-of-the-art sound systems, lighting integration and music curation for weddings, corporate events, conferences and celebrations.",

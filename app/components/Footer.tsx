@@ -43,6 +43,7 @@ export default function Footer() {
             <h4 className="text-xs uppercase tracking-widest text-[#7f141f] font-bold font-heading">Showcase</h4>
             <ul className="space-y-2 text-sm text-[#050507]/85 font-normal flex flex-col items-center md:items-start [&_a]:justify-center md:[&_a]:justify-start">
               <li><Link href="/projects" className="hover:text-[#7f141f] transition-colors">Featured Projects</Link></li>
+              <li><Link href="/gallery" className="hover:text-[#7f141f] transition-colors">Gallery</Link></li>
               <li><Link href="/packages/conferences" className="hover:text-[#7f141f] transition-colors">Conference &amp; Corporate Event Packages</Link></li>
               <li><Link href="/packages/weddings" className="hover:text-[#7f141f] transition-colors">Weddings and Social Events Packages</Link></li>
               <li><Link href="/packages/video-production" className="hover:text-[#7f141f] transition-colors">Video Production Packages</Link></li>

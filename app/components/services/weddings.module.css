@@ -814,3 +814,57 @@
     transition: none;
   }
 }
+
+/* Editorial photography for the three package categories. Images support the
+   existing stakeholder copy without entering or rearranging package panels. */
+.packageSectionEditorial {
+  display: grid;
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  align-items: center;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.packageSectionEditorial .sectionHeader {
+  min-width: 0;
+}
+
+.packageSectionFigure {
+  position: relative;
+  width: 100%;
+  min-height: 230px;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #e6ded9;
+}
+
+.packageSectionImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (min-width: 900px) {
+  .packageSectionEditorial {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  }
+
+  .packageSectionEditorialReverse {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  }
+
+  .packageSectionEditorialReverse .packageSectionFigure {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .packageSectionEditorialReverse .sectionHeader {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .packageSectionFigure {
+    aspect-ratio: 4 / 3;
+    max-height: 340px;
+  }
+}

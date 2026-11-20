@@ -147,14 +147,29 @@ export default function WeddingsPage() {
           aria-labelledby="destinations-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
-              <p className={styles.eyebrow}>1 · Victoria Falls &amp; Beyond</p>
-              <h2 id="destinations-title">Our exclusive wedding destinations</h2>
-              <p className={wStyles.sectionIntro}>
-                Each destination offers a different atmosphere, allowing couples
-                to choose a setting that reflects their personalities and love
-                story.
-              </p>
+            <div className={wStyles.sectionSplit}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>1 · Victoria Falls &amp; Beyond</p>
+                <h2 id="destinations-title">Our exclusive wedding destinations</h2>
+                <p className={wStyles.sectionIntro}>
+                  Each destination offers a different atmosphere, allowing couples
+                  to choose a setting that reflects their personalities and love
+                  story.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={`${wStyles.sectionPhotoFrame} ${wStyles.sectionPhotoPortrait}`}>
+                  <Image
+                    src="/mms/mms/weddings/weddin%20and%20elopments/IMG_3424.jpg"
+                    alt="Couple walking barefoot hand in hand beside the Zambezi River"
+                    fill
+                    sizes="(max-width:959px) 92vw, 38vw"
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Romantic riverside setting along the Zambezi by Mosi Media Solutions.
+                </figcaption>
+              </figure>
             </div>
             <div className={wStyles.destinationRows}>
               {weddingDestinations.map((dest, index) => (
@@ -244,14 +259,14 @@ export default function WeddingsPage() {
               <figure className={wStyles.sectionSplitMedia}>
                 <div className={wStyles.sectionPhotoFrame}>
                   <Image
-                    src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7269.jpg"
-                    alt="Bride and groom holding hands under white parasols during an intimate ceremony"
+                    src="/mms/mms/weddings/_DSC7059.jpg"
+                    alt="Bride and groom smiling together beneath a white floral arch beside the river at golden hour"
                     fill
                     sizes="(max-width:959px) 92vw, 44vw"
                   />
                 </div>
                 <figcaption className={styles.caption}>
-                  Intimate ceremony moments captured by Mosi Media Solutions.
+                  Intimate riverside elopement portrait by Mosi Media Solutions.
                 </figcaption>
               </figure>
             </div>
@@ -283,16 +298,16 @@ export default function WeddingsPage() {
                 </p>
               </div>
               <figure className={wStyles.sectionSplitMedia}>
-                <div className={`${wStyles.sectionPhotoFrame} ${wStyles.sectionPhotoPortrait}`}>
+                <div className={wStyles.sectionPhotoFrame}>
                   <Image
-                    src="/mms/mms/weddings/weddin%20and%20elopments/IMG_3424.jpg"
-                    alt="Couple walking barefoot hand in hand beside the Zambezi River"
+                    src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7271.jpg"
+                    alt="Couple holding hands during an intimate outdoor ceremony under white parasols"
                     fill
-                    sizes="(max-width:959px) 92vw, 38vw"
+                    sizes="(max-width:959px) 92vw, 44vw"
                   />
                 </div>
                 <figcaption className={styles.caption}>
-                  Romantic riverside portrait along the Zambezi by Mosi Media Solutions.
+                  Intimate outdoor celebration captured by Mosi Media Solutions.
                 </figcaption>
               </figure>
             </div>

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     url: "/services/weddings-elopements",
     images: [
       {
-        url: "/mms/wedding%2012.jpg",
+        url: "/mms/mms/weddings/weddin%20and%20elopments/wedding%2012.jpg",
         alt: "A couple walking hand in hand towards Victoria Falls",
       },
     ],
@@ -85,7 +85,7 @@ export default function WeddingsPage() {
           <figure className={wStyles.heroMedia}>
             <div className={styles.weddingPortrait}>
               <Image
-                src="/mms/wedding%2012.jpg"
+                src="/mms/mms/weddings/weddin%20and%20elopments/wedding%2012.jpg"
                 alt="A couple walking hand in hand towards Victoria Falls"
                 fill
                 sizes="(max-width:1023px) 90vw, 42vw"
@@ -93,8 +93,7 @@ export default function WeddingsPage() {
               />
             </div>
             <figcaption className={styles.caption}>
-              Wedding inspiration from our image library; shown for
-              illustration.
+              Wedding photography beside Victoria Falls by Mosi Media Solutions.
             </figcaption>
           </figure>
         </section>
@@ -193,13 +192,28 @@ export default function WeddingsPage() {
           aria-labelledby="wedding-packages-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
-              <p className={styles.eyebrow}>2 · Destination Celebrations</p>
-              <h2 id="wedding-packages-title">Exclusive wedding packages</h2>
-              <p className={wStyles.sectionIntro}>
-                Our wedding experiences cater to different celebrations, from
-                intimate ceremonies to luxurious destination weddings.
-              </p>
+            <div className={wStyles.sectionSplit}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>2 · Destination Celebrations</p>
+                <h2 id="wedding-packages-title">Exclusive wedding packages</h2>
+                <p className={wStyles.sectionIntro}>
+                  Our wedding experiences cater to different celebrations, from
+                  intimate ceremonies to luxurious destination weddings.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={wStyles.sectionPhotoFrame}>
+                  <Image
+                    src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7268.jpg"
+                    alt="Outdoor destination wedding ceremony with bride, groom, officiant, floral arch and guests"
+                    fill
+                    sizes="(max-width:959px) 92vw, 44vw"
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Outdoor wedding ceremony captured by Mosi Media Solutions.
+                </figcaption>
+              </figure>
             </div>
             <WeddingPackagePanels
               sectionId="wedding"
@@ -215,16 +229,31 @@ export default function WeddingsPage() {
           aria-labelledby="elopement-packages-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
-              <p className={styles.eyebrow}>3 · Just The Two Of You</p>
-              <h2 id="elopement-packages-title">Exclusive elopement packages</h2>
-              <p className={wStyles.sectionIntro}>
-                For couples who believe that getting married should be about the
-                two of them, our elopement experiences offer intimate, beautifully
-                curated celebrations. These packages are particularly suitable for
-                international visitors, honeymooners and couples looking for a
-                private wedding experience in Victoria Falls.
-              </p>
+            <div className={`${wStyles.sectionSplit} ${wStyles.sectionSplitReverse}`}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>3 · Just The Two Of You</p>
+                <h2 id="elopement-packages-title">Exclusive elopement packages</h2>
+                <p className={wStyles.sectionIntro}>
+                  For couples who believe that getting married should be about the
+                  two of them, our elopement experiences offer intimate, beautifully
+                  curated celebrations. These packages are particularly suitable for
+                  international visitors, honeymooners and couples looking for a
+                  private wedding experience in Victoria Falls.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={wStyles.sectionPhotoFrame}>
+                  <Image
+                    src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7269.jpg"
+                    alt="Bride and groom holding hands under white parasols during an intimate ceremony"
+                    fill
+                    sizes="(max-width:959px) 92vw, 44vw"
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Intimate ceremony moments captured by Mosi Media Solutions.
+                </figcaption>
+              </figure>
             </div>
             <WeddingPackagePanels
               sectionId="elopement"
@@ -240,17 +269,32 @@ export default function WeddingsPage() {
           aria-labelledby="proposal-packages-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
-              <p className={styles.eyebrow}>4 · Make the question unforgettable</p>
-              <h2 id="proposal-packages-title">Marriage proposal packages</h2>
-              <p className={wStyles.sectionIntro}>
-                A marriage proposal is one of life&apos;s most important moments.
-                Our proposal packages are designed to help you surprise your
-                partner with a beautifully planned, romantic and memorable
-                experience. From a private riverside arrangement to an elaborate
-                surprise proposal, we take care of the details while you focus on
-                asking the most important question.
-              </p>
+            <div className={wStyles.sectionSplit}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>4 · Make the question unforgettable</p>
+                <h2 id="proposal-packages-title">Marriage proposal packages</h2>
+                <p className={wStyles.sectionIntro}>
+                  A marriage proposal is one of life&apos;s most important moments.
+                  Our proposal packages are designed to help you surprise your
+                  partner with a beautifully planned, romantic and memorable
+                  experience. From a private riverside arrangement to an elaborate
+                  surprise proposal, we take care of the details while you focus on
+                  asking the most important question.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={`${wStyles.sectionPhotoFrame} ${wStyles.sectionPhotoPortrait}`}>
+                  <Image
+                    src="/mms/mms/weddings/weddin%20and%20elopments/IMG_3424.jpg"
+                    alt="Couple walking barefoot hand in hand beside the Zambezi River"
+                    fill
+                    sizes="(max-width:959px) 92vw, 38vw"
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Romantic riverside portrait along the Zambezi by Mosi Media Solutions.
+                </figcaption>
+              </figure>
             </div>
             <WeddingPackagePanels
               sectionId="proposal"

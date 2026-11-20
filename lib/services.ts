@@ -67,7 +67,7 @@ export const services = [
   },
   {
     title: "Live Streaming Production",
-    image: "/services%20images/Live%20Streaming%20Production.jpg",
+    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.34.08.jpeg",
     gallery: [
       "/mms/livestreaming/7DqC9xBqivpkVQKij53366-1706-80.jpg.jpeg",
       "/mms/livestreaming/71T8PEvLnJL._AC_SX569_.jpg.jpeg",
@@ -170,8 +170,6 @@ export const services = [
     image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.38.jpeg",
     gallery: [
       "/mms/djServices/firstImg.png",
-      "/mms/djServices/49b8034ebd2420fbd38a9309c786c635.jpg",
-      "/mms/djServices/f0228365620c116f61cb2d909d7f22c6.jpg",
       "/mms/mms/dj%20services%20and%20entertainment/DSC_7080.jpg",
       "/mms/mms/dj%20services%20and%20entertainment/DSC_7044.jpg",
     ],

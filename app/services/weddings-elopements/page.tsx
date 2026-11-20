@@ -83,12 +83,14 @@ export default function WeddingsPage() {
           </div>
 
           <figure className={wStyles.heroMedia}>
-            <div className={styles.weddingPortrait}>
+            <div className={wStyles.heroPhotoFrame}>
               <Image
                 src="/mms/mms/weddings/weddin%20and%20elopments/wedding%2012.jpg"
                 alt="A couple walking hand in hand towards Victoria Falls"
-                fill
+                width={1024}
+                height={768}
                 sizes="(max-width:1023px) 90vw, 42vw"
+                className={wStyles.fullBleedImage}
                 preload
               />
             </div>
@@ -162,8 +164,10 @@ export default function WeddingsPage() {
                   <Image
                     src="/mms/mms/weddings/weddin%20and%20elopments/IMG_3424.jpg"
                     alt="Couple walking barefoot hand in hand beside the Zambezi River"
-                    fill
+                    width={1200}
+                    height={1800}
                     sizes="(max-width:959px) 92vw, 38vw"
+                    className={wStyles.fullBleedImage}
                   />
                 </div>
                 <figcaption className={styles.caption}>
@@ -221,8 +225,10 @@ export default function WeddingsPage() {
                   <Image
                     src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7268.jpg"
                     alt="Outdoor destination wedding ceremony with bride, groom, officiant, floral arch and guests"
-                    fill
+                    width={1500}
+                    height={1000}
                     sizes="(max-width:959px) 92vw, 44vw"
+                    className={wStyles.fullBleedImage}
                   />
                 </div>
                 <figcaption className={styles.caption}>
@@ -261,8 +267,10 @@ export default function WeddingsPage() {
                   <Image
                     src="/mms/mms/weddings/_DSC7059.jpg"
                     alt="Bride and groom smiling together beneath a white floral arch beside the river at golden hour"
-                    fill
+                    width={1500}
+                    height={1000}
                     sizes="(max-width:959px) 92vw, 44vw"
+                    className={wStyles.fullBleedImage}
                   />
                 </div>
                 <figcaption className={styles.caption}>
@@ -302,8 +310,10 @@ export default function WeddingsPage() {
                   <Image
                     src="/mms/mms/weddings/weddin%20and%20elopments/Golden%20Proposal%20at%20Victoria%20Falls.png"
                     alt="Marriage proposal overlooking Victoria Falls at golden sunset"
-                    fill
+                    width={1408}
+                    height={1056}
                     sizes="(max-width:959px) 92vw, 44vw"
+                    className={wStyles.fullBleedImage}
                   />
                 </div>
                 <figcaption className={styles.caption}>

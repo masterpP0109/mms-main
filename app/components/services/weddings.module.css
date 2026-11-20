@@ -1,47 +1,170 @@
-.heroLead {
-  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+.weddingBrochure {
+  overflow-x: clip;
+}
+
+/* Editorial typography overrides scoped to the Weddings & Elopements brochure */
+.weddingBrochure h1 {
+  font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   font-weight: 500;
   color: #050507;
-  margin-bottom: 1rem;
+  margin-block: 1rem 1.35rem;
+}
+
+.weddingBrochure h2 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  color: #050507;
+  max-width: 26ch;
+  margin-bottom: 1.1rem;
+}
+
+.weddingBrochure h3 {
+  font-size: clamp(1.3125rem, 1.8vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: #050507;
+}
+
+.weddingBrochure p {
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  line-height: 1.65;
+  color: rgb(5 5 7 / 0.88);
+}
+
+.weddingBrochure :global([class*="eyebrow"]) {
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  margin-bottom: 0.85rem;
+}
+
+.weddingBrochure :global([class*="caption"]) {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgb(5 5 7 / 0.72);
+}
+
+.weddingBrochure :global([class*="button"]),
+.weddingBrochure :global([class*="textLink"]) {
+  font-size: 0.96875rem;
+  min-height: 44px;
+}
+
+/* Hero layout & spacing */
+.heroSection {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  padding-block: 6.5rem 3.5rem;
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.heroContent {
+  min-width: 0;
+}
+
+.heroLead {
+  font-size: clamp(1.15rem, 1.65vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #050507;
+  max-width: 56ch;
+  margin-bottom: 1.25rem;
 }
 
 .heroCopy {
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
+  max-width: 62ch;
 }
 
-.sectionDivider {
-  border-top: 1px solid rgb(5 5 7 / 0.12);
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.75rem;
+  margin-top: 2rem;
 }
 
+.heroMedia {
+  min-width: 0;
+  margin: 0;
+}
+
+.heroMedia figcaption {
+  margin-top: 0.85rem;
+}
+
+/* Full-bleed alternating editorial bands */
+.bandStone {
+  background: #eceae5;
+  border-top: 1px solid rgb(5 5 7 / 0.1);
+  border-bottom: 1px solid rgb(5 5 7 / 0.1);
+}
+
+.bandBase {
+  background: #e4e4e4;
+}
+
+.bandInner {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.sectionHeader {
+  max-width: 68ch;
+}
+
+.sectionIntro {
+  font-size: clamp(1.025rem, 1.25vw, 1.125rem);
+  line-height: 1.62;
+  color: rgb(5 5 7 / 0.86);
+}
+
+/* 1. Destinations */
 .destinationGrid {
   display: grid;
   gap: 1.5rem;
   margin-top: 2.5rem;
+  align-items: stretch;
 }
 
 .destinationCard {
-  padding: 2rem;
+  min-width: 0;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
   border: 1px solid rgb(5 5 7 / 0.12);
   border-radius: 1.25rem;
-  background: #efefef;
+  background: #f9f8f6;
+  box-shadow: 0 4px 18px rgb(5 5 7 / 0.04);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.9rem;
 }
 
 .destinationCard h3 {
-  font-size: 1.25rem;
-  color: #050507;
+  margin: 0;
+}
+
+.destinationCard p {
+  font-size: 1rem;
+  line-height: 1.6;
   margin: 0;
 }
 
 .destinationPerfectFor {
-  margin-top: auto;
-  padding-top: 0.9rem;
+  margin-top: auto !important;
+  padding-top: 1rem;
   border-top: 1px solid rgb(5 5 7 / 0.1);
-  font-size: 0.9rem;
-  color: rgb(5 5 7 / 0.85);
+  font-size: 0.9375rem !important;
+  line-height: 1.55 !important;
+  color: rgb(5 5 7 / 0.86);
 }
 
 .destinationPerfectFor strong {
@@ -50,49 +173,48 @@
 }
 
 .sectionNote {
-  margin-top: 1.75rem;
+  margin-top: 2rem;
   padding: 1.25rem 1.5rem;
-  border-left: 3px solid #7f141f;
-  background: #efefef;
+  border: 1px solid rgb(5 5 7 / 0.1);
+  border-left: 4px solid #7f141f;
+  background: #f9f8f6;
   border-radius: 0 1rem 1rem 0;
-  font-size: 0.92rem;
+  font-size: 0.9375rem !important;
+  line-height: 1.6 !important;
   color: rgb(5 5 7 / 0.88);
+  max-width: 78ch;
 }
 
+/* 2, 3, 4. Package cards — 2 wide columns on desktop, 1 column on tablet & mobile */
 .packagesGrid {
   display: grid;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.75rem;
   margin-top: 2.5rem;
-  align-items: stretch;
-}
-
-.packagesGridTwo {
-  display: grid;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-  align-items: stretch;
+  align-items: start;
 }
 
 .packageCard {
-  padding: 2rem;
+  min-width: 0;
+  padding: clamp(1.5rem, 3vw, 2.35rem);
   border: 1px solid rgb(5 5 7 / 0.14);
-  border-radius: 1.5rem;
-  background: #efefef;
+  border-radius: 1.35rem;
+  background: #f9f8f6;
+  box-shadow: 0 6px 24px rgb(5 5 7 / 0.045);
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  gap: 1.25rem;
 }
 
 .packageCardFeatured {
-  border-color: rgb(127 20 31 / 0.4);
-  box-shadow: 0 14px 36px rgb(5 5 7 / 0.08);
+  border-color: rgb(127 20 31 / 0.42);
+  box-shadow: 0 12px 32px rgb(127 20 31 / 0.07);
 }
 
 .packageHeader {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.6rem;
 }
 
 .packageMeta {
@@ -100,45 +222,41 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: 0.5rem 0.75rem;
 }
 
 .packageNumber {
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgb(5 5 7 / 0.68);
+  letter-spacing: 0.16em;
+  color: rgb(5 5 7 / 0.72);
   font-weight: 600;
 }
 
 .packageBadge {
   display: inline-flex;
   align-items: center;
-  padding: 0.3rem 0.75rem;
+  padding: 0.32rem 0.85rem;
   border-radius: 999px;
   background: rgb(127 20 31 / 0.1);
-  border: 1px solid rgb(127 20 31 / 0.25);
+  border: 1px solid rgb(127 20 31 / 0.28);
   color: #7f141f;
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .packageTitle {
-  font-size: 1.45rem;
-  line-height: 1.25;
-  color: #050507;
   margin: 0;
 }
 
 .packagePricing {
-  padding-block: 0.85rem;
+  padding-block: 1rem;
   border-block: 1px solid rgb(5 5 7 / 0.1);
 }
 
 .packagePrice {
-  font-size: clamp(1.85rem, 2.8vw, 2.35rem);
+  font-size: clamp(2rem, 2.6vw, 2.375rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   color: #050507;
@@ -146,24 +264,30 @@
 }
 
 .packagePriceNote {
-  margin-top: 0.35rem;
-  font-size: 0.8rem;
-  color: rgb(5 5 7 / 0.7);
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: rgb(5 5 7 / 0.72);
 }
 
 .packageDescription {
-  font-size: 0.95rem;
-  color: rgb(5 5 7 / 0.88);
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: rgb(5 5 7 / 0.9);
   margin: 0;
 }
 
+.packageInclusionsBlock {
+  padding-top: 0.25rem;
+}
+
 .packageSubheading {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   color: #7f141f;
   font-weight: 600;
-  margin: 0 0 0.65rem;
+  margin: 0 0 0.85rem;
 }
 
 .inclusionsList {
@@ -171,37 +295,37 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .inclusionsList li {
   display: flex;
   align-items: flex-start;
-  gap: 0.55rem;
-  font-size: 0.9rem;
-  line-height: 1.55;
-  color: rgb(5 5 7 / 0.86);
+  gap: 0.65rem;
+  font-size: 0.96875rem;
+  line-height: 1.52;
+  color: rgb(5 5 7 / 0.88);
 }
 
 .inclusionIcon {
   color: #7f141f;
   flex-shrink: 0;
-  margin-top: 0.22rem;
+  margin-top: 0.24rem;
 }
 
 .packageFooter {
-  margin-top: auto;
-  padding-top: 1.15rem;
+  padding-top: 1.25rem;
   border-top: 1px solid rgb(5 5 7 / 0.1);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 .recommendedLocations {
-  font-size: 0.86rem;
-  line-height: 1.55;
-  color: rgb(5 5 7 / 0.82);
+  font-size: 0.9375rem !important;
+  line-height: 1.55 !important;
+  color: rgb(5 5 7 / 0.84);
+  margin: 0;
 }
 
 .recommendedLocations strong {
@@ -213,13 +337,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  min-height: 44px;
-  padding: 0.75rem 1.25rem;
+  gap: 0.65rem;
+  min-height: 46px;
+  padding: 0.8rem 1.4rem;
   border-radius: 999px;
   background: #050507;
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: 0.96875rem;
   font-weight: 600;
   text-decoration: none;
   transition: background-color 0.2s ease, transform 0.2s ease;
@@ -229,6 +353,12 @@
   background: #7f141f;
 }
 
+.packageCta:focus-visible {
+  outline: 2px solid #7f141f;
+  outline-offset: 3px;
+}
+
+/* 5. Add-ons & additional services */
 .addonsGrid {
   display: grid;
   gap: 1.25rem;
@@ -236,40 +366,43 @@
 }
 
 .addonCard {
-  padding: 1.65rem;
+  min-width: 0;
+  padding: 1.6rem;
   border: 1px solid rgb(5 5 7 / 0.12);
-  border-radius: 1.25rem;
-  background: #efefef;
+  border-radius: 1.15rem;
+  background: #f9f8f6;
+  box-shadow: 0 3px 14px rgb(5 5 7 / 0.035);
 }
 
 .addonCard h3 {
-  font-size: 1.08rem;
+  font-size: 1.1875rem;
+  line-height: 1.3;
   color: #050507;
-  margin-bottom: 0.55rem;
+  margin: 0 0 0.55rem;
 }
 
 .addonCard p {
-  font-size: 0.92rem;
+  font-size: 0.96875rem;
+  line-height: 1.55;
   margin: 0;
 }
 
 .additionalBox {
   margin-top: 2rem;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
   border: 1px solid rgb(5 5 7 / 0.12);
   border-radius: 1.25rem;
-  background: #efefef;
+  background: #f9f8f6;
+  box-shadow: 0 4px 18px rgb(5 5 7 / 0.04);
 }
 
 .additionalBox h3 {
-  font-size: 1.18rem;
-  color: #050507;
-  margin-bottom: 1.25rem;
+  margin: 0 0 1.25rem;
 }
 
 .additionalList {
   display: grid;
-  gap: 0.75rem 2rem;
+  gap: 0.8rem 2.25rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -278,12 +411,13 @@
 .additionalList li {
   display: flex;
   align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.94rem;
-  line-height: 1.6;
+  gap: 0.65rem;
+  font-size: 0.96875rem;
+  line-height: 1.55;
   color: rgb(5 5 7 / 0.88);
 }
 
+/* 6. Signature Journey */
 .journeyGrid {
   display: grid;
   gap: 1.5rem;
@@ -291,38 +425,45 @@
 }
 
 .journeyCard {
-  padding: 2rem;
-  border-top: 2px solid #7f141f;
-  border-radius: 0 0 1.25rem 1.25rem;
-  background: #efefef;
-  border-right: 1px solid rgb(5 5 7 / 0.1);
-  border-bottom: 1px solid rgb(5 5 7 / 0.1);
-  border-left: 1px solid rgb(5 5 7 / 0.1);
+  min-width: 0;
+  padding: clamp(1.5rem, 2.5vw, 2.15rem);
+  border: 1px solid rgb(5 5 7 / 0.12);
+  border-top: 3px solid #7f141f;
+  border-radius: 0.5rem 0.5rem 1.25rem 1.25rem;
+  background: #f9f8f6;
+  box-shadow: 0 4px 18px rgb(5 5 7 / 0.04);
 }
 
 .journeyStage {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   color: #7f141f;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7rem;
 }
 
 .journeyCard h3 {
-  font-size: 1.3rem;
-  color: #050507;
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.75rem;
 }
 
+.journeyCard p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 7. Important Package Information */
 .infoBox {
   margin-top: 2rem;
-  padding: 2rem;
-  border: 1px solid rgb(5 5 7 / 0.14);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid rgb(5 5 7 / 0.12);
   border-left: 4px solid #7f141f;
   border-radius: 0 1.25rem 1.25rem 0;
-  background: #efefef;
+  background: #f9f8f6;
+  box-shadow: 0 4px 18px rgb(5 5 7 / 0.04);
+  max-width: 82ch;
 }
 
 .infoList {
@@ -330,25 +471,49 @@
   padding-left: 1.35rem;
   margin: 0;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
   color: rgb(5 5 7 / 0.88);
-  font-size: 0.95rem;
-  line-height: 1.75;
+  font-size: 0.96875rem;
+  line-height: 1.6;
+}
+
+/* 8. Booking & Enquiry closing */
+.closingInner {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  padding-block: clamp(4rem, 7vw, 6.5rem);
+  text-align: center;
+}
+
+.closingInner h2,
+.closingInner p {
+  max-width: 64ch;
+  margin-inline: auto;
+}
+
+.closingActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 2rem;
+  margin-top: 2rem;
 }
 
 .bookingTagline {
   font-weight: 600;
-  color: #7f141f;
-  margin-top: 1rem;
-  font-size: 1.05rem;
+  color: #7f141f !important;
+  margin-top: 1.1rem;
+  font-size: 1.1rem !important;
 }
 
 .bookingMeta {
-  margin-top: 2.25rem;
-  padding: 1.75rem;
+  margin-top: 2.5rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: 1.25rem;
   border: 1px solid rgb(5 5 7 / 0.12);
-  background: #efefef;
+  background: #f9f8f6;
+  box-shadow: 0 4px 18px rgb(5 5 7 / 0.04);
   display: grid;
   gap: 1rem;
   text-align: left;
@@ -356,12 +521,20 @@
   margin-inline: auto;
 }
 
+.bookingMeta > p {
+  margin: 0 0 0.25rem;
+  max-width: none;
+  font-weight: 500;
+  color: #050507;
+}
+
 .bookingMetaRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 0.85rem;
-  font-size: 0.95rem;
+  gap: 0.4rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.55;
   color: rgb(5 5 7 / 0.88);
 }
 
@@ -380,12 +553,19 @@
   text-underline-offset: 0.25rem;
 }
 
+.bookingMetaLink:focus-visible {
+  outline: 2px solid #7f141f;
+  outline-offset: 3px;
+}
+
 @media (min-width: 640px) {
-  .destinationGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .heroSection,
+  .bandInner,
+  .closingInner {
+    width: min(100% - 4.5rem, 1280px);
   }
 
-  .packagesGridTwo {
+  .destinationGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -398,20 +578,37 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .destinationGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
+@media (min-width: 960px) {
   .packagesGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .addonsGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
   }
 
   .journeyGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroSection {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4.5rem;
+    padding-block: 8.5rem 5rem;
+  }
+
+  .destinationGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .addonsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packageCta {
+    transition: none;
   }
 }

@@ -306,18 +306,18 @@ export default function WeddingsPage() {
                 </p>
               </div>
               <figure className={wStyles.sectionSplitMedia}>
-                <div className={wStyles.sectionPhotoFrame}>
+                <div className={`${wStyles.sectionPhotoFrame} ${wStyles.sectionPhotoPortrait}`}>
                   <Image
-                    src="/mms/mms/weddings/weddin%20and%20elopments/Golden%20Proposal%20at%20Victoria%20Falls.png"
-                    alt="Marriage proposal overlooking Victoria Falls at golden sunset"
-                    width={1408}
-                    height={1056}
-                    sizes="(max-width:959px) 92vw, 44vw"
+                    src="/mms/mms/weddings/IMG_2727.jpg"
+                    alt="Surprise marriage proposal with picnic setup beside the Zambezi River"
+                    width={1200}
+                    height={1500}
+                    sizes="(max-width:959px) 92vw, 38vw"
                     className={wStyles.fullBleedImage}
                   />
                 </div>
                 <figcaption className={styles.caption}>
-                  Golden-hour proposal overlooking Victoria Falls by Mosi Media Solutions.
+                  Riverside marriage proposal captured by Mosi Media Solutions.
                 </figcaption>
               </figure>
             </div>

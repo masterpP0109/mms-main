@@ -193,13 +193,25 @@ export default function WeddingsPage() {
           aria-labelledby="wedding-packages-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
+            <div className={wStyles.packageSectionEditorial}>
+              <div data-reveal className={wStyles.sectionHeader}>
               <p className={styles.eyebrow}>2 · Destination Celebrations</p>
               <h2 id="wedding-packages-title">Exclusive wedding packages</h2>
               <p className={wStyles.sectionIntro}>
                 Our wedding experiences cater to different celebrations, from
                 intimate ceremonies to luxurious destination weddings.
               </p>
+            </div>
+              <figure className={wStyles.packageSectionFigure}>
+                <Image
+                  src="/mms/_DSC7098.jpg"
+                  alt="Wedding party gathered beneath a floral ceremony arch"
+                  fill
+                  sizes="(max-width: 899px) 100vw, (max-width: 1280px) 38vw, 480px"
+                  className={wStyles.packageSectionImage}
+                  loading="lazy"
+                />
+              </figure>
             </div>
             <WeddingPackagePanels
               sectionId="wedding"
@@ -215,7 +227,8 @@ export default function WeddingsPage() {
           aria-labelledby="elopement-packages-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
+            <div className={`${wStyles.packageSectionEditorial} ${wStyles.packageSectionEditorialReverse}`}>
+              <div data-reveal className={wStyles.sectionHeader}>
               <p className={styles.eyebrow}>3 · Just The Two Of You</p>
               <h2 id="elopement-packages-title">Exclusive elopement packages</h2>
               <p className={wStyles.sectionIntro}>
@@ -225,6 +238,17 @@ export default function WeddingsPage() {
                 international visitors, honeymooners and couples looking for a
                 private wedding experience in Victoria Falls.
               </p>
+            </div>
+              <figure className={wStyles.packageSectionFigure}>
+                <Image
+                  src="/mms/wedding1.jpg"
+                  alt="Bride and groom sharing a quiet moment at sunset"
+                  fill
+                  sizes="(max-width: 899px) 100vw, (max-width: 1280px) 38vw, 480px"
+                  className={wStyles.packageSectionImage}
+                  loading="lazy"
+                />
+              </figure>
             </div>
             <WeddingPackagePanels
               sectionId="elopement"
@@ -240,7 +264,8 @@ export default function WeddingsPage() {
           aria-labelledby="proposal-packages-title"
         >
           <div className={wStyles.bandInner}>
-            <div data-reveal className={wStyles.sectionHeader}>
+            <div className={wStyles.packageSectionEditorial}>
+              <div data-reveal className={wStyles.sectionHeader}>
               <p className={styles.eyebrow}>4 · Make the question unforgettable</p>
               <h2 id="proposal-packages-title">Marriage proposal packages</h2>
               <p className={wStyles.sectionIntro}>
@@ -251,6 +276,17 @@ export default function WeddingsPage() {
                 surprise proposal, we take care of the details while you focus on
                 asking the most important question.
               </p>
+            </div>
+              <figure className={wStyles.packageSectionFigure}>
+                <Image
+                  src="/mms/DSC_0477.jpg"
+                  alt="Couple smiling together on a wooden terrace"
+                  fill
+                  sizes="(max-width: 899px) 100vw, (max-width: 1280px) 38vw, 480px"
+                  className={wStyles.packageSectionImage}
+                  loading="lazy"
+                />
+              </figure>
             </div>
             <WeddingPackagePanels
               sectionId="proposal"

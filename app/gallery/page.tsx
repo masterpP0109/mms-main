@@ -217,65 +217,34 @@ export default function GalleryPage() {
         </div>
       </div>
 
-      {/* Folder-Ordered Pinterest Masonry Sections */}
-      <div className="py-12 md:py-16 max-w-[1440px] mx-auto mms-gutter space-y-16">
-        {visibleSections.map((section) => {
-          const sectionOffset = flatVisibleItems.findIndex(
-            (item) => item.src === section.items[0]?.src,
-          );
-
-          return (
-            <section
-              key={section.category}
-              aria-labelledby={`gallery-section-${section.category}`}
+      {/* Folder-Ordered Pinterest Masonry Grid */}
+      <section className="py-12 md:py-16 max-w-[1440px] mx-auto mms-gutter">
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+          {flatVisibleItems.map((item, idx) => (
+            <button
+              key={item.src}
+              type="button"
+              onClick={() => setLightboxIndex(idx)}
+              className="group relative block w-full break-inside-avoid overflow-hidden rounded-2xl bg-[#d6d5d0] border border-[#050507]/10 shadow-sm hover:shadow-md transition-shadow duration-300 focus-visible:outline-2 focus-visible:outline-[#981b28] focus-visible:outline-offset-2 cursor-pointer"
+              aria-label={`View ${item.alt}`}
             >
-              <div className="mb-8 max-w-2xl">
-                <p className="text-xs uppercase tracking-[0.2em] text-[#7f141f] font-semibold mb-2">
-                  {section.eyebrow}
-                </p>
-                <h2
-                  id={`gallery-section-${section.category}`}
-                  className="text-3xl sm:text-4xl font-semibold text-[#050507] font-heading tracking-tight"
-                >
-                  {section.title}
-                </h2>
-                <p className="mt-2 text-sm sm:text-base text-[#050507]/80 leading-relaxed">
-                  {section.description}
-                </p>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt={item.alt}
+                loading={idx < 8 ? "eager" : "lazy"}
+                className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <span className="pointer-events-none absolute inset-0 bg-[#050507]/0 group-hover:bg-[#050507]/20 transition-colors duration-300 flex items-end justify-end p-3">
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-[#050507] shadow">
+                  <ZoomIn size={16} aria-hidden="true" />
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
 
-              <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                {section.items.map((item, idx) => {
-                  const globalIdx = sectionOffset + idx;
-                  return (
-                    <button
-                      key={item.src}
-                      type="button"
-                      onClick={() => setLightboxIndex(globalIdx)}
-                      className="group relative block w-full break-inside-avoid overflow-hidden rounded-2xl bg-[#d6d5d0] border border-[#050507]/10 shadow-sm hover:shadow-md transition-shadow duration-300 focus-visible:outline-2 focus-visible:outline-[#981b28] focus-visible:outline-offset-2 cursor-pointer"
-                      aria-label={`View ${item.alt}`}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={item.src}
-                        alt={item.alt}
-                        loading={globalIdx < 8 ? "eager" : "lazy"}
-                        className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
-                      <span className="pointer-events-none absolute inset-0 bg-[#050507]/0 group-hover:bg-[#050507]/20 transition-colors duration-300 flex items-end justify-end p-3">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-[#050507] shadow">
-                          <ZoomIn size={16} aria-hidden="true" />
-                        </span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            </section>
-          );
-        })}
-
-        <div className="pt-4 text-center">
+        <div className="mt-14 text-center">
           <Link
             href="/contact#enquiry"
             className="mms-button inline-flex items-center gap-2 px-7 py-3.5 text-sm"
@@ -284,7 +253,7 @@ export default function GalleryPage() {
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
-      </div>
+      </section>
 
       {/* Lightbox Modal */}
       <AnimatePresence>

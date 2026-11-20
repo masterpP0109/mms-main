@@ -87,9 +87,9 @@ export const services = [
   },
   {
     title: "Videography & Photography",
-    image: "/mms/videography/movie-camera-film-reel-clapper-board-wood-closeup-124522595.webp",
-   gallery: [
-      "/mms/videography/istockphoto-883163916-612x612.jpg.jpeg",
+    image: "/mms/mms/video%20production/IMG_2306.jpg",
+    gallery: [
+      "/mms/mms/video%20production/IMG_2300.jpg",
       "/services%20images/videography-photography.jpg",
       "/mms/videography/vlcsnap-2026-10-03-10h05m26s464.png",
     ],
@@ -127,7 +127,7 @@ export const services = [
   },
   {
     title: "Interactive Screens",
-    image: "/mms/interactiveScreens/OEM-ODM-86-Inch-Business-Meeting-Presentation-Interactive-LED-Touch-Screen-Monitor-White-Board.avif",
+    image: "/mms/mms/podium/interactive%20screens%20.jpeg",
     gallery: [
       "/mms/interactiveScreens/IMG_9220.jpeg",
       "/mms/interactiveScreens/IMG_9264.jpeg",
@@ -146,14 +146,34 @@ export const services = [
     href: "/contact",
   },
   {
+    title: "Digital Podiums",
+    image: "/mms/mms/podium/WhatsApp%20Image%202026-11-20%20at%2014.19.00.jpeg",
+    gallery: [
+      "/mms/mms/podium/WhatsApp%20Image%202026-11-20%20at%2014.19.00.jpeg",
+      "/mms/mms/podium/interactive%20screens%20.jpeg",
+      "/mms/interactiveScreens/IMG_9220.jpeg",
+    ],
+    tag: "Conference & Stage",
+    desc: "Branded digital podiums with integrated front-facing LED displays and presenter controls for conferences, summits, keynote stages and executive events.",
+    items: [
+      { label: "Front LED Branding", icon: Globe },
+      { label: "Presenter Display", icon: Play },
+      { label: "Stage Integration", icon: Video },
+      { label: "Custom Graphics", icon: PenTool },
+      { label: "On-Site Support", icon: Briefcase },
+    ],
+    cta: "Book Digital Podiums",
+    href: "/contact",
+  },
+  {
     title: "DJ Services",
-    image: "/mms/djServices/0d237a704ce0b4ec067317bc1e4f8f0a.jpg",
+    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.38.jpeg",
     gallery: [
       "/mms/djServices/firstImg.png",
       "/mms/djServices/49b8034ebd2420fbd38a9309c786c635.jpg",
       "/mms/djServices/f0228365620c116f61cb2d909d7f22c6.jpg",
-      "/mms/djServices/dj-pioneer-closeup.jpg",
-      "/mms/djServices/dj-booth-setup.jpg",
+      "/mms/mms/dj%20services%20and%20entertainment/DSC_7080.jpg",
+      "/mms/mms/dj%20services%20and%20entertainment/DSC_7044.jpg",
     ],
     tag: "Entertainment",
     desc: "Professional DJ services with state-of-the-art sound systems, lighting integration and music curation for weddings, corporate events, conferences and celebrations.",

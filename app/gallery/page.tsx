@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,38 +9,121 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useModalFocus } from "../components/useModalFocus";
 
+type GalleryCategory = "Corporate" | "Weddings" | "Social Events";
+type FilterCategory = "All" | GalleryCategory;
+
 interface GalleryItem {
   src: string;
   alt: string;
+  category: GalleryCategory;
 }
 
-const galleryItems: GalleryItem[] = [
-  { src: "/mms/mms/gallery/DSC_3531.jpg", alt: "Mosi Media Solutions gallery photograph 1" },
-  { src: "/mms/mms/gallery/DSC_3548.jpg", alt: "Mosi Media Solutions gallery photograph 2" },
-  { src: "/mms/mms/gallery/DSC_3722.jpg", alt: "Mosi Media Solutions gallery photograph 3" },
-  { src: "/mms/mms/gallery/DSC_3908.jpg", alt: "Mosi Media Solutions gallery photograph 4" },
-  { src: "/mms/mms/gallery/DSC_7044.jpg", alt: "Mosi Media Solutions gallery photograph 5" },
-  { src: "/mms/mms/gallery/DSC_7080.jpg", alt: "Mosi Media Solutions gallery photograph 6" },
-  { src: "/mms/mms/gallery/DSC_7504.jpg", alt: "Mosi Media Solutions gallery photograph 7" },
-  { src: "/mms/mms/gallery/DSC_7941-1.jpg", alt: "Mosi Media Solutions gallery photograph 8" },
-  { src: "/mms/mms/gallery/IMG_0600.jpg", alt: "Mosi Media Solutions gallery photograph 9" },
-  { src: "/mms/mms/gallery/IMG_2300.jpg", alt: "Mosi Media Solutions gallery photograph 10" },
-  { src: "/mms/mms/gallery/IMG_2306.jpg", alt: "Mosi Media Solutions gallery photograph 11" },
-  { src: "/mms/mms/gallery/IMG_4524.jpg", alt: "Mosi Media Solutions gallery photograph 12" },
-  { src: "/mms/mms/gallery/IMG_4641.jpg", alt: "Mosi Media Solutions gallery photograph 13" },
-  { src: "/mms/mms/gallery/IMG_8846.jpg", alt: "Mosi Media Solutions gallery photograph 14" },
-  { src: "/mms/mms/gallery/untitled-7266.jpg", alt: "Mosi Media Solutions gallery photograph 15" },
-  { src: "/mms/mms/gallery/untitled-7271.jpg", alt: "Mosi Media Solutions gallery photograph 16" },
-  { src: "/mms/mms/gallery/vlcsnap-2026-11-19-12h18m48s038.png", alt: "Mosi Media Solutions production still 1" },
-  { src: "/mms/mms/gallery/vlcsnap-2026-11-19-14h45m41s499%20-%20Copy.png", alt: "Mosi Media Solutions production still 2" },
-  { src: "/mms/mms/gallery/vlcsnap-2026-11-19-14h45m51s096.png", alt: "Mosi Media Solutions production still 3" },
-  { src: "/mms/mms/gallery/wedding1.jpg", alt: "Mosi Media Solutions wedding celebration" },
-  { src: "/mms/mms/gallery/_DSC8310.jpg", alt: "Mosi Media Solutions gallery photograph 21" },
+interface GallerySection {
+  category: GalleryCategory;
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: GalleryItem[];
+}
+
+const corporateItems: GalleryItem[] = [
+  { src: "/mms/mms/gallery/corporate/DSC_1213.jpg", alt: "Corporate event coverage 1", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/DSC_9848.jpg", alt: "Corporate event coverage 2", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/DSC_9868.jpg", alt: "Corporate event coverage 3", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/DSC_9892.jpg", alt: "Corporate event coverage 4", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/IMG_0600.jpg", alt: "Corporate event coverage 5", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/IMG_8703.jpg", alt: "Corporate event coverage 6", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/IMG_8846.jpg", alt: "Corporate event coverage 7", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/_DSC8272.jpg", alt: "Corporate event coverage 8", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/_DSC8310.jpg", alt: "Corporate event coverage 9", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h02m26s119.png", alt: "Corporate production frame 1", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h06m01s029.png", alt: "Corporate production frame 2", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h09m37s469.png", alt: "Corporate production frame 3", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h10m19s045.png", alt: "Corporate production frame 4", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h22m47s454.png", alt: "Corporate production frame 5", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h36m08s903.png", alt: "Corporate production frame 6", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h39m18s938.png", alt: "Corporate production frame 7", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h45m41s499.png", alt: "Corporate production frame 8", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h45m41s499%20-%20Copy.png", alt: "Corporate production frame 9", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h45m51s096.png", alt: "Corporate production frame 10", category: "Corporate" },
+];
+
+const weddingItems: GalleryItem[] = [
+  { src: "/mms/mms/gallery/weddings/DSC_2505.jpg", alt: "Wedding & elopement photography 1", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_2689%20(2).jpg", alt: "Wedding & elopement photography 2", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_2778.jpg", alt: "Wedding & elopement photography 3", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_2790.jpg", alt: "Wedding & elopement photography 4", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_3722.jpg", alt: "Wedding & elopement photography 5", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_3908.jpg", alt: "Wedding & elopement photography 6", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/IMG_2727.jpg", alt: "Wedding & proposal photography 7", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7262.jpg", alt: "Wedding & elopement photography 8", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7266.jpg", alt: "Wedding & elopement photography 9", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7268.jpg", alt: "Wedding & elopement photography 10", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7271.jpg", alt: "Wedding & elopement photography 11", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/vlcsnap-2026-11-19-12h18m48s038.png", alt: "Wedding production frame", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/wedding1.jpg", alt: "Wedding celebration", category: "Weddings" },
+];
+
+const socialEventItems: GalleryItem[] = [
+  { src: "/mms/mms/gallery/Social%20Events/DSC_3531.jpg", alt: "Social event photography 1", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/DSC_3548.jpg", alt: "Social event photography 2", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/DSC_7504.jpg", alt: "Social event photography 3", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/DSC_7941-1.jpg", alt: "Social event photography 4", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/IMG_4524.jpg", alt: "Social event photography 5", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/IMG_4641.jpg", alt: "Social event photography 6", category: "Social Events" },
+];
+
+const gallerySections: GallerySection[] = [
+  {
+    category: "Corporate",
+    eyebrow: "01 · Conferences & Business",
+    title: "Corporate",
+    description:
+      "Conferences, summits, executive panels, live stage production and corporate events.",
+    items: corporateItems,
+  },
+  {
+    category: "Weddings",
+    eyebrow: "02 · Love Stories",
+    title: "Weddings",
+    description:
+      "Destination weddings, intimate elopements and marriage proposals in Victoria Falls.",
+    items: weddingItems,
+  },
+  {
+    category: "Social Events",
+    eyebrow: "03 · Celebrations",
+    title: "Social Events",
+    description:
+      "Private parties, live entertainment, DJ productions and special celebrations.",
+    items: socialEventItems,
+  },
+];
+
+const filterCategories: FilterCategory[] = [
+  "All",
+  "Corporate",
+  "Weddings",
+  "Social Events",
 ];
 
 export default function GalleryPage() {
+  const [activeCategory, setActiveCategory] = useState<FilterCategory>("All");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const visibleSections = useMemo(
+    () =>
+      activeCategory === "All"
+        ? gallerySections
+        : gallerySections.filter((s) => s.category === activeCategory),
+    [activeCategory],
+  );
+
+  const flatVisibleItems = useMemo(
+    () => visibleSections.flatMap((s) => s.items),
+    [visibleSections],
+  );
 
   useModalFocus(lightboxIndex !== null, modalRef, () => setLightboxIndex(null));
 
@@ -49,22 +132,22 @@ export default function GalleryPage() {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
         setLightboxIndex((prev) =>
-          prev === null ? null : (prev + 1) % galleryItems.length,
+          prev === null ? null : (prev + 1) % flatVisibleItems.length,
         );
       } else if (e.key === "ArrowLeft") {
         setLightboxIndex((prev) =>
           prev === null
             ? null
-            : (prev - 1 + galleryItems.length) % galleryItems.length,
+            : (prev - 1 + flatVisibleItems.length) % flatVisibleItems.length,
         );
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [lightboxIndex]);
+  }, [lightboxIndex, flatVisibleItems.length]);
 
   const activeItem =
-    lightboxIndex !== null ? galleryItems[lightboxIndex] : null;
+    lightboxIndex !== null ? flatVisibleItems[lightboxIndex] ?? null : null;
 
   return (
     <div className="min-h-screen bg-[#e4e4e4] text-[#050507] font-sans">
@@ -74,7 +157,7 @@ export default function GalleryPage() {
       <section className="relative min-h-[48vh] flex items-end overflow-hidden bg-black pt-28 pb-12">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/mms/mms/gallery/DSC_7941-1.jpg"
+            src="/mms/mms/gallery/Social%20Events/DSC_7941-1.jpg"
             alt="MMS Gallery"
             fill
             sizes="100vw"
@@ -98,46 +181,110 @@ export default function GalleryPage() {
               Gallery
             </h1>
             <p className="text-sm md:text-base text-brand-foreground/80 font-light leading-relaxed">
-              Moments captured across weddings, live productions, destinations and celebrations in Victoria Falls.
+              Moments captured across corporate productions, weddings and social events in Victoria Falls.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Pinterest-style Masonry Grid */}
-      <section className="py-12 md:py-16 max-w-[1440px] mx-auto mms-gutter">
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-          {galleryItems.map((item, idx) => (
-            <button
-              key={item.src}
-              type="button"
-              onClick={() => setLightboxIndex(idx)}
-              className="group relative block w-full break-inside-avoid overflow-hidden rounded-2xl bg-[#d6d5d0] border border-[#050507]/10 shadow-sm hover:shadow-md transition-shadow duration-300 focus-visible:outline-2 focus-visible:outline-[#981b28] focus-visible:outline-offset-2 cursor-pointer"
-              aria-label={`View ${item.alt}`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={item.src}
-                alt={item.alt}
-                loading={idx < 8 ? "eager" : "lazy"}
-                className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <span className="pointer-events-none absolute inset-0 bg-[#050507]/0 group-hover:bg-[#050507]/20 transition-colors duration-300 flex items-end justify-end p-3">
-                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-[#050507] shadow">
-                  <ZoomIn size={16} aria-hidden="true" />
-                </span>
-              </span>
-            </button>
-          ))}
+      {/* Sticky Category Filter Ribbon */}
+      <div className="sticky top-[72px] lg:top-[82px] z-30 bg-white/95 backdrop-blur-md border-b border-[#050507]/12 py-3">
+        <div className="max-w-[1440px] mx-auto mms-gutter flex items-center gap-2.5 overflow-x-auto scrollbar-none">
+          {filterCategories.map((cat) => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setActiveCategory(cat);
+                  setLightboxIndex(null);
+                }}
+                aria-pressed={isActive}
+                className={`shrink-0 min-h-[44px] px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+                  isActive
+                    ? "bg-[#981b28] text-white"
+                    : "bg-[#f8f8f8] border border-[#050507]/16 text-[#111827] hover:border-[#981b28] hover:text-[#981b28]"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+          <span className="ml-auto text-xs font-medium text-[#050507]/65 pl-4 border-l border-[#050507]/15 shrink-0">
+            {flatVisibleItems.length} photos
+          </span>
         </div>
+      </div>
 
-        <div className="mt-14 text-center">
-          <Link href="/contact#enquiry" className="mms-button inline-flex items-center gap-2 px-7 py-3.5 text-sm">
+      {/* Folder-Ordered Pinterest Masonry Sections */}
+      <div className="py-12 md:py-16 max-w-[1440px] mx-auto mms-gutter space-y-16">
+        {visibleSections.map((section) => {
+          const sectionOffset = flatVisibleItems.findIndex(
+            (item) => item.src === section.items[0]?.src,
+          );
+
+          return (
+            <section
+              key={section.category}
+              aria-labelledby={`gallery-section-${section.category}`}
+            >
+              <div className="mb-8 max-w-2xl">
+                <p className="text-xs uppercase tracking-[0.2em] text-[#7f141f] font-semibold mb-2">
+                  {section.eyebrow}
+                </p>
+                <h2
+                  id={`gallery-section-${section.category}`}
+                  className="text-3xl sm:text-4xl font-semibold text-[#050507] font-heading tracking-tight"
+                >
+                  {section.title}
+                </h2>
+                <p className="mt-2 text-sm sm:text-base text-[#050507]/80 leading-relaxed">
+                  {section.description}
+                </p>
+              </div>
+
+              <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                {section.items.map((item, idx) => {
+                  const globalIdx = sectionOffset + idx;
+                  return (
+                    <button
+                      key={item.src}
+                      type="button"
+                      onClick={() => setLightboxIndex(globalIdx)}
+                      className="group relative block w-full break-inside-avoid overflow-hidden rounded-2xl bg-[#d6d5d0] border border-[#050507]/10 shadow-sm hover:shadow-md transition-shadow duration-300 focus-visible:outline-2 focus-visible:outline-[#981b28] focus-visible:outline-offset-2 cursor-pointer"
+                      aria-label={`View ${item.alt}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                        loading={globalIdx < 8 ? "eager" : "lazy"}
+                        className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                      <span className="pointer-events-none absolute inset-0 bg-[#050507]/0 group-hover:bg-[#050507]/20 transition-colors duration-300 flex items-end justify-end p-3">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-[#050507] shadow">
+                          <ZoomIn size={16} aria-hidden="true" />
+                        </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+
+        <div className="pt-4 text-center">
+          <Link
+            href="/contact#enquiry"
+            className="mms-button inline-flex items-center gap-2 px-7 py-3.5 text-sm"
+          >
             <span>Plan your event with MMS</span>
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
-      </section>
+      </div>
 
       {/* Lightbox Modal */}
       <AnimatePresence>
@@ -167,8 +314,8 @@ export default function GalleryPage() {
               onClick={(e) => {
                 e.stopPropagation();
                 setLightboxIndex(
-                  (lightboxIndex - 1 + galleryItems.length) %
-                    galleryItems.length,
+                  (lightboxIndex - 1 + flatVisibleItems.length) %
+                    flatVisibleItems.length,
                 );
               }}
               aria-label="Previous image"
@@ -193,7 +340,7 @@ export default function GalleryPage() {
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                setLightboxIndex((lightboxIndex + 1) % galleryItems.length);
+                setLightboxIndex((lightboxIndex + 1) % flatVisibleItems.length);
               }}
               aria-label="Next image"
               className="absolute right-3 sm:right-6 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"

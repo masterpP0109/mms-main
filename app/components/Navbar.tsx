@@ -49,8 +49,8 @@ export default function Navbar() {
     href === "/" || href === "/services" ? pathname === href : (pathname ?? "").startsWith(href);
 
   return (
-    <header className="site-header fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
+    <header className={`site-header fixed top-0 left-0 right-0 z-50 ${scrolled ? "site-header--scrolled" : ""}`}>
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="relative z-50 flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.03]"
@@ -84,7 +84,9 @@ export default function Navbar() {
                     className={`nav-item relative px-2.5 py-2.5 text-[10px] 2xl:text-[11px] uppercase tracking-[.06em] ${
                       isActive(item.href)
                         ? "active text-white font-semibold"
-                        : "text-[#050507]/85 hover:text-[#7f141f] font-medium"
+                        : scrolled
+                          ? "text-white/90 hover:text-white font-medium"
+                          : "text-[#050507]/85 hover:text-[#7f141f] font-medium"
                     }`}
                   >
                     {isActive(item.href) && (
@@ -102,7 +104,7 @@ export default function Navbar() {
 
               <button
                 type="button"
-                className="nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 text-[#050507]"
+                className={`nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 ${scrolled ? "text-white" : "text-[#050507]"}`}
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label={mobileOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileOpen}

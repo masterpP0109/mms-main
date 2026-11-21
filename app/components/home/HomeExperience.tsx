@@ -209,7 +209,7 @@ export default function Home() {
     {
       image: "/mms/DSC_9244.jpg",
       category: "Live Production",
-      title: "Global Summit Production",
+      title: "Conference and Seminar Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
       tags: ["Event Production", "Live Streaming", "AV Staging"],
       link: "/gallery"
@@ -225,17 +225,9 @@ export default function Home() {
     {
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
       category: "Corporate Event",
-      title: "Luxury Brand Campaign",
+      title: "Brand Campaigns",
       desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
       tags: ["Corporate Events", "Digital Displays", "Live Capture"],
-      link: "/gallery"
-    },
-    {
-      image: "/mms/_MG_0072.jpg",
-      category: "Immersive Media",
-      title: "Immersive Media Production",
-      desc: "360 capture, drone sequences and podcast experiences that transformed events into shareable stories.",
-      tags: ["Immersive Tech", "Drone Cinematography", "360 Capture"],
       link: "/gallery"
     }
   ];

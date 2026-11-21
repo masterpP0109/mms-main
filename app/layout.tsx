@@ -23,10 +23,62 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, view
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "https://www.mosimediasolutions.com"),
-  openGraph: { type: "website", siteName: "Mosi Media Solutions", images: [{ url: "/victoria_falls_banner.png", alt: "Victoria Falls" }] },
-  title: "MMS | Conference & Seminar Production Victoria Falls",
-  description: "Mosi Media Solutions provides professional conference, seminar and event production for ministries, government agencies, international organisations and professional institutions.",
-  keywords: ["conference production Victoria Falls", "seminar production Zimbabwe", "event audiovisual services", "conference live streaming"],
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", siteName: "Mosi Media Solutions", images: [{ url: "/victoria_falls_banner.png", alt: "Victoria Falls, Zimbabwe — Mosi Media Solutions" }] },
+  title: "Conference & Event Management Victoria Falls | Mosi Media Solutions",
+  description: "Mosi Media Solutions (MMS) — end-to-end conference organisers, corporate event management, audiovisual production, LED screen hire, simultaneous interpretation equipment and livestreaming in Victoria Falls, Zimbabwe and Southern Africa.",
+  keywords: [
+    "conference organisers Victoria Falls",
+    "event management company Victoria Falls",
+    "conference planning services Zimbabwe",
+    "corporate event management Zimbabwe",
+    "conference production Victoria Falls",
+    "conference audiovisual services Zimbabwe",
+    "corporate event planners Victoria Falls",
+    "conference equipment hire Victoria Falls",
+    "professional conference organiser Zimbabwe",
+    "conference live streaming Zimbabwe",
+    "corporate retreats Victoria Falls",
+    "hybrid conference production Zimbabwe",
+    "international conference organisers Zimbabwe",
+    "LED screen hire Victoria Falls",
+    "simultaneous interpretation equipment Zimbabwe",
+    "digital podiums Zimbabwe",
+    "drone cinematography Victoria Falls",
+    "wedding photography Victoria Falls",
+  ],
+};
+
+const organizationStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Mosi Media Solutions",
+  alternateName: "MMS",
+  url: "https://www.mosimediasolutions.com",
+  description: "End-to-end conference organisers, corporate event management, audiovisual production, LED screen hire, simultaneous interpretation and media production partner in Victoria Falls, Zimbabwe.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Victoria Falls",
+    addressCountry: "ZW",
+  },
+  areaServed: [
+    { "@type": "City", name: "Victoria Falls" },
+    { "@type": "City", name: "Harare" },
+    { "@type": "City", name: "Bulawayo" },
+    { "@type": "Country", name: "Zimbabwe" },
+    { "@type": "Country", name: "South Africa" },
+    { "@type": "Country", name: "Botswana" },
+    { "@type": "Country", name: "Zambia" },
+  ],
+  serviceType: [
+    "Conference Management",
+    "Corporate Event Planning",
+    "Audiovisual Production",
+    "LED Screen Rental",
+    "Simultaneous Interpretation Equipment",
+    "Live Streaming Production",
+    "Drone Photography & Videography",
+  ],
 };
 
 export default function RootLayout({
@@ -41,6 +93,7 @@ export default function RootLayout({
       className="h-full antialiased dark"
     >
       <body className={`${poppins.variable} ${inter.variable} min-h-full flex flex-col bg-[#050507] text-[#f3f4f6]`}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData).replace(/</g, "\\u003c") }} />
         <MotionProvider>
           <ScrollEffects />
           <CampaignCapture />

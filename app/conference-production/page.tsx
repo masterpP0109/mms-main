@@ -99,7 +99,7 @@ export default function ConferencesAndEventsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#050507]/85 via-transparent to-transparent" />
         <div className="relative z-10 max-w-[1600px] mx-auto mms-gutter w-full pt-28 pb-16">
           <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-semibold block mb-4">
-            Conference &amp; Corporate Events
+            Conference &amp; Corporate Event Management · Victoria Falls, Zimbabwe
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-semibold text-white font-heading leading-[1.05] max-w-4xl mb-4">
             Conferences and Events
@@ -108,10 +108,11 @@ export default function ConferencesAndEventsPage() {
             Exceptional Events. Seamless Experiences. Unforgettable Connections.
           </p>
           <p className="text-sm md:text-base text-brand-foreground/80 font-light leading-relaxed max-w-2xl mb-8">
-            At Mosi Media Solutions, we specialise in the planning, coordination,
-            production and management of professional conferences, corporate
-            gatherings and business events — bringing together creativity,
-            technology, hospitality and professional event management.
+            From international conferences and executive meetings to corporate
+            retreats and business summits, Mosi Media Solutions brings together
+            professional event planning, audiovisual production, simultaneous
+            interpretation, livestreaming and delegate logistics in Victoria
+            Falls, Zimbabwe and across Southern Africa.
           </p>
           <div className="flex flex-wrap gap-4">
             <a

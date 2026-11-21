@@ -17,6 +17,13 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
+  keywords: [
+    "conference packages Zimbabwe",
+    "corporate event packages Victoria Falls",
+    "wedding packages Victoria Falls",
+    "video production packages Zimbabwe",
+    "drone packages Victoria Falls",
+  ],
   alternates: { canonical: "/packages" },
   openGraph: {
     title,

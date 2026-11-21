@@ -166,7 +166,7 @@ export default function Home() {
     {
       title: "Drone Packages",
       icon: Video,
-      image: "/services%20images/Drone%20Services.jpg",
+      image: "/mms/drone/landscape-photography-5.webp",
       alt: "Illustrative image of a drone above a city",
       desc: "Aerial photography and videography for venues, tourism and events, subject to permissions.",
       href: "/services/drone"

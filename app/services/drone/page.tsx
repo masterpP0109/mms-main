@@ -37,8 +37,8 @@ const DRONE_MEDIA = {
     alt: "Expansive aerial panorama across open landscape and waterways",
   },
   overview: {
-    src: "/mms/drone/Untitled-design-3-scaled.webp",
-    alt: "Professional aerial drone photography and filming operations",
+    src: "/mms/drone/landscape-photography-8.webp",
+    alt: "Aerial landscape framing over river and wilderness",
     caption: "Aerial perspectives and commercial operations from our library.",
   },
   servicesShowcase: [
@@ -53,14 +53,14 @@ const DRONE_MEDIA = {
       caption: "Agricultural & environmental land survey",
     },
     {
-      src: "/mms/drone/landscape-photography-8.webp",
-      alt: "Aerial landscape framing over river and wilderness",
+      src: "/mms/drone/Untitled-design-3-scaled.webp",
+      alt: "Professional aerial drone photography and filming operations",
       caption: "Landscape & destination storytelling",
     },
   ],
   operations: {
-    src: "/mms/drone/istockphoto-1188996771-612x612.jpg",
-    alt: "Professional remote drone operator controlling flight operations",
+    src: "/mms/drone/landscape-photography-15.webp",
+    alt: "Expansive aerial panorama across open landscape and waterways",
     caption: "Certified flight operations and on-site mission planning.",
   },
 } as const;

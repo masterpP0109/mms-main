@@ -13,6 +13,7 @@ import { useModalFocus } from "../components/useModalFocus";
 import { serviceFeatureIcons } from "@/lib/service-icons";
 import type { ServiceCardData } from "@/lib/content-types";
 import WeddingsFeature from "../components/services/WeddingsFeature";
+import FitImage from "../components/FitImage";
 
 const primaryButton = "mms-button group";
 
@@ -85,11 +86,11 @@ export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
                  {/* Primary image */}
                 <div className={`relative rounded-3xl overflow-hidden border border-[#050507]/10 aspect-[4/3] group bg-[#efefef] ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
-                  <Image
+                  <FitImage
                     src={service.image}
                     alt={service.heroAlt || service.title}
-                    fill sizes="(max-width:1023px) 100vw, 50vw"
-                    className="object-contain object-center transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width:1023px) 100vw, 50vw"
+                    className="transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute bottom-4 left-4 z-20">
                     <span className="text-xs uppercase tracking-[0.25em] bg-white/95 text-[#7f141f] border border-[#050507]/10 font-semibold shadow-sm px-3 py-1.5 rounded-full">
@@ -127,7 +128,7 @@ export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }
             <div className={`grid gap-3 ${service.gallery.length === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"}`}>
               {service.gallery.map((img, i) => (
                 <div key={i} className="relative aspect-[16/9] rounded-2xl overflow-hidden border border-[#050507]/12 group bg-[#efefef] flex items-center justify-center">
-                  <Image src={img} alt={`${service.title} ${i + 1}`} fill sizes={service.gallery.length === 4 ? "(max-width:767px) 50vw, 25vw" : "33vw"} className="object-contain transition-transform duration-500 group-hover:scale-105" />
+                  <FitImage src={img} alt={`${service.title} ${i + 1}`} sizes={service.gallery.length === 4 ? "(max-width:767px) 50vw, 25vw" : "33vw"} className="transition-transform duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-[#050507]/5 group-hover:bg-transparent transition-colors duration-300" />
                 </div>
               ))}
@@ -172,7 +173,7 @@ onClick={() => setSelected(null)}
             className="relative w-full max-w-4xl detail-panel overflow-y-auto glass-panel rounded-3xl border border-brand-accent/20 shadow-2xl"
           >
             <div className="relative aspect-[16/9] overflow-hidden rounded-t-3xl bg-[#050507]">
-              <Image src={selected.image} alt={selected.heroAlt || selected.title} fill sizes="(max-width:960px) 100vw, 896px" className="object-contain object-center" />
+              <FitImage src={selected.image} alt={selected.heroAlt || selected.title} sizes="(max-width:960px) 100vw, 896px" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/70 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4">
                 <span className="text-xs uppercase tracking-[0.25em] bg-brand-accent/20 text-brand-accent border border-brand-accent/30 px-3 py-1.5 rounded-full">
@@ -197,7 +198,7 @@ onClick={() => setSelected(null)}
               <div className={`grid gap-3 pt-2 ${selected.gallery.length === 4 ? "grid-cols-2 md:grid-cols-4" : "grid-cols-3"}`}>
                 {selected.gallery.map((img, i) => (
                   <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-xl border border-brand-accent/10 bg-[#050507]">
-                    <Image src={img} alt={`${selected.title} ${i + 1}`} fill sizes="(max-width:960px) 33vw, 299px" className="object-contain object-center" />
+                    <FitImage src={img} alt={`${selected.title} ${i + 1}`} sizes="(max-width:960px) 33vw, 299px" />
                     <div className="absolute inset-0 bg-[#050507]/20" />
                   </div>
                 ))}
@@ -245,11 +246,11 @@ onClick={() => setSelected(null)}
                 className="bg-[#efefef] rounded-2xl border border-[#050507]/12 shadow-sm overflow-hidden hover:border-[#7f141f]/40 transition-all duration-300 group"
               >
                 {addon.label === "Drone Cinematography" ? <Link href="/services/drone" className="block rounded-2xl" aria-label="Explore Drone Services">
-                  <div className="relative h-40 overflow-hidden bg-[#e4e4e4]"><Image src={addon.img} alt="Illustrative image of a drone" fill sizes="(max-width:639px) 100vw, 33vw" className="object-contain object-center" /></div>
+                  <div className="relative h-40 overflow-hidden bg-[#e4e4e4]"><FitImage src={addon.img} alt="Illustrative image of a drone" sizes="(max-width:639px) 100vw, 33vw" /></div>
                   <div className="p-5"><h3 className="text-lg font-semibold text-[#050507] mb-1.5">{addon.label}</h3><p className="text-base text-[#050507]/85 leading-relaxed">{addon.desc}</p><span className="inline-flex items-center gap-2 mt-4 text-[#7f141f] font-semibold text-sm">Explore Drone Services <ArrowRight size={16} aria-hidden="true" /></span></div>
                 </Link> : <>
                 <div className="relative h-40 overflow-hidden bg-[#e4e4e4]">
-                  <Image src={addon.img} alt={addon.label} fill sizes="(max-width:639px) 100vw, (max-width:1023px) 50vw, 33vw" className="object-contain object-center transition-transform duration-500 group-hover:scale-105" />
+                  <FitImage src={addon.img} alt={addon.label} sizes="(max-width:639px) 100vw, (max-width:1023px) 50vw, 33vw" className="transition-transform duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/30 to-transparent" />
                   <div className="absolute bottom-3 left-4">
                     <div className="w-10 h-10 rounded-full bg-brand-accent/20 flex items-center justify-center border border-brand-accent/25">

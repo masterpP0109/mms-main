@@ -5,6 +5,7 @@ import SignatureExperiences from "../packages/SignatureExperiences";
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import FitImage from "../FitImage";
 import Link from "next/link";
 import { useHomeMotion } from "./useHomeMotion";
 import { motion, AnimatePresence } from "framer-motion";
@@ -124,7 +125,7 @@ export default function Home() {
     {
       title: "Conference Microphone & Interpretation Equipment",
       icon: Mic,
-      image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.39%20(1).jpeg",
+      image: "/services%20images/5e3c3df339009497f72d40842dd6c19b.jpg",
       alt: "Conference microphones and interpretation booth setup",
       desc: "Conference microphones and simultaneous interpretation systems for multilingual summits and institutional events.",
       href: "/services"
@@ -514,12 +515,11 @@ export default function Home() {
             {services.slice(0, 6).map((service) => (
               <Link key={service.title} href={service.href} data-lift className="group min-w-0 flex flex-col rounded-2xl" aria-label={`Learn more about ${service.title}`}>
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-5 border border-[#050507]/8 bg-[#efefef]">
-                  <Image
+                  <FitImage
                     src={service.image}
                     alt={service.alt}
-                    fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                    className="transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-3 left-3">
                     <div className="w-10 h-10 rounded-full border border-[#050507]/10 bg-white/95 shadow-sm flex items-center justify-center">

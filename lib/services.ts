@@ -6,7 +6,7 @@ export const contentSlug = (title: string) =>
 export const services = [
   {
     title: "Conference Microphone & Interpretation Equipment",
-    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.39%20(1).jpeg",
+    image: "/services%20images/5e3c3df339009497f72d40842dd6c19b.jpg",
     gallery: [
       "/mms/conferenceServicesImagesGallery/How-To-Choose-A-Wireless-Interpretation-System-For-Large-Venues.jpg.jpeg",
       "/mms/conferenceServicesImagesGallery/images%20(62).jpg.jpeg",
@@ -67,9 +67,9 @@ export const services = [
   },
   {
     title: "Live Streaming Production",
-    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.34.08.jpeg",
+    image: "/mms/mms/dj%20services%20and%20entertainment/live%20streaming%20.jpeg",
     gallery: [
-      "/mms/livestreaming/7DqC9xBqivpkVQKij53366-1706-80.jpg.jpeg",
+      "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.34.08.jpeg",
       "/mms/livestreaming/71T8PEvLnJL._AC_SX569_.jpg.jpeg",
       "/mms/livestreaming/photo-1607968565043-36af90dde238.jpg.jpeg",
     ],
@@ -127,7 +127,7 @@ export const services = [
   },
   {
     title: "Interactive Screens",
-    image: "/mms/mms/podium/interactive%20screens%20.jpeg",
+    image: "/mms/interactiveScreens/OEM-ODM-86-Inch-Business-Meeting-Presentation-Interactive-LED-Touch-Screen-Monitor-White-Board.avif",
     gallery: [
       "/mms/interactiveScreens/IMG_9220.jpeg",
       "/mms/interactiveScreens/IMG_9264.jpeg",
@@ -149,9 +149,9 @@ export const services = [
     title: "Digital Podiums",
     image: "/mms/mms/podium/WhatsApp%20Image%202026-11-20%20at%2014.19.00.jpeg",
     gallery: [
-      "/mms/mms/podium/WhatsApp%20Image%202026-11-20%20at%2014.19.00.jpeg",
-      "/mms/mms/podium/interactive%20screens%20.jpeg",
-      "/mms/interactiveScreens/IMG_9220.jpeg",
+      "/mms/mms/dj%20services%20and%20entertainment/digital%20podium.jpeg",
+      "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.39%20(1).jpeg",
+      "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.39.jpeg",
     ],
     tag: "Conference & Stage",
     desc: "Branded digital podiums with integrated front-facing LED displays and presenter controls for conferences, summits, keynote stages and executive events.",
@@ -167,10 +167,10 @@ export const services = [
   },
   {
     title: "DJ Services",
-    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.38.jpeg",
+    image: "/mms/mms/dj%20services%20and%20entertainment/DSC_7080.jpg",
     gallery: [
       "/mms/djServices/firstImg.png",
-      "/mms/mms/dj%20services%20and%20entertainment/DSC_7080.jpg",
+      "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.25.38.jpeg",
       "/mms/mms/dj%20services%20and%20entertainment/DSC_7044.jpg",
     ],
     tag: "Entertainment",

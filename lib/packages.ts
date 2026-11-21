@@ -659,8 +659,8 @@ export const packageExperiences: PackageExperience[] = [
     headline: "A different view.\nA bigger story.",
     intro:
       "A place is more than a point on a map. Reveal its setting, its scale and the way it connects to the world around it.",
-    image: "/victoria_falls_banner.png",
-    imageAlt: "A panoramic landscape across Victoria Falls",
+    image: "/mms/drone/landscape-photography-15.webp",
+    imageAlt: "Aerial view over African river and open landscape captured by drone",
     valueTitle: "Let the setting speak.",
     value:
       "Discuss aerial stills and moving sequences that help people understand a place before they arrive. Every brief begins with a location and feasibility review.",
@@ -670,8 +670,8 @@ export const packageExperiences: PackageExperience[] = [
       { title: "Plan for the platform", text: "Shape the brief around your website, campaign or social publishing needs." },
     ],
     examples: [
-      { image: "/victoria_falls_banner.png", alt: "Victoria Falls and its surrounding landscape", title: "A sense of place", text: "Consider establishing views for tourism, hospitality or a location-led story." },
-      { image: "/mms/vic%20falls%20bridge.jpg", alt: "Landscape and bridge near Victoria Falls", title: "Context beyond the frame", text: "Discuss how an aerial sequence could connect a subject to its wider surroundings." },
+      { image: "/mms/drone/Untitled-design-3-scaled.webp", alt: "Cinematic drone filming and aerial videography perspective", title: "A sense of place", text: "Consider establishing views for tourism, hospitality or a location-led story." },
+      { image: "/mms/drone/landscape-photography-5.webp", alt: "Dramatic landscape and terrain aerial perspective", title: "Context beyond the frame", text: "Discuss how an aerial sequence could connect a subject to its wider surroundings." },
     ],
     options: [
       { id: "aerial-stills", name: "Aerial Perspectives", for: "A place told through still images", coverage: "A location-led aerial photography brief", finish: "Discuss image selection, formats and intended use", planning: "Location, access and permission review" },

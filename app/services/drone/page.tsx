@@ -33,35 +33,35 @@ const contact = enquiryLink("Drone Services", "/services/drone");
  */
 const DRONE_MEDIA = {
   hero: {
-    src: "/victoria_falls_banner.png",
-    alt: "Expansive aerial panorama across Victoria Falls and the Zambezi River",
+    src: "/mms/drone/landscape-photography-15.webp",
+    alt: "Expansive aerial panorama across open landscape and waterways",
   },
   overview: {
-    src: "/services%20images/Drone%20Services.jpg",
-    alt: "Commercial camera drone in flight above an urban development site at golden hour",
-    caption: "Illustrative aerial operations imagery from our library.",
+    src: "/mms/drone/Untitled-design-3-scaled.webp",
+    alt: "Professional aerial drone photography and filming operations",
+    caption: "Aerial perspectives and commercial operations from our library.",
   },
   servicesShowcase: [
     {
-      src: "/mms/bridge.jpg",
-      alt: "Aerial perspective of the Victoria Falls Bridge spanning the Batoka Gorge",
-      caption: "Infrastructure & landmark aerial perspective",
+      src: "/mms/drone/68dcd1b8454602a81a36b50c_4-Powerlines-Inspection-3d-option-180-kb-1024x682.jpeg",
+      alt: "Aerial survey and industrial infrastructure inspection",
+      caption: "Infrastructure & industrial inspection perspective",
     },
     {
-      src: "/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg",
-      alt: "Scenic sunrise view across Victoria Falls",
-      caption: "Tourism & destination storytelling",
+      src: "/mms/drone/future-farming-agriculture-drone.avif",
+      alt: "Agricultural drone operation and survey across fields",
+      caption: "Agricultural & environmental land survey",
     },
     {
-      src: "/mms/_MG_2920.jpg",
-      alt: "Golden hour sky over open landscape",
-      caption: "Landscape & environmental framing",
+      src: "/mms/drone/landscape-photography-8.webp",
+      alt: "Aerial landscape framing over river and wilderness",
+      caption: "Landscape & destination storytelling",
     },
   ],
   operations: {
-    src: "/mms/vic%20falls%20bridge.jpg",
-    alt: "High-angle view above the Victoria Falls Bridge and Batoka Gorge",
-    caption: "Illustrative gorge & bridge imagery from our library.",
+    src: "/mms/drone/istockphoto-1188996771-612x612.jpg",
+    alt: "Professional remote drone operator controlling flight operations",
+    caption: "Certified flight operations and on-site mission planning.",
   },
 } as const;
 

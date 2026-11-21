@@ -129,7 +129,7 @@ export const services = [
     title: "Interactive Screens",
     image: "/mms/interactiveScreens/OEM-ODM-86-Inch-Business-Meeting-Presentation-Interactive-LED-Touch-Screen-Monitor-White-Board.avif",
     gallery: [
-      "/mms/interactiveScreens/IMG_9220.jpeg",
+      "/mms/mms/dj%20services%20and%20entertainment/vertical%20screens.jpeg",
       "/mms/interactiveScreens/IMG_9264.jpeg",
       "/mms/interactiveScreens/types-of-digital-signage.webp",
     ],

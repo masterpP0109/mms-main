@@ -125,7 +125,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
                   { label: "Weddings & Elopements", href: "/services/weddings-elopements" },
                   { label: "Drone Services", href: "/services/drone" },
                   { label: "Signature Packages",    href: "/packages" },
-                  { label: "View Our Work",         href: "/projects" },
+                  { label: "View Our Work",         href: "/gallery" },
                 ].map((link) => (
                   <Link
                     key={link.label}
@@ -224,7 +224,7 @@ export default function ContactExperience({ initialService = "" }: { initialServ
             )}
 
             <p className="text-center mt-5 text-[10px] text-[#050507]/75">
-              <Link href="/projects" className="hover:text-[#7f141f] font-medium transition-colors">View all projects →</Link>
+              <Link href="/gallery" className="hover:text-[#7f141f] font-medium transition-colors">View our gallery →</Link>
             </p>
           </div>
         </div>

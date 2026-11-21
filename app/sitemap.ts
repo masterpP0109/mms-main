@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { db } from "@/lib/db";
 import { packageExperiences, packagePath } from "@/lib/packages";
 import { siteOrigin } from "@/lib/site-metadata";
+import { PROJECTS_ENABLED } from "@/lib/site-flags";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Failed to load services for sitemap");
   }
   try {
-    projects = await db.project.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } });
+    if (PROJECTS_ENABLED) projects = await db.project.findMany({ where: { published: true }, select: { slug: true, updatedAt: true } });
   } catch {
     console.error("Failed to load projects for sitemap");
   }
@@ -30,7 +31,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/services/special-effects",
     "/packages",
     ...packageExperiences.map(item => packagePath(item.slug)),
-    "/projects",
+    ...(PROJECTS_ENABLED ? ["/projects"] : []),
     "/gallery",
     "/contact",
     "/conference-production",

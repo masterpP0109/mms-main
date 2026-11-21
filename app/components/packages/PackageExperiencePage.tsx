@@ -222,7 +222,7 @@ export default function PackageExperiencePage({ experience: e }: { experience: P
               Mosi Media Solutions brings media production and event technology together in Victoria Falls, Zimbabwe. Explore our published work or review our package guidelines.
             </p>
             <div className={s.actions}>
-              <Link className={styles.glassButton} href="/projects">
+              <Link className={styles.glassButton} href="/gallery">
                 Explore published MMS work
               </Link>
               <Link className={styles.glassButton} href="/packages#package-info">

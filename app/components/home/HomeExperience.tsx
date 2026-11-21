@@ -203,7 +203,7 @@ export default function Home() {
       title: "Victoria Falls Wedding Film",
       desc: "An emotional, intimate film captured across waterfall light and golden celebration.",
       tags: ["Cinematography", "Editing", "Color Grading"],
-      link: "/projects"
+      link: "/gallery"
     },
     {
       image: "/mms/DSC_9244.jpg",
@@ -211,7 +211,7 @@ export default function Home() {
       title: "Global Summit Production",
       desc: "A fully produced conference experience with multiple screens, live streaming and branded stages.",
       tags: ["Event Production", "Live Streaming", "AV Staging"],
-      link: "/projects"
+      link: "/gallery"
     },
     {
       image: "/mms/DSC_7607.jpg",
@@ -219,7 +219,7 @@ export default function Home() {
       title: "Corporate Event Experience",
       desc: "Interactive screens, digital podiums and branded media that kept guests engaged throughout.",
       tags: ["Brand Strategy", "Motion Design", "Content Creation"],
-      link: "/projects"
+      link: "/gallery"
     },
     {
       image: "/mms/Victoria-Falls-Video-Conference-Hire.webp",
@@ -227,7 +227,7 @@ export default function Home() {
       title: "Luxury Brand Campaign",
       desc: "Creative ads, motion design and polished visuals for a launch that moved audiences across channels.",
       tags: ["Corporate Events", "Digital Displays", "Live Capture"],
-      link: "/projects"
+      link: "/gallery"
     },
     {
       image: "/mms/_MG_0072.jpg",
@@ -235,7 +235,7 @@ export default function Home() {
       title: "Immersive Media Production",
       desc: "360 capture, drone sequences and podcast experiences that transformed events into shareable stories.",
       tags: ["Immersive Tech", "Drone Cinematography", "360 Capture"],
-      link: "/projects"
+      link: "/gallery"
     }
   ];
 

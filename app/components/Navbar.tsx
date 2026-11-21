@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import { useModalFocus } from "./useModalFocus";
+import { PROJECTS_ENABLED } from "@/lib/site-flags";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -19,7 +20,7 @@ const navLinks = [
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-];
+].filter(link => PROJECTS_ENABLED || link.href !== "/projects");
 
 export default function Navbar() {
   const pathname = usePathname();

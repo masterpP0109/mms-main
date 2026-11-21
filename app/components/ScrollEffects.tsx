@@ -42,10 +42,50 @@ export default function ScrollEffects() {
       { rootMargin: "0px 0px -10%", threshold: 0.12 },
     );
 
+    const handleAnchorClick = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      const anchor = (event.target as Element | null)?.closest("a[href]");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (!href || href === "#") return;
+
+      let hash = "";
+      if (href.startsWith("#")) {
+        hash = href.slice(1);
+      } else {
+        try {
+          const url = new URL(href, window.location.href);
+          if (url.origin === window.location.origin && url.pathname === window.location.pathname && url.hash.length > 1) {
+            hash = url.hash.slice(1);
+          }
+        } catch {
+          return;
+        }
+      }
+      if (!hash) return;
+
+      const target = document.getElementById(decodeURIComponent(hash));
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
+      if (window.location.hash !== `#${hash}`) {
+        window.history.pushState(null, "", `#${hash}`);
+      }
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+
     const frame = requestAnimationFrame(() => targets.forEach((target) => observer.observe(target)));
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      document.removeEventListener("click", handleAnchorClick);
     };
   }, [pathname]);
 

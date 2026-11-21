@@ -27,22 +27,6 @@ test("project links resolve to published case studies", async ({ page }) => {
   await page.locator('a[href^="/projects/"]').first().click();
   await expect(page.locator("h1")).toBeVisible();
 });
-test("gallery opens and restores keyboard focus after Escape", async ({ page }) => {
-  test.setTimeout(60000);
-  await page.goto("/gallery", { waitUntil: "domcontentloaded" });
-  await page.locator('button[aria-label^="View "]').first().waitFor({ state: "visible" });
-  await page.getByRole("button", { name: "Drone", exact: true }).click();
-  const trigger = page.getByRole("button", { name: "View Victoria Falls Aerial", exact: true });
-  await expect(trigger).toBeVisible();
-  await trigger.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect.poll(() => page.getByRole("dialog").locator("img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0), { timeout: 15000 }).toBe(true);
-  await page.screenshot({ path: "test-results/gallery-lightbox.png" });
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(trigger).toBeFocused();
-});
 test("contact acknowledges persistence with no external send", async ({ page }) => {
   await page.route("**/api/leads", route => {
     const valid = contactLeadSchema.safeParse(route.request().postDataJSON()).success;

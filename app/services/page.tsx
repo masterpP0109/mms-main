@@ -1,7 +1,21 @@
 import type { Metadata } from "next";
 import { db } from "@/lib/db";
 import ServicesView from "./ServicesView";
-export const metadata: Metadata = { title: 'Services | MMS', description: 'Conference and event production, audiovisual equipment and creative media services.', alternates: { canonical: "/services" } };
+export const metadata: Metadata = {
+  title: "Conference AV, LED Screens & Event Services Victoria Falls | MMS",
+  description: "Hire conference audiovisual services, LED screens, PA sound systems, simultaneous interpretation equipment, live streaming, digital podiums and event production in Victoria Falls, Zimbabwe.",
+  keywords: [
+    "conference audiovisual services Zimbabwe",
+    "conference equipment hire Victoria Falls",
+    "LED screen hire Victoria Falls",
+    "simultaneous interpretation equipment Zimbabwe",
+    "conference live streaming Zimbabwe",
+    "professional sound systems Zimbabwe",
+    "digital podiums Zimbabwe",
+    "DJ services Victoria Falls",
+  ],
+  alternates: { canonical: "/services" },
+};
 export const dynamic = "force-dynamic";
 export default async function ServicesPage() {
   const rows = await db.service.findMany({ where: { published: true }, orderBy: [{ sortOrder: "asc" }, { slug: "asc" }] });

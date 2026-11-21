@@ -1,407 +1,324 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useSyncExternalStore, Suspense } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ArrowRight, ZoomIn } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useModalFocus } from "../components/useModalFocus";
 
-type Category = "All" | "Wedding" | "Conference" | "Brand" | "Drone" | "Events";
+type GalleryCategory = "Corporate" | "Weddings" | "Social Events";
+type FilterCategory = "All" | GalleryCategory;
 
 interface GalleryItem {
   src: string;
   alt: string;
-  cat: Category;
-  title: string;
-  tall?: boolean; // makes card span 2 rows in masonry
+  category: GalleryCategory;
 }
 
-const items: GalleryItem[] = [
-  // Weddings
-  { src: "/mms/_DSC7098.jpg",       alt: "Victoria Falls wedding",          cat: "Wedding",    title: "Victoria Falls Ceremony",      tall: true  },
-  { src: "/mms/wedding1.jpg",       alt: "Wedding celebration",             cat: "Wedding",    title: "Golden Hour Celebration"               },
-  { src: "/mms/DSC_7607.jpg",       alt: "Wedding portrait",                cat: "Wedding",    title: "Intimate Portraits",           tall: true  },
-  { src: "/mms/DSC_0453.jpg",       alt: "Wedding reception",               cat: "Wedding",    title: "Reception Evening"                     },
-  { src: "/mms/DSC_0477.jpg",       alt: "Bride and groom",                 cat: "Wedding",    title: "Bride & Groom"                 },
-  { src: "/mms/DSC_0481 (2).jpg",   alt: "Wedding ceremony",                cat: "Wedding",    title: "The Ceremony",                 tall: true  },
-  { src: "/mms/DSC_0676.jpg",       alt: "Wedding party",                   cat: "Wedding",    title: "Bridal Party"                  },
-  { src: "/mms/DSC_1105.jpg",       alt: "Wedding couple",                  cat: "Wedding",    title: "Couple Portraits"                      },
-  { src: "/mms/DSC_1257.jpg",       alt: "Wedding dance",                   cat: "Wedding",    title: "First Dance",                  tall: true  },
-  { src: "/mms/DSC_1258.jpg",       alt: "Wedding vows",                    cat: "Wedding",    title: "Exchange of Vows"                      },
-  { src: "/mms/DSC_1347.jpg",       alt: "Wedding venue",                   cat: "Wedding",    title: "Victoria Falls Venue"                  },
-  { src: "/mms/DSC_1349.jpg",       alt: "Wedding detail",                  cat: "Wedding",    title: "Details & Florals",            tall: true  },
-  { src: "/mms/DSC_1821.jpg",       alt: "Outdoor wedding",                 cat: "Wedding",    title: "Outdoor Celebration"                   },
-  { src: "/mms/DSC_1825.jpg",       alt: "Sunset wedding",                  cat: "Wedding",    title: "Sunset Portraits"                      },
-  { src: "/mms/DSC_1864.jpg",       alt: "Wedding toast",                   cat: "Wedding",    title: "Champagne Toast"               },
-  { src: "/mms/AllanLinda-31.jpg",  alt: "Allan & Linda wedding",           cat: "Wedding",    title: "Allan & Linda",                tall: true  },
-  { src: "/mms/untitled-455.jpg",   alt: "Wedding editorial",               cat: "Wedding",    title: "Editorial Shoot"                       },
-  { src: "/mms/untitled-477.jpg",   alt: "Wedding editorial 2",             cat: "Wedding",    title: "Golden Light"                  },
-  { src: "/mms/wedding 12.jpg",     alt: "Wedding celebration 2",           cat: "Wedding",    title: "Joyful Celebration",           tall: true  },
+interface GallerySection {
+  category: GalleryCategory;
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: GalleryItem[];
+}
 
-  // Conferences
-  { src: "/mms/DSC_9244.jpg", alt: "Conference hall", cat: "Conference", title: "Grand Conference Hall", tall: true },
-  { src: "/mms/Victoria-Falls-Video-Conference-Hire.webp", alt: "Video conference hire", cat: "Conference", title: "Video Conference Setup"  },
-  { src: "/mms/DSC_7176.jpg",       alt: "Conference session",              cat: "Conference", title: "Plenary Session",              tall: true  },
-  { src: "/mms/DSC_7188.jpg",       alt: "Conference panel",                cat: "Conference", title: "Expert Panel"                          },
-  { src: "/mms/DSC_7204.jpg",       alt: "Conference speaker",              cat: "Conference", title: "Keynote Speaker"               },
-  { src: "/mms/DSC_7208.jpg",       alt: "Conference delegates",            cat: "Conference", title: "Delegate Engagement",          tall: true  },
-  { src: "/mms/DSC_7211.jpg",       alt: "Conference setup",                cat: "Conference", title: "AV Production Setup"                   },
-  { src: "/mms/DSC_7215.jpg",       alt: "Conference stage",                cat: "Conference", title: "Branded Stage"                 },
-  { src: "/mms/DSC_7218.jpg",       alt: "Conference audience",             cat: "Conference", title: "Full-House Audience",          tall: true  },
-  { src: "/mms/DSC_7258.jpg",       alt: "Conference networking",           cat: "Conference", title: "Networking Session"                    },
-  { src: "/mms/DSC_7262.jpg",       alt: "Conference breakout",             cat: "Conference", title: "Breakout Session"              },
-
-  // Brand / Events
-  { src: "/mms/DSC_2260.jpg",       alt: "Brand event",                     cat: "Brand",      title: "Brand Launch Event",           tall: true  },
-  { src: "/mms/DSC_2297.jpg",       alt: "Campaign shoot",                  cat: "Brand",      title: "Campaign Shoot"                        },
-  { src: "/mms/DSC_2327-Edit.jpg",  alt: "Editorial brand",                 cat: "Brand",      title: "Editorial Brand Story"         },
-  { src: "/mms/DSC_2349.jpg",       alt: "Product campaign",                cat: "Brand",      title: "Product Campaign",             tall: true  },
-  { src: "/mms/DSC_2353.jpg",       alt: "Brand shoot",                     cat: "Brand",      title: "Lifestyle Shoot"                       },
-  { src: "/mms/DSC_2475.jpg",       alt: "Corporate portrait",              cat: "Brand",      title: "Corporate Portraits"           },
-  { src: "/mms/DSC_2484.jpg",       alt: "Brand storytelling",              cat: "Brand",      title: "Brand Storytelling",           tall: true  },
-  { src: "/mms/DSC_2505.jpg",       alt: "Creative campaign",               cat: "Brand",      title: "Creative Campaign"                     },
-  { src: "/mms/DSC_2591.jpg",       alt: "Commercial shoot",                cat: "Brand",      title: "Commercial Production"         },
-  { src: "/mms/DSC_2643 (2).jpg",   alt: "Brand identity",                  cat: "Brand",      title: "Brand Identity Shoot",         tall: true  },
-  { src: "/mms/DSC_2660 (2).jpg",   alt: "Advertising campaign",            cat: "Brand",      title: "Advertising Campaign"                  },
-  { src: "/mms/MMss.webp",          alt: "MMS brand",                       cat: "Brand",      title: "MMS Production"                },
-
-  // Events
-  { src: "/mms/DSC_7286.jpg",       alt: "Live event",                      cat: "Events",     title: "Live Stage Production",        tall: true  },
-  { src: "/mms/DSC_7297.jpg",       alt: "Event crowd",                     cat: "Events",     title: "Audience Engagement"                   },
-  { src: "/mms/DSC_7314.jpg",       alt: "Event stage",                     cat: "Events",     title: "Main Stage"                    },
-  { src: "/mms/DSC_7317.jpg",       alt: "Event speakers",                  cat: "Events",     title: "Guest Speakers",               tall: true  },
-  { src: "/mms/DSC_7320.jpg",       alt: "Event lighting",                  cat: "Events",     title: "Stage Lighting"                        },
-  { src: "/mms/DSC_7343.jpg",       alt: "Event entertainment",             cat: "Events",     title: "Live Entertainment"            },
-  { src: "/mms/DSC_7356.jpg",       alt: "Event production",                cat: "Events",     title: "Full Production",              tall: true  },
-  { src: "/mms/DSC_7362.jpg",       alt: "Awards night",                    cat: "Events",     title: "Awards Evening"                        },
-  { src: "/mms/DSC_7368.jpg",       alt: "Gala dinner",                     cat: "Events",     title: "Gala Dinner"                   },
-  { src: "/mms/Iconic Final Look with Pyro.jpg", alt: "Pyro finale", cat: "Events", title: "Pyro Grand Finale",           tall: true  },
-  { src: "/mms/cold-spark-machine.jpg", alt: "Cold spark machines", cat: "Events", title: "Cold Spark Machines" },
-
-  // Drone / Scenic
-  { src: "/mms/Zambia-Zimbabwe-Victoria-Falls-Impressive-View-1.jpg", alt: "Victoria Falls aerial", cat: "Drone", title: "Victoria Falls Aerial", tall: true },
-  { src: "/victoria_falls_banner.png", alt: "Victoria Falls panorama", cat: "Drone", title: "Falls Panorama"            },
-  { src: "/mms/vic falls bridge.jpg", alt: "Victoria Falls bridge", cat: "Drone", title: "Falls Bridge",             tall: true  },
-  { src: "/mms/bridge.jpg",          alt: "Bridge aerial",                  cat: "Drone",      title: "Bridge Aerial"                         },
-  { src: "/mms/_MG_0072.jpg",        alt: "Drone landscape",                cat: "Drone",      title: "Landscape Film",               tall: true  },
-  { src: "/mms/_MG_0305.jpg",        alt: "Aerial shot",                    cat: "Drone",      title: "Aerial Sequence"                       },
-  { src: "/mms/_MG_2920.jpg",        alt: "Drone event coverage",           cat: "Drone",      title: "Event Aerial Coverage",        tall: true  },
-  { src: "/mms/360.webp",            alt: "360 degree capture",             cat: "Drone",      title: "360° Immersive Capture"                },
-  { src: "/mms/IMG_9196.jpeg",       alt: "Immersive media",                cat: "Drone",      title: "Immersive Media"               },
-  { src: "/mms/IMG_9198.jpeg",       alt: "360 booth",                      cat: "Drone",      title: "360° Experience Booth",        tall: true  },
-  { src: "/mms/IMG_9203.jpeg",       alt: "Tech setup",                     cat: "Drone",      title: "Production Tech"                       },
-  { src: "/mms/IMG_9220.jpeg",       alt: "Drone cinematic",                cat: "Drone",      title: "Cinematic Drone Shot"          },
-  { src: "/mms/IMG_9221.jpeg",       alt: "Aerial landscape",               cat: "Drone",      title: "Aerial Landscape",             tall: true  },
+const corporateItems: GalleryItem[] = [
+  { src: "/mms/mms/gallery/corporate/DSC_1213.jpg", alt: "Corporate event coverage 1", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/DSC_9848.jpg", alt: "Corporate event coverage 2", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/DSC_9868.jpg", alt: "Corporate event coverage 3", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/DSC_9892.jpg", alt: "Corporate event coverage 4", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/IMG_0600.jpg", alt: "Corporate event coverage 5", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/IMG_8703.jpg", alt: "Corporate event coverage 6", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/IMG_8846.jpg", alt: "Corporate event coverage 7", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/_DSC8272.jpg", alt: "Corporate event coverage 8", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/_DSC8310.jpg", alt: "Corporate event coverage 9", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h02m26s119.png", alt: "Corporate production frame 1", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h06m01s029.png", alt: "Corporate production frame 2", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h09m37s469.png", alt: "Corporate production frame 3", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h10m19s045.png", alt: "Corporate production frame 4", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-12h22m47s454.png", alt: "Corporate production frame 5", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h36m08s903.png", alt: "Corporate production frame 6", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h39m18s938.png", alt: "Corporate production frame 7", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h45m41s499.png", alt: "Corporate production frame 8", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h45m41s499%20-%20Copy.png", alt: "Corporate production frame 9", category: "Corporate" },
+  { src: "/mms/mms/gallery/corporate/vlcsnap-2026-11-19-14h45m51s096.png", alt: "Corporate production frame 10", category: "Corporate" },
 ];
 
-const cats: Category[] = ["All", "Wedding", "Conference", "Brand", "Events", "Drone"];
+const weddingItems: GalleryItem[] = [
+  { src: "/mms/mms/gallery/weddings/DSC_2505.jpg", alt: "Wedding & elopement photography 1", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_2689%20(2).jpg", alt: "Wedding & elopement photography 2", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_2778.jpg", alt: "Wedding & elopement photography 3", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_2790.jpg", alt: "Wedding & elopement photography 4", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_3722.jpg", alt: "Wedding & elopement photography 5", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/DSC_3908.jpg", alt: "Wedding & elopement photography 6", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/IMG_2727.jpg", alt: "Wedding & proposal photography 7", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7262.jpg", alt: "Wedding & elopement photography 8", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7266.jpg", alt: "Wedding & elopement photography 9", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7268.jpg", alt: "Wedding & elopement photography 10", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/untitled-7271.jpg", alt: "Wedding & elopement photography 11", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/vlcsnap-2026-11-19-12h18m48s038.png", alt: "Wedding production frame", category: "Weddings" },
+  { src: "/mms/mms/gallery/weddings/wedding1.jpg", alt: "Wedding celebration", category: "Weddings" },
+];
 
-const subscribeToHydration = () => () => {};
+const socialEventItems: GalleryItem[] = [
+  { src: "/mms/mms/gallery/Social%20Events/DSC_3531.jpg", alt: "Social event photography 1", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/DSC_3548.jpg", alt: "Social event photography 2", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/DSC_7504.jpg", alt: "Social event photography 3", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/DSC_7941-1.jpg", alt: "Social event photography 4", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/IMG_4524.jpg", alt: "Social event photography 5", category: "Social Events" },
+  { src: "/mms/mms/gallery/Social%20Events/IMG_4641.jpg", alt: "Social event photography 6", category: "Social Events" },
+];
 
-function GalleryContent() {
-  const hydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
-  const searchParams = useSearchParams();
-  const paramCat = searchParams.get("cat") as Category | null;
-  const initCat: Category = paramCat && cats.includes(paramCat) ? paramCat : "All";
+const gallerySections: GallerySection[] = [
+  {
+    category: "Corporate",
+    eyebrow: "01 · Conferences & Business",
+    title: "Corporate",
+    description:
+      "Conferences, summits, executive panels, live stage production and corporate events.",
+    items: corporateItems,
+  },
+  {
+    category: "Weddings",
+    eyebrow: "02 · Love Stories",
+    title: "Weddings",
+    description:
+      "Destination weddings, intimate elopements and marriage proposals in Victoria Falls.",
+    items: weddingItems,
+  },
+  {
+    category: "Social Events",
+    eyebrow: "03 · Celebrations",
+    title: "Social Events",
+    description:
+      "Private parties, live entertainment, DJ productions and special celebrations.",
+    items: socialEventItems,
+  },
+];
 
-  const [active, setActive] = useState<Category>(initCat);
-  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
-  const [expanded, setExpanded] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const touchStart = useRef<{x: number; y: number} | null>(null);
-  useModalFocus(lightboxIdx !== null, modalRef, () => setLightboxIdx(null));
-
-  const filtered = active === "All" ? items : items.filter((i) => i.cat === active);
-  const INITIAL_COUNT = 12;
-  const visible = expanded ? filtered : filtered.slice(0, INITIAL_COUNT);
-
-  const setActiveCat = (cat: Category) => {
-    setActive(cat);
-    setExpanded(false);
-    setLightboxIdx(null);
-  };
-
-  // Navigate lightbox
-  const prev = () => setLightboxIdx((n) => (n === null ? null : (n - 1 + filtered.length) % filtered.length));
-  const next = () => setLightboxIdx((n) => (n === null ? null : (n + 1) % filtered.length));
-
-  // Close lightbox on Escape / arrow keys
-  useEffect(() => {
-    if (lightboxIdx === null) return;
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightboxIdx(null);
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  });
-
-  return (
-    <>
-      {/* Sticky filter bar */}
-      <div className="sticky top-[72px] z-30 bg-[#050507]/92 backdrop-blur-md border-b border-brand-accent/12 py-3.5">
-        <div className="max-w-[1600px] mx-auto mms-gutter flex items-center gap-2.5 overflow-x-auto scrollbar-none">
-          {cats.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              disabled={!hydrated}
-              onClick={() => setActiveCat(cat)}
-              aria-pressed={active === cat}
-              className={`shrink-0 px-5 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-medium transition-all duration-250 cursor-pointer ${
-                active === cat
-                  ? "bg-brand-accent text-[#050507]"
-                  : "border border-brand-accent/25 text-brand-foreground/60 hover:border-brand-accent/60 hover:text-white"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-          <span className="ml-auto shrink-0 text-[10px] text-brand-foreground/35 font-light pl-4 border-l border-brand-accent/12">
-            {visible.length} of {filtered.length} photos
-          </span>
-        </div>
-      </div>
-
-      {/* Masonry grid */}
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-5 lg:px-8 py-8 md:py-12">
-        <motion.div
-          layout
-          className="columns-1 min-[400px]:columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-3 space-y-0"
-        >
-          <AnimatePresence mode="popLayout">
-            {visible.map((item, idx) => (
-              <motion.button
-                type="button"
-                key={item.src}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: Math.min(idx * 0.02, 0.3) }}
-                className={`block w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent break-inside-avoid mb-3 group relative overflow-hidden rounded-xl border border-brand-accent/10 cursor-pointer bg-[#0d0d10] ${
-                  item.tall ? "row-span-2" : ""
-                }`}
-                aria-label={`View ${item.title}`}
-                onClick={() => setLightboxIdx(idx)}
-              >
-                <div className={`relative w-full ${item.tall ? "aspect-[3/4]" : "aspect-[4/3]"}`}>
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="(max-width:399px) calc(100vw - 32px), (max-width:639px) 50vw, (max-width:1023px) 33vw, (max-width:1279px) 25vw, 20vw"
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* hover overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050507]/80 via-[#050507]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 flex flex-col justify-end p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-brand-accent font-semibold mb-0.5">{item.cat}</span>
-                    <p className="text-xs text-white font-medium leading-tight">{item.title}</p>
-                  </div>
-                  <div className="absolute top-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-7 h-7 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                      <ZoomIn className="w-3.5 h-3.5 text-white" />
-                    </div>
-                  </div>
-                  {/* category pill always visible */}
-                  <div className="absolute top-2 left-2">
-                    <span className="text-[8px] uppercase tracking-[0.15em] bg-black/50 backdrop-blur-sm text-brand-accent/90 px-2 py-0.5 rounded-full">
-                      {item.cat}
-                    </span>
-                  </div>
-                </div>
-              </motion.button>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {filtered.length === 0 && (
-          <div className="text-center py-24 text-brand-foreground/40 text-sm">No images in this category yet.</div>
-        )}
-
-        {filtered.length > INITIAL_COUNT && !expanded && (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-brand-foreground/40 font-light">
-              Showing {visible.length} of {filtered.length} photos
-            </span>
-            <button
-              type="button"
-              onClick={() => setExpanded(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300 cursor-pointer"
-            >
-              View More
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-
-        {expanded && (
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <span className="text-xs text-brand-foreground/40 font-light">
-              Showing all {filtered.length} photos
-            </span>
-            <button
-              type="button"
-              onClick={() => { setExpanded(false); setLightboxIdx(null); }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300 cursor-pointer"
-            >
-              Show Less
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxIdx !== null && (
-          <motion.div
-            key="lightbox"
-            ref={modalRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Gallery image viewer"
-            onTouchStart={(event) => { const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY }; }}
-            onTouchEnd={(event) => { const start = touchStart.current; const end = event.changedTouches[0]; if (start && Math.abs(end.clientX - start.x) > 45 && Math.abs(end.clientX - start.x) > Math.abs(end.clientY - start.y)) { if (end.clientX < start.x) next(); else prev(); } touchStart.current = null; }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
-            className="lightbox-overlay fixed inset-0 z-[200] flex items-center justify-center bg-black/92 backdrop-blur-lg"
-            onClick={() => setLightboxIdx(null)}
-          >
-            {/* Close */}
-            <button
-              type="button"
-              onClick={() => setLightboxIdx(null)}
-              className="modal-close absolute z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-5 h-5 text-white" />
-            </button>
-
-            {/* Prev */}
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); prev(); }}
-              className="absolute left-4 sm:left-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-accent hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
-              aria-label="Previous"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-
-            {/* Next */}
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); next(); }}
-              className="absolute right-4 sm:right-8 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-brand-accent hover:text-[#050507] text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
-              aria-label="Next"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* Image */}
-            <motion.div
-              key={lightboxIdx}
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.22 }}
-              className="relative max-w-[90vw] max-h-[85vh] w-full flex flex-col items-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative w-full lightbox-image h-auto flex items-center justify-center">
-                <Image
-                  src={filtered[lightboxIdx].src}
-                  alt={filtered[lightboxIdx].alt}
-                  width={1400}
-                  height={1000}
-                  sizes="(max-width: 640px) 100vw, 90vw"
-                  className="object-contain lightbox-image h-auto rounded-xl shadow-2xl"
-                  preload
-                />
-              </div>
-              <div className="mt-3 text-center space-y-0.5">
-                <p className="text-white font-medium text-sm">{filtered[lightboxIdx].title}</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-brand-accent">{filtered[lightboxIdx].cat}</p>
-              </div>
-              <p className="mt-2 text-[10px] text-white/30">{lightboxIdx + 1} / {filtered.length}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-}
+const filterCategories: FilterCategory[] = [
+  "All",
+  "Corporate",
+  "Weddings",
+  "Social Events",
+];
 
 export default function GalleryPage() {
+  const [activeCategory, setActiveCategory] = useState<FilterCategory>("All");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const visibleSections = useMemo(
+    () =>
+      activeCategory === "All"
+        ? gallerySections
+        : gallerySections.filter((s) => s.category === activeCategory),
+    [activeCategory],
+  );
+
+  const flatVisibleItems = useMemo(
+    () => visibleSections.flatMap((s) => s.items),
+    [visibleSections],
+  );
+
+  useModalFocus(lightboxIndex !== null, modalRef, () => setLightboxIndex(null));
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        setLightboxIndex((prev) =>
+          prev === null ? null : (prev + 1) % flatVisibleItems.length,
+        );
+      } else if (e.key === "ArrowLeft") {
+        setLightboxIndex((prev) =>
+          prev === null
+            ? null
+            : (prev - 1 + flatVisibleItems.length) % flatVisibleItems.length,
+        );
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [lightboxIndex, flatVisibleItems.length]);
+
+  const activeItem =
+    lightboxIndex !== null ? flatVisibleItems[lightboxIndex] ?? null : null;
+
   return (
-    <div className="min-h-screen bg-[#050507] text-brand-foreground font-sans">
+    <div className="min-h-screen bg-[#e4e4e4] text-[#050507] font-sans">
       <Navbar />
 
       {/* Hero */}
-      <section className="relative min-h-[42vh] flex items-center justify-center overflow-hidden bg-black pt-28 pb-14">
+      <section className="relative min-h-[48vh] flex items-end overflow-hidden bg-black pt-28 pb-12">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/mms/DSC_7598.jpg"
+            src="/mms/mms/gallery/Social%20Events/DSC_7941-1.jpg"
             alt="MMS Gallery"
-            fill sizes="100vw"
-            className="object-cover object-center opacity-40"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            style={{ opacity: 0.45 }}
             preload
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/55 to-[#050507]/20" />
         </div>
-        <div className="relative z-10 text-center max-w-2xl mx-auto px-6">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/55 to-[#050507]/15 z-10" />
+        <div className="relative z-20 max-w-[1400px] mx-auto mms-gutter w-full">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="space-y-4"
+            className="max-w-2xl space-y-4"
           >
-            <span className="text-[10px] tracking-[0.4em] text-brand-accent uppercase font-bold block font-heading">Our Portfolio</span>
-            <h1 className="text-4xl sm:text-5xl font-semibold text-white font-heading">Gallery</h1>
-            <p className="text-sm text-brand-foreground/70 font-light">
-              Weddings, conferences, brand campaigns, drone aerials and immersive productions — browse our full body of work.
+            <span className="text-[11px] tracking-[0.35em] text-brand-accent uppercase font-bold block font-heading">
+              Visual Archive
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white font-heading">
+              Gallery
+            </h1>
+            <p className="text-sm md:text-base text-brand-foreground/80 font-light leading-relaxed">
+              Moments captured across corporate productions, weddings and social events in Victoria Falls.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Gallery with filter — wrapped in Suspense for useSearchParams */}
-      <Suspense fallback={<div className="py-24 text-center text-brand-foreground/30 text-sm">Loading gallery…</div>}>
-        <GalleryContent />
-      </Suspense>
+      {/* Sticky Category Filter Ribbon */}
+      <div className="sticky top-[72px] lg:top-[82px] z-30 bg-white/95 backdrop-blur-md border-b border-[#050507]/12 py-3">
+        <div className="max-w-[1440px] mx-auto mms-gutter flex items-center gap-2.5 overflow-x-auto scrollbar-none">
+          {filterCategories.map((cat) => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setActiveCategory(cat);
+                  setLightboxIndex(null);
+                }}
+                aria-pressed={isActive}
+                className={`shrink-0 min-h-[44px] px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+                  isActive
+                    ? "bg-[#981b28] text-white"
+                    : "bg-[#f8f8f8] border border-[#050507]/16 text-[#111827] hover:border-[#981b28] hover:text-[#981b28]"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+          <span className="ml-auto text-xs font-medium text-[#050507]/65 pl-4 border-l border-[#050507]/15 shrink-0">
+            {flatVisibleItems.length} photos
+          </span>
+        </div>
+      </div>
 
-      {/* CTA */}
-      <section className="py-16 border-t border-brand-accent/10 bg-black">
-        <div data-reveal className="max-w-[1400px] mx-auto mms-gutter flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div>
-            <h3 className="text-xl md:text-2xl font-semibold text-white font-heading">Ready to be in our gallery?</h3>
-            <p className="text-sm text-brand-foreground/55 font-light mt-1">Let&apos;s create something beautiful together.</p>
-          </div>
-          <div className="flex flex-wrap gap-3 shrink-0">
-            <Link
-              href="/contact"
-              data-lead-cta
-              className="mms-button group relative isolate inline-flex items-center justify-center overflow-hidden rounded-full font-semibold px-7 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2"
+      {/* Folder-Ordered Pinterest Masonry Grid */}
+      <section className="py-12 md:py-16 max-w-[1440px] mx-auto mms-gutter">
+        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+          {flatVisibleItems.map((item, idx) => (
+            <button
+              key={item.src}
+              type="button"
+              onClick={() => setLightboxIndex(idx)}
+              className="group relative block w-full break-inside-avoid overflow-hidden rounded-2xl bg-[#d6d5d0] border border-[#050507]/10 shadow-sm hover:shadow-md transition-shadow duration-300 focus-visible:outline-2 focus-visible:outline-[#981b28] focus-visible:outline-offset-2 cursor-pointer"
+              aria-label={`View ${item.alt}`}
             >
-              Start a Project
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/conference-production#enquiry"
-              className="inline-flex items-center px-7 py-3.5 rounded-full border border-brand-accent/30 text-brand-foreground/80 text-[11px] uppercase tracking-[0.18em] hover:border-brand-accent hover:text-white transition-all duration-300"
-            >
-              Conference Enquiry
-            </Link>
-          </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt={item.alt}
+                loading={idx < 8 ? "eager" : "lazy"}
+                className="w-full h-auto block transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+              <span className="pointer-events-none absolute inset-0 bg-[#050507]/0 group-hover:bg-[#050507]/20 transition-colors duration-300 flex items-end justify-end p-3">
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/90 text-[#050507] shadow">
+                  <ZoomIn size={16} aria-hidden="true" />
+                </span>
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-14 text-center">
+          <Link
+            href="/contact#enquiry"
+            className="mms-button inline-flex items-center gap-2 px-7 py-3.5 text-sm"
+          >
+            <span>Plan your event with MMS</span>
+            <ArrowRight size={16} aria-hidden="true" />
+          </Link>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {activeItem && lightboxIndex !== null && (
+          <motion.div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Gallery image viewer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+            onClick={() => setLightboxIndex(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setLightboxIndex(null)}
+              aria-label="Close gallery viewer"
+              className="absolute top-4 right-4 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <X size={20} aria-hidden="true" />
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex(
+                  (lightboxIndex - 1 + flatVisibleItems.length) %
+                    flatVisibleItems.length,
+                );
+              }}
+              aria-label="Previous image"
+              className="absolute left-3 sm:left-6 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <ChevronLeft size={22} aria-hidden="true" />
+            </button>
+
+            <div
+              className="relative max-w-5xl max-h-[85vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activeItem.src}
+                alt={activeItem.alt}
+                className="max-h-[85vh] w-auto max-w-full rounded-xl object-contain shadow-2xl"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightboxIndex((lightboxIndex + 1) % flatVisibleItems.length);
+              }}
+              aria-label="Next image"
+              className="absolute right-3 sm:right-6 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <ChevronRight size={22} aria-hidden="true" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

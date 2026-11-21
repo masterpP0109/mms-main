@@ -8,6 +8,7 @@ interface StarRatingProps {
   interactive?: boolean;
   size?: "sm" | "md" | "lg";
   showLabel?: boolean;
+  lightSurface?: boolean;
 }
 
 const RATING_LABELS: Record<number, string> = {
@@ -23,10 +24,12 @@ function RealisticStar({
   filled,
   className = "",
   size = "md",
+  lightSurface = false,
 }: {
   filled: boolean;
   className?: string;
   size?: "sm" | "md" | "lg";
+  lightSurface?: boolean;
 }) {
   const pixelSizes = {
     sm: 18,
@@ -64,9 +67,9 @@ function RealisticStar({
         </linearGradient>
 
         {/* Subtle Inactive Gradient */}
-        <linearGradient id={`emptyGrad-${size}`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#27272a" />
-          <stop offset="100%" stopColor="#18181b" />
+        <linearGradient id={`emptyGrad-${size}-${lightSurface ? "l" : "d"}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={lightSurface ? "#d4d4d8" : "#27272a"} />
+          <stop offset="100%" stopColor={lightSurface ? "#a1a1aa" : "#18181b"} />
         </linearGradient>
       </defs>
 
@@ -89,8 +92,8 @@ function RealisticStar({
       ) : (
         <path
           d="M12 2.2l2.95 6.3 6.95.8-5.14 4.7 1.39 6.8-6.15-3.4-6.15 3.4 1.39-6.8-5.14-4.7 6.95-.8L12 2.2z"
-          fill={`url(#emptyGrad-${size})`}
-          stroke="#3f3f46"
+          fill={`url(#emptyGrad-${size}-${lightSurface ? "l" : "d"})`}
+          stroke={lightSurface ? "#71717a" : "#3f3f46"}
           strokeWidth="1"
           strokeLinejoin="round"
         />
@@ -105,6 +108,7 @@ export default function StarRating({
   interactive = false,
   size = "md",
   showLabel = false,
+  lightSurface = false,
 }: StarRatingProps) {
   const [hoverValue, setHoverValue] = useState<number | null>(null);
 
@@ -143,21 +147,21 @@ export default function StarRating({
                 onKeyDown={(e) => handleKeyDown(e, star)}
                 className="p-1 rounded-lg transition-transform hover:scale-115 focus:outline-none focus:ring-2 focus:ring-brand-accent/50 cursor-pointer"
               >
-                <RealisticStar filled={isFilled} size={size} />
+                <RealisticStar filled={isFilled} size={size} lightSurface={lightSurface} />
               </button>
             );
           }
 
           return (
             <div key={star} className="inline-flex">
-              <RealisticStar filled={isFilled} size={size} />
+              <RealisticStar filled={isFilled} size={size} lightSurface={lightSurface} />
             </div>
           );
         })}
       </div>
 
       {showLabel && (
-        <div className="text-xs text-brand-accent font-medium font-heading">
+        <div className={`text-xs font-semibold font-heading ${lightSurface ? "text-[#7f141f]" : "text-brand-accent"}`}>
           {RATING_LABELS[activeValue] || `${activeValue} Stars`}
         </div>
       )}

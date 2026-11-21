@@ -4,6 +4,7 @@ jest.mock("@/lib/db", () => ({ db: { service: { findMany: jest.fn() }, project: 
 import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
 import { db } from "@/lib/db";
+import { PROJECTS_ENABLED } from "@/lib/site-flags";
 import { pageMetadata, siteOrigin } from "@/lib/site-metadata";
 
 const originalSiteUrl = process.env.SITE_URL;
@@ -38,7 +39,11 @@ it("includes static pages and published catalogue records without duplicate dedi
   expect(urls).toContain("https://www.mosimediasolutions.com/privacy");
   expect(urls).toContain("https://www.mosimediasolutions.com/packages/drone");
   expect(urls).toContain("https://www.mosimediasolutions.com/services/led-screen-rental");
-  expect(urls).toContain("https://www.mosimediasolutions.com/projects/published-event");
+  if (PROJECTS_ENABLED) {
+    expect(urls).toContain("https://www.mosimediasolutions.com/projects/published-event");
+  } else {
+    expect(urls).not.toContain("https://www.mosimediasolutions.com/projects/published-event");
+  }
   expect(new Set(urls).size).toBe(urls.length);
   expect(db.service.findMany).toHaveBeenCalledWith({ where: { published: true }, select: { slug: true, updatedAt: true } });
 });
@@ -49,7 +54,10 @@ it("retains static URLs and the healthy catalogue during an outage without loggi
   const logger = jest.spyOn(console, "error").mockImplementation(() => {});
   try {
     const entries = await sitemap();
-    expect(entries.map(entry => entry.url)).toEqual(expect.arrayContaining(["https://www.mosimediasolutions.com/", "https://www.mosimediasolutions.com/projects/published-event"]));
+    const expected = PROJECTS_ENABLED
+      ? ["https://www.mosimediasolutions.com/", "https://www.mosimediasolutions.com/projects/published-event"]
+      : ["https://www.mosimediasolutions.com/", "https://www.mosimediasolutions.com/services"];
+    expect(entries.map(entry => entry.url)).toEqual(expect.arrayContaining(expected));
     expect(JSON.stringify(logger.mock.calls)).not.toContain("private database details");
   } finally { logger.mockRestore(); }
 });

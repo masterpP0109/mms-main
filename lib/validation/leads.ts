@@ -13,7 +13,7 @@ export const contactLeadSchema = z.object({
   organisation: optionalText(160),
   service: optionalText(160),
   origin: z.string().max(300).regex(CONTACT_ORIGIN_PATTERN).optional(),
-  projectType: z.preprocess((value) => value === "" ? undefined : value, z.enum(["conference", "wedding", "brand", "event", "other"]).optional()),
+  projectType: z.preprocess((value) => value === "" ? undefined : value, z.enum(["conference", "wedding", "brand", "event", "drone", "podcast", "other"]).optional()),
   message: text(5000),
   website: z.string().max(0).optional(),
 }).strict();
@@ -54,7 +54,7 @@ export const projectBriefSchema = z.object({
 const campaignValue = optionalText(200);
 export const packageLeadSchema = z.object({
   kind: z.literal("package"),
-  category: z.enum(["weddings", "drone", "podcasts"]),
+  category: z.enum(["conferences", "weddings", "video-production", "drone", "podcasts"]),
   packageId: text(80),
   name: text(120), email: z.string().trim().email().max(254), phone,
   date: z.string().date().optional(),

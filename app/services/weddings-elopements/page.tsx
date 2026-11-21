@@ -1,69 +1,510 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  MapPin,
+  MessageCircle,
+  Sparkles,
+} from "lucide-react";
 import Navbar from "@/app/components/Navbar";
 import Footer from "@/app/components/Footer";
-import { EnquiryLink, enquiryLink, ServiceClosing, ServiceFAQs, ServiceProcess } from "@/app/components/services/ServiceSections";
+import { EnquiryLink, enquiryLink } from "@/app/components/services/ServiceSections";
+import WeddingPackagePanels from "@/app/components/services/WeddingPackagePanels";
+import WeddingStickyNav from "@/app/components/services/WeddingStickyNav";
 import styles from "@/app/components/services/services.module.css";
+import wStyles from "@/app/components/services/weddings.module.css";
+import {
+  additionalWeddingServices,
+  exclusiveElopementPackages,
+  exclusiveWeddingPackages,
+  featuredWeddingAddons,
+  importantPackageInformation,
+  marriageProposalPackages,
+  signatureJourneyStages,
+  weddingDestinations,
+} from "@/lib/weddings-elopements";
 
-const title = "Weddings & Elopements | Photography & Film | MMS";
-const description = "Discuss wedding and intimate elopement photography and film with Mosi Media Solutions. Explore coverage options, planning and enquiries for your celebration.";
-export const metadata: Metadata = { title, description, alternates: { canonical: "/services/weddings-elopements" }, openGraph: { title, description, url: "/services/weddings-elopements", images: [{ url: "/mms/wedding%2012.jpg", alt: "A couple walking beside Victoria Falls" }] } };
-const contact = enquiryLink("Weddings & Elopements", "/services/weddings-elopements");
+const title =
+  "Exclusive Wedding, Elopement & Proposal Packages | Victoria Falls | MMS";
+const description =
+  "Mosi Media Solutions presents exclusive wedding, elopement and marriage proposal experiences in Victoria Falls, Zimbabwe — combining romance, destination styling, photography, film and event production.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: "/services/weddings-elopements" },
+  openGraph: {
+    title,
+    description,
+    url: "/services/weddings-elopements",
+    images: [
+      {
+        url: "/mms/mms/weddings/weddin%20and%20elopments/wedding%2012.jpg",
+        alt: "A couple walking hand in hand towards Victoria Falls",
+      },
+    ],
+  },
+};
+
+const contact = enquiryLink(
+  "Weddings & Elopements",
+  "/services/weddings-elopements",
+);
 
 export default function WeddingsPage() {
-  return <div className={`${styles.page} ${styles.wedding}`}><Navbar /><main>
-    <section className={styles.weddingHero} aria-labelledby="wedding-title">
-      <div>
-        <Link className={styles.breadcrumb} href="/services"><ArrowLeft size={16} aria-hidden="true" />All services</Link>
-        <p className={styles.eyebrow}>Weddings &amp; Elopements</p>
-        <h1 id="wedding-title">A day that feels like you.<br />A story to hold close.</h1>
-        <p>Quiet promises. Familiar faces. The feeling of being together. Talk to Mosi Media Solutions about photography and film that make space for the moments that matter to you.</p>
-        <div className={styles.actions}><EnquiryLink href={contact}>Tell us about your day</EnquiryLink><Link className={styles.textLink} href="/packages/weddings">Explore wedding packages</Link><a className={styles.textLink} href="#coverage">Explore coverage options</a></div>
-      </div>
-      <figure><div className={styles.weddingPortrait}><Image src="/mms/wedding%2012.jpg" alt="A couple walking hand in hand towards Victoria Falls" fill sizes="(max-width:1023px) 90vw, 45vw" preload /></div><figcaption className={styles.caption}>Wedding inspiration from our image library; shown for illustration.</figcaption></figure>
-    </section>
+  return (
+    <div className={`${styles.page} ${styles.wedding} ${wStyles.weddingBrochure}`}>
+      <Navbar />
+      <main>
+        {/* 01 — Spacious Editorial Hero */}
+        <section className={wStyles.heroSection} aria-labelledby="wedding-title">
+          <div className={wStyles.heroContent}>
+            <Link className={styles.breadcrumb} href="/services">
+              <ArrowLeft size={16} aria-hidden="true" />
+              All services
+            </Link>
+            <p className={styles.eyebrow}>
+              Mosi Media Solutions | Victoria Falls, Zimbabwe
+            </p>
+            <h1 id="wedding-title">
+              Exclusive Wedding, Elopement &amp; Proposal Packages
+            </h1>
+            <p className={wStyles.heroLead}>
+              Where extraordinary love stories meet extraordinary destinations.
+            </p>
+            <div className={wStyles.heroActions}>
+              <EnquiryLink href={contact}>
+                Start planning your experience
+              </EnquiryLink>
+            </div>
+          </div>
 
-    <section className={styles.section} aria-labelledby="celebration-title">
-      <div data-reveal><p className={styles.eyebrow}>However you choose to celebrate</p><h2 id="celebration-title">Your story sets the scale.</h2><p className={styles.intro}>Photography and film help you return to the people, places and moments that made the day yours. Tell us what matters most, and discuss coverage with MMS that suits your plans.</p></div>
-      <div data-stagger className={styles.grid}>
-        <article className={styles.card}><p className={styles.eyebrow}>Together with your people</p><h3>Weddings</h3><p>For celebrations shared with family and friends, discuss coverage around the rhythm of your day: preparation, the ceremony, portraits and the gathering afterwards. Share your traditions, key people and schedule so priorities can be planned with care.</p></article>
-        <article className={styles.card}><p className={styles.eyebrow}>A little more intimate</p><h3>Elopements</h3><p>For a ceremony with just the two of you or a small circle, discuss a focused approach around your vows, couple portraits and the setting you have chosen. Location access, travel time and a flexible plan for the light and weather help shape what is possible.</p></article>
-      </div>
-    </section>
+          <figure className={wStyles.heroMedia}>
+            <div className={wStyles.heroPhotoFrame}>
+              <Image
+                src="/mms/mms/weddings/weddin%20and%20elopments/wedding%2012.jpg"
+                alt="A couple walking hand in hand towards Victoria Falls"
+                width={1024}
+                height={768}
+                sizes="(max-width:1023px) 90vw, 42vw"
+                className={wStyles.fullBleedImage}
+                preload
+              />
+            </div>
+            <figcaption className={styles.caption}>
+              Wedding photography beside Victoria Falls by Mosi Media Solutions.
+            </figcaption>
+          </figure>
+        </section>
 
-    <section id="coverage" className={styles.section} aria-labelledby="coverage-title">
-      <div data-reveal><p className={styles.eyebrow}>Make room for what matters</p><h2 id="coverage-title">Coverage options to talk through</h2><p className={styles.intro}>These are possibilities to discuss, rather than fixed packages. Photography, film, coverage time and finished deliverables are confirmed in your agreed brief and quotation.</p></div>
-      <div data-stagger className={styles.grid}>{[
-        ["Preparation & personal details", "The anticipation, the finishing touches and time with the people closest to you. Discuss which preparations and locations you want included."],
-        ["The ceremony", "Your arrival, the exchange of vows and the people sharing the moment. Confirm venue rules, timing, filming positions and any audio requirements in advance."],
-        ["Couple portraits", "A little time together, with portraits shaped around your setting and the available light. Discuss your comfort in front of the camera and how much time to allow."],
-        ["Celebration highlights", "Greetings, speeches, a first dance or the energy of the gathering. Choose the moments you want prioritised and discuss how they might become photographs or an edited film."],
-      ].map(([heading, text]) => <article key={heading} className={styles.card}><h3>{heading}</h3><p>{text}</p></article>)}</div>
-    </section>
+        {/* Sticky Pill Navigation Ribbon */}
+        <WeddingStickyNav enquiryHref={contact} />
 
-    <ServiceProcess steps={[
-      { title: "Say hello", text: "Share your date, location, celebration size and whether you are considering photography, film or both." },
-      { title: "Talk through your day", text: "Discuss the atmosphere, people and moments you want to remember, along with venue and travel details." },
-      { title: "Agree & book", text: "Review availability, the proposed scope, quotation and booking terms. Confirm your booking with MMS." },
-      { title: "Plan & celebrate", text: "Agree the timeline and priority moments before the day, including access arrangements and a weather plan." },
-      { title: "Edit & deliver", text: "Your agreed selections and edits are prepared. File formats, revisions and delivery timing are confirmed for your booking." },
-    ]} />
+        {/* 02 — The Full Introduction */}
+        <section className={wStyles.bandBase} aria-labelledby="intro-title">
+          <div className={wStyles.bandInner}>
+            <div className={wStyles.introLayout}>
+              <div className={wStyles.introAside}>
+                <p className={styles.eyebrow}>Victoria Falls, Zimbabwe</p>
+                <h2 id="intro-title" className={wStyles.introAsideTitle}>
+                  Designed for couples who want something beyond the ordinary.
+                </h2>
+              </div>
+              <div className={wStyles.introColumn}>
+                <p>
+                  Mosi Media Solutions presents an exclusive collection of
+                  wedding, elopement and marriage proposal experiences designed
+                  for couples who want something beyond the ordinary.
+                </p>
+                <p>
+                  Set against the breathtaking landscapes of Victoria Falls and
+                  its surrounding natural wonders, our experiences combine
+                  romance, adventure, elegant styling and professional
+                  multimedia production to create unforgettable moments.
+                </p>
+                <p>
+                  Whether you are planning an intimate destination wedding, a
+                  private elopement, a surprise marriage proposal or a romantic
+                  celebration with family and friends, we help bring your vision
+                  to life.
+                </p>
+                <p>
+                  Our packages are designed for international visitors,
+                  destination wedding couples, Zimbabwean residents and local
+                  travellers looking to celebrate love in a unique and memorable
+                  way.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-    <section className={`${styles.section} ${styles.split}`} aria-labelledby="details-title">
-      <div data-reveal><p className={styles.eyebrow}>Thoughtful planning</p><h2 id="details-title">A few details help us begin.</h2><p>Tell us about your date, ceremony and celebration locations, approximate guest count and the coverage you are considering. If your plans are still taking shape, share what you know so far.</p><p className="mt-4">Your quotation depends on coverage time, locations and travel, photography or film requirements, editing and the finished work you would like. Availability and booking terms need confirmation with MMS.</p></div>
-      <aside className={styles.note}><h3>Thinking about an aerial view?</h3><p>Aerial footage may be worth discussing if the setting is part of your story. It requires a separate feasibility review and is subject to location, weather and applicable permissions.</p><Link href="/services/drone" className={`${styles.textLink} mt-4`}>Explore Drone Services</Link></aside>
-    </section>
+        {/* 1. Our exclusive wedding destinations — Spacious Editorial Rows */}
+        <section
+          id="destinations"
+          className={wStyles.bandStone}
+          aria-labelledby="destinations-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div className={wStyles.sectionSplit}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>1 · Victoria Falls &amp; Beyond</p>
+                <h2 id="destinations-title">Our exclusive wedding destinations</h2>
+                <p className={wStyles.sectionIntro}>
+                  Each destination offers a different atmosphere, allowing couples
+                  to choose a setting that reflects their personalities and love
+                  story.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={`${wStyles.sectionPhotoFrame} ${wStyles.sectionPhotoPortrait}`}>
+                  <Image
+                    src="/mms/mms/weddings/weddin%20and%20elopments/IMG_3424.jpg"
+                    alt="Couple walking barefoot hand in hand beside the Zambezi River"
+                    width={1200}
+                    height={1800}
+                    sizes="(max-width:959px) 92vw, 38vw"
+                    className={wStyles.fullBleedImage}
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Romantic riverside setting along the Zambezi by Mosi Media Solutions.
+                </figcaption>
+              </figure>
+            </div>
+            <div className={wStyles.destinationRows}>
+              {weddingDestinations.map((dest, index) => (
+                <article key={dest.name} className={wStyles.destinationRow}>
+                  <div className={wStyles.destinationRowTitle}>
+                    <span
+                      className={wStyles.destinationNumber}
+                      aria-hidden="true"
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3>{dest.name}</h3>
+                  </div>
+                  <div className={wStyles.destinationRowBody}>
+                    <p>{dest.description}</p>
+                    <p className={wStyles.destinationPerfectFor}>
+                      <strong>Perfect for:</strong> {dest.perfectFor}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className={wStyles.editorialNote}>
+              All locations are subject to landowner and relevant authority
+              approvals, access arrangements, environmental requirements and
+              availability.
+            </p>
+          </div>
+        </section>
 
-    <ServiceFAQs items={[
-      { question: "Can we enquire about a small elopement?", answer: "Yes. Share your location, date and the moments you want covered, even if it is just the two of you. Coverage, access and availability can then be discussed for your plans." },
-      { question: "Can we discuss both photography and film?", answer: "Yes. Tell MMS whether you are considering photographs, a film or both. The team will discuss the scope and what can be arranged for your date before confirming a quotation." },
-      { question: "Do we need to choose a package?", answer: "The options here are a starting point for a conversation. Agree the coverage time, priority moments, deliverables and booking terms with MMS; nothing is automatically included by this page." },
-      { question: "How far ahead should we enquire?", answer: "Enquire once you have a preferred date or a shortlist. Availability must be checked, and a date is only secured according to the booking terms agreed with MMS." },
-      { question: "What if our location or the weather changes?", answer: "Discuss an alternative portrait location and any venue access restrictions during planning. Changes to date, location or coverage are subject to availability and your agreed booking terms." },
-      { question: "When will we receive our photographs or film?", answer: "Delivery timing, image selections, film length, formats, revisions and sharing permissions are agreed for each booking. Share any important deadlines when you enquire." },
-    ]} />
-    <ServiceClosing title="Tell us what your day could be." text="An intimate ceremony or a room full of your favourite people. Share your plans and we can begin with a conversation." href={contact} label="Enquire about your wedding or elopement" relatedHref="/services" relatedLabel="Explore all MMS services" />
-  </main><Footer /></div>;
+        {/* 2. Exclusive wedding packages */}
+        <section
+          id="wedding-packages"
+          className={wStyles.bandBase}
+          aria-labelledby="wedding-packages-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div className={wStyles.sectionSplit}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>2 · Destination Celebrations</p>
+                <h2 id="wedding-packages-title">Exclusive wedding packages</h2>
+                <p className={wStyles.sectionIntro}>
+                  Our wedding experiences cater to different celebrations, from
+                  intimate ceremonies to luxurious destination weddings.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={wStyles.sectionPhotoFrame}>
+                  <Image
+                    src="/mms/mms/weddings/weddin%20and%20elopments/untitled-7268.jpg"
+                    alt="Outdoor destination wedding ceremony with bride, groom, officiant, floral arch and guests"
+                    width={1500}
+                    height={1000}
+                    sizes="(max-width:959px) 92vw, 44vw"
+                    className={wStyles.fullBleedImage}
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Outdoor wedding ceremony captured by Mosi Media Solutions.
+                </figcaption>
+              </figure>
+            </div>
+            <WeddingPackagePanels
+              sectionId="wedding"
+              packages={exclusiveWeddingPackages}
+            />
+          </div>
+        </section>
+
+        {/* 3. Exclusive elopement packages */}
+        <section
+          id="elopement-packages"
+          className={wStyles.bandStone}
+          aria-labelledby="elopement-packages-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div className={`${wStyles.sectionSplit} ${wStyles.sectionSplitReverse}`}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>3 · Just The Two Of You</p>
+                <h2 id="elopement-packages-title">Exclusive elopement packages</h2>
+                <p className={wStyles.sectionIntro}>
+                  For couples who believe that getting married should be about the
+                  two of them, our elopement experiences offer intimate, beautifully
+                  curated celebrations. These packages are particularly suitable for
+                  international visitors, honeymooners and couples looking for a
+                  private wedding experience in Victoria Falls.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={wStyles.sectionPhotoFrame}>
+                  <Image
+                    src="/mms/mms/weddings/_DSC7059.jpg"
+                    alt="Bride and groom smiling together beneath a white floral arch beside the river at golden hour"
+                    width={1500}
+                    height={1000}
+                    sizes="(max-width:959px) 92vw, 44vw"
+                    className={wStyles.fullBleedImage}
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Intimate riverside elopement portrait by Mosi Media Solutions.
+                </figcaption>
+              </figure>
+            </div>
+            <WeddingPackagePanels
+              sectionId="elopement"
+              packages={exclusiveElopementPackages}
+            />
+          </div>
+        </section>
+
+        {/* 4. Marriage proposal packages */}
+        <section
+          id="proposal-packages"
+          className={wStyles.bandBase}
+          aria-labelledby="proposal-packages-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div className={wStyles.sectionSplit}>
+              <div data-reveal className={wStyles.sectionSplitBody}>
+                <p className={styles.eyebrow}>4 · Make the question unforgettable</p>
+                <h2 id="proposal-packages-title">Marriage proposal packages</h2>
+                <p className={wStyles.sectionIntro}>
+                  A marriage proposal is one of life&apos;s most important moments.
+                  Our proposal packages are designed to help you surprise your
+                  partner with a beautifully planned, romantic and memorable
+                  experience. From a private riverside arrangement to an elaborate
+                  surprise proposal, we take care of the details while you focus on
+                  asking the most important question.
+                </p>
+              </div>
+              <figure className={wStyles.sectionSplitMedia}>
+                <div className={`${wStyles.sectionPhotoFrame} ${wStyles.sectionPhotoPortrait}`}>
+                  <Image
+                    src="/mms/mms/weddings/IMG_2727.jpg"
+                    alt="Surprise marriage proposal with picnic setup beside the Zambezi River"
+                    width={1200}
+                    height={1500}
+                    sizes="(max-width:959px) 92vw, 38vw"
+                    className={wStyles.fullBleedImage}
+                  />
+                </div>
+                <figcaption className={styles.caption}>
+                  Riverside marriage proposal captured by Mosi Media Solutions.
+                </figcaption>
+              </figure>
+            </div>
+            <WeddingPackagePanels
+              sectionId="proposal"
+              packages={marriageProposalPackages}
+            />
+          </div>
+        </section>
+
+        {/* 5. Exclusive add-ons and personalised experiences — Service Directory */}
+        <section
+          id="add-ons"
+          className={wStyles.bandStone}
+          aria-labelledby="addons-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div data-reveal className={wStyles.sectionHeader}>
+              <p className={styles.eyebrow}>5 · Tailored Touches</p>
+              <h2 id="addons-title">
+                Exclusive add-ons and personalised experiences
+              </h2>
+              <p className={wStyles.sectionIntro}>
+                Couples can customise any wedding, elopement or proposal package
+                with additional services to create an even more extraordinary
+                celebration.
+              </p>
+            </div>
+            <div className={wStyles.directoryGrid}>
+              {featuredWeddingAddons.map((addon) => (
+                <div key={addon.title} className={wStyles.directoryItem}>
+                  <h3>{addon.title}</h3>
+                  <p>{addon.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className={wStyles.additionalDirectory}>
+              <h3>Additional services can include</h3>
+              <ul className={wStyles.additionalList}>
+                {additionalWeddingServices.map((service) => (
+                  <li key={service}>
+                    <Check
+                      size={16}
+                      className={wStyles.inclusionIcon}
+                      aria-hidden="true"
+                    />
+                    <span>{service}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Our signature experience — Numbered 3-Stage Timeline */}
+        <section
+          id="signature-journey"
+          className={wStyles.bandBase}
+          aria-labelledby="signature-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div data-reveal className={wStyles.sectionHeader}>
+              <p className={styles.eyebrow}>6 · Complete Love Story</p>
+              <h2 id="signature-title">
+                Our signature experience: From the proposal to the wedding
+              </h2>
+              <p className={wStyles.sectionIntro}>
+                For couples who want to make their entire love story
+                extraordinary, Mosi Media Solutions offers a customised journey
+                that combines three memorable experiences.
+              </p>
+            </div>
+            <ol className={wStyles.journeyTimeline}>
+              {signatureJourneyStages.map((item) => (
+                <li key={item.stage} className={wStyles.journeyStep}>
+                  <span className={wStyles.journeyStage}>{item.stage}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </li>
+              ))}
+            </ol>
+            <p className={wStyles.editorialNote}>
+              Couples can book each experience separately or request a combined
+              proposal-to-wedding package.
+            </p>
+          </div>
+        </section>
+
+        {/* 7. Important package information — Organised Editorial Conditions */}
+        <section
+          id="package-information"
+          className={wStyles.bandStone}
+          aria-labelledby="package-info-title"
+        >
+          <div className={wStyles.bandInner}>
+            <div className={wStyles.conditionsLayout}>
+              <div data-reveal className={wStyles.conditionsHeader}>
+                <p className={styles.eyebrow}>7 · Transparency &amp; Conditions</p>
+                <h2 id="package-info-title">Important package information</h2>
+                <p className={wStyles.sectionIntro}>
+                  To maintain transparency for both local and international
+                  clients, the following conditions accompany all packages.
+                </p>
+              </div>
+              <ul className={wStyles.conditionsList}>
+                {importantPackageInformation.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 8. Website booking and enquiry section */}
+        <section
+          id="enquiry"
+          className={wStyles.bandBase}
+          aria-labelledby="closing-title"
+        >
+          <div className={wStyles.closingInner}>
+            <div data-reveal>
+              <p className={styles.eyebrow}>8 · Start planning your experience</p>
+              <h2 id="closing-title">
+                Your Love Story Deserves an Extraordinary Setting.
+              </h2>
+              <p>
+                Whether you are planning a destination wedding, dreaming of an
+                intimate elopement or preparing to ask the most important question
+                of your life, let us create an experience worth remembering.
+              </p>
+              <p className={wStyles.bookingTagline}>
+                Celebrate love. Experience Victoria Falls. Create memories that
+                last forever.
+              </p>
+
+              <div className={wStyles.closingActions}>
+                <EnquiryLink href={contact}>
+                  Start planning your experience
+                </EnquiryLink>
+                <Link className={styles.textLink} href="/packages/weddings">
+                  Explore social event &amp; reception packages
+                  <ArrowRight aria-hidden="true" size={16} />
+                </Link>
+              </div>
+
+              <div className={wStyles.bookingMeta}>
+                <p>
+                  Contact Mosi Media Solutions for package details, personalised
+                  quotations and destination arrangements.
+                </p>
+                <div className={wStyles.bookingMetaRow}>
+                  <span className={wStyles.bookingMetaLabel}>
+                    <MessageCircle size={16} aria-hidden="true" />
+                    WhatsApp:
+                  </span>
+                  <a
+                    href="https://wa.me/263775728397"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={wStyles.bookingMetaLink}
+                  >
+                    +263 77 572 8397
+                  </a>
+                </div>
+                <div className={wStyles.bookingMetaRow}>
+                  <span className={wStyles.bookingMetaLabel}>
+                    <MapPin size={16} aria-hidden="true" />
+                    Location:
+                  </span>
+                  <span>Victoria Falls, Zimbabwe</span>
+                </div>
+                <div className={wStyles.bookingMetaRow}>
+                  <span className={wStyles.bookingMetaLabel}>
+                    <Sparkles size={16} aria-hidden="true" />
+                    Services:
+                  </span>
+                  <span>
+                    Weddings | Elopements | Proposals | Photography | Videography
+                    | Event Experiences
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
 }

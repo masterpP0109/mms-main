@@ -8,10 +8,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 import { useModalFocus } from "./useModalFocus";
+import { PROJECTS_ENABLED } from "@/lib/site-flags";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Conference Production", href: "/conference-production" },
+  { label: "Conferences and Events", href: "/conference-production" },
   { label: "Services", href: "/services" },
   { label: "Packages", href: "/packages" },
   { label: "Drone Services", href: "/services/drone" },
@@ -19,7 +20,7 @@ const navLinks = [
   { label: "Gallery", href: "/gallery" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-];
+].filter(link => PROJECTS_ENABLED || link.href !== "/projects");
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -49,21 +50,19 @@ export default function Navbar() {
     href === "/" || href === "/services" ? pathname === href : (pathname ?? "").startsWith(href);
 
   return (
-    <header className="site-header fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
+    <header className={`site-header fixed top-0 left-0 right-0 z-50 ${scrolled ? "site-header--scrolled" : ""}`}>
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 flex items-center justify-between gap-4">
         <Link
           href="/"
-          className="relative z-50 flex shrink-0 items-center"
-
+          className="relative z-50 flex shrink-0 items-center transition-transform duration-300 hover:scale-[1.03]"
           aria-label="MMS Home"
         >
           <Image
             src="/mms/MMS%20LOGO.png"
             alt="MMS Logo"
-            width={140}
-            height={38}
-            style={{ width: "auto", height: "auto", maxWidth: "112px" }}
-            className="sm:[max-width:140px] object-contain"
+            width={220}
+            height={64}
+            className="w-[116px] sm:w-[136px] lg:w-[152px] h-auto object-contain drop-shadow-[0_1px_3px_rgba(5,5,7,0.45)]"
             preload
           />
         </Link>
@@ -83,15 +82,19 @@ export default function Navbar() {
                     key={item.href}
                     href={item.href}
                     aria-current={isActive(item.href) ? "page" : undefined}
-                    className={`nav-item relative px-2 py-2.5 text-[10px] 2xl:text-[11px] uppercase tracking-[.06em] ${
-                      isActive(item.href) ? "active text-white" : "text-brand-foreground/70 hover:text-white"
+                    className={`nav-item relative px-2.5 py-2.5 text-[10px] 2xl:text-[11px] uppercase tracking-[.06em] ${
+                      isActive(item.href)
+                        ? "active text-white font-semibold"
+                        : scrolled
+                          ? "text-white/90 hover:text-white font-medium"
+                          : "text-[#050507]/85 hover:text-[#7f141f] font-medium"
                     }`}
                   >
                     {isActive(item.href) && (
                       <motion.div
                         layoutId="nav-pill"
                         className="absolute inset-0 rounded-full"
-                        style={{ background: "rgba(255,255,255,0.12)" }}
+                        style={{ background: "#981b28" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       />
                     )}
@@ -102,7 +105,7 @@ export default function Navbar() {
 
               <button
                 type="button"
-                className="nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 text-white"
+                className={`nav-icon-btn shrink-0 xl:hidden relative z-10 p-3 ${scrolled ? "text-white" : "text-[#050507]"}`}
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label={mobileOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileOpen}
@@ -127,10 +130,17 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="mobile-menu xl:hidden fixed inset-0 z-[60] bg-[#050507]/95 backdrop-blur-xl"
+            className="mobile-menu xl:hidden fixed inset-0 z-[60] bg-[#e4e4e4]/96 backdrop-blur-xl"
             onClick={() => setMobileOpen(false)}
           >
-            <button type="button" aria-label="Close menu" onClick={() => setMobileOpen(false)} className="modal-close"><X /></button>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setMobileOpen(false)}
+              className="modal-close !bg-[#efefef] !text-[#050507] border border-[#050507]/15 shadow-sm"
+            >
+              <X />
+            </button>
             <div
               className="mobile-menu-links flex flex-col items-stretch gap-2"
               onClick={(e) => e.stopPropagation()}
@@ -141,8 +151,10 @@ export default function Navbar() {
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`min-h-11 flex items-center justify-center text-center text-lg sm:text-2xl font-semibold tracking-widest uppercase transition-colors duration-300 font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-sm ${
-                    isActive(item.href) ? "text-white" : "text-brand-foreground/70 hover:text-white"
+                  className={`min-h-11 flex items-center justify-center text-center text-lg sm:text-2xl font-semibold tracking-widest uppercase transition-colors duration-300 font-heading focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7f141f] rounded-full px-6 py-2 ${
+                    isActive(item.href)
+                      ? "bg-[#981b28] text-white"
+                      : "text-[#050507]/85 hover:text-[#7f141f]"
                   }`}
                 >
                   {item.label}

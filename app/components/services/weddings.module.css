@@ -1,0 +1,870 @@
+.weddingBrochure {
+  overflow-x: clip;
+}
+
+/* Editorial typography system scoped to the Weddings & Elopements brochure */
+.weddingBrochure h1 {
+  font-size: clamp(2.25rem, 4.4vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: #050507;
+  margin-block: 1rem 1.35rem;
+}
+
+.weddingBrochure h2 {
+  font-size: clamp(1.75rem, 3vw, 2.75rem);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  color: #050507;
+  max-width: 24ch;
+  margin-bottom: 1rem;
+}
+
+.weddingBrochure h3 {
+  font-size: clamp(1.3125rem, 1.8vw, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  color: #050507;
+}
+
+.weddingBrochure p {
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  line-height: 1.65;
+  color: rgb(5 5 7 / 0.88);
+}
+
+.weddingBrochure :global([class*="eyebrow"]) {
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  margin-bottom: 0.85rem;
+}
+
+.weddingBrochure :global([class*="caption"]) {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgb(5 5 7 / 0.72);
+}
+
+.weddingBrochure :global([class*="button"]),
+.weddingBrochure :global([class*="textLink"]) {
+  font-size: 0.96875rem;
+  min-height: 44px;
+}
+
+/* 01 — Spacious Hero Composition */
+.heroSection {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  padding-block: 6.5rem 3.5rem;
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.heroContent {
+  min-width: 0;
+}
+
+.heroLead {
+  font-size: clamp(1.1875rem, 1.75vw, 1.45rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #050507;
+  max-width: 44ch;
+  margin-bottom: 0;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2rem;
+}
+
+.heroMedia {
+  min-width: 0;
+  margin: 0;
+}
+
+.heroPhotoFrame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.35rem;
+  border: 1px solid rgb(5 5 7 / 0.14);
+  background: #d6d5d0;
+}
+
+.heroMedia figcaption {
+  margin-top: 0.85rem;
+}
+
+/* Sticky Pill Navigation Ribbon (clears fixed Navbar cleanly) */
+.stickyNav {
+  position: sticky;
+  top: 72px;
+  z-index: 30;
+  background: rgb(255 255 255 / 0.96);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgb(5 5 7 / 0.1);
+  border-bottom: 1px solid rgb(5 5 7 / 0.12);
+  padding-block: 0.75rem;
+}
+
+.stickyNavInner {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.stickyNavInner::-webkit-scrollbar {
+  display: none;
+}
+
+.navPill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid rgb(5 5 7 / 0.16);
+  background: #f8f8f8;
+  color: #111827;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.navPill:hover {
+  border-color: #981b28;
+  color: #981b28;
+}
+
+.navPill:focus-visible {
+  outline: 2px solid #981b28;
+  outline-offset: 2px;
+}
+
+.navPillActive {
+  background: #981b28;
+  border-color: #981b28;
+  color: #ffffff;
+}
+
+.navPillActive:hover {
+  background: #7f141f;
+  border-color: #7f141f;
+  color: #ffffff;
+}
+
+.navAction {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding-left: 0.75rem;
+  display: none;
+}
+
+.navCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  background: #981b28;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease;
+}
+
+.navCta:is(:hover, :focus-visible) {
+  background: #7f141f;
+}
+
+.navCta:focus-visible {
+  outline: 2px solid #981b28;
+  outline-offset: 2px;
+}
+
+/* Full-bleed Alternating Editorial Bands */
+.bandStone {
+  background: #eceae5;
+  border-top: 1px solid rgb(5 5 7 / 0.1);
+  border-bottom: 1px solid rgb(5 5 7 / 0.1);
+  scroll-margin-top: 150px;
+}
+
+.bandBase {
+  background: #e4e4e4;
+  scroll-margin-top: 150px;
+}
+
+.bandInner {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  padding-block: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.sectionHeader {
+  max-width: 68ch;
+}
+
+.sectionIntro {
+  font-size: clamp(1.025rem, 1.25vw, 1.125rem);
+  line-height: 1.62;
+  color: rgb(5 5 7 / 0.86);
+}
+
+.sectionSplit {
+  display: grid;
+  gap: 2rem 3.5rem;
+  align-items: center;
+}
+
+.sectionSplitBody {
+  min-width: 0;
+}
+
+.sectionSplitMedia {
+  min-width: 0;
+  margin: 0;
+}
+
+.sectionPhotoFrame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgb(5 5 7 / 0.12);
+  background: #d6d5d0;
+}
+
+.sectionPhotoPortrait {
+  max-width: 460px;
+  margin-inline: auto;
+}
+
+.fullBleedImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.sectionSplitMedia figcaption {
+  margin-top: 0.7rem;
+}
+
+/* 02 — Full Introduction Reading Column */
+.introLayout {
+  display: grid;
+  gap: 1.5rem 4rem;
+  align-items: start;
+}
+
+.introAside {
+  min-width: 0;
+}
+
+.introAsideTitle {
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.25;
+  color: #050507;
+  margin: 0;
+}
+
+.introColumn {
+  min-width: 0;
+  display: grid;
+  gap: 1.25rem;
+  max-width: 66ch;
+}
+
+.introColumn p {
+  margin: 0;
+  font-size: clamp(1.03125rem, 1.2vw, 1.125rem);
+  line-height: 1.68;
+}
+
+/* 03 — Destinations: Spacious Editorial Rows (No Boxes) */
+.destinationRows {
+  margin-top: 2.75rem;
+  border-top: 1px solid rgb(5 5 7 / 0.16);
+}
+
+.destinationRow {
+  display: grid;
+  gap: 1rem 3rem;
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  border-bottom: 1px solid rgb(5 5 7 / 0.16);
+  align-items: start;
+}
+
+.destinationRowTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.destinationNumber {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #7f141f;
+  flex-shrink: 0;
+}
+
+.destinationRowTitle h3 {
+  margin: 0;
+}
+
+.destinationRowBody {
+  min-width: 0;
+  display: grid;
+  gap: 0.65rem;
+  max-width: 66ch;
+}
+
+.destinationRowBody p {
+  margin: 0;
+}
+
+.destinationPerfectFor {
+  font-size: 0.96875rem !important;
+  line-height: 1.55 !important;
+  color: rgb(5 5 7 / 0.86);
+}
+
+.destinationPerfectFor strong {
+  color: #7f141f;
+  font-weight: 600;
+}
+
+.editorialNote {
+  margin-top: 2rem;
+  padding-left: 1.25rem;
+  border-left: 3px solid #7f141f;
+  font-size: 0.96875rem !important;
+  line-height: 1.6 !important;
+  color: rgb(5 5 7 / 0.85);
+  max-width: 72ch;
+}
+
+/* 04 — Expandable Editorial Package Panels */
+.packageList {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.packagePanel {
+  border: 1px solid rgb(5 5 7 / 0.14);
+  border-radius: 1rem;
+  background: #f9f8f6;
+  transition: border-color 0.2s ease;
+}
+
+.packagePanelFeatured {
+  border-color: rgb(127 20 31 / 0.4);
+}
+
+.packagePanelSummary {
+  padding: clamp(1.35rem, 2.8vw, 2.25rem);
+  display: grid;
+  gap: 1.5rem 3rem;
+  align-items: start;
+}
+
+.packageIdentity {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.packageMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.packageNumber {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgb(5 5 7 / 0.72);
+  font-weight: 600;
+}
+
+.packageBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(127 20 31 / 0.09);
+  border: 1px solid rgb(127 20 31 / 0.26);
+  color: #7f141f;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.packageTitle {
+  margin: 0;
+}
+
+.packagePricing {
+  margin-top: 0.35rem;
+}
+
+.packagePrice {
+  font-size: clamp(2rem, 2.8vw, 2.375rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #050507;
+  line-height: 1.1;
+}
+
+.packagePriceNote {
+  margin-top: 0.35rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: rgb(5 5 7 / 0.72);
+}
+
+.packageOverview {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.packageDescription {
+  font-size: 1.03125rem !important;
+  line-height: 1.62 !important;
+  color: rgb(5 5 7 / 0.9);
+  margin: 0;
+  max-width: 60ch;
+}
+
+.packageControls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.15rem;
+}
+
+.packageToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgb(5 5 7 / 0.25);
+  background: transparent;
+  color: #050507;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.packageToggle:is(:hover, :focus-visible) {
+  border-color: #7f141f;
+  color: #7f141f;
+  background: rgb(127 20 31 / 0.04);
+}
+
+.packageToggle:focus-visible {
+  outline: 2px solid #7f141f;
+  outline-offset: 3px;
+}
+
+.packageChevron {
+  transition: transform 0.22s ease;
+}
+
+.packageChevronOpen {
+  transform: rotate(180deg);
+}
+
+.packageCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  padding: 0.7rem 1.35rem;
+  border-radius: 999px;
+  background: #050507;
+  color: #ffffff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.packageCta:is(:hover, :focus-visible) {
+  background: #7f141f;
+}
+
+.packageCta:focus-visible {
+  outline: 2px solid #7f141f;
+  outline-offset: 3px;
+}
+
+/* Expanded Package Details Drawer */
+.packageDetails {
+  padding: clamp(1.35rem, 2.8vw, 2.25rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid rgb(5 5 7 / 0.12);
+  background: #ffffff;
+  border-radius: 0 0 1rem 1rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.packageSubheading {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #7f141f;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.inclusionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.65rem 2rem;
+}
+
+.inclusionsList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.96875rem;
+  line-height: 1.55;
+  color: rgb(5 5 7 / 0.88);
+}
+
+.inclusionIcon {
+  color: #7f141f;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.packageDetailsFooter {
+  padding-top: 1.15rem;
+  border-top: 1px solid rgb(5 5 7 / 0.1);
+}
+
+.recommendedLocations {
+  font-size: 0.96875rem !important;
+  line-height: 1.55 !important;
+  color: rgb(5 5 7 / 0.86);
+  margin: 0;
+}
+
+.recommendedLocations strong {
+  color: #050507;
+  font-weight: 600;
+}
+
+/* 05 — Add-ons: Clean 2-Column Service Directory (No Box Grid) */
+.directoryGrid {
+  margin-top: 2.5rem;
+  border-top: 1px solid rgb(5 5 7 / 0.16);
+  display: grid;
+  gap: 0;
+}
+
+.directoryItem {
+  min-width: 0;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid rgb(5 5 7 / 0.16);
+}
+
+.directoryItem h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.45rem;
+}
+
+.directoryItem p {
+  font-size: 1rem;
+  line-height: 1.58;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.additionalDirectory {
+  margin-top: 2.75rem;
+}
+
+.additionalDirectory h3 {
+  margin: 0 0 1.25rem;
+}
+
+.additionalList {
+  display: grid;
+  gap: 0.85rem 2.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.additionalList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgb(5 5 7 / 0.88);
+}
+
+/* 06 — Signature Journey: Numbered 3-Stage Timeline (No Cards) */
+.journeyTimeline {
+  margin-top: 2.75rem;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+}
+
+.journeyStep {
+  min-width: 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid #7f141f;
+}
+
+.journeyStage {
+  display: inline-block;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #7f141f;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+
+.journeyStep h3 {
+  margin: 0 0 0.65rem;
+}
+
+.journeyStep p {
+  font-size: 1rem;
+  line-height: 1.62;
+  margin: 0;
+}
+
+/* 07 — Important Package Information: Organised Editorial Conditions */
+.conditionsLayout {
+  display: grid;
+  gap: 2rem 4rem;
+  align-items: start;
+}
+
+.conditionsHeader {
+  min-width: 0;
+}
+
+.conditionsList {
+  min-width: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid rgb(5 5 7 / 0.16);
+}
+
+.conditionsList li {
+  padding-block: 1rem;
+  border-bottom: 1px solid rgb(5 5 7 / 0.14);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgb(5 5 7 / 0.88);
+}
+
+/* 08 — Focused Closing Enquiry Section */
+.closingInner {
+  width: min(100% - 2rem, 1280px);
+  margin-inline: auto;
+  padding-block: clamp(4rem, 7vw, 6.5rem);
+  text-align: center;
+}
+
+.closingInner h2,
+.closingInner p {
+  max-width: 62ch;
+  margin-inline: auto;
+}
+
+.bookingTagline {
+  font-weight: 600;
+  color: #7f141f !important;
+  margin-top: 1.1rem;
+  font-size: 1.125rem !important;
+}
+
+.closingActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem 2rem;
+  margin-top: 2rem;
+}
+
+.bookingMeta {
+  margin-top: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgb(5 5 7 / 0.16);
+  display: grid;
+  gap: 1rem;
+  text-align: left;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.bookingMeta > p {
+  margin: 0 0 0.25rem;
+  max-width: none;
+  font-weight: 500;
+  color: #050507;
+}
+
+.bookingMetaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgb(5 5 7 / 0.88);
+}
+
+.bookingMetaLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  color: #050507;
+}
+
+.bookingMetaLink {
+  color: #7f141f;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.bookingMetaLink:focus-visible {
+  outline: 2px solid #7f141f;
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .heroSection,
+  .stickyNavInner,
+  .bandInner,
+  .closingInner {
+    width: min(100% - 4.5rem, 1280px);
+  }
+
+  .inclusionsList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .directoryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3rem;
+  }
+
+  .additionalList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .destinationRow {
+    grid-template-columns: 0.9fr 1.35fr;
+  }
+
+  .packagePanelSummary {
+    grid-template-columns: 0.85fr 1.25fr;
+  }
+}
+
+@media (min-width: 960px) {
+  .introLayout {
+    grid-template-columns: 0.75fr 1.45fr;
+  }
+
+  .sectionSplit {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .sectionSplitReverse .sectionSplitMedia {
+    order: -1;
+  }
+
+  .journeyTimeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .journeyStep {
+    padding-left: 0;
+    padding-top: 1.5rem;
+    border-left: 0;
+    border-top: 2px solid #7f141f;
+  }
+
+  .conditionsLayout {
+    grid-template-columns: 0.85fr 1.35fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroSection {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4.5rem;
+    padding-block: 8.5rem 4.5rem;
+  }
+
+  .stickyNav {
+    top: 82px;
+  }
+
+  .navAction {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packageToggle,
+  .packageCta,
+  .packageChevron,
+  .navPill,
+  .navCta {
+    transition: none;
+  }
+}

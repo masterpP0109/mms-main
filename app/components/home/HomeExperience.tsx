@@ -149,7 +149,7 @@ export default function Home() {
     {
       title: "Live Streaming Production",
       icon: Play,
-      image: "/services%20images/Live%20Streaming%20Production.jpg",
+      image: "/mms/mms/dj%20services%20and%20entertainment/live%20streaming%20.jpeg",
       alt: "Multi-camera live streaming control setup",
       desc: "Multi-camera live streaming, remote speaker integration and graphics for hybrid events.",
       href: "/services"
@@ -157,7 +157,7 @@ export default function Home() {
     {
       title: "Videography & Photography",
       icon: Camera,
-      image: "/services%20images/videography-photography.jpg",
+      image: "/mms/mms/video%20production/IMG_2300.jpg",
       alt: "Cinematic filming and photography at an event",
       desc: "Event photography, commercial filming and highlight reels crafted for lasting impact.",
       href: "/services"

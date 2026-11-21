@@ -140,7 +140,7 @@ export default function Home() {
     {
       title: "Professional Sound Systems",
       icon: Volume2,
-      image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.34.08.jpeg",
+      image: "/services%20images/Professional%20Sound%20Systems.jpg",
       alt: "Professional sound system and PA setup at an event",
       desc: "PA systems, line arrays, mixing consoles and wireless microphones tailored to any venue.",
       href: "/services"
@@ -148,7 +148,7 @@ export default function Home() {
     {
       title: "Live Streaming Production",
       icon: Play,
-      image: "/mms/mms/dj%20services%20and%20entertainment/live%20streaming%20.jpeg",
+      image: "/services%20images/Live%20Streaming%20Production.jpg",
       alt: "Multi-camera live streaming control setup",
       desc: "Multi-camera live streaming, remote speaker integration and graphics for hybrid events.",
       href: "/services"

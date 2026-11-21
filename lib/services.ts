@@ -46,7 +46,7 @@ export const services = [
   },
   {
     title: "Professional Sound Systems",
-    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.34.08.jpeg",
+    image: "/mms/PaSystem/WhatsApp%20Image%202026-10-03%20at%2010.42.11%20AM.jpeg",
     gallery: [
       "/mms/PaSystem/vlcsnap-2026-10-03-10h05m49s490.png",
       "/mms/PaSystem/vlcsnap-2026-10-03-10h06m45s223.png",
@@ -67,7 +67,7 @@ export const services = [
   },
   {
     title: "Live Streaming Production",
-    image: "/mms/mms/dj%20services%20and%20entertainment/live%20streaming%20.jpeg",
+    image: "/mms/mms/dj%20services%20and%20entertainment/WhatsApp%20Image%202026-11-20%20at%2014.34.08.jpeg",
     gallery: [
       "/mms/livestreaming/7DqC9xBqivpkVQKij53366-1706-80.jpg.jpeg",
       "/mms/livestreaming/71T8PEvLnJL._AC_SX569_.jpg.jpeg",

@@ -70,7 +70,7 @@
 .mediaFigure figcaption { margin-top: .65rem; }
 .mediaFrame { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 1.5rem; border: 1px solid rgb(5 5 7 / .12); background: #d6d5d0; }
 .mediaFrameWide { aspect-ratio: 16 / 10; }
-.mediaFrame img { object-fit: cover; transition: transform .65s cubic-bezier(0.22, 1, 0.36, 1); }
+.mediaFrame img { object-fit: contain; transition: transform .65s cubic-bezier(0.22, 1, 0.36, 1); }
 .mediaFrame:hover img { transform: scale(1.03); }
 .mediaGrid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
 .serviceChecklist { display: grid; gap: .75rem; margin-top: 1.5rem; list-style: none; padding: 0; align-items: start; }

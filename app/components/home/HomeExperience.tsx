@@ -2,6 +2,7 @@
 
 import ProjectBriefBuilder from "./ProjectBriefBuilder";
 import SignatureExperiences from "../packages/SignatureExperiences";
+import LogoMarquee from "./LogoMarquee";
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
@@ -558,6 +559,7 @@ export default function Home() {
 
       {/* 5) STORIES THAT BECAME MEMORIES SECTION - HORIZONTAL WHEEL CAROUSEL */}
       <SignatureExperiences variant="light" />
+      <LogoMarquee />
       <section
         style={{ opacity: 1, visibility: "visible" }}
         id="gallery"

@@ -68,22 +68,22 @@ export default function LogoMarquee() {
       aria-label="Our Clients and Partners"
       className="relative w-full py-12 md:py-16 bg-[#fafafa] border-t border-b border-[#050507]/10 overflow-hidden select-none"
     >
-      <div className="max-w-[1600px] mx-auto mms-wide-gutter mb-8 text-center">
-        <span className="text-[11px] md:text-xs tracking-[0.32em] text-[#7f141f] uppercase font-semibold block font-heading">
+      <div className="max-w-[1600px] mx-auto mms-wide-gutter mb-10 text-center">
+        <span className="text-[12px] md:text-sm tracking-[0.35em] text-[#7f141f] uppercase font-semibold block font-heading">
           Trusted By Industry Leaders &amp; Partners
         </span>
       </div>
 
       {/* Marquee viewport container with edge fade masks */}
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden py-4">
         {/* Left & Right gradient edge fades for smooth entry/exit */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-28 md:w-40 bg-gradient-to-r from-[#fafafa] to-transparent z-10"
+          className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-36 md:w-56 bg-gradient-to-r from-[#fafafa] to-transparent z-10"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-28 md:w-40 bg-gradient-to-l from-[#fafafa] to-transparent z-10"
+          className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-36 md:w-56 bg-gradient-to-l from-[#fafafa] to-transparent z-10"
         />
 
         {/* The scrolling ribbon: moves left-to-right via CSS keyframe translate */}
@@ -93,22 +93,20 @@ export default function LogoMarquee() {
             <div
               key={copyIndex}
               aria-hidden={copyIndex > 0 ? "true" : undefined}
-              className="marquee-track flex items-center shrink-0 justify-around gap-10 sm:gap-14 md:gap-20 px-5 sm:px-7 md:px-10"
+              className="marquee-track flex items-center shrink-0 justify-around gap-12 sm:gap-16 md:gap-24 lg:gap-28 px-6 sm:px-10 md:px-14"
             >
               {PARTNER_LOGOS.map((logo, idx) => (
                 <div
                   key={`${copyIndex}-${idx}-${logo.name}`}
-                  className="flex items-center justify-center shrink-0 h-16 sm:h-20 w-32 sm:w-40 md:w-48 px-3 py-2 rounded-xl bg-white/80 border border-[#050507]/6 shadow-sm hover:border-[#7f141f]/30 hover:bg-white transition-all duration-300"
+                  className="flex items-center justify-center shrink-0 h-24 sm:h-28 md:h-32 transition-transform duration-300 hover:scale-105"
                 >
-                  <div className="relative w-full h-full flex items-center justify-center">
-                    <Image
-                      src={logo.src}
-                      alt={logo.alt}
-                      width={180}
-                      height={70}
-                      className="max-h-12 sm:max-h-14 w-auto object-contain grayscale opacity-75 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                    />
-                  </div>
+                  <Image
+                    src={logo.src}
+                    alt={logo.alt}
+                    width={320}
+                    height={140}
+                    className="max-h-20 sm:max-h-24 md:max-h-28 w-auto max-w-[200px] sm:max-w-[240px] md:max-w-[280px] object-contain transition-all duration-300"
+                  />
                 </div>
               ))}
             </div>

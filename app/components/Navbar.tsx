@@ -12,7 +12,7 @@ import { PROJECTS_ENABLED } from "@/lib/site-flags";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Conference Production", href: "/conference-production" },
+  { label: "Conferences and Events", href: "/conference-production" },
   { label: "Services", href: "/services" },
   { label: "Packages", href: "/packages" },
   { label: "Drone Services", href: "/services/drone" },

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { PROJECTS_ENABLED } from "../lib/site-flags";
 import { contactLeadSchema } from "../lib/validation/leads";
 
 test("homepage keeps the MMS identity and links to services", async ({ page }) => {
@@ -16,6 +17,7 @@ test("homepage keeps the MMS identity and links to services", async ({ page }) =
   await expect(page.locator("h1")).toBeVisible();
 });
 test("project links resolve to published case studies", async ({ page }) => {
+  test.skip(!PROJECTS_ENABLED, "Projects page is temporarily hidden");
   test.skip(!process.env.MMS_TEST_DATABASE_URL, "Dedicated test PostgreSQL required for case studies");
   await page.goto("/projects");
   await page.getByRole("button", { name: /^Preview / }).first().click();

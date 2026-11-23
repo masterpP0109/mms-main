@@ -67,7 +67,7 @@ export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="space-y-8"
+              className="space-y-6 lg:space-y-8 pt-10 border-t border-[#050507]/10 first:pt-0 first:border-t-0 lg:pt-0 lg:border-t-0"
             >
               <div
                 className="group cursor-pointer"
@@ -84,8 +84,8 @@ export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }
               >
               {/* Main grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
-                 {/* Primary image */}
-                <div className={`relative rounded-3xl overflow-hidden border border-[#050507]/10 aspect-[4/3] group bg-[#efefef] ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
+                 {/* Primary image (after text on mobile, alternating on desktop) */}
+                <div className={`relative rounded-3xl overflow-hidden border border-[#050507]/10 aspect-[4/3] group bg-[#efefef] order-2 ${idx % 2 === 1 ? "lg:order-2" : "lg:order-1"}`}>
                   <FitImage
                     src={service.image}
                     alt={service.heroAlt || service.title}
@@ -99,8 +99,8 @@ export default function ServicesView({ catalog }: { catalog: ServiceCardData[] }
                   </div>
                 </div>
 
-                {/* Text */}
-                <div className={`space-y-6 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
+                {/* Text (first on mobile, alternating on desktop) */}
+                <div className={`space-y-6 order-1 ${idx % 2 === 1 ? "lg:order-1" : "lg:order-2"}`}>
                   <h2 className="text-3xl md:text-5xl font-semibold text-[#050507] font-heading">{service.title}</h2>
                   <p className="text-lg text-[#050507]/85 leading-relaxed font-normal">{service.desc}</p>
                   <div data-stagger className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-5 gap-3 pt-2">

@@ -166,7 +166,7 @@ export default function DronePage() {
             </p>
             <div className={styles.actions}>
               <EnquiryLink href={contact}>Discuss your aerial shoot</EnquiryLink>
-              <Link href="/packages/drone" className={styles.textLink}>Explore drone packages</Link>
+              <Link href="/packages/drone" className={styles.textLink}>Explore drone services</Link>
               <a href="#drone-services-list" className={styles.textLink}>Explore our drone services</a>
             </div>
             <p className={styles.caption}>
@@ -230,7 +230,7 @@ export default function DronePage() {
             <div className={styles.actions}>
               <EnquiryLink href={contact}>Request aerial coverage</EnquiryLink>
               <Link href="/packages/drone" className={styles.textLink}>
-                Explore drone packages
+                Explore drone services
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </div>

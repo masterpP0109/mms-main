@@ -63,7 +63,7 @@ test("desktop Drone Services link and homepage feature links resolve", async ({ 
   await expect(nav.getByRole("link", { name: "Services", exact: true })).not.toHaveAttribute("aria-current", "page");
   await page.goto("/#services");
   await page.locator('#signature-experiences').screenshot({ path: "test-results/home-signature-experiences.png" });
-  await page.getByRole("link", { name: "Learn more about Drone Packages", exact: true }).click();
+  await page.getByRole("link", { name: "Learn more about Drone Services", exact: true }).click();
   await expect(page).toHaveURL(/\/services\/drone$/);
   await page.goto("/#services");
   await page.locator("#signature-experiences").getByRole("link", { name: "Explore Wedding & Social Packages", exact: true }).click();

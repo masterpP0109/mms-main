@@ -651,7 +651,7 @@ export const packageExperiences: PackageExperience[] = [
   },
   {
     slug: "drone",
-    title: "Drone Packages",
+    title: "Drone Services",
     service: "Drone Photography & Videography",
     tagline: "Discover the extraordinary from above.",
     description:

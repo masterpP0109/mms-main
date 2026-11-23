@@ -48,7 +48,7 @@ export default function Footer() {
               <li><Link href="/packages/conferences" className="hover:text-[#7f141f] transition-colors">Conference &amp; Corporate Event Packages</Link></li>
               <li><Link href="/packages/weddings" className="hover:text-[#7f141f] transition-colors">Weddings and Social Events Packages</Link></li>
               <li><Link href="/packages/video-production" className="hover:text-[#7f141f] transition-colors">Video Production Packages</Link></li>
-              <li><Link href="/packages/drone" className="hover:text-[#7f141f] transition-colors">Drone Packages</Link></li>
+              <li><Link href="/packages/drone" className="hover:text-[#7f141f] transition-colors">Drone Services</Link></li>
               <li><Link href="/packages/podcasts" className="hover:text-[#7f141f] transition-colors">Podcast Packages</Link></li>
             </ul>
           </div>

@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { PROJECTS_ENABLED } from "../lib/site-flags";
 import { contactLeadSchema } from "../lib/validation/leads";
 
 test("homepage keeps the MMS identity and links to services", async ({ page }) => {
@@ -16,6 +17,7 @@ test("homepage keeps the MMS identity and links to services", async ({ page }) =
   await expect(page.locator("h1")).toBeVisible();
 });
 test("project links resolve to published case studies", async ({ page }) => {
+  test.skip(!PROJECTS_ENABLED, "Projects page is temporarily hidden");
   test.skip(!process.env.MMS_TEST_DATABASE_URL, "Dedicated test PostgreSQL required for case studies");
   await page.goto("/projects");
   await page.getByRole("button", { name: /^Preview / }).first().click();
@@ -26,22 +28,6 @@ test("project links resolve to published case studies", async ({ page }) => {
   expect(page.isClosed()).toBe(false);
   await page.locator('a[href^="/projects/"]').first().click();
   await expect(page.locator("h1")).toBeVisible();
-});
-test("gallery opens and restores keyboard focus after Escape", async ({ page }) => {
-  test.setTimeout(60000);
-  await page.goto("/gallery", { waitUntil: "domcontentloaded" });
-  await page.locator('button[aria-label^="View "]').first().waitFor({ state: "visible" });
-  await page.getByRole("button", { name: "Drone", exact: true }).click();
-  const trigger = page.getByRole("button", { name: "View Victoria Falls Aerial", exact: true });
-  await expect(trigger).toBeVisible();
-  await trigger.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect.poll(() => page.getByRole("dialog").locator("img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0), { timeout: 15000 }).toBe(true);
-  await page.screenshot({ path: "test-results/gallery-lightbox.png" });
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(trigger).toBeFocused();
 });
 test("contact acknowledges persistence with no external send", async ({ page }) => {
   await page.route("**/api/leads", route => {

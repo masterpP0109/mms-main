@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
+import { PROJECTS_ENABLED } from "../lib/site-flags";
 
-const routes = ["/", "/about", "/conference-production", "/services/drone", "/services/weddings-elopements", "/services/special-effects", "/packages", "/packages/weddings", "/packages/drone", "/packages/podcasts", "/gallery", "/contact", "/privacy"];
+const routes = ["/", "/about", "/conference-production", "/services/drone", "/services/weddings-elopements", "/services/special-effects", "/packages", "/packages/conferences", "/packages/weddings", "/packages/video-production", "/packages/drone", "/packages/podcasts", "/contact", "/privacy"];
 
 for (const width of [390, 768, 1440]) {
   test(`public pages retain landmarks, metadata, media and layout at ${width}px`, async ({ page }) => {
@@ -36,29 +37,6 @@ for (const width of [390, 768, 1440]) {
   });
 }
 
-test("gallery category URLs, history, lightbox keyboard and image failures recover", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/gallery?cat=Drone&utm_source=review");
-  await expect(page.getByRole("button", { name: "Drone", exact: true })).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "Wedding", exact: true }).click();
-  await expect(page).toHaveURL(/cat=Wedding/);
-  expect(new URL(page.url()).searchParams.get("utm_source")).toBe("review");
-  await page.goBack();
-  await expect(page.getByRole("button", { name: "Drone", exact: true })).toHaveAttribute("aria-pressed", "true");
-  const trigger = page.getByRole("button", { name: "View Victoria Falls landscape", exact: true });
-  await trigger.click();
-  const dialog = page.getByRole("dialog", { name: "Gallery image viewer" });
-  await expect(dialog).toBeVisible();
-  await page.keyboard.press("ArrowRight");
-  await expect(dialog).toContainText("Falls Panorama");
-  await page.keyboard.press("Escape");
-  await expect(dialog).toHaveCount(0);
-  await expect(trigger).toBeFocused();
-  await page.route("**/_next/image?**", route => route.abort());
-  await page.goto("/gallery?cat=Brand");
-  await expect(page.getByText("Image unavailable. Try another photo.").first()).toBeVisible();
-});
-
 test("skip link, slideshow pause and featured-work keys remain operable", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -86,19 +64,6 @@ test("quick contact reuses the configured WhatsApp number without sending", asyn
   await expect(page.getByRole("link", { name: "info@mosimediasolutions.com", exact: true })).toHaveAttribute("href", "mailto:info@mosimediasolutions.com");
 });
 
-test("a fading tile from the previous gallery category cannot crash or open the wrong image", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  const errors: string[] = [];
-  page.on("pageerror", error => errors.push(error.message));
-  await page.goto("/gallery");
-  const previousTile = await page.getByRole("button", { name: "View Event speaker", exact: true }).elementHandle();
-  await page.getByRole("button", { name: "Conference", exact: true }).click();
-  await previousTile!.dispatchEvent("click");
-  await expect(page.getByRole("dialog")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "View Conference presentation", exact: true })).toBeVisible();
-  expect(errors).toEqual([]);
-});
-
 for (const width of [390, 768, 1440]) {
   test(`catalogue pages, details and project expansion at ${width}px`, async ({ page }) => {
     test.setTimeout(120000);
@@ -115,41 +80,36 @@ for (const width of [390, 768, 1440]) {
     await service.click();
     await expect(page.locator("main h1")).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://www.mosimediasolutions.com${servicePath}`);
-    await page.goto("/projects");
-    const studies = page.locator('main a[href^="/projects/"]');
-    await expect(studies).toHaveCount(6);
-    await page.getByRole("button", { name: "View More Projects", exact: true }).click();
-    await expect(studies).toHaveCount(12);
-    await page.getByRole("button", { name: "Conference", exact: true }).click();
-    await expect(studies).toHaveCount(3);
-    await page.getByRole("button", { name: "All", exact: true }).click();
-    await expect(studies).toHaveCount(6);
-    const preview = page.getByRole("button", { name: /^Preview / }).first();
-    await preview.focus();
-    await page.keyboard.press("Enter");
-    const dialog = page.getByRole("dialog");
-    await expect(dialog).toBeVisible();
-    await page.keyboard.press("Escape");
-    await expect(dialog).toHaveCount(0);
-    await expect(preview).toBeFocused();
-    const projectPath = await studies.first().getAttribute("href");
-    await studies.first().click();
-    await expect(page.locator("main h1")).toBeVisible();
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://www.mosimediasolutions.com${projectPath}`);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
-    await page.screenshot({ path: `test-results/refinement-project-detail-${width}.png` });
+    if (PROJECTS_ENABLED) {
+      await page.goto("/projects");
+      const studies = page.locator('main a[href^="/projects/"]');
+      await expect(studies).toHaveCount(6);
+      await page.getByRole("button", { name: "View More Projects", exact: true }).click();
+      await expect(studies).toHaveCount(12);
+      await page.getByRole("button", { name: "Conference", exact: true }).click();
+      await expect(studies).toHaveCount(3);
+      await page.getByRole("button", { name: "All", exact: true }).click();
+      await expect(studies).toHaveCount(6);
+      const preview = page.getByRole("button", { name: /^Preview / }).first();
+      await preview.focus();
+      await page.keyboard.press("Enter");
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(dialog).toHaveCount(0);
+      await expect(preview).toBeFocused();
+      const projectPath = await studies.first().getAttribute("href");
+      await studies.first().click();
+      await expect(page.locator("main h1")).toBeVisible();
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://www.mosimediasolutions.com${projectPath}`);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+      await page.screenshot({ path: `test-results/refinement-project-detail-${width}.png` });
+    } else {
+      const hiddenProjects = await page.goto("/projects");
+      expect(hiddenProjects?.status()).toBe(404);
+    }
   });
 }
-
-test("the gallery has usable photographs with JavaScript disabled", async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
-  try {
-    const page = await context.newPage();
-    await page.goto("/gallery");
-    await expect(page.getByText("Enable JavaScript for filters and the image viewer", { exact: false })).toBeVisible();
-    await expect(page.locator('#gallery-static a[href^="/mms/"]')).toHaveCount(12);
-  } finally { await context.close(); }
-});
 
 test("animated desktop featured work retains keyboard focus and navigation", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });

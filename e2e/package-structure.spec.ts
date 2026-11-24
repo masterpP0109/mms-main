@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { weddingPackages } from "../lib/wedding-packages";
 
 for (const option of weddingPackages) {
-  test(`${option.name}: destination selection, reload, scroll and submitted payload`, async ({ page }) => {
+  test(`${option.name}: package selection, reload, scroll and submitted payload`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     let payload: Record<string, unknown> = {};
     await page.route("**/api/leads", route => {
@@ -11,30 +11,30 @@ for (const option of weddingPackages) {
     });
     await page.goto("/packages/weddings");
     await page.getByRole("link", { name: `Enquire about ${option.name}`, exact: true }).click();
-    await expect(page).toHaveURL(url => url.searchParams.get("package") === option.id && url.searchParams.get("location") === option.location && url.hash === "#package-enquiry");
+    await expect(page).toHaveURL(url => url.searchParams.get("package") === option.id && url.hash === "#package-enquiry");
     const form = page.locator("#package-enquiry form");
     await expect(form.getByLabel("Package preference")).toHaveValue(option.id);
-    await expect(form.getByRole("textbox", { name: "Preferred location", exact: true })).toHaveValue(option.location);
     await expect.poll(() => page.locator("#package-enquiry").evaluate(el => { const box = el.getBoundingClientRect(); return box.top < innerHeight && box.bottom > 0; })).toBe(true);
     await page.reload();
     await expect(form.getByLabel("Package preference")).toHaveValue(option.id);
-    await expect(form.getByRole("textbox", { name: "Preferred location", exact: true })).toHaveValue(option.location);
-    await form.getByLabel("Your name", { exact: true }).fill("Destination Test Visitor");
-    await form.getByLabel("Email address", { exact: true }).fill("destination-fixture@example.com");
-    await form.getByLabel("Project details").fill("Please discuss photography and film coverage at our selected destination.");
+    await form.getByLabel("Your name", { exact: true }).fill("Celebration Test Visitor");
+    await form.getByLabel("Email address", { exact: true }).fill("celebration-fixture@example.com");
+    await form.getByRole("textbox", { name: "Preferred location", exact: true }).fill("Victoria Falls");
+    await form.getByLabel("Project details").fill("Please discuss sound, lighting, photography and film coverage for our celebration.");
     await form.getByRole("button", { name: "Send my package enquiry" }).click();
     await expect(page.locator("#package-enquiry").getByRole("status")).toContainText("Your enquiry has been saved");
-    expect(payload).toMatchObject({ kind: "package", category: "weddings", packageId: option.id, location: option.location });
+    expect(payload).toMatchObject({ kind: "package", category: "weddings", packageId: option.id, location: "Victoria Falls" });
   });
 }
 
-test("changing the destination preserves typed details and updates the venue", async ({ page }) => {
-  await page.goto("/packages/weddings?package=victoria-falls-hotel#package-enquiry");
+test("changing the social package preserves typed details and location", async ({ page }) => {
+  await page.goto("/packages/weddings?package=celebration-luxe#package-enquiry");
   await page.getByLabel("Your name", { exact: true }).fill("Keep my details");
+  await page.getByRole("textbox", { name: "Preferred location", exact: true }).fill("Victoria Falls Hotel");
   await page.getByLabel("Project details").fill("Our plans must remain here.");
   for (const option of weddingPackages) {
     await page.getByLabel("Package preference").selectOption(option.id);
-    await expect(page.getByRole("textbox", { name: "Preferred location", exact: true })).toHaveValue(option.location);
+    await expect(page.getByRole("textbox", { name: "Preferred location", exact: true })).toHaveValue("Victoria Falls Hotel");
     await expect(page.getByLabel("Your name", { exact: true })).toHaveValue("Keep my details");
     await expect(page.getByLabel("Project details")).toHaveValue("Our plans must remain here.");
   }
@@ -49,9 +49,9 @@ for (const id of ["intimate", "celebration", "complete"]) {
   });
 }
 
-test("repairs old location-after-fragment URLs and preserves the intended destination", async ({ page }) => {
+test("repairs old location-after-fragment URLs and preserves the location", async ({ page }) => {
   await page.goto("/packages/weddings?package=tailored&utm_source=legacy#package-enquiry&location=The%20Lookout%20Caf%C3%A9");
-  await expect(page.getByLabel("Package preference")).toHaveValue("lookout-cafe");
+  await expect(page.getByLabel("Package preference")).toHaveValue("tailored");
   await expect(page.getByRole("textbox", { name: "Preferred location", exact: true })).toHaveValue("The Lookout Café");
   await expect(page).toHaveURL(url => url.searchParams.get("location") === "The Lookout Café" && url.hash === "#package-enquiry" && url.searchParams.get("utm_source") === "legacy");
 });
@@ -62,7 +62,7 @@ for (const width of [390, 768, 1440]) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     const errors: string[] = [];
     page.on("pageerror", error => errors.push(error.message));
-    for (const category of ["weddings", "drone", "podcasts"]) {
+    for (const category of ["conferences", "weddings", "video-production", "drone", "podcasts"]) {
       await page.goto(`/packages/${category}`);
       const packages = page.locator("#package-options");
       await expect(packages.locator("article")).toHaveCount(3);
@@ -72,7 +72,11 @@ for (const width of [390, 768, 1440]) {
       const cards = packages.locator("article");
       await expect(cards).toHaveCount(3);
       await expect(packages).toContainText("Tailored quotation");
-      await expect(packages).toContainText("Coverage to discuss");
+      if (category === "drone" || category === "podcasts") {
+        await expect(packages).toContainText("Coverage to discuss");
+      } else {
+        await expect(packages).toContainText("Services included");
+      }
       for (const image of await packages.locator("img").all()) {
         await image.scrollIntoViewIfNeeded();
         await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
@@ -82,4 +86,3 @@ for (const width of [390, 768, 1440]) {
     expect(errors).toEqual([]);
   });
 }
-

@@ -65,11 +65,9 @@ test("desktop Drone Services link and homepage feature links resolve", async ({ 
   await page.locator('#signature-experiences').screenshot({ path: "test-results/home-signature-experiences.png" });
   await page.getByRole("link", { name: "Learn more about Drone Services", exact: true }).click();
   await expect(page).toHaveURL(/\/services\/drone$/);
-  for (const label of ["Explore Wedding Packages", "View wedding packages"]) {
-    await page.goto("/#services");
-    await page.locator("#signature-experiences").getByRole("link", { name: label, exact: true }).click();
-    await expect(page).toHaveURL(/\/packages\/weddings$/);
-  }
+  await page.goto("/#services");
+  await page.locator("#signature-experiences").getByRole("link", { name: "Explore Wedding & Social Packages", exact: true }).click();
+  await expect(page).toHaveURL(/\/packages\/weddings$/);
 });
 
 test("services catalogue links its drone card and wedding feature to the dedicated pages", async ({ page }) => {
@@ -89,10 +87,10 @@ test("mobile signature experiences remain readable and animated content is reach
   await page.goto("/#services");
   const feature = page.locator('#signature-experiences');
   await feature.scrollIntoViewIfNeeded();
-  await expect(feature.getByRole("heading", { name: "Wedding Packages" })).toBeVisible();
+  await expect(feature.getByRole("heading", { name: "Weddings and Social Events Packages" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   await feature.screenshot({ path: "test-results/home-weddings-feature-mobile.png" });
-  await feature.getByRole("link", { name: "View wedding packages", exact: true }).click();
+  await feature.getByRole("link", { name: /Explore Wedding|Explore Weddings/i }).click();
   await expect(page).toHaveURL(/\/packages\/weddings$/);
   await page.locator("summary").first().scrollIntoViewIfNeeded();
   await expect(page.locator("summary").first()).toBeVisible();

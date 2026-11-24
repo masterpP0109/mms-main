@@ -247,7 +247,9 @@ function classifyFunnel(
   }
   if (
     typeof metadata.packageId === "string" ||
+    projectType === "conferences" ||
     projectType === "weddings" ||
+    projectType === "video-production" ||
     projectType === "drone" ||
     projectType === "podcasts" ||
     (typeof metadata.origin === "string" && metadata.origin.startsWith("/packages"))

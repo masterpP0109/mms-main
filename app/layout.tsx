@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Poppins, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import MotionProvider from "./components/MotionProvider";
 import ScrollEffects from "./components/ScrollEffects";
@@ -93,6 +94,17 @@ export default function RootLayout({
       className="h-full antialiased dark"
     >
       <body className={`${poppins.variable} ${inter.variable} min-h-full flex flex-col bg-[#050507] text-[#f3f4f6]`}>
+        <Script
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-TG8CP52H"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag-manager-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          `}
+        </Script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData).replace(/</g, "\\u003c") }} />
         <MotionProvider>
           <ScrollEffects />

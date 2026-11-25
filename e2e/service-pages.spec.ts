@@ -77,7 +77,7 @@ test("services catalogue links its drone card and wedding feature to the dedicat
   expect(response?.status()).toBe(200);
   await page.getByRole("link", { name: "Explore Drone Services", exact: true }).click();
   await expect(page).toHaveURL(/\/services\/drone$/);
-  await page.goto("/services");
+  await page.goto("/conference-production");
   await page.getByRole("link", { name: "Explore weddings & elopements", exact: true }).click();
   await expect(page).toHaveURL(/\/services\/weddings-elopements$/);
 });
